@@ -1,0 +1,11 @@
+#App {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
+  width: auto;
+  position: relative;
+  word-break: keep-all;
+  font-family: 'Noto Sans KR', sans-serif;
+}
