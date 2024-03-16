@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 Widget headerWidget(
-    String title, Alignment itemAlignment, bool isShowBackButton) {
+    {required String title,
+    required Alignment itemAlignment,
+    required bool isShowBackButton}) {
   return Container(
     padding: const EdgeInsets.all(20),
     alignment: itemAlignment,
