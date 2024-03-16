@@ -8,13 +8,13 @@ const selecteds = {
   `,
   false: css`
     background-color: #ffffff;
-    color: #808080;
+    color: var(--unselected-color);
     border: 2px solid #808080;
   `,
 };
 
 const ToggleStyled = styled.button`
-  background-color: #379237;
+  background-color: var(--primary-color);
   text-align: center;
   border-radius: 30px;
   ${({ selected, color }) => selecteds[selected]}

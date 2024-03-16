@@ -15,19 +15,19 @@ const sizes = {
 };
 const selecteds = {
   true: css`
-    background-color: #379237;
+    background-color: var(--primary-color);
     color: #ffffff;
     border: none;
   `,
   false: css`
     background-color: #ffffff;
-    color: #379237;
-    border: 2px solid #379237;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
   `,
 };
 
 const ToggleStyled = styled.button`
-  background-color: #379237;
+  background-color: var(--primary-color);
   text-align: center;
   border-radius: 10px;
   ${({ selected }) => selecteds[selected]}

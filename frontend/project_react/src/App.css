@@ -9,3 +9,8 @@
   word-break: keep-all;
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+:root {
+  --primary-color: #379237;
+  --unselected-color: #808080;
+}

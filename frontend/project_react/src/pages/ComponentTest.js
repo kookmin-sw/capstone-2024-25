@@ -68,6 +68,16 @@ const ComponentTest = () => {
         <Toggle text="Small Unselected" size="Small" selected={false} />
       </TestWrapper>
       <TestWrapper>
+        <Category
+          text="Selected Primary"
+          selected={true}
+          color="var(--primary-color)"
+        />
+        <Category
+          text="Unselected Primary"
+          selected={false}
+          color="var(--primary-color)"
+        />
         <Category text="Selected Green" selected={true} color="#379237" />
         <Category text="Unselected Green" selected={false} color="#379237" />
         <Category text="Selected Red" selected={true} color="#ff0000" />
