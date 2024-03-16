@@ -20,7 +20,7 @@ const heights = {
 
 const types = {
   Primary: css`
-    background-color: #379237;
+    background-color: var(--primary-color);
     border: none;
     color: white;
   `,
@@ -32,7 +32,7 @@ const types = {
 };
 
 const ButtonStyled = styled.button`
-  background-color: #379237;
+  background-color: var(--primary-color);
   font-size: 16px;
   text-align: center;
   border-radius: 10px;
