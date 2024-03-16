@@ -8,9 +8,12 @@
   position: relative;
   word-break: keep-all;
   font-family: 'Noto Sans KR', sans-serif;
+  border: 1px solid red;
 }
 
 :root {
   --primary-color: #379237;
   --unselected-color: #808080;
+  --secondary-unselected-color: #E6E6E6;
+  --error-color: #EF3B3B;
 }
