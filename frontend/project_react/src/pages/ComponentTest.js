@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';
 import Category from '../components/Toggle/Category';
+import Input from '../components/Input';
 
 const TestWrapper = styled.div`
   display: flex;
@@ -13,52 +14,56 @@ const TestWrapper = styled.div`
 `;
 
 const ComponentTest = () => {
+  const text = '텍스트';
+  const inputInfo = '정보';
+  const infoState = 'error';
+  const infoText = '정보텍스트';
   return (
     <>
-      <TestWrapper>
-        <Button
-          text="Large Primary"
-          size="Large"
-          height="Tall"
-          type="Primary"
-        />
-        <Button
-          text="Small Primary"
-          size="Small"
-          height="Short"
-          type="Primary"
-        />
-        <Button text="Large Back" size="Large" height="Tall" type="Back" />
-        <Button text="Small Back" size="Small" height="Short" type="Back" />
-        <Button
-          text="Large Primary Disabled"
-          size="Large"
-          height="Tall"
-          type="Primary"
-          disabled
-        />
-        <Button
-          text="Small Primary Disabled"
-          size="Small"
-          height="Short"
-          type="Primary"
-          disabled
-        />
-        <Button
-          text="Large Back Disabled"
-          size="Large"
-          height="Tall"
-          type="Back"
-          disabled
-        />
-        <Button
-          text="Small Back Disabled"
-          size="Small"
-          height="Short"
-          type="Back"
-          disabled
-        />
-      </TestWrapper>
+      {/*<TestWrapper>*/}
+      {/*  <Button*/}
+      {/*    text="Large Primary"*/}
+      {/*    size="Large"*/}
+      {/*    height="Tall"*/}
+      {/*    type="Primary"*/}
+      {/*  />*/}
+      {/*  <Button*/}
+      {/*    text="Small Primary"*/}
+      {/*    size="Small"*/}
+      {/*    height="Short"*/}
+      {/*    type="Primary"*/}
+      {/*  />*/}
+      {/*  <Button text="Large Back" size="Large" height="Tall" type="Back" />*/}
+      {/*  <Button text="Small Back" size="Small" height="Short" type="Back" />*/}
+      {/*  <Button*/}
+      {/*    text="Large Primary Disabled"*/}
+      {/*    size="Large"*/}
+      {/*    height="Tall"*/}
+      {/*    type="Primary"*/}
+      {/*    disabled*/}
+      {/*  />*/}
+      {/*  <Button*/}
+      {/*    text="Small Primary Disabled"*/}
+      {/*    size="Small"*/}
+      {/*    height="Short"*/}
+      {/*    type="Primary"*/}
+      {/*    disabled*/}
+      {/*  />*/}
+      {/*  <Button*/}
+      {/*    text="Large Back Disabled"*/}
+      {/*    size="Large"*/}
+      {/*    height="Tall"*/}
+      {/*    type="Back"*/}
+      {/*    disabled*/}
+      {/*  />*/}
+      {/*  <Button*/}
+      {/*    text="Small Back Disabled"*/}
+      {/*    size="Small"*/}
+      {/*    height="Short"*/}
+      {/*    type="Back"*/}
+      {/*    disabled*/}
+      {/*  />*/}
+      {/*</TestWrapper>*/}
       <TestWrapper>
         <Toggle text="Large Selected" size="Large" selected={true} />
         <Toggle text="Medium Selected" size="Medium" selected={true} />
@@ -84,6 +89,14 @@ const ComponentTest = () => {
         <Category text="Unselected Red" selected={false} color="#ff0000" />
         <Category text="Selected Blue" selected={true} color="#0000ff" />
         <Category text="Unselected Blue" selected={false} color="#0000ff" />
+      </TestWrapper>
+      <TestWrapper>
+        <Input
+          text={text}
+          inputInfo={inputInfo}
+          infoState={infoState}
+          infoText={infoText}
+        />
       </TestWrapper>
     </>
   );
