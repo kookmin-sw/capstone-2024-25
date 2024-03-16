@@ -49,9 +49,15 @@ const ButtonStyled = styled.button`
     `}
 `;
 
-const Button = ({ text, size, height, type, disabled }) => {
+const Button = ({ text, size, height, type, disabled, onClick }) => {
   return (
-    <ButtonStyled size={size} height={height} type={type} disabled={disabled}>
+    <ButtonStyled
+      size={size}
+      height={height}
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {text}
     </ButtonStyled>
   );

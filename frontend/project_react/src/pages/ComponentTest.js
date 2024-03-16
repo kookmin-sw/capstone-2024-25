@@ -1,3 +1,5 @@
+// ComponentTest.js
+
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Toggle from '../components/Toggle';

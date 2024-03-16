@@ -1,14 +1,20 @@
+// Input/index.js
+
 import styled from 'styled-components';
 
 const InputWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  box-sizing: border-box;
 `;
 
 const InputStyled = styled.input`
+  width: 100%;
   font-size: 24px;
+  box-sizing: border-box;
   border: none;
   border-bottom: 4px solid var(--secondary-unselected-color);
   outline: none;
@@ -27,14 +33,10 @@ const InputInfo = styled.div`
       : 'var(--unselected-color)'};
 `;
 
-const Input = ({ text, inputInfo, infoState, infoText }) => {
-  console.log('text : ', text);
-  console.log('inputInfo : ', inputInfo);
-  console.log('infoState : ', infoState);
-  console.log('infoText : ', infoText);
+const Input = ({ text, inputInfo, infoState, infoText, onChange }) => {
   return (
     <InputWrapper>
-      <InputStyled placeholder={inputInfo} />
+      <InputStyled placeholder={inputInfo} value={text} onChange={onChange} />
       <InputInfo infoState={infoState}>{infoText}</InputInfo>
     </InputWrapper>
   );
