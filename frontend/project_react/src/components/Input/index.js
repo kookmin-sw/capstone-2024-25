@@ -1,6 +1,7 @@
 // Input/index.js
 
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -33,10 +34,30 @@ const InputInfo = styled.div`
       : 'var(--unselected-color)'};
 `;
 
-const Input = ({ text, inputInfo, infoState, infoText, onChange }) => {
+const Input = ({ text, inputInfo, infoState, infoText, onChange, type }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
+  const displayValue =
+    type === 'password' && inputValue.length > 0
+      ? `${'*'.repeat(inputValue.length - 1)}${inputValue.slice(-1)}`
+      : inputValue;
+
   return (
     <InputWrapper>
-      <InputStyled placeholder={inputInfo} value={text} onChange={onChange} />
+      <InputStyled
+        placeholder={inputInfo}
+        value={displayValue}
+        onChange={handleChange}
+      />
       <InputInfo infoState={infoState}>{infoText}</InputInfo>
     </InputWrapper>
   );

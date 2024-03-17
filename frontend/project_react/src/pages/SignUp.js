@@ -1,6 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import Step from '../components/SignUp/step';
+import { useRef, useState } from 'react';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+import './sign-up.css';
+import StepId from '../components/SignUp/stepId';
+import StepPassword from '../components/SignUp/stepPassword';
+import StepName from '../components/SignUp/stepName';
+import StepBirth from '../components/SignUp/stepBirth';
+
 import Button from '../components/Button';
 
 const SignUpWrapper = styled.div`
@@ -23,9 +31,6 @@ const SignUpTitle = styled.div`
 const StepWrapper = styled.div`
   display: flex;
   width: 100%;
-  overflow-x: hidden;
-  transition: transform 0.5s ease-in-out;
-  transform: ${({ stepValue }) => `translateX(-${stepValue * 100}%)`};
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -52,27 +57,66 @@ const LoginButton = styled.span`
 
 const SignUp = () => {
   const [userId, setUserId] = useState('');
-  const [stepValue, setStepValue] = useState(0);
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const [name, setName] = useState('');
+  const [birth, setBirth] = useState(''); // 생년월일 추가 예정
 
-  const gungun = () => {
-    console.log('userId : ', userId);
+  const sliderRef = useRef();
+  const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
+  const handlePrev = () => {
+    sliderRef.current.slickPrev();
+  };
+
+  const handleNext = () => {
+    sliderRef.current.slickNext();
+  };
+
+  const settings = {
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    afterChange: (current) => setCurrentSlide(current), // 현재 슬라이드 인덱스 업데이트
+    arrows: false,
+    draggable: false,
+    speed: 200, // 넘어가는 시간
   };
 
   return (
     <SignUpWrapper>
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
-        <Step value={userId} setValue={setUserId}></Step>
+        <Slider ref={sliderRef} {...settings}>
+          <StepId value={userId} setValue={setUserId}></StepId>
+          <StepPassword
+            value={password}
+            setValue={setPassword}
+            secondValue={passwordCheck}
+            setSecondValue={setPasswordCheck}
+          ></StepPassword>
+          <StepName value={name} setValue={setName}></StepName>
+          <StepBirth value={birth} setValue={setBirth}></StepBirth>
+        </Slider>
       </StepWrapper>
       <SignUpFooter>
         <ButtonWrapper>
-          <Button text="이전" size="Large" height="Tall" type="Back" />
+          {currentSlide === 0 ? (
+            <Button text="취소" size="Large" height="Tall" type="Back" />
+          ) : (
+            <Button
+              text="이전"
+              size="Large"
+              height="Tall"
+              type="Back"
+              onClick={handlePrev}
+            />
+          )}
           <Button
             text="다음"
             size="Large"
             height="Tall"
             type="Primary"
-            onClick={() => setStepValue(stepValue + 1)}
+            onClick={handleNext}
           />
         </ButtonWrapper>
         <FooterText>

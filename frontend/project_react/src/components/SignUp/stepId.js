@@ -7,9 +7,9 @@ const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
-  border: 1px solid red;
+  width: 98%;
   gap: 8px;
+  box-sizing: border-box;
 `;
 
 const StepTitle = styled.div`
@@ -18,22 +18,31 @@ const StepTitle = styled.div`
   margin-bottom: 32px;
 `;
 
-const Step = ({ step, value, setValue, inputInfo, infoState, infoText }) => {
+const StepId = ({ value, setValue }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
   const [errorState, setErrorState] = useState(0);
   const stateList = ['', 'error', 'success'];
-  const gugu = () => {
+  const infoTextList = [
+    '6자 이상 12자 이내. 영문, 숫자 사용 가능',
+    '이미 사용중인 아이디입니다.',
+    '사용 가능한 아이디입니다.',
+  ];
+
+  const onClickEvent = () => {
     console.log('value:', value);
+  };
+  const checkId = () => {
+    setErrorState(2);
   };
   return (
     <StepWrapper>
-      <StepTitle>아이디</StepTitle>
+      <StepTitle>아이디 *</StepTitle>
       <Input
         text={value}
         inputInfo="아이디를 입력해주세요"
-        infoText="6자 이상 12자 이내. 영문, 숫자 사용 가능"
+        infoText={infoTextList[errorState]}
         infoState={stateList[errorState]}
         onChange={handleInputChange}
       />
@@ -42,9 +51,9 @@ const Step = ({ step, value, setValue, inputInfo, infoState, infoText }) => {
         size="Large"
         height="Short"
         type="Primary"
-        onClick={() => gugu()}
+        onClick={() => checkId()}
       />
     </StepWrapper>
   );
 };
-export default Step;
+export default StepId;
