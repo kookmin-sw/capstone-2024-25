@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Input from '../Input';
 import { useState } from 'react';
+import DaumPostcode from 'react-daum-postcode';
+import AddressModal from '../Modal/address';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -22,12 +24,23 @@ const InputWrapper = styled.div`
   flex-direction: column;
   gap: 36px;
 `;
+
 const StepAddress = ({ value, setValue }) => {
   const [detailAddress, setDetailAddress] = useState('');
+  const [modalState, setModalState] = useState(false);
+
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
-
+  const handleDetailAddressChange = (e) => {
+    setDetailAddress(e.target.value);
+  };
+  const handleFocus = () => {
+    setModalState(true);
+  };
+  const handleBlur = () => {
+    setModalState(false);
+  };
   return (
     <StepWrapper>
       <StepTitle>주소 *</StepTitle>
@@ -35,12 +48,20 @@ const StepAddress = ({ value, setValue }) => {
         <Input
           text={value}
           inputInfo="지번, 도로명, 건물명으로 검색"
-          onChange={handleInputChange}
+          onClick={handleFocus}
+          fontSize="20px"
         />
         <Input
           text={detailAddress}
           inputInfo="상세 주소를 입력해주세요."
-          onChange={handleInputChange}
+          onChange={handleDetailAddressChange}
+          fontSize="20px"
+        />
+        <AddressModal
+          isOpen={modalState}
+          closeModal={handleBlur}
+          address={value}
+          setAddress={setValue}
         />
       </InputWrapper>
     </StepWrapper>

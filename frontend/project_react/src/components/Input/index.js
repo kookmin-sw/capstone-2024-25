@@ -17,7 +17,7 @@ const InputWrapper = styled.div`
 
 const InputStyled = styled.input`
   width: 100%;
-  font-size: 24px;
+  font-size: ${({ fontSize }) => fontSize || '24px'};
   box-sizing: border-box;
   border: none;
   border-bottom: 4px solid var(--secondary-unselected-color);
@@ -41,7 +41,15 @@ const InputInfo = styled.div`
       : 'var(--unselected-color)'};
 `;
 
-const Input = ({ text, inputInfo, infoState, infoText, onChange, type }) => {
+const Input = ({
+  text,
+  inputInfo,
+  infoState,
+  infoText,
+  onChange,
+  type,
+  onClick,
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -57,7 +65,7 @@ const Input = ({ text, inputInfo, infoState, infoText, onChange, type }) => {
   const displayValue =
     type === 'password' && inputValue.length > 0
       ? `${'*'.repeat(inputValue.length - 1)}${inputValue.slice(-1)}`
-      : inputValue;
+      : text;
 
   const handleFocus = () => {
     setShowCalendar(true);
@@ -68,13 +76,10 @@ const Input = ({ text, inputInfo, infoState, infoText, onChange, type }) => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 
-    // getFullYear(), getMonth(), getDate() 메서드를 사용하여 연도, 월, 일을 가져옵니다.
-    // getMonth()는 0부터 시작하므로 1을 더해주어야 합니다.
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; // getMonth()는 0에서 시작하기 때문에 1을 더해줍니다.
+    const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    // 템플릿 문자열을 사용하여 원하는 형식으로 문자열을 조합합니다.
     return `${year}년 ${month}월 ${day}일`;
   };
 
@@ -82,13 +87,13 @@ const Input = ({ text, inputInfo, infoState, infoText, onChange, type }) => {
     <InputWrapper>
       <InputStyled
         placeholder={inputInfo}
-        // value={formatDate(displayValue)}
         value={
           type == 'date'
             ? displayValue && formatDate(displayValue)
             : displayValue
         }
         onChange={handleChange}
+        onClick={onClick}
       />
       <BirthModal
         isOpen={showCalendar}
