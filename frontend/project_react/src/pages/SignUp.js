@@ -10,6 +10,7 @@ import StepName from '../components/SignUp/stepName';
 import StepBirth from '../components/SignUp/stepBirth';
 import StepGender from '../components/SignUp/stepGender';
 import StepAddress from '../components/SignUp/stepAddress';
+import StepNum from '../components/SignUp/stepNum';
 import Button from '../components/Button';
 
 const SignUpWrapper = styled.div`
@@ -65,6 +66,7 @@ const SignUp = () => {
   const [gender, setGender] = useState(0);
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
 
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
@@ -91,12 +93,6 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider ref={sliderRef} {...settings}>
-          <StepAddress
-            value={address}
-            setValue={setAddress}
-            secondValue={detailAddress}
-            setSecondValue={setDetailAddress}
-          ></StepAddress>
           <StepId value={userId} setValue={setUserId}></StepId>
           <StepPassword
             value={password}
@@ -107,6 +103,13 @@ const SignUp = () => {
           <StepName value={name} setValue={setName}></StepName>
           <StepBirth value={birth} setValue={setBirth}></StepBirth>
           <StepGender value={gender} setValue={setGender}></StepGender>
+          <StepAddress
+            value={address}
+            setValue={setAddress}
+            secondValue={detailAddress}
+            setSecondValue={setDetailAddress}
+          ></StepAddress>
+          <StepNum value={phoneNum} setValue={setPhoneNum}></StepNum>
         </Slider>
       </StepWrapper>
       <SignUpFooter>
