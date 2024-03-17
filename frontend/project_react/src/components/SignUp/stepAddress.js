@@ -25,15 +25,10 @@ const InputWrapper = styled.div`
   gap: 36px;
 `;
 
-const StepAddress = ({ value, setValue }) => {
-  const [detailAddress, setDetailAddress] = useState('');
+const StepAddress = ({ value, setValue, secondValue, setSecondValue }) => {
   const [modalState, setModalState] = useState(false);
-
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-  };
   const handleDetailAddressChange = (e) => {
-    setDetailAddress(e.target.value);
+    setSecondValue(e.target.value);
   };
   const handleFocus = () => {
     setModalState(true);
@@ -52,7 +47,7 @@ const StepAddress = ({ value, setValue }) => {
           fontSize="20px"
         />
         <Input
-          text={detailAddress}
+          text={secondValue}
           inputInfo="상세 주소를 입력해주세요."
           onChange={handleDetailAddressChange}
           fontSize="20px"
