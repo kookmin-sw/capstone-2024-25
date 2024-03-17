@@ -9,6 +9,7 @@ import StepPassword from '../components/SignUp/stepPassword';
 import StepName from '../components/SignUp/stepName';
 import StepBirth from '../components/SignUp/stepBirth';
 import StepGender from '../components/SignUp/stepGender';
+import StepAddress from '../components/SignUp/stepAddress';
 import Button from '../components/Button';
 
 const SignUpWrapper = styled.div`
@@ -62,6 +63,7 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState(0);
+  const [address, setAddress] = useState('');
 
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
@@ -88,6 +90,8 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider ref={sliderRef} {...settings}>
+          <StepAddress value={address} setValue={setAddress}></StepAddress>
+
           <StepId value={userId} setValue={setUserId}></StepId>
           <StepPassword
             value={password}
