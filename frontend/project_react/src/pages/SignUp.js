@@ -11,6 +11,8 @@ import StepBirth from '../components/SignUp/stepBirth';
 import StepGender from '../components/SignUp/stepGender';
 import StepAddress from '../components/SignUp/stepAddress';
 import StepNum from '../components/SignUp/stepNum';
+import StepNumEmergency from '../components/SignUp/stepNumEmergency';
+
 import Button from '../components/Button';
 
 const SignUpWrapper = styled.div`
@@ -67,6 +69,7 @@ const SignUp = () => {
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
+  const [emergencyNum, setEmergencyNum] = useState('');
 
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
@@ -110,6 +113,10 @@ const SignUp = () => {
             setSecondValue={setDetailAddress}
           ></StepAddress>
           <StepNum value={phoneNum} setValue={setPhoneNum}></StepNum>
+          <StepNumEmergency
+            value={emergencyNum}
+            setValue={setEmergencyNum}
+          ></StepNumEmergency>
         </Slider>
       </StepWrapper>
       <SignUpFooter>
