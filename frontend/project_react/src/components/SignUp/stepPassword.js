@@ -32,9 +32,6 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
   const [errorState, setErrorState] = useState(0);
   const [checkErrorState, setCheckErrorState] = useState(0);
   const stateList = ['', 'error', 'success'];
-  const onClickEvent = () => {
-    console.log('value:', value);
-  };
 
   const checkPwList = ['', '비밀번호가 일치하지 않습니다.'];
 

@@ -27,6 +27,7 @@ const StepName = ({ value, setValue }) => {
         text={value}
         inputInfo="생년월일을 입력해주세요"
         onChange={handleInputChange}
+        type="date"
       />
     </StepWrapper>
   );
