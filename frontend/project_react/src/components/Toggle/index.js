@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 
 const sizes = {
   Large: css`
+    width: 100%;
+    padding: 34px 0;
     font-size: 32px;
   `,
   Medium: css`
@@ -34,9 +36,9 @@ const ToggleStyled = styled.button`
   ${({ size }) => sizes[size]}
 `;
 
-const Toggle = ({ text, size, selected }) => {
+const Toggle = ({ text, size, selected, onClick }) => {
   return (
-    <ToggleStyled size={size} selected={selected}>
+    <ToggleStyled size={size} selected={selected} onClick={onClick}>
       {text}
     </ToggleStyled>
   );
