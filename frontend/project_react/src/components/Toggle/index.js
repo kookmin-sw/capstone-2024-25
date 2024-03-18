@@ -7,6 +7,7 @@ const sizes = {
     font-size: 32px;
   `,
   Medium: css`
+    padding: 16px 22px;
     font-size: 24px;
   `,
   Small: css`
@@ -14,12 +15,16 @@ const sizes = {
     border-radius: 30px;
     border: 1px solid;
   `,
+  RectSmall: css`
+    padding: 10px 12px;
+    font-size: 16px;
+  `,
 };
 const selecteds = {
   true: css`
     background-color: var(--primary-color);
     color: #ffffff;
-    border: none;
+    border: 2px solid var(--primary-color);
   `,
   false: css`
     background-color: #ffffff;
@@ -34,6 +39,7 @@ const ToggleStyled = styled.button`
   border-radius: 10px;
   ${({ selected }) => selecteds[selected]}
   ${({ size }) => sizes[size]}
+  box-sizing: border-box;
 `;
 
 const Toggle = ({ text, size, selected, onClick }) => {

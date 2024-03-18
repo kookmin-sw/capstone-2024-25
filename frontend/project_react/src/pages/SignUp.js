@@ -1,3 +1,4 @@
+// SignUp.js
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import 'slick-carousel/slick/slick.css';
@@ -12,6 +13,7 @@ import StepGender from '../components/SignUp/stepGender';
 import StepAddress from '../components/SignUp/stepAddress';
 import StepNum from '../components/SignUp/stepNum';
 import StepNumEmergency from '../components/SignUp/stepNumEmergency';
+import StepMedicine from '../components/SignUp/stepMedicine';
 
 import Button from '../components/Button';
 
@@ -70,6 +72,7 @@ const SignUp = () => {
   const [detailAddress, setDetailAddress] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [emergencyNum, setEmergencyNum] = useState('');
+  const [medicineList, setMedicineList] = useState([]);
 
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
@@ -88,6 +91,8 @@ const SignUp = () => {
     afterChange: (current) => setCurrentSlide(current), // 현재 슬라이드 인덱스 업데이트
     arrows: false,
     draggable: false,
+    swipe: false, // 모바일 스와이프 비활성화
+
     speed: 200, // 넘어가는 시간
   };
 
@@ -96,27 +101,25 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider ref={sliderRef} {...settings}>
-          <StepId value={userId} setValue={setUserId}></StepId>
+          <StepId value={userId} setValue={setUserId} />
           <StepPassword
             value={password}
             setValue={setPassword}
             secondValue={passwordCheck}
             setSecondValue={setPasswordCheck}
-          ></StepPassword>
-          <StepName value={name} setValue={setName}></StepName>
-          <StepBirth value={birth} setValue={setBirth}></StepBirth>
-          <StepGender value={gender} setValue={setGender}></StepGender>
+          />
+          <StepName value={name} setValue={setName} />
+          <StepBirth value={birth} setValue={setBirth} />
+          <StepGender value={gender} setValue={setGender} />
           <StepAddress
             value={address}
             setValue={setAddress}
             secondValue={detailAddress}
             setSecondValue={setDetailAddress}
-          ></StepAddress>
-          <StepNum value={phoneNum} setValue={setPhoneNum}></StepNum>
-          <StepNumEmergency
-            value={emergencyNum}
-            setValue={setEmergencyNum}
-          ></StepNumEmergency>
+          />
+          <StepNum value={phoneNum} setValue={setPhoneNum} />
+          <StepNumEmergency value={emergencyNum} setValue={setEmergencyNum} />
+          <StepMedicine value={medicineList} setValue={setMedicineList} />
         </Slider>
       </StepWrapper>
       <SignUpFooter>
