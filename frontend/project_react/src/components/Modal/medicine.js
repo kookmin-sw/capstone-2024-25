@@ -122,10 +122,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
     >
       <ModalHeader>
         <ModalTitle>추가한 약품</ModalTitle>
-        <XBtn
-          src={process.env.PUBLIC_URL + '/images/x-img.svg'}
-          onClick={closeModal}
-        />
       </ModalHeader>
       <ModalContent>
         {value.map((item, index) => (
