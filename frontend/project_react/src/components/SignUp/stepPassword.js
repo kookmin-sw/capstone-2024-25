@@ -46,6 +46,7 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
           infoState={stateList[errorState]}
           onChange={handleInputChange}
           type={'password'}
+          fontSize={'20px'}
         />
       </StepItem>
       <StepItem>
@@ -57,6 +58,7 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
           infoState={stateList[errorState]}
           onChange={handleSecondInputChange}
           type={'password'}
+          fontSize={'20px'}
         />
       </StepItem>
     </StepWrapper>

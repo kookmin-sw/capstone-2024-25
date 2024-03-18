@@ -49,6 +49,7 @@ const Input = ({
   onChange,
   type,
   onClick,
+  fontSize,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
@@ -94,6 +95,7 @@ const Input = ({
         }
         onChange={handleChange}
         onClick={onClick}
+        fontSize={fontSize}
       />
       <BirthModal
         isOpen={showCalendar}
