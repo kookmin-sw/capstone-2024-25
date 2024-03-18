@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 const sizes = {
   Large: css`
+    font-size: 24px;
     width: 100%;
   `,
   Small: css`
