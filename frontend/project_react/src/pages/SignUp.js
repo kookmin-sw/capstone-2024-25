@@ -124,19 +124,15 @@ const SignUp = () => {
       </StepWrapper>
       <SignUpFooter>
         <ButtonWrapper>
-          {currentSlide === 0 ? (
-            <Button text="취소" size="Large" height="Tall" type="Back" />
-          ) : (
-            <Button
-              text="이전"
-              size="Large"
-              height="Tall"
-              type="Back"
-              onClick={handlePrev}
-            />
-          )}
           <Button
-            text="다음"
+            text={currentSlide === 0 ? '취소' : '이전'}
+            size="Large"
+            height="Tall"
+            type="Back"
+            onClick={handlePrev}
+          />
+          <Button
+            text={currentSlide === 8 ? '완료' : '다음'}
             size="Large"
             height="Tall"
             type="Primary"
