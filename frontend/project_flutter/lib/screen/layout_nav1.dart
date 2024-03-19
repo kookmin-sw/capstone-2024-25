@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:project_flutter/screen/game/crossword/intro_crossword.dart';
+import 'package:project_flutter/screen/game/twentyheads/intro_twentyheads.dart';
+import 'package:project_flutter/screen/game/wordorder/intro_wordorder.dart';
 import 'package:project_flutter/widget/gamecard.dart';
 import 'package:project_flutter/widget/header.dart';
 
@@ -18,16 +21,9 @@ class _LayoutNav1State extends State<LayoutNav1> {
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
-        // decoration: BoxDecoration(
-        //   color: Colors.blue,
-        // ),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            headerWidget(
-                title: '두뇌 향상 게임',
-                itemAlignment: Alignment.centerLeft,
-                isShowBackButton: false),
+            HeaderWidget(title: '두뇌 향상 게임', isShowBackButton: false),
             const Divider(
               color: Color(0xFFABABAB),
               height: 0,
@@ -37,7 +33,7 @@ class _LayoutNav1State extends State<LayoutNav1> {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     SvgPicture.asset(
@@ -52,33 +48,30 @@ class _LayoutNav1State extends State<LayoutNav1> {
                     ),
                     const Gap(20),
                     Expanded(
-                      child: gamecard(
-                        'assets/wordgame.png',
-                        () {
-                          print('Word Game is clicked');
-                        },
+                      child: GameCard(
+                        thumbnail: 'assets/wordgame.png',
+                        onTap: () => Navigator.of(context)
+                            .push(_createRoute(WordOrderIntro())),
                         title: '문장 순서 맞히기',
                         description: '단어를 순서대로 배열하여\n문장을 완성하세요',
                       ),
                     ),
                     const Gap(30),
                     Expanded(
-                      child: gamecard(
-                        'assets/wordgame.png',
-                        () {
-                          print('Word Game is clicked');
-                        },
+                      child: GameCard(
+                        thumbnail: 'assets/wordgame.png',
+                        onTap: () => Navigator.of(context)
+                            .push(_createRoute(CrossWordIntro())),
                         title: '십자말풀이',
                         description: '빈칸의 단어를 맞혀\n격자를 완성하세요',
                       ),
                     ),
                     const Gap(30),
                     Expanded(
-                      child: gamecard(
-                        'assets/wordgame.png',
-                        () {
-                          print('Word Game is clicked');
-                        },
+                      child: GameCard(
+                        thumbnail: 'assets/wordgame.png',
+                        onTap: () => Navigator.of(context)
+                            .push(_createRoute(TwentyHeadsIntro())),
                         title: '스무고개',
                         description: '20개의 질문 만으로 AI가\n생각한 단어를 맞혀보세요',
                       ),
@@ -90,4 +83,22 @@ class _LayoutNav1State extends State<LayoutNav1> {
           ],
         ));
   }
+}
+
+Route _createRoute(Widget gameIntroWidget) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => gameIntroWidget,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

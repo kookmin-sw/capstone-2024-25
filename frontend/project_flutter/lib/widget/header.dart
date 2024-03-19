@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 
-Widget headerWidget(
-    {required String title,
-    required Alignment itemAlignment,
-    required bool isShowBackButton}) {
+Widget HeaderWidget(
+    {String? title, Alignment? itemAlignment, bool? isShowBackButton}) {
   return Container(
     padding: const EdgeInsets.all(20),
     alignment: itemAlignment,
     child: Row(
       children: [
-        if (isShowBackButton)
+        if (isShowBackButton == true)
           IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               print('Back button is clicked');
             },
           ),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        if (title != null)
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
       ],
     ),
   );
