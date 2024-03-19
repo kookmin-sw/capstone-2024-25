@@ -19,7 +19,7 @@ const SignUpContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
   width: 100%;
 `;
 
