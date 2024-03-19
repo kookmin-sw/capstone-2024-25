@@ -35,6 +35,8 @@ public class Member {
     @Embedded
     private Address address;
 
+    private String detailAddress;
+
     private Double longitude;
 
     private Double latitude;
