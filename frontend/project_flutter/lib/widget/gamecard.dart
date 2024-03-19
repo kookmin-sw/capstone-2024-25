@@ -9,8 +9,27 @@ Widget GameCard({
 }) {
   return InkResponse(
     onTap: () => onTap(),
-    child: Column(children: [
+    child: Row(children: [
       Expanded(
+        flex: 2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              description,
+              // textAlign: TextAlign.right,
+            )
+          ],
+        ),
+      ),
+      const Gap(12),
+      Expanded(
+        flex: 3,
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -26,21 +45,6 @@ Widget GameCard({
           ),
         ),
       ),
-      const Gap(12),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            description,
-            textAlign: TextAlign.right,
-          )
-        ],
-      )
     ]),
   );
 }

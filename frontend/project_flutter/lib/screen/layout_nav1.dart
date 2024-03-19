@@ -52,8 +52,8 @@ class _LayoutNav1State extends State<LayoutNav1> {
                         thumbnail: 'assets/wordgame.png',
                         onTap: () => Navigator.of(context)
                             .push(_createRoute(WordOrderIntro())),
-                        title: '문장 순서 맞히기',
-                        description: '단어를 순서대로 배열하여\n문장을 완성하세요',
+                        title: '문장 순서 맞추기',
+                        description: '단어를 순서대로 배열하여 문장을 완성하세요',
                       ),
                     ),
                     const Gap(30),
@@ -63,7 +63,7 @@ class _LayoutNav1State extends State<LayoutNav1> {
                         onTap: () => Navigator.of(context)
                             .push(_createRoute(CrossWordIntro())),
                         title: '십자말풀이',
-                        description: '빈칸의 단어를 맞혀\n격자를 완성하세요',
+                        description: '빈칸의 단어를 맞혀 격자를 완성하세요',
                       ),
                     ),
                     const Gap(30),
@@ -73,7 +73,7 @@ class _LayoutNav1State extends State<LayoutNav1> {
                         onTap: () => Navigator.of(context)
                             .push(_createRoute(TwentyHeadsIntro())),
                         title: '스무고개',
-                        description: '20개의 질문 만으로 AI가\n생각한 단어를 맞혀보세요',
+                        description: '20개의 질문 만으로 AI가 생각한 단어를 맞혀보세요',
                       ),
                     ),
                   ],
