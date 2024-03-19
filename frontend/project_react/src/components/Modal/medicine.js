@@ -43,12 +43,6 @@ const ModalHeader = styled.div`
 const ModalTitle = styled.div`
   font-size: 24px;
 `;
-const XBtn = styled.img`
-  position: absolute;
-  width: 24px;
-  right: 20px;
-  top: 20px;
-`;
 const ModalContent = styled.div`
   width: 100%;
   display: flex;

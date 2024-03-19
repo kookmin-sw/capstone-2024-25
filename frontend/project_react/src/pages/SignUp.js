@@ -23,7 +23,6 @@ const SignUpWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid blue;
   padding: 60px 24px;
   box-sizing: border-box;
 `;
