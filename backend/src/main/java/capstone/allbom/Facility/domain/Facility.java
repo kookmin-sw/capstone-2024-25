@@ -1,4 +1,4 @@
-package capstone.allbom.map.domain;
+package capstone.allbom.Facility.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
