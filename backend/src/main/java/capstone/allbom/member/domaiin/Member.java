@@ -33,7 +33,7 @@ public class Member {
 
     private String name;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     private gender gender;
