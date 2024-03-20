@@ -1,5 +1,6 @@
 package capstone.allbom.member.domaiin;
 
+import capstone.allbom.chatbot.domain.Chatbot;
 import capstone.allbom.medicine.domain.Medicine;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -50,17 +51,18 @@ public class Member {
 
     private String profileImageUrl;
 
+    @OneToMany (mappedBy = "medicine", cascade = CascadeType.ALL)
+    private List<Medicine> medicines = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chatbot_id")
+    private Chatbot chatbot;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id")
+    private Game game;
 
-
-
-
-
-
-
-
-
-
-
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "routine_id")
+    private Routine routine;
 }
