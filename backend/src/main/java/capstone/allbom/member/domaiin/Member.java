@@ -53,7 +53,7 @@ public class Member {
 
     private String profileImageUrl;
 
-    @OneToMany (mappedBy = "medicine", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<Medicine> medicines = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
