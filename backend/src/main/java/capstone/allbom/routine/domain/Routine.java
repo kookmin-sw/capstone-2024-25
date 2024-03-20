@@ -15,7 +15,8 @@ public class Routine {
     @Column(name = "routine_id")
     private Long id;
 
-    @OneToOne(mappedBy = "routine")
+    @OneToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     private String dailyExercise;
@@ -41,4 +42,9 @@ public class Routine {
     private Boolean dailyEatStatus;
 
     private Boolean dailyRestStatus;
+
+    public void setMember(Member member){
+        this.member = member;
+        member.setRoutine(this);
+    }
 }

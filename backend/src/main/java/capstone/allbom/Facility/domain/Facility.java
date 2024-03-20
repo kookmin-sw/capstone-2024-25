@@ -15,6 +15,7 @@ public class Facility {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private FacilityType type;
 
     private Double latitude;

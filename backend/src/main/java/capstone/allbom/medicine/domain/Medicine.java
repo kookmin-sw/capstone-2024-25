@@ -25,4 +25,10 @@ public class Medicine {
 
     @Convert(converter = StringListConverter.class)
     private List<String> medicineTime;
+
+     public void setMember(Member member) {
+         this.member = member;
+         member.getMedicines().add(this);
+     }
+
 }

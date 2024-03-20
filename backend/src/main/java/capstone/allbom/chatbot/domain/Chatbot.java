@@ -13,7 +13,8 @@ public class Chatbot {
     @Column(name = "chatbot_id")
     private Long id;
 
-    @OneToOne(mappedBy = "chatbot")
+    @OneToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     private String profileImageUrl;

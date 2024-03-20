@@ -15,7 +15,8 @@ public class Game {
     @Column(name = "game_id")
     private Long id;
 
-    @OneToOne(mappedBy = "game")
+    @OneToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     /**

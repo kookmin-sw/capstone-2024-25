@@ -13,7 +13,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -36,6 +35,7 @@ public class Member {
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
+    @Enumerated(EnumType.STRING)
     private gender gender;
 
     @Embedded
@@ -56,15 +56,7 @@ public class Member {
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<Medicine> medicines = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "chatbot_id")
-    private Chatbot chatbot;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
-    private Game game;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "routine_id")
+    @OneToOne(mappedBy = "member")
     private Routine routine;
+
 }

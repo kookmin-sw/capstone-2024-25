@@ -21,7 +21,8 @@ public class Answer {
     @JoinColumn(name = "chatbot_id")
     private Chatbot chatbot;
 
-    @OneToOne(mappedBy = "answer")
+    @OneToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 
     private String details;

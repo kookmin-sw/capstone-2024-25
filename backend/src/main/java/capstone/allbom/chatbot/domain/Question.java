@@ -22,12 +22,7 @@ public class Question {
     @JoinColumn(name = "twentyQuestions_id")
     private TwentyQuestions twentyQuestions;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "answer_id")
-    private Answer answer;
-
     private String details;
 
     private LocalDateTime createdAt;
-
 }
