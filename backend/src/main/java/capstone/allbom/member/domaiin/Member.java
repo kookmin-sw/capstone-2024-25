@@ -1,6 +1,7 @@
 package capstone.allbom.member.domaiin;
 
 import capstone.allbom.chatbot.domain.Chatbot;
+import capstone.allbom.game.domain.Game;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.routine.domain.Routine;
 import jakarta.persistence.*;
