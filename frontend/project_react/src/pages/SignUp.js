@@ -35,7 +35,9 @@ const SignUpTitle = styled.div`
 
 const StepWrapper = styled.div`
   display: flex;
+  flex: 1;
   width: 100%;
+  border: 1px solid red;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -100,6 +102,7 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider ref={sliderRef} {...settings}>
+          <StepMedicine value={medicineList} setValue={setMedicineList} />
           <StepId value={userId} setValue={setUserId} />
           <StepPassword
             value={password}
@@ -118,7 +121,6 @@ const SignUp = () => {
           />
           <StepNum value={phoneNum} setValue={setPhoneNum} />
           <StepNumEmergency value={emergencyNum} setValue={setEmergencyNum} />
-          <StepMedicine value={medicineList} setValue={setMedicineList} />
         </Slider>
       </StepWrapper>
       <SignUpFooter>

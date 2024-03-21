@@ -4,7 +4,7 @@ import 'react-day-picker/dist/style.css';
 import styled from 'styled-components';
 import Button from '../Button';
 import Toggle from '../Toggle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const customModalStyles = {
   overlay: {
@@ -51,14 +51,18 @@ const ModalContent = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 const MedicineItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 100%;
   border-bottom: 2px solid var(--unselected-color);
   padding-bottom: 20px;
+  overflow-x: hidden;
 `;
 const MedicineInfo = styled.div`
   display: flex;
@@ -74,6 +78,9 @@ const CycleWrapper = styled.div`
   display: flex;
   gap: 20px;
 `;
+const InputWrapper = styled.div`
+  overflow-x: hidden;
+`;
 const EditName = styled.input`
   align-self: flex-start;
   width: 160px;
@@ -86,6 +93,7 @@ const EditName = styled.input`
 const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingName, setEditingName] = useState('');
+
   const handleToggle = (index, cycleIndex) => {
     const updatedMedicines = [...value];
     updatedMedicines[index].cycle[cycleIndex] =
@@ -101,15 +109,29 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
     const updatedMedicines = [...value];
     if (editingName !== '') updatedMedicines[index].medicine = editingName;
     setValue(updatedMedicines);
-    setEditingIndex(null); // 편집 모드 종료
+    setEditingIndex(null);
   };
+
+  const modalContentWidth =
+    document.getElementById('modal-content')?.clientWidth;
+  useEffect(() => {
+    const inputWidth = editingName.trim().length * 20;
+    if (
+      document.getElementById('edit-name') &&
+      modalContentWidth - 50 >= inputWidth
+    ) {
+      document.getElementById('edit-name').style.width = `${inputWidth}px`;
+      console.log('inputWidth : ', inputWidth);
+      console.log('modalContentWidth : ', modalContentWidth);
+    }
+  }, [editingName]);
 
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={() => {
+        setEditingIndex(null);
         closeModal();
-        setEditingIndex(null); // 모달이 닫힐 때 편집 모드 종료
       }}
       style={customModalStyles}
       contentLabel="Example Modal"
@@ -117,16 +139,19 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
       <ModalHeader>
         <ModalTitle>추가한 약품</ModalTitle>
       </ModalHeader>
-      <ModalContent>
+      <ModalContent id="modal-content">
         {value.map((item, index) => (
           <MedicineItem key={index}>
             <MedicineInfo>
               {editingIndex === index ? (
-                <EditName
-                  type="text"
-                  value={editingName}
-                  onChange={handleNameChange}
-                />
+                <InputWrapper>
+                  <EditName
+                    id="edit-name"
+                    type="text"
+                    value={editingName}
+                    onChange={handleNameChange}
+                  />
+                </InputWrapper>
               ) : (
                 <MedicineName
                   onClick={() => {
@@ -137,7 +162,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
                   {item.medicine}
                 </MedicineName>
               )}
-              <CycleWrapper>
+              <CycleWrapper id="cycle-wrapper">
                 {['아침', '점심', '저녁'].map((part, cycleIndex) => (
                   <Toggle
                     key={cycleIndex}
@@ -168,6 +193,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
         ))}
       </ModalContent>
       <Button
+        id="close-btn"
         text="닫기"
         size="Large"
         height="Short"

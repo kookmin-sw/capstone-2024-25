@@ -17,8 +17,12 @@ const customModalStyles = {
     top: '0',
     left: '0',
   },
+  // top: '50%',
+  // left: '50%',
+  // transform: 'translate(-50%, -50%)',
+  // width: '80%',
   content: {
-    width: '360px',
+    width: '280px',
     height: '520px',
     zIndex: '150',
     position: 'absolute',
@@ -51,6 +55,21 @@ const XBtn = styled.img`
   right: 20px;
   top: 20px;
 `;
+const Gugu = styled.div`
+  overflow: hidden;
+  > div {
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  [id^='__daum__layer_'] {
+    width: fit-content !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+`;
 
 const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
   const [inputAddressValue, setInputAddressValue] = useState('');
@@ -67,6 +86,7 @@ const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
   }; // 스타일 정의 code
   const onCompletePost = (data) => {
     setModalState(false);
+    console.log('data : ', data);
     setInputAddressValue(data.address);
     setInputZipCodeValue(data.zonecode);
     setAddress(`(${data.zonecode}) ${data.address}`);
@@ -87,10 +107,12 @@ const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
           onClick={xClick}
         />
       </ModalHeader>
-      <DaumPostcode
-        style={postCodeStyle}
-        onComplete={onCompletePost}
-      ></DaumPostcode>
+      <Gugu>
+        <DaumPostcode
+          style={postCodeStyle}
+          onComplete={onCompletePost}
+        ></DaumPostcode>
+      </Gugu>
     </Modal>
   );
 };
