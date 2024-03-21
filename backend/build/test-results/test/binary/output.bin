@@ -1,0 +1,2 @@
+R19:48:43.862 [Test worker] INFO capstone.allbom.job.domain.Job -- deadline = D-15
+X19:48:43.865 [Test worker] INFO capstone.allbom.job.domain.Job -- updateDeadline = D-14

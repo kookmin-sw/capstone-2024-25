@@ -56,7 +56,7 @@ public class Member {
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<Medicine> medicines = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Routine routine;
 
 }
