@@ -1,11 +1,13 @@
 package capstone.allbom.Facility.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Entity
 @Getter @Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Facility {
 
     @Id
@@ -18,7 +20,12 @@ public class Facility {
     @Enumerated(EnumType.STRING)
     private FacilityType type;
 
+    private String address; // 전체 주소
+
+    private String phoneNumber;
+
     private Double latitude;
 
     private Double longitude;
+
 }

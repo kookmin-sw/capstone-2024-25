@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Job {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
     private Long id;
 
