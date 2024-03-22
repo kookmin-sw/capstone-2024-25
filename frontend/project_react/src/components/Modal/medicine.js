@@ -53,11 +53,13 @@ const ModalContent = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  border: 1px solid red;
 `;
 const MedicineItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 25%;
   width: 100%;
   max-width: 100%;
   border-bottom: 2px solid var(--unselected-color);
@@ -73,7 +75,6 @@ const MedicineName = styled.span`
   font-size: 20px;
 `;
 const DeleteBtn = styled.img``;
-const SaveBtn = styled.img``;
 const CycleWrapper = styled.div`
   display: flex;
   gap: 20px;
@@ -90,30 +91,59 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
-const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
+const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingName, setEditingName] = useState('');
+  const [newValue, setNewValue] = useState([]);
+  const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    if (showModal) {
+      setNewValue([...value]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (editingIndex !== null) {
+      setEditingName(newValue[editingIndex].medicine);
+    }
+  }, [editingIndex, value]);
 
   const handleToggle = (index, cycleIndex) => {
-    const updatedMedicines = [...value];
-    updatedMedicines[index].cycle[cycleIndex] =
-      !updatedMedicines[index].cycle[cycleIndex];
-    setValue(updatedMedicines);
+    setIsChanged(true);
+    const updatedValue = newValue.map((item, idx) => {
+      if (idx === index) {
+        const updatedCycle = [...item.cycle];
+        updatedCycle[cycleIndex] = !updatedCycle[cycleIndex];
+        return { ...item, cycle: updatedCycle };
+      }
+      return item;
+    });
+    setNewValue(updatedValue);
   };
 
   const handleNameChange = (event) => {
+    setIsChanged(true);
     setEditingName(event.target.value);
   };
 
-  const saveEdit = (index) => {
-    const updatedMedicines = [...value];
-    if (editingName !== '') updatedMedicines[index].medicine = editingName;
-    setValue(updatedMedicines);
+  const deleteItem = (index) => {
+    setIsChanged(true);
+    const updateValue = [...newValue];
+    updateValue.splice(index, 1);
+    setNewValue(updateValue);
+  };
+
+  const saveEdit = () => {
+    applyName();
+    setValue([...newValue]);
     setEditingIndex(null);
+    closeModal();
   };
 
   const modalContentWidth =
     document.getElementById('modal-content')?.clientWidth;
+
   useEffect(() => {
     const inputWidth = editingName.trim().length * 20;
     if (
@@ -121,10 +151,16 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
       modalContentWidth - 50 >= inputWidth
     ) {
       document.getElementById('edit-name').style.width = `${inputWidth}px`;
-      console.log('inputWidth : ', inputWidth);
-      console.log('modalContentWidth : ', modalContentWidth);
     }
   }, [editingName]);
+
+  const applyName = () => {
+    if (editingName) {
+      const updatedValue = [...newValue];
+      updatedValue[editingIndex].medicine = editingName;
+      setNewValue(updatedValue);
+    }
+  };
 
   return (
     <Modal
@@ -134,13 +170,12 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
         closeModal();
       }}
       style={customModalStyles}
-      contentLabel="Example Modal"
     >
       <ModalHeader>
         <ModalTitle>추가한 약품</ModalTitle>
       </ModalHeader>
       <ModalContent id="modal-content">
-        {value.map((item, index) => (
+        {newValue.map((item, index) => (
           <MedicineItem key={index}>
             <MedicineInfo>
               {editingIndex === index ? (
@@ -155,6 +190,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
               ) : (
                 <MedicineName
                   onClick={() => {
+                    applyName();
                     setEditingIndex(index);
                     setEditingName(item.medicine);
                   }}
@@ -165,40 +201,33 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue }) => {
               <CycleWrapper id="cycle-wrapper">
                 {['아침', '점심', '저녁'].map((part, cycleIndex) => (
                   <Toggle
-                    key={cycleIndex}
+                    key={`${index}-${cycleIndex}`}
                     text={part}
                     size="RectSmall"
-                    selected={item.cycle[cycleIndex]}
-                    onClick={() => handleToggle(index, cycleIndex)}
+                    selected={newValue[index].cycle[cycleIndex]}
+                    onClick={() => {
+                      setEditingIndex(index);
+                      handleToggle(index, cycleIndex);
+                    }}
                   />
                 ))}
               </CycleWrapper>
             </MedicineInfo>
-            {editingIndex === index ? (
-              <SaveBtn
-                src={process.env.PUBLIC_URL + '/images/save.svg'}
-                onClick={() => saveEdit(index)}
-              />
-            ) : (
-              <DeleteBtn
-                src={process.env.PUBLIC_URL + '/images/delete.svg'}
-                onClick={() => {
-                  const updatedMedicines = [...value];
-                  updatedMedicines.splice(index, 1);
-                  setValue(updatedMedicines);
-                }}
-              />
-            )}
+
+            <DeleteBtn
+              src={process.env.PUBLIC_URL + '/images/delete.svg'}
+              onClick={() => deleteItem(index)}
+            />
           </MedicineItem>
         ))}
       </ModalContent>
       <Button
         id="close-btn"
-        text="닫기"
+        text={isChanged ? '수정 완료' : '닫기'}
         size="Large"
         height="Short"
         type="Primary"
-        onClick={closeModal}
+        onClick={isChanged ? saveEdit : closeModal}
       />
     </Modal>
   );

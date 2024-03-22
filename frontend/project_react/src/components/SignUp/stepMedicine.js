@@ -1,5 +1,5 @@
 // stepMedicine.js
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import Toggle from '../Toggle';
@@ -38,7 +38,7 @@ const ButtonWrapper = styled.div`
   margin-top: 64px;
 `;
 
-const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
+const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
   const [medicine, setMedicine] = useState('');
   const [cycleMorning, setCycleMorning] = useState(false);
   const [cycleLunch, setCycleLunch] = useState(false);
@@ -63,6 +63,9 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
     setCycleLunch(false);
     setCycleDinner(false);
   };
+  useEffect(() => {
+    console.log('only value useEffect value : ', value);
+  }, [value]);
   const btnClick = () => {
     if (medicine.length === 0) return;
     const newMedicineInfo = {
@@ -105,12 +108,15 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
           />
         </CycleWrapper>
       </StepItem>
-      <MedicineModal
-        isOpen={showModal}
-        closeModal={() => setShowModal(false)}
-        value={value}
-        setValue={setValue}
-      />
+      {showModal === true ? (
+        <MedicineModal
+          isOpen={() => setShowModal(true)}
+          closeModal={() => setShowModal(false)}
+          value={value}
+          setValue={setValue}
+          showModal={showModal}
+        />
+      ) : null}
       <ButtonWrapper>
         {value.length === 0 || medicine.length !== 0 ? (
           <Button
@@ -133,4 +139,4 @@ const StepPassword = ({ value, setValue, secondValue, setSecondValue }) => {
     </StepWrapper>
   );
 };
-export default StepPassword;
+export default StepMedicine;

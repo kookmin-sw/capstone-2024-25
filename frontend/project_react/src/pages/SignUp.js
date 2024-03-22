@@ -37,7 +37,6 @@ const StepWrapper = styled.div`
   display: flex;
   flex: 1;
   width: 100%;
-  border: 1px solid red;
 `;
 const ButtonWrapper = styled.div`
   display: flex;

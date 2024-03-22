@@ -44,7 +44,7 @@ const ToggleStyled = styled.button`
 
 const Toggle = ({ text, size, selected, onClick }) => {
   return (
-    <ToggleStyled size={size} selected={selected} onClick={onClick}>
+    <ToggleStyled size={size} selected={selected} onClick={() => onClick()}>
       {text}
     </ToggleStyled>
   );
