@@ -18,7 +18,12 @@ public class Facility {
     @Enumerated(EnumType.STRING)
     private FacilityType type;
 
+    private String address; // 전체 주소
+
+    private String phoneNumber;
+
     private Double latitude;
 
     private Double longitude;
+
 }
