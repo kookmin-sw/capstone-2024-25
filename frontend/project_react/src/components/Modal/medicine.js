@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 import Toggle from '../Toggle';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const customModalStyles = {
   overlay: {
@@ -40,8 +41,15 @@ const ModalHeader = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const ModalTitle = styled.div`
   font-size: 24px;
+`;
+const XBtn = styled.img`
+  position: absolute;
+  width: 24px;
+  right: 20px;
+  top: 20px;
 `;
 const ModalContent = styled.div`
   width: 100%;
@@ -53,7 +61,6 @@ const ModalContent = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  border: 1px solid red;
 `;
 const MedicineItem = styled.div`
   display: flex;
@@ -101,13 +108,30 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     if (showModal) {
       setNewValue([...value]);
     }
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     if (editingIndex !== null) {
       setEditingName(newValue[editingIndex].medicine);
     }
   }, [editingIndex, value]);
+
+  const closeBtn = () => {
+    Swal.fire({
+      title: '창 닫기',
+      text: '변경 사항을 저장하시겠습니까 ?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        setEditingIndex(null);
+        saveEdit();
+      } else {
+        closeModal();
+      }
+    });
+  };
 
   const handleToggle = (index, cycleIndex) => {
     setIsChanged(true);
@@ -126,12 +150,43 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     setIsChanged(true);
     setEditingName(event.target.value);
   };
+  const deleteBtn = (index) => {
+    Swal.fire({
+      title: '약품 삭제',
+      text: `[${newValue[index].medicine}]를 삭제하시겠습니까 ?`,
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        deleteItem(index);
+      } else {
+        return;
+      }
+    });
+  };
 
   const deleteItem = (index) => {
     setIsChanged(true);
     const updateValue = [...newValue];
     updateValue.splice(index, 1);
     setNewValue(updateValue);
+  };
+
+  const saveBtn = () => {
+    Swal.fire({
+      title: '수정 완료',
+      text: `수정 사항을 저장하시겠습니까 ?`,
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        saveEdit();
+      } else {
+        return;
+      }
+    });
   };
 
   const saveEdit = () => {
@@ -166,13 +221,16 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={() => {
-        setEditingIndex(null);
-        closeModal();
+        closeBtn();
       }}
       style={customModalStyles}
     >
       <ModalHeader>
         <ModalTitle>추가한 약품</ModalTitle>
+        <XBtn
+          src={process.env.PUBLIC_URL + '/images/x-img.svg'}
+          onClick={() => closeBtn()}
+        />
       </ModalHeader>
       <ModalContent id="modal-content">
         {newValue.map((item, index) => (
@@ -213,10 +271,9 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
                 ))}
               </CycleWrapper>
             </MedicineInfo>
-
             <DeleteBtn
               src={process.env.PUBLIC_URL + '/images/delete.svg'}
-              onClick={() => deleteItem(index)}
+              onClick={() => deleteBtn(index)}
             />
           </MedicineItem>
         ))}
@@ -227,7 +284,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
         size="Large"
         height="Short"
         type="Primary"
-        onClick={isChanged ? saveEdit : closeModal}
+        onClick={isChanged ? saveBtn : closeModal}
       />
     </Modal>
   );
