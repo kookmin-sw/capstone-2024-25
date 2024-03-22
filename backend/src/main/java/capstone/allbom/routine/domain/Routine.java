@@ -47,4 +47,12 @@ public class Routine {
         this.member = member;
         member.setRoutine(this);
     }
+
+    public void setDailyStatus() {
+        this.dailyExerciseStatus = false;
+        this.dailyGrowthStatus = false;
+        this.dailyHobbyStatus = false;
+        this.dailyEatStatus = false;
+        this.dailyRestStatus = false;
+    }
 }
