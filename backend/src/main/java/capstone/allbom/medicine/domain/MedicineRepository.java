@@ -1,17 +1,17 @@
 package capstone.allbom.medicine.domain;
 
-import capstone.allbom.member.domaiin.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface MedicineRepository {
+public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
     Medicine save(Medicine medicine);
 
     Optional<Medicine> findById(Long medicineId);
 
-    Optional<Medicine> findByMemberId(Long memberId); // 일반 로그인 아이디로 찾기
+    List<Medicine> findByMemberId(Long memberId);
 
     boolean existsById(Long id);
 
