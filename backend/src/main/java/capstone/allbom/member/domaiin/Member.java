@@ -1,23 +1,19 @@
 package capstone.allbom.member.domaiin;
 
-import capstone.allbom.chatbot.domain.Chatbot;
-import capstone.allbom.game.domain.Game;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.routine.domain.Routine;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
