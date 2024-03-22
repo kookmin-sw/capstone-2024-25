@@ -10,7 +10,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Optional<Question> findById(Long questionId);
 
-    List<Question> findByMemberId(Long memberId);
+    List<Question> findByTwentyQuestionsId(Long twentyQuestionsId);
 
     boolean existsById(Long id);
 

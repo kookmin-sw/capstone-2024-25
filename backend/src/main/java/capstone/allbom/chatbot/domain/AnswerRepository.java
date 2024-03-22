@@ -10,7 +10,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     Optional<Answer> findById(Long answerId);
 
-    List<Answer> findByMemberId(Long memberId);
+    List<Answer> findByChatbotId(Long chatbotId);
 
     List<Answer> findByQuestionId(Long questionId);
 
