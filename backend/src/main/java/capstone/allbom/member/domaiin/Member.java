@@ -26,9 +26,9 @@ public class Member {
 
     private String kakaoEmail;
 
-    private String login_id;
+    private String loginId;
 
-    private String login_password;
+    private String loginPassword;
 
     private String name;
 
