@@ -13,7 +13,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
     boolean existsById(Long id);
 
-    List<Job> findByProvince(Province province); // 해당 도시의 모든 일자리 반환
+    List<Job> findByProvince(Province province); // 해당 도시의 모든 일자리 객체 반환
 
     List<Job> findAll();
 }
