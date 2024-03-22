@@ -31,17 +31,20 @@ class MemberRepositoryTest {
                 .build();
         memberRepository.save(member);
 
+        // then
         assertThat(member.getKakaoEmail()).isEqualTo(memberRepository.findBykakaoEmail("eunsun2080@naver.com").get().getKakaoEmail());
     }
 
     @Test
     void 일반로그인_아이디로_조회한다(){
+        // given
         Member member = Member.builder()
                 .name("userA")
                 .loginId("eunsun")
                 .build();
         memberRepository.save(member);
 
+        // then
         assertThat(member.getLoginId()).isEqualTo(memberRepository.findByloginId("eunsun").get().getLoginId());
     }
 
