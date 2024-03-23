@@ -54,11 +54,39 @@ public class RestTemplateRoutineRequester {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(routineData);
-//            log.info("jsonObject={}", jsonObject);
+            log.info("jsonObject={}", jsonObject);
 
             JSONObject exercises = (JSONObject)jsonObject.get("운동");
-            log.info("Exercises={}", exercises);
+            log.info("exercises={}", exercises);
             String exercise = selectRandomRoutine(exercises);
+
+            JSONObject rests = (JSONObject)jsonObject.get("휴식");
+            String rest = selectRandomRoutine(rests);
+
+            JSONObject growths = (JSONObject)jsonObject.get("성장");
+            String growth = selectRandomRoutine(growths);
+
+            JSONObject hobbies = (JSONObject)jsonObject.get("취미");
+            String hobby = selectRandomRoutine(hobbies);
+
+            JSONObject fruits = (JSONObject)jsonObject.get("과일");
+            String fruit = selectRandomRoutine(fruits);
+
+            JSONObject snacks = (JSONObject)jsonObject.get("간식");
+            String snack = selectRandomRoutine(snacks);
+
+            JSONObject eats = (JSONObject)jsonObject.get("식사");
+            log.info("eats={}", eats);
+            String eat = selectRandomRoutine(eats);
+
+            if (eat.equals("간식 먹기")) {
+                String replaceMent = snack + " 먹기";
+                eat = eat.replace("간식 먹기", replaceMent);
+            } else if (eat.equals("과일 먹기")) {
+                String replaceMent = fruit + " 먹기";
+                eat = eat.replace("과일 먹기", replaceMent);
+            }
+            log.info("newEat={}", eat);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -77,8 +105,4 @@ public class RestTemplateRoutineRequester {
 
         return randomKey;
     }
-
-
-
-
 }
