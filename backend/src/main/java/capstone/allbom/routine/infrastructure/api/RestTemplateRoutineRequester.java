@@ -1,8 +1,6 @@
 package capstone.allbom.routine.infrastructure.api;
 
 import capstone.allbom.common.service.S3FileService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -16,9 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -48,7 +45,8 @@ public class RestTemplateRoutineRequester {
         return routineData;
     }
 
-    public void getRoutineFields() {
+    public List<String> getRoutineFields() {
+        List<String> routines = new ArrayList<>();
         try {
             String routineData = requestRoutine();
 
@@ -56,41 +54,25 @@ public class RestTemplateRoutineRequester {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(routineData);
             log.info("jsonObject={}", jsonObject);
 
-            JSONObject exercises = (JSONObject)jsonObject.get("운동");
-            log.info("exercises={}", exercises);
-            String exercise = selectRandomRoutine(exercises);
+            List<String> categories = Arrays.asList("운동", "휴식", "성장", "취미", "과일", "간식", "식사");
+            routines = categories.stream()
+                    .map(category -> (JSONObject) jsonObject.get(category))
+                    .map(this::selectRandomRoutine)
+                    .collect(Collectors.toList());
 
-            JSONObject rests = (JSONObject)jsonObject.get("휴식");
-            String rest = selectRandomRoutine(rests);
-
-            JSONObject growths = (JSONObject)jsonObject.get("성장");
-            String growth = selectRandomRoutine(growths);
-
-            JSONObject hobbies = (JSONObject)jsonObject.get("취미");
-            String hobby = selectRandomRoutine(hobbies);
-
-            JSONObject fruits = (JSONObject)jsonObject.get("과일");
-            String fruit = selectRandomRoutine(fruits);
-
-            JSONObject snacks = (JSONObject)jsonObject.get("간식");
-            String snack = selectRandomRoutine(snacks);
-
-            JSONObject eats = (JSONObject)jsonObject.get("식사");
-            log.info("eats={}", eats);
-            String eat = selectRandomRoutine(eats);
-
-            if (eat.equals("간식 먹기")) {
-                String replaceMent = snack + " 먹기";
-                eat = eat.replace("간식 먹기", replaceMent);
-            } else if (eat.equals("과일 먹기")) {
-                String replaceMent = fruit + " 먹기";
-                eat = eat.replace("과일 먹기", replaceMent);
+            if (routines.get(6).equals("간식 먹기")) {
+                String replaceMent = routines.get(5) + " 먹기";
+                routines.set(6, replaceMent);
+            } else if (routines.get(6).equals("과일 먹기")) {
+                String replaceMent = routines.get(4) + " 먹기";
+                routines.set(6, replaceMent);
             }
-            log.info("newEat={}", eat);
+            log.info("newRoutines={}", routines);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return routines;
     }
 
     public String selectRandomRoutine(JSONObject jsonObject) {
