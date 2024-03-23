@@ -14,8 +14,14 @@ class RestTemplateRoutineRequesterTest {
 
     @Test
     public void 루틴_파일을_문자열로_변환한다() {
-        String routineData = restTemplateRoutineRequester.requestRoutine();
-        System.out.println("routineData = " + routineData);
+//        restTemplateRoutineRequester.requestRoutine();
+      String routineData = restTemplateRoutineRequester.requestRoutine();
+    }
+
+    @Test
+    public void JSON_필드를_추출한다() {
+//        restTemplateRoutineRequester.getRoutineFields();
+        restTemplateRoutineRequester.getRoutineFields2();
     }
 
 }
