@@ -49,34 +49,16 @@ public class RestTemplateRoutineRequester {
     }
 
     public void getRoutineFields() {
-        String routineData = requestRoutine();
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-            String jsonStr = objectMapper.writeValueAsString(routineData);
-            JsonNode jsonNode = objectMapper.readTree(jsonStr);
-            JsonNode jsonNode1 = jsonNode.get("운동");
-
-            System.out.println("jsonNode = " + jsonNode);
-            System.out.println("jsonNode1 = " + jsonNode1);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getRoutineFields2() {
         try {
             String routineData = requestRoutine();
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(routineData);
-            log.info("jsonObject={}", jsonObject);
+//            log.info("jsonObject={}", jsonObject);
 
             JSONObject exercises = (JSONObject)jsonObject.get("운동");
             log.info("Exercises={}", exercises);
             String exercise = selectRandomRoutine(exercises);
-            log.info("Exercise={}", exercise);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -89,10 +71,9 @@ public class RestTemplateRoutineRequester {
 
         Random random = new Random();
         int randomIndex = random.nextInt(keysList.size());
-        System.out.println("randomIndex = " + randomIndex);
 
         String randomKey = keysList.get(randomIndex);
-        System.out.println("randomKey = " + randomKey);
+        log.info("randomKey={}", randomKey);
 
         return randomKey;
     }
