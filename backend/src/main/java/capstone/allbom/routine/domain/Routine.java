@@ -2,12 +2,13 @@ package capstone.allbom.routine.domain;
 
 import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Entity
 @Getter @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Routine {
 
     @Id
