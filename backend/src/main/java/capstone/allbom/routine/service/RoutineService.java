@@ -34,6 +34,7 @@ public class RoutineService {
             routineToUpdate.setDailySnack(routines.get(5));
             routineToUpdate.setDailyEat(routines.get(6));
 
+            routineToUpdate.setDailyStatus();
         }
     }
 }

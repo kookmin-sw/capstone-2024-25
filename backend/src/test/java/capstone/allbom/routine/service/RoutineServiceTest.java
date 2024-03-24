@@ -25,7 +25,7 @@ class RoutineServiceTest {
     @Autowired RoutineRepository routineRepository;
 
     @Test
-    public void 루틴_필드를_매일_업데이트한다() throws Exception{
+    public void 모든_루틴_필드를_매일_업데이트한다() throws Exception{
         // given
         Routine routine1 = Routine.builder()
                 .dailyExercise("맨몸 운동")
@@ -51,6 +51,11 @@ class RoutineServiceTest {
 
         // when
         routineService.dailyRoutineUpdate();
+        boolean condition1 = routine1.getDailyEatStatus() && routine1.getDailyGrowthStatus() &&
+                routine1.getDailyExerciseStatus() && routine1.getDailyHobbyStatus() && routine1.getDailyRestStatus();
+
+        boolean condition2 = routine2.getDailyEatStatus() && routine2.getDailyGrowthStatus() &&
+                routine2.getDailyExerciseStatus() && routine2.getDailyHobbyStatus() && routine2.getDailyRestStatus();
 
         // then
         List<Routine> all = routineRepository.findAll();
@@ -68,6 +73,9 @@ class RoutineServiceTest {
         assertThat(routine1.getDailyRest()).isEqualTo(routine2.getDailyRest());
         assertThat(routine1.getDailyGrowth()).isEqualTo(routine2.getDailyGrowth());
         assertThat(routine1.getDailyEat()).isEqualTo(routine2.getDailyEat());
+
+        assertFalse(condition1);
+        assertFalse(condition2);
     }
 
 }
