@@ -20,7 +20,7 @@ class RestTemplateRoutineRequesterTest {
 
     @Test
     public void JSON_필드를_랜덤으로_추출한다() {
-        restTemplateRoutineRequester.getRoutineFields();
+        restTemplateRoutineRequester.getRandomRoutineFields();
     }
 
 }

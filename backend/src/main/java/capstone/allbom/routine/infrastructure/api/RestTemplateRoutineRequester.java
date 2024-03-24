@@ -45,7 +45,7 @@ public class RestTemplateRoutineRequester {
         return routineData;
     }
 
-    public List<String> getRoutineFields() {
+    public List<String> getRandomRoutineFields() {
         List<String> routines = new ArrayList<>();
         try {
             String routineData = requestRoutine();
