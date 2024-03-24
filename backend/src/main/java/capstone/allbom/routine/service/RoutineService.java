@@ -4,6 +4,8 @@ import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +14,16 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@EnableScheduling
 public class RoutineService {
 
     private final RoutineRepository routineRepository;
     private final RestTemplateRoutineRequester restTemplateRoutineRequester;
 
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
+//    @Scheduled(cron = "0 13 11 * * ?")
     public void dailyRoutineUpdate() {
+        System.out.println("실행!!!!!!!!!!!!!!!!!!!!!");
         List<Routine> all = routineRepository.findAll();
         List<String> routines = restTemplateRoutineRequester.getRandomRoutineFields();
 
