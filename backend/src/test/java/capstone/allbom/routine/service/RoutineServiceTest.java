@@ -50,7 +50,7 @@ class RoutineServiceTest {
         routineRepository.save(routine2);
 
         // when
-        routineService.dailyRoutineUpdate();
+        routineService.dailyRoutineAutoUpdate();
         boolean condition1 = routine1.getDailyEatStatus() && routine1.getDailyGrowthStatus() &&
                 routine1.getDailyExerciseStatus() && routine1.getDailyHobbyStatus() && routine1.getDailyRestStatus();
 
