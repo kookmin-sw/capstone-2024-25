@@ -20,7 +20,10 @@ public class MedicineService {
     @Transactional
     public Long saveMedicine(Long memberId, MedicineRequest medicineRequest) {
         Member member = memberRepository.findById(memberId).get();
-
+        /**
+         * TODO
+         * memberRepository로 찾지 못할 때 예외 처리 추가
+         */
         Medicine medicine = medicineRequest.toDomain();
         medicine.setMember(member);
         return medicineRepository.save(medicine).getId();
@@ -29,6 +32,13 @@ public class MedicineService {
 
     @Transactional
     public void updateMedicine(Long medicineId, MedicineRequest medicineRequest){
+        Medicine medicines = medicineRepository.findById(medicineId).get();
+
+
+    }
+
+    @Transactional
+    public void deleteMedicine(Long medicineId) {
 
     }
 }

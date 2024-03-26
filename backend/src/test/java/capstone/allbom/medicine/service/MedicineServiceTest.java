@@ -35,15 +35,15 @@ class MedicineServiceTest {
 
     @Nested
     class createMedicine {
-        MedicineRequest medicineRequest = MedicineRequest.builder()
-                .medicineName("지르텍")
-                .medicineTime(Arrays.asList("아침", "점심"))
-                .build();
+//        MedicineRequest medicineRequest = MedicineRequest.builder()
+//                .medicineName("지르텍")
+//                .medicineTime(Arrays.asList("아침", "점심"))
+//                .build();
 
-//        MedicineRequest medicineRequest = new MedicineRequest(
-//                "지르텍지르텍지르텍지르텍지르텍지르텍지르텍",
-//                Arrays.asList("아침", "점심")
-//        );
+        MedicineRequest medicineRequest = new MedicineRequest(
+                "지르텍",
+                Arrays.asList("아침", "점심")
+        );
 
 
         @Test
