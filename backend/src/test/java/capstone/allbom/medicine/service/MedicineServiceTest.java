@@ -1,5 +1,6 @@
 package capstone.allbom.medicine.service;
 
+import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
@@ -83,6 +84,25 @@ class MedicineServiceTest {
             Member member = memberRepository.save( new Member());
             medicine.setMember(member);
             medicineRepository.save(medicine);
+        }
+
+        @Test
+        void 수정할_약이_기존의_약과_동일하면_수정되지_않는다() {
+            // given
+            Long medicineId = medicine.getId();
+            var medicineRequest = new MedicineRequest(
+                    "지르텍",
+                    Arrays.asList("아침", "점심")
+            );
+
+            // when
+            BadRequestException e = assertThrows(BadRequestException.class, () -> medicineService.updateMedicine(medicineId, medicineRequest));
+
+            // then
+            Medicine updatedMedicine = medicineRepository.findById(medicineId).orElseThrow();
+            assertThat(e.getMessage()).isEqualTo("중복된 약입니다.");
+            assertThat(updatedMedicine.getMedicineName()).isEqualTo(medicine.getMedicineName());
+            assertThat(updatedMedicine.getMedicineTime()).isEqualTo(medicine.getMedicineTime());
         }
 
         @Test
