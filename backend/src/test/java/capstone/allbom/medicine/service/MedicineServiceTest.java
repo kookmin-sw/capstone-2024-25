@@ -1,6 +1,7 @@
 package capstone.allbom.medicine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.ErrorCode;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,7 +77,7 @@ class MedicineServiceTest {
 
         @BeforeEach
         void setUp() {
-            medicine = new Medicine(
+            medicine = new Medicine( // 1L
                    null,
                    null,
                     "지르텍",
@@ -96,7 +98,12 @@ class MedicineServiceTest {
             );
 
             // when
-            BadRequestException e = assertThrows(BadRequestException.class, () -> medicineService.updateMedicine(medicineId, medicineRequest));
+            BadRequestException e = assertThrows(BadRequestException.class, ()
+                    -> medicineService.updateMedicine(medicineId, medicineRequest));
+
+//            assertThatThrownBy(() -> medicineService.updateMedicine(medicineId, medicineRequest))
+//                    .isInstanceOf(BadRequestException.class)
+//                    .hasMessage(ErrorCode.DUPLICATED_MEDICINE.getMessage());
 
             // then
             Medicine updatedMedicine = medicineRepository.findById(medicineId).orElseThrow();
@@ -119,6 +126,36 @@ class MedicineServiceTest {
                 softly.assertThat(updatedMedicine.getMedicineName()).isEqualTo("타이레놀");
                 softly.assertThat(updatedMedicine.getMedicineTime()).isEqualTo(Arrays.asList("아침", "저녁"));
             });
+        }
+
+        @Nested
+        class deleteMedicine {
+            Medicine medicine;
+
+            @BeforeEach
+            void setUp() {
+                medicine = new Medicine( // 2L
+                        null,
+                        null,
+                        "지르텍",
+                        Arrays.asList("아침", "점심")
+                );
+                Member member = memberRepository.save( new Member());
+                medicine.setMember(member);
+                medicineRepository.save(medicine);
+            }
+
+            @Test
+            void 예외가_발생하지_않으면_약이_삭제된다() {
+                // given
+                Long medicineId = medicine.getId();
+
+                // when
+                medicineService.deleteMedicine(medicineId);
+
+                // then
+                assertThat(medicineRepository.findById(medicineId)).isEmpty();
+            }
         }
     }
 

@@ -16,4 +16,6 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
     boolean existsById(Long id);
 
     List<Medicine> findAll();
+
+    void deleteById(Long medicineId);
 }

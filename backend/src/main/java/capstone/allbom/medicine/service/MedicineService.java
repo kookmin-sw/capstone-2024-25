@@ -48,6 +48,8 @@ public class MedicineService {
 
     @Transactional
     public void deleteMedicine(Long medicineId) {
-
+        medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEDICINE_ID));
+        medicineRepository.deleteById(medicineId);
     }
 }
