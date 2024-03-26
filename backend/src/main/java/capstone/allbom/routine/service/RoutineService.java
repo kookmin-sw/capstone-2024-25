@@ -23,14 +23,13 @@ public class RoutineService {
     private final RestTemplateRoutineRequester restTemplateRoutineRequester;
 
     @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
-//    @Scheduled(cron = "0 15 11 * * ?")
-    public void dailyRoutineUpdate() {
+//    @Scheduled(cron = "0 32 11 * * ?")
+    public void dailyRoutineAutoUpdate() {
         log.info("매일 자동으로 루틴이 업데이트된다.");
         List<Routine> all = routineRepository.findAll();
         List<String> routines = restTemplateRoutineRequester.getRandomRoutineFields();
 
         for (int i = 0; i < all.size(); i++) {
-            String routine = routines.get(i);
             Routine routineToUpdate = all.get(i);
 
             // "운동", "휴식", "성장", "취미", "과일", "간식", "식사"

@@ -3,14 +3,16 @@ package capstone.allbom.medicine.domain;
 import capstone.allbom.common.StringListConverter;
 import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
 @Getter @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class Medicine {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +32,11 @@ public class Medicine {
          this.member = member;
          member.getMedicines().add(this);
      }
+
+//     public static Medicine createMedicine(Member member) {
+//         Medicine medicine = new Medicine();
+//         medicine.setMember(member);
+//         return medicine;
+//     }
 
 }

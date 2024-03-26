@@ -44,10 +44,10 @@ public class Routine {
 
     private Boolean dailyRestStatus;
 
-    public void setMember(Member member){
-        this.member = member;
-        member.setRoutine(this);
-    }
+//    public void setMember(Member member){
+//        this.member = member;
+//        member.setRoutine(this);
+//    }
 
     public void setDailyStatus() {
         this.dailyExerciseStatus = false;
