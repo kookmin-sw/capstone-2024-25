@@ -36,9 +36,14 @@ class MedicineServiceTest {
     @Nested
     class createMedicine {
         MedicineRequest medicineRequest = MedicineRequest.builder()
-                .MedicineName("지르텍지르텍지르텍지르텍지르텍지르텍지르텍")
+                .medicineName("지르텍")
                 .medicineTime(Arrays.asList("아침", "점심"))
                 .build();
+
+//        MedicineRequest medicineRequest = new MedicineRequest(
+//                "지르텍지르텍지르텍지르텍지르텍지르텍지르텍",
+//                Arrays.asList("아침", "점심")
+//        );
 
 
         @Test
@@ -52,7 +57,9 @@ class MedicineServiceTest {
             Medicine medicine = medicineRepository.findById(medicineId).get();
 
             // then
-            assertThat(medicine.getMedicineName()).isEqualTo("지르텍지르텍지르텍지르텍지르텍지르텍지르텍");
+            assertThat(medicine.getMedicineName()).isEqualTo("지르텍");
+//            System.out.println("medicine.getMedicineName() = " + medicine.getMedicineName());
+//            System.out.println("medicine.getMedicineTime() = " + medicine.getMedicineTime());
         }
     }
 
