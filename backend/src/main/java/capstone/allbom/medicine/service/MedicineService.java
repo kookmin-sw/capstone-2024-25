@@ -1,5 +1,7 @@
 package capstone.allbom.medicine.service;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.ErrorCode;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MedicineService {
 
@@ -19,7 +21,8 @@ public class MedicineService {
 
     @Transactional
     public Long saveMedicine(Long memberId, MedicineRequest medicineRequest) {
-        Member member = memberRepository.findById(memberId).get();
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_ID));
 
         Medicine medicine = medicineRequest.toDomain();
         medicine.setMember(member);
@@ -29,6 +32,24 @@ public class MedicineService {
 
     @Transactional
     public void updateMedicine(Long medicineId, MedicineRequest medicineRequest){
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEDICINE_ID));
 
+        validateMedicineDuplicate(medicine, medicineRequest);
+        medicine.setMedicineName(medicineRequest.medicineName());
+        medicine.setMedicineTime(medicineRequest.medicineTime());
+    }
+
+    private void validateMedicineDuplicate(Medicine medicine, MedicineRequest medicineRequest) {
+        if (medicine.isSameNameAndTime(medicineRequest.medicineName(), medicineRequest.medicineTime())) {
+            throw new BadRequestException(ErrorCode.DUPLICATED_MEDICINE);
+        }
+    }
+
+    @Transactional
+    public void deleteMedicine(Long medicineId) {
+        medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEDICINE_ID));
+        medicineRepository.deleteById(medicineId);
     }
 }

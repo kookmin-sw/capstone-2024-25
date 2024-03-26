@@ -33,6 +33,10 @@ public class Medicine {
          member.getMedicines().add(this);
      }
 
+     public boolean isSameNameAndTime(final String medicinName, final List<String> medicineTime) {
+         return this.medicineName.equals(medicinName) && this.medicineTime.equals(medicineTime);
+     }
+
 //     public static Medicine createMedicine(Member member) {
 //         Medicine medicine = new Medicine();
 //         medicine.setMember(member);

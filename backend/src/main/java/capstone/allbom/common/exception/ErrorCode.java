@@ -4,6 +4,9 @@ public enum ErrorCode {
     // 400
     INVALID_REQUEST_ARGUMENT("잘못된 요청입니다."),
     VALIDATION_FAIL("검증이 실패하였습니다."),
+    NOT_FOUND_MEMBER_ID("요청한 ID에 해당하는 멤버가 존재하지 않습니다."),
+    NOT_FOUND_MEDICINE_ID("요청한 ID에 해당하는 약이 존재하지 않습니다."),
+    DUPLICATED_MEDICINE("중복된 약입니다."),
 
     // 401
     EXPIRED_AUTH_TOKEN("만료된 로그인 토큰입니다."),
