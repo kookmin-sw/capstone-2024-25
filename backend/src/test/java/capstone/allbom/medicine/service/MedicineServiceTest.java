@@ -7,6 +7,7 @@ import capstone.allbom.member.domaiin.Member;
 import capstone.allbom.member.domaiin.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,44 @@ class MedicineServiceTest {
             assertThat(medicine.getMedicineName()).isEqualTo("지르텍");
 //            System.out.println("medicine.getMedicineName() = " + medicine.getMedicineName());
 //            System.out.println("medicine.getMedicineTime() = " + medicine.getMedicineTime());
+        }
+    }
+
+    @Nested
+    class updateMedicine {
+        Medicine medicine;
+        MedicineRequest medicineRequest = new MedicineRequest(
+                "타이레놀",
+                Arrays.asList("아침", "저녁")
+        );
+
+        @BeforeEach
+        void setUp() {
+            medicine = new Medicine(
+                   null,
+                   null,
+                    "지르텍",
+                    Arrays.asList("아침", "점심")
+            );
+            Member member = memberRepository.save( new Member());
+            medicine.setMember(member);
+            medicineRepository.save(medicine);
+        }
+
+        @Test
+        void 예외가_발생하지_않으면_약이_수정된다() {
+            // given
+            Long medicineId = medicine.getId();
+
+            // when
+            medicineService.updateMedicine(medicineId, medicineRequest);
+
+            // then
+            Medicine updatedMedicine = medicineRepository.findById(medicineId).orElseThrow();
+            assertSoftly(softly -> {
+                softly.assertThat(updatedMedicine.getMedicineName()).isEqualTo("타이레놀");
+                softly.assertThat(updatedMedicine.getMedicineTime()).isEqualTo(Arrays.asList("아침", "저녁"));
+            });
         }
     }
 

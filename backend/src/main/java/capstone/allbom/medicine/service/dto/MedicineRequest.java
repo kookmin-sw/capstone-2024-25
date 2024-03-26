@@ -4,6 +4,7 @@ import capstone.allbom.common.util.Validator;
 import capstone.allbom.medicine.domain.Medicine;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Range;
 
 import java.util.List;
