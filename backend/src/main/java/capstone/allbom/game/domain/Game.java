@@ -19,10 +19,25 @@ public class Game {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    /**
-     * TODO
-     * 문장 순서 맞추기 카테고리 정해지면 각 카테고리별로 연관관계 추가 매핑 필요
-     */
+    @OneToOne
+    @JoinColumn(name = "literature_id")
+    private Literature literature;
+
+    @OneToOne
+    @JoinColumn(name = "science_id")
+    private Science science;
+
+    @OneToOne
+    @JoinColumn(name = "society_id")
+    private Society society;
+
+    @OneToOne
+    @JoinColumn(name = "legislation_id")
+    private Legislation legislation;
+
+    @OneToOne
+    @JoinColumn(name = "history_id")
+    private History history;
 
     private String dailySentence;
 }
