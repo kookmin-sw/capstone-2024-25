@@ -83,7 +83,7 @@ class MedicineServiceTest {
                     "지르텍",
                     Arrays.asList("아침", "점심")
             );
-            Member member = memberRepository.save( new Member());
+            Member member = memberRepository.save(new Member());
             medicine.setMember(member);
             medicineRepository.save(medicine);
         }
@@ -140,7 +140,7 @@ class MedicineServiceTest {
                         "지르텍",
                         Arrays.asList("아침", "점심")
                 );
-                Member member = memberRepository.save( new Member());
+                Member member = memberRepository.save(new Member());
                 medicine.setMember(member);
                 medicineRepository.save(medicine);
             }

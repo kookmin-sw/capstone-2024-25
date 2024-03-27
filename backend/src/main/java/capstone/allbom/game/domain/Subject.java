@@ -8,11 +8,13 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
