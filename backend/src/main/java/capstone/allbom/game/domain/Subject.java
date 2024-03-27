@@ -1,6 +1,7 @@
 package capstone.allbom.game.domain;
 
 import capstone.allbom.Facility.domain.FacilityType;
+import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,10 @@ public class Subject {
 
     Integer currProblem;
 
-    private List<Integer> passedProblems = new ArrayList<>();
+    private List<Integer> passedProblems = new ArrayList<>(); // 건너뛴 문제 기록
+
+    public void setGame(Game game) {
+        this.game = game;
+        game.getSubjects().add(this);
+    }
 }
