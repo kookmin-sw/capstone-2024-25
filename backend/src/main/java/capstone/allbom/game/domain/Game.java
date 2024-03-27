@@ -2,12 +2,17 @@ package capstone.allbom.game.domain;
 
 import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Game {
 
     @Id
@@ -19,10 +24,8 @@ public class Game {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    /**
-     * TODO
-     * 문장 순서 맞추기 카테고리 정해지면 각 카테고리별로 연관관계 추가 매핑 필요
-     */
+    @OneToMany (mappedBy = "game", cascade = CascadeType.ALL)
+    private List<Subject> subjects = new ArrayList<>();
 
     private String dailySentence;
 }
