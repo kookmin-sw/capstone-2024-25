@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,6 +75,7 @@ class SubjectRepositoryTest {
         Assertions.assertThat(society.getId()).isEqualTo(societyFind.getId());
         Assertions.assertThat(science2.getId()).isEqualTo(scienceFind2.getId());
         Assertions.assertThat(society2.getId()).isEqualTo(societyFind2.getId());
+
     }
 
 }
