@@ -2,12 +2,15 @@ package capstone.allbom.game.domain;
 
 import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Game {
 
     @Id
@@ -19,25 +22,8 @@ public class Game {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne
-    @JoinColumn(name = "literature_id")
-    private Literature literature;
-
-    @OneToOne
-    @JoinColumn(name = "science_id")
-    private Science science;
-
-    @OneToOne
-    @JoinColumn(name = "society_id")
-    private Society society;
-
-    @OneToOne
-    @JoinColumn(name = "legislation_id")
-    private Legislation legislation;
-
-    @OneToOne
-    @JoinColumn(name = "history_id")
-    private History history;
+    @OneToMany (mappedBy = "game", cascade = CascadeType.ALL)
+    private List<Subject> subjects = new ArrayList<>();
 
     private String dailySentence;
 }
