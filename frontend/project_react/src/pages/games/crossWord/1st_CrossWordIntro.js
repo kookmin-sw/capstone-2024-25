@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import GamePageHeader from "../../../components/Header/GamePageHeader";
 
-export default function IntroCrossWord() {
+export default function CrossWordIntro() {
     const navigate = useNavigate();
 
     return (

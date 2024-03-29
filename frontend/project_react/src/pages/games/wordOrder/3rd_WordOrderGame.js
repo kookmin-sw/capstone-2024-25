@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
 import axios from 'axios';
-import { is } from 'date-fns/locale';
 
-export default function IntroWordOrder() {
-  // const navigate = useNavigate();
+export default function WordOrderGame() {
+  const navigate = useNavigate();
+  const { category } = useParams()
+
+
   const [sentenceData, setSentenceData] = useState(null);
   const [wordList, setWordList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,8 +19,10 @@ export default function IntroWordOrder() {
   }, []);
 
   useEffect(() => {
-    console.log('userSelection:', userSelection);
-    isCorrectAnswer();
+    if (userSelection.length > 0) { // 초기 userSelection이 빈 배열이 아닐 때만 실행
+      console.log('userSelection:', userSelection);
+      isCorrectAnswer();
+    }
   }, [userSelection]);
 
   function getSentence() {
@@ -27,15 +31,15 @@ export default function IntroWordOrder() {
       .get(process.env.PUBLIC_URL + '/wordOrderDummy.json')
       .then((response) => {
         const data = response.data;
-        const category = data['문학'];
-        const keys = Object.keys(category);
+        const selectedCategory = data[category];
+        const keys = Object.keys(selectedCategory);
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const randomSentence = category[randomKey];
+        const randomSentence = selectedCategory[randomKey];
         let wordArr = randomSentence.split(' ');
         shuffle(wordArr);
         setSentenceData(randomSentence);
         setWordList(wordArr);
-        // setinvisibleButtonList(new Array(wordArr.length).fill(false));
+        console.log('sentenceData:', randomSentence);
       })
       .catch((err) => {
         console.log(err);
@@ -68,6 +72,11 @@ export default function IntroWordOrder() {
             startNewGame();
           }, 200);
           alert('정답입니다!');
+        }, 200);
+      } else {
+        setTimeout(() => {
+          alert('틀렸습니다. 다시 시도해보세요.');
+          setUserSelection([]);
         }, 200);
       }
     }

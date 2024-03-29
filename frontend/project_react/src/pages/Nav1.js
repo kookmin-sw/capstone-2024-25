@@ -11,9 +11,9 @@ export default function Nav1() {
             <GamePageHeader title={'두뇌 향상 게임'} showDivider={true}></GamePageHeader>
             <div>전구</div>
             <GameINfo>치매예방 게임을 하시면 두뇌 향상에 많이 도움이 됩니다 믿으시고 하루에 10개씩 하십시오</GameINfo>
-            <GameButton onClick={() => navigate('/game/wordOrder')}>문장 순서 맞추기</GameButton>
-            <GameButton onClick={() => navigate('/game/crossWord')}>십자말풀이</GameButton>
-            <GameButton onClick={() => navigate('/game/twentyHeads')}>스무고개</GameButton>
+            <GameButton onClick={() => navigate('wordOrderSelection')}>문장 순서 맞추기</GameButton>
+            <GameButton onClick={() => navigate('crossWordIntro')}>십자말풀이</GameButton>
+            <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
         </Frame>
     );
 }
