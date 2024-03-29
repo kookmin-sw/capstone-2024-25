@@ -5,6 +5,7 @@ import Input from '../Input';
 import Toggle from '../Toggle';
 import Button from '../Button';
 import MedicineModal from '../Modal/medicine';
+import Swal from 'sweetalert2';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -65,6 +66,15 @@ const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
   };
   const btnClick = () => {
     if (medicine.length === 0) return;
+    else if (medicine.length < 3 || medicine.length > 20) {
+      Swal.fire({
+        title: '약품 이름',
+        text: '약품 이름은 3자 이상 20자 이하로 입력해주세요.',
+        type: 'warning',
+        confirmButtonText: '확인',
+      });
+      return;
+    }
     const newMedicineInfo = {
       medicine: medicine,
       cycle: [cycleMorning, cycleLunch, cycleDinner],
