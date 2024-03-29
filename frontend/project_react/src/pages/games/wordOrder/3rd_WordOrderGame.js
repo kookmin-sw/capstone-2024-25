@@ -16,8 +16,10 @@ export default function WordOrderGame() {
   }, []);
 
   useEffect(() => {
-    console.log('userSelection:', userSelection);
-    isCorrectAnswer();
+    if (userSelection.length > 0) { // 초기 userSelection이 빈 배열이 아닐 때만 실행
+      console.log('userSelection:', userSelection);
+      isCorrectAnswer();
+    }
   }, [userSelection]);
 
   function getSentence() {
@@ -67,6 +69,11 @@ export default function WordOrderGame() {
             startNewGame();
           }, 200);
           alert('정답입니다!');
+        }, 200);
+      } else {
+        setTimeout(() => {
+          alert('틀렸습니다. 다시 시도해보세요.');
+          setUserSelection([]);
         }, 200);
       }
     }
