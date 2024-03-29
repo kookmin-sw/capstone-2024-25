@@ -13,7 +13,8 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,10 +50,11 @@ public class Member {
 
     private String profileImageUrl;
 
+    @Builder.Default
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<Medicine> medicines = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private Routine routine;
+//    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+//    private Routine routine;
 
 }

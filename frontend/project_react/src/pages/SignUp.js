@@ -35,6 +35,7 @@ const SignUpTitle = styled.div`
 
 const StepWrapper = styled.div`
   display: flex;
+  flex: 1;
   width: 100%;
 `;
 const ButtonWrapper = styled.div`
@@ -91,7 +92,6 @@ const SignUp = () => {
     arrows: false,
     draggable: false,
     swipe: false, // 모바일 스와이프 비활성화
-
     speed: 200, // 넘어가는 시간
   };
 
@@ -99,7 +99,7 @@ const SignUp = () => {
     <SignUpWrapper>
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
-        <Slider ref={sliderRef} {...settings}>
+        <Slider id="slider" ref={sliderRef} {...settings}>
           <StepId value={userId} setValue={setUserId} />
           <StepPassword
             value={password}

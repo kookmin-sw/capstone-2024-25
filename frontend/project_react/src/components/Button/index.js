@@ -27,7 +27,7 @@ const types = {
   `,
   Back: css`
     background-color: #ffffff;
-    border: 2px solid #000000;
+    border: 3px solid #000000;
     color: black;
   `,
 };

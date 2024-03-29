@@ -1,10 +1,6 @@
 import Modal from 'react-modal';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
 import styled from 'styled-components';
-import Button from '../Button';
 import { useState } from 'react';
-import { ko } from 'date-fns/locale';
 import DaumPostcode from 'react-daum-postcode';
 
 const customModalStyles = {
@@ -18,7 +14,7 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '360px',
+    width: '280px',
     height: '520px',
     zIndex: '150',
     position: 'absolute',
@@ -50,6 +46,21 @@ const XBtn = styled.img`
   width: 24px;
   right: 20px;
   top: 20px;
+`;
+const Gugu = styled.div`
+  overflow: hidden;
+  > div {
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  [id^='__daum__layer_'] {
+    width: fit-content !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
 `;
 
 const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
@@ -87,10 +98,12 @@ const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
           onClick={xClick}
         />
       </ModalHeader>
-      <DaumPostcode
-        style={postCodeStyle}
-        onComplete={onCompletePost}
-      ></DaumPostcode>
+      <Gugu>
+        <DaumPostcode
+          style={postCodeStyle}
+          onComplete={onCompletePost}
+        ></DaumPostcode>
+      </Gugu>
     </Modal>
   );
 };
