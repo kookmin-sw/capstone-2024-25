@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_flutter/layout_nav1.dart';
-import 'package:project_flutter/layout_nav2.dart';
-import 'package:project_flutter/layout_nav3.dart';
-import 'package:project_flutter/layout_nav4.dart';
-import 'package:project_flutter/layout_nav5.dart';
+import 'package:project_flutter/screen/layout_nav1.dart';
+import 'package:project_flutter/screen/layout_nav2.dart';
+import 'package:project_flutter/screen/layout_nav3.dart';
+import 'package:project_flutter/screen/layout_nav4.dart';
+import 'package:project_flutter/screen/layout_nav5.dart';
 
 class AllBome extends StatefulWidget {
   const AllBome({super.key});
@@ -26,6 +26,7 @@ class _AllBomeState extends State<AllBome> {
                 currentPageIndex = index;
               });
             },
+            height: 60.0,
             // elevation: 0.5,
             // shadowColor: Colors.black,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
