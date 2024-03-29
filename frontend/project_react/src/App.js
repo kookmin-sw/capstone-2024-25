@@ -25,8 +25,8 @@ function App() {
           {/* 게임 페이지 */}
           <Route path="/game" element={<Nav1 />} />
           <Route path="/game/wordOrderSelection" element={<WordOrderSelection />} />
-          <Route path="/game/wordOrderIntro" element={<WordOrderIntro />} />
-          <Route path="/game/wordOrderGame" element={<WordOrderGame />} />
+          <Route path="/game/wordOrderIntro/:category" element={<WordOrderIntro />} />
+          <Route path="/game/wordOrderGame/:category" element={<WordOrderGame />} />
           <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
           

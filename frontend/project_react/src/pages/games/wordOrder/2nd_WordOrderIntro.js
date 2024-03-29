@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
 
 export default function WordOrderIntro() {
   const navigate = useNavigate();
+  const { category } = useParams();
 
   return (
     <Frame>
       <GamePageHeader showBackButton={true}></GamePageHeader>
       <button
-        onClick={() => navigate('/game/wordOrderGame', { replace: true })}
+        onClick={() => navigate(`/game/wordOrderGame/${category}`, { replace: true })}
       >
         게임 시작
       </button>
-      s
+      <p>{category}</p>
     </Frame>
   );
 }

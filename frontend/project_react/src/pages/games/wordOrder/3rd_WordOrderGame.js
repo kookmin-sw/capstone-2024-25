@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
 import axios from 'axios';
 
 export default function WordOrderGame() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { category } = useParams()
+
+
   const [sentenceData, setSentenceData] = useState(null);
   const [wordList, setWordList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,15 +31,15 @@ export default function WordOrderGame() {
       .get(process.env.PUBLIC_URL + '/wordOrderDummy.json')
       .then((response) => {
         const data = response.data;
-        const category = data['문학'];
-        const keys = Object.keys(category);
+        const selectedCategory = data[category];
+        const keys = Object.keys(selectedCategory);
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const randomSentence = category[randomKey];
+        const randomSentence = selectedCategory[randomKey];
         let wordArr = randomSentence.split(' ');
         shuffle(wordArr);
         setSentenceData(randomSentence);
         setWordList(wordArr);
-        // setinvisibleButtonList(new Array(wordArr.length).fill(false));
+        console.log('sentenceData:', randomSentence);
       })
       .catch((err) => {
         console.log(err);
