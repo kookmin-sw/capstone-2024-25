@@ -1,10 +1,11 @@
-package capstone.allbom.auth.Exception;
+package capstone.allbom.auth.exception;
 
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public enum AuthErrorCode {
+public enum AuthErrorCode implements ErrorCode {
     NONEXISTENT_REFRESH_TOKEN(300, "갱신 토큰이 존재하지 않습니다."),
     UNMATCHED_INFORMATION_BETWEEN_TOKEN(301, "토큰 간의 정보가 일치하지 않습니다."),
     INVALID_TOKEN(302, "올바르지 않은 토큰입니다."),
