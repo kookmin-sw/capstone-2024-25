@@ -43,5 +43,5 @@ const Divder = styled.div`
     height: 1px;
     background-color: black;
     opacity: 0.2;
-    margin: 10px 0;
+    margin-top: 20px;
 `;

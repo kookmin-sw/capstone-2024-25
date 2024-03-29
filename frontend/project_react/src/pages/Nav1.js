@@ -7,30 +7,53 @@ export default function Nav1() {
     const navigate = useNavigate();
 
     return (
-        <Frame>
+        <FrameWithHeader>
             <GamePageHeader title={'두뇌 향상 게임'} showDivider={true}></GamePageHeader>
-            <div>전구</div>
-            <GameINfo>치매예방 게임을 하시면 두뇌 향상에 많이 도움이 됩니다 믿으시고 하루에 10개씩 하십시오</GameINfo>
-            <GameButton onClick={() => navigate('wordOrderSelection')}>문장 순서 맞추기</GameButton>
-            <GameButton onClick={() => navigate('crossWordIntro')}>십자말풀이</GameButton>
-            <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
-        </Frame>
+            <ContentFrame>
+                <Contents>
+                    <img src={process.env.PUBLIC_URL + '/images/bulb.svg'} alt="bulb" width="50" height="50"></img>
+                    <GameINfo>정기적인 두뇌 활동은 뇌 건강 유지에 필수적입니다. 게임을 통해 두뇌를 자극하고 문제해결력, 기억력, 주의력을 향상시켜 보세요!</GameINfo>
+                    <GameButton onClick={() => navigate('wordOrderSelection')}>문장 순서 맞추기</GameButton>
+                    <GameButton onClick={() => navigate('crossWordIntro')}>십자말풀이</GameButton>
+                    <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
+                    <GameButton onClick={() => navigate('wordOrderSelection')}>문장 순서 맞추기</GameButton>
+                    <GameButton onClick={() => navigate('crossWordIntro')}>십자말풀이</GameButton>
+                    <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
+                    <GameButton onClick={() => navigate('wordOrderSelection')}>문장 순서 맞추기</GameButton>
+                    <GameButton onClick={() => navigate('crossWordIntro')}>십자말풀이</GameButton>
+                    <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
+                    <GameButton onClick={() => navigate('twentyHeadsIntro')}>스무고개</GameButton>
+                </Contents>
+            </ContentFrame>
+        </FrameWithHeader>
     );
 }
 
-const Frame = styled.div`
+const FrameWithHeader = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+    padding: 30px;
+`;
+
+const ContentFrame = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+`;
+
+const Contents = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
-    gap: 20px;
+    gap: 24px;
+    padding-top: 20px;
 `;
 
 const GameINfo = styled.p`
-    font-size: 17px;
+    font-size: 18px;
     margin: 0;
 `;
 
