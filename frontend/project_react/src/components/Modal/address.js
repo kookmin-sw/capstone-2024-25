@@ -1,10 +1,6 @@
 import Modal from 'react-modal';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
 import styled from 'styled-components';
-import Button from '../Button';
 import { useState } from 'react';
-import { ko } from 'date-fns/locale';
 import DaumPostcode from 'react-daum-postcode';
 
 const customModalStyles = {
@@ -17,10 +13,6 @@ const customModalStyles = {
     top: '0',
     left: '0',
   },
-  // top: '50%',
-  // left: '50%',
-  // transform: 'translate(-50%, -50%)',
-  // width: '80%',
   content: {
     width: '280px',
     height: '520px',
@@ -86,7 +78,6 @@ const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
   }; // 스타일 정의 code
   const onCompletePost = (data) => {
     setModalState(false);
-    console.log('data : ', data);
     setInputAddressValue(data.address);
     setInputZipCodeValue(data.zonecode);
     setAddress(`(${data.zonecode}) ${data.address}`);

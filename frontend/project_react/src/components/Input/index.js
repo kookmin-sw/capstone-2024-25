@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import BirthModal from '../Modal/birth';
+import BirthModal from '../Modal/birth2';
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -89,7 +89,7 @@ const Input = ({
       <InputStyled
         placeholder={inputInfo}
         value={
-          type == 'date'
+          type === 'date'
             ? displayValue && formatDate(displayValue)
             : displayValue
         }
@@ -100,11 +100,11 @@ const Input = ({
       <BirthModal
         isOpen={showCalendar}
         closeModal={handleBlur}
-        birth={displayValue}
+        birth={displayValue ? displayValue : new Date()}
         setBirth={setInputValue}
         formatDate={formatDate}
       />
-      {type == 'date' && (
+      {type === 'date' && (
         <CalendarIcon
           src={process.env.PUBLIC_URL + '/images/calendar.svg'}
           onClick={handleFocus}

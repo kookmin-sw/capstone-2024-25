@@ -1,6 +1,5 @@
 // medicine.js
 import Modal from 'react-modal';
-import 'react-day-picker/dist/style.css';
 import styled from 'styled-components';
 import Button from '../Button';
 import Toggle from '../Toggle';

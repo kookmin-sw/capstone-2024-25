@@ -63,9 +63,6 @@ const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
     setCycleLunch(false);
     setCycleDinner(false);
   };
-  useEffect(() => {
-    console.log('only value useEffect value : ', value);
-  }, [value]);
   const btnClick = () => {
     if (medicine.length === 0) return;
     const newMedicineInfo = {
