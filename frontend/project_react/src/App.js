@@ -6,24 +6,30 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Test from './pages/Test';
 import Nav1 from './pages/Nav1';
-import IntroCrossWord from './pages/games/crossWord/IntroCrossWord';
-import IntroWordOrder from './pages/games/wordOrder/IntroWordOrder';
-import IntroTwentyHeads from './pages/games/twentyHeads/IntroTwentyHeads';
-
+import WordOrderSelection from './pages/games/wordOrder/1st_WordOrderSelection';
+import CrossWordIntro from './pages/games/crossWord/1st_CrossWordIntro';
+import WordOrderIntro from './pages/games/wordOrder/2nd_WordOrderIntro';
+import TwentyHeadsIntro from './pages/games/twentyHeads/1st_TwentyHeadsIntro';
+import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
 
 function App() {
   return (
     <div id="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<SignIn />} />
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/" element={<SignIn />} />
-          <Route path="/game" element={<Nav1 />} />
-          <Route path="/game/crossWord" element={<IntroCrossWord />} />
-          <Route path="/game/wordOrder" element={<IntroWordOrder />} />
-          <Route path="/game/twentyHeads" element={<IntroTwentyHeads />} />
           <Route path="/ttt" element={<Test />} />
+
+          {/* 게임 페이지 */}
+          <Route path="/game" element={<Nav1 />} />
+          <Route path="/game/wordOrderSelection" element={<WordOrderSelection />} />
+          <Route path="/game/wordOrderIntro" element={<WordOrderIntro />} />
+          <Route path="/game/wordOrderGame" element={<WordOrderGame />} />
+          <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
+          <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
+          
         </Routes>
       </BrowserRouter>
     </div>

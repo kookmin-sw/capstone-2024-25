@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
 import axios from 'axios';
-import { is } from 'date-fns/locale';
 
-export default function IntroWordOrder() {
+export default function WordOrderGame() {
   // const navigate = useNavigate();
   const [sentenceData, setSentenceData] = useState(null);
   const [wordList, setWordList] = useState([]);

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import GamePageHeader from "../../../components/Header/GamePageHeader";
 
-export default function IntroTwentyHeads() {
+export default function TwentyHeadsIntro() {
     const navigate = useNavigate();
 
     return (
