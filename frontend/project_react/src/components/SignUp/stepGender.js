@@ -4,7 +4,7 @@ const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 98%;
+  width: 100%;
   gap: 8px;
   box-sizing: border-box;
 `;
@@ -15,7 +15,7 @@ const StepTitle = styled.div`
   margin-bottom: 32px;
 `;
 
-const StepName = ({ value, setValue }) => {
+const StepGender = ({ value, setValue }) => {
   const maleClick = () => {
     setValue(1);
   };
@@ -40,4 +40,4 @@ const StepName = ({ value, setValue }) => {
     </StepWrapper>
   );
 };
-export default StepName;
+export default StepGender;

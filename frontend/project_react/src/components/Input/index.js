@@ -50,6 +50,7 @@ const Input = ({
   type,
   onClick,
   fontSize,
+  readonly,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);

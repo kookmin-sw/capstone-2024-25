@@ -5,7 +5,7 @@ const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 98%;
+  width: 100%;
   gap: 8px;
   box-sizing: border-box;
 `;
@@ -16,7 +16,7 @@ const StepTitle = styled.div`
   margin-bottom: 32px;
 `;
 
-const StepName = ({ value, setValue }) => {
+const StepBirth = ({ value, setValue }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
@@ -28,8 +28,9 @@ const StepName = ({ value, setValue }) => {
         inputInfo="생년월일을 입력해주세요"
         onChange={handleInputChange}
         type="date"
+        readonly="readonly"
       />
     </StepWrapper>
   );
 };
-export default StepName;
+export default StepBirth;
