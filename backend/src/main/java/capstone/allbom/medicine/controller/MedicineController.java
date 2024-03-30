@@ -18,6 +18,11 @@ public class MedicineController {
 
     private final MedicineService medicineService;
 
+    @GetMapping("/medicines")
+    public String example(){
+        return "hihi";
+    }
+
     @GetMapping("/medicine/{medicineId}")
     public ResponseEntity<MedicineDetailResponse> findMedicine(@PathVariable Long medicineId) {
         Medicine medicine = medicineService.findById(medicineId);
