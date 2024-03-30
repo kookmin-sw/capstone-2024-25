@@ -4,7 +4,7 @@ import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.response.LoginResponse;
 import capstone.allbom.auth.dto.response.ReissuedAccessTokenResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
-import capstone.allbom.auth.service.AuthService;
+import capstone.allbom.auth.service.oauth.AuthService;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
 import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.common.exception.BadRequestException;
@@ -35,9 +35,13 @@ public class AuthController {
     ) {
         final LoginTokenDto loginTokenDto = authService.register(code);
 
+        System.out.println("loginTokenDto = " + loginTokenDto);
+
         addRefreshTokenToCookie(httpServletResponse, loginTokenDto.refreshToken());
         final LoginResponse response =
                 new LoginResponse(loginTokenDto.accessToken(), loginTokenDto.hasEssentialInfo());
+
+        System.out.println("response = " + response);
         return ResponseEntity.ok(response);
     }
 

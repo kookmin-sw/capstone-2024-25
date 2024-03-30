@@ -1,4 +1,4 @@
-package capstone.allbom.auth.service.oauth;
+package capstone.allbom.auth.service.oauth.kakao;
 
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.auth.dto.response.OAuthAccessTokenResponse;

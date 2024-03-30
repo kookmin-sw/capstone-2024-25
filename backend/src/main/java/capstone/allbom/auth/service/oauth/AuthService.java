@@ -1,4 +1,4 @@
-package capstone.allbom.auth.service;
+package capstone.allbom.auth.service.oauth;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
@@ -6,13 +6,12 @@ import capstone.allbom.auth.exception.AuthErrorCode;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
 import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.auth.service.dto.TokenPayloadDto;
-import capstone.allbom.auth.service.oauth.KakaoOAuthClient;
+import capstone.allbom.auth.service.oauth.kakao.KakaoOAuthClient;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.JsonErrorCode;
 import capstone.allbom.common.jwt.TokenPayload;
 import capstone.allbom.common.jwt.TokenProcessor;
 import capstone.allbom.member.domaiin.Member;
-import capstone.allbom.member.exception.MemberErrorCode;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;

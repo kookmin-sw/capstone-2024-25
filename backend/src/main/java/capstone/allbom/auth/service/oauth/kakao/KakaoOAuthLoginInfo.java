@@ -1,4 +1,4 @@
-package capstone.allbom.auth.service.oauth;
+package capstone.allbom.auth.service.oauth.kakao;
 
 import lombok.Getter;
 import lombok.Setter;
