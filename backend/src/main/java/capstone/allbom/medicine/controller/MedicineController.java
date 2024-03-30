@@ -1,15 +1,14 @@
 package capstone.allbom.medicine.controller;
 
+import capstone.allbom.auth.annotation.Member;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.MedicineService;
+import capstone.allbom.medicine.service.dto.MedicineRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping
@@ -24,5 +23,17 @@ public class MedicineController {
         Medicine medicine = medicineService.findById(medicineId);
         return ResponseEntity.ok(MedicineDetailResponse.from(medicine));
     }
+
+    @PostMapping("/medicine")
+//    public ResponseEntity<Void> saveMedicine(@Member Long memberId, @RequestBody MedicineRequest medicineRequest) {
+    public ResponseEntity<Void> saveMedicine(@RequestParam Long memberId, @RequestBody MedicineRequest medicineRequest) {
+        Long medicineId = medicineService.saveMedicine(memberId, medicineRequest);
+        return ResponseEntity.ok()
+                .build();
+    }
+    /**
+     * TODO
+     * medicine post할 때 memberId 전달방식 고려
+     */
 
 }

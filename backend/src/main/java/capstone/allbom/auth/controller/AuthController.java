@@ -43,7 +43,7 @@ public class AuthController {
         final LoginResponse response =
                 new LoginResponse(loginTokenDto.accessToken(), loginTokenDto.hasEssentialInfo());
 
-        System.out.println("response = " + response);
+        System.out.println("kakao.callback.response = " + response);
         return ResponseEntity.ok(response);
     }
 
