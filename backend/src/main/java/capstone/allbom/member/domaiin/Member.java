@@ -2,7 +2,6 @@ package capstone.allbom.member.domaiin;
 
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.medicine.domain.Medicine;
-import capstone.allbom.routine.domain.Routine;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +21,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    private LoginType loginType;
+
     private String socialId;
 
     private String loginId;
@@ -34,7 +35,7 @@ public class Member {
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
-    private gender gender;
+    private Gender gender;
 
     @Embedded
     private Address address;

@@ -45,6 +45,8 @@ public class KakaoOAuthClient {
                 httpEntity,
                 OAuthAccessTokenResponse.class
         ).getBody();
+
+        System.out.println("kakaoOauthClient.getAccessToken = " + response);
         return response.accessToken();
     }
 
