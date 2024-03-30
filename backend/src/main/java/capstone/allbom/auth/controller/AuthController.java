@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import static org.springframework.boot.web.server.Cookie.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @RestController
+@Slf4j
 public class AuthController {
 
     private final AuthService authService;
@@ -52,6 +54,7 @@ public class AuthController {
             final HttpServletResponse httpServletResponse
     ) {
         final String refreshToken = getRefreshTokenFromCookie(httpServletRequest);
+        log.info("refreshToken={}", refreshToken);
         final ReissuedTokenDto reissuedTokenDto = authService.reissueAuthToken(request, refreshToken);
 
         addRefreshTokenToCookie(httpServletResponse, reissuedTokenDto.refreshToken());

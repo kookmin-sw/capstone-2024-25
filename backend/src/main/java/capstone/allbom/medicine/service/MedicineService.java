@@ -2,7 +2,7 @@ package capstone.allbom.medicine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
-import capstone.allbom.common.exception.ErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
@@ -19,6 +19,12 @@ public class MedicineService {
 
     private final MedicineRepository medicineRepository;
     private final MemberRepository memberRepository;
+
+    @Transactional(readOnly = true)
+    public Medicine findById(final Long medicineId) {
+        return medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+    }
 
     @Transactional
     public Long saveMedicine(Long memberId, MedicineRequest medicineRequest) {
