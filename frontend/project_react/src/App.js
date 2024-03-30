@@ -1,3 +1,4 @@
+// App.js
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -20,16 +21,25 @@ function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/auth/*" element={<SignUp />} />
           <Route path="/ttt" element={<Test />} />
 
           {/* 게임 페이지 */}
           <Route path="/game" element={<Nav1 />} />
-          <Route path="/game/wordOrderSelection" element={<WordOrderSelection />} />
-          <Route path="/game/wordOrderIntro/:category" element={<WordOrderIntro />} />
-          <Route path="/game/wordOrderGame/:category" element={<WordOrderGame />} />
+          <Route
+            path="/game/wordOrderSelection"
+            element={<WordOrderSelection />}
+          />
+          <Route
+            path="/game/wordOrderIntro/:category"
+            element={<WordOrderIntro />}
+          />
+          <Route
+            path="/game/wordOrderGame/:category"
+            element={<WordOrderGame />}
+          />
           <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
-          
         </Routes>
       </BrowserRouter>
     </div>

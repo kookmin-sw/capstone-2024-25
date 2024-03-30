@@ -2,9 +2,10 @@
 import styled from 'styled-components';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const SignUpWrapper = styled.div`
+const SignInWrapper = styled.div`
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -13,9 +14,10 @@ const SignUpWrapper = styled.div`
   padding: 60px 28px;
   box-sizing: border-box;
 `;
+
 const LogoImage = styled.img``;
 
-const SignUpContent = styled.div`
+const SignInContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,15 +31,17 @@ const FooterText = styled.div`
   margin-top: 20px;
 `;
 
-const SignUpButton = styled.span`
+const SignInButton = styled.span`
   color: var(--primary-color);
   cursor: pointer;
 `;
+
 const HorizontalLine = styled.div`
   width: 100%;
   height: 1px;
   background-color: var(--unselected-color);
 `;
+
 const KakaoButton = styled.div`
   width: 100%;
   height: 60px;
@@ -60,21 +64,28 @@ const KakaoImage = styled.img`
   height: 28px;
 `;
 
-const SignUp = () => {
-  const Rest_api_key = process.env.REACT_APP_REST_API_KEY; //REST API KEY
-  const redirect_uri = 'http://localhost:3000/api/user/kakao/callback'; //Redirect URI
-  // oauth 요청 URL
+const SignIn = () => {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+
+  // 환경 변수에서 카카오 API 키와 리다이렉트 URI를 가져옵니다.
+  const Rest_api_key = process.env.REACT_APP_REST_API_KEY; // REST API KEY
+  const redirect_uri = 'http://localhost:3000/auth/kakao/callback'; //Redirect URI
+
+  // 카카오 로그인 페이지로 이동할 URL을 구성합니다.
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+
+  // 카카오 로그인 버튼 클릭 시 실행되는 함수입니다.
   const handleLogin = () => {
     window.location.href = kakaoURL;
   };
 
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  // 카카오 로그인 후 돌아왔을 때 URL에서 인증 코드(code)를 추출하는 로직입니다.
+
   return (
-    <SignUpWrapper>
+    <SignInWrapper>
       <LogoImage src={process.env.PUBLIC_URL + '/images/logo.svg'} alt="logo" />
-      <SignUpContent>
+      <SignInContent>
         <Input
           value={userId}
           inputInfo="아이디를 입력해주세요"
@@ -84,16 +95,17 @@ const SignUp = () => {
           value={password}
           inputInfo="비밀번호를 입력해주세요"
           onChange={(e) => setPassword(e.target.value)}
-          type={'password'}
+          type="password"
         />
         <Button
-          size={'Large'}
-          height={'Tall'}
-          type={'Primary'}
-          text={'로그인'}
+          size="Large"
+          height="Tall"
+          type="Primary"
+          text="로그인"
+          // onClick={/* 로그인 처리 함수를 여기에 추가합니다. */}
         />
         <FooterText>
-          아직 회원이 아니신가요 ?<SignUpButton>회원가입</SignUpButton>
+          아직 회원이 아니신가요? <SignInButton>회원가입</SignInButton>
         </FooterText>
         <HorizontalLine />
         <FooterText>다른 방법으로 로그인하기</FooterText>
@@ -104,8 +116,9 @@ const SignUp = () => {
           />
           카카오 로그인
         </KakaoButton>
-      </SignUpContent>
-    </SignUpWrapper>
+      </SignInContent>
+    </SignInWrapper>
   );
 };
-export default SignUp;
+
+export default SignIn;
