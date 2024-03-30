@@ -1,3 +1,5 @@
+<div style="background-color: #ffffff; color: #000000; display: flex; flex-direction: column; padding-left: 20px;">
+
 # Welcome to GitHub
 
 캡스톤 팀 생성을 축하합니다.
@@ -34,18 +36,25 @@
 
 ### 3. 팀 소개
 
-|이름|학번|포지션|프로필 사진|깃허브|
-| - | - | - | - | - |
-| **이은선** | 20203118 | 백엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a47d70cf-02ad-409f-a320-057046f56578" width="100" height="100"/> | [https://github.com/Eun-sun-Lee](https://github.com/Eun-sun-Lee) | 
-| **곽희건** | 20181574 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/53166aa7-a504-4d5c-889f-545c99249710" width="100" height="100"/> | [https://github.com/VarGun](https://github.com/VarGun) |
-| **백현식** | 20191605 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/bb9a6d50-a53d-4456-ae55-7c577e697fb6" width="100" height="100"/> | [https://github.com/hammsik](https://github.com/hammsik) |
-| **김민선** | 20203035 | AI | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a8daeed0-a399-4c60-adda-c17d97d3b4ac" width="100" height="100"/> | [https://github.com/CLM-BONNY](https://github.com/CLM-BONNY) |
+| <span style="color: red;">이름</span> |학번|포지션|프로필 사진|깃허브|
+|-------------------------------------| - | - | - | - |
+| **이은선**                             | 20203118 | 백엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a47d70cf-02ad-409f-a320-057046f56578" width="100" height="100"/> | [https://github.com/Eun-sun-Lee](https://github.com/Eun-sun-Lee) | 
+| **곽희건**                             | 20181574 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/53166aa7-a504-4d5c-889f-545c99249710" width="100" height="100"/> | [https://github.com/VarGun](https://github.com/VarGun) |
+| **백현식**                             | 20191605 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/bb9a6d50-a53d-4456-ae55-7c577e697fb6" width="100" height="100"/> | [https://github.com/hammsik](https://github.com/hammsik) |
+| **김민선**                             | 20203035 | AI | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a8daeed0-a399-4c60-adda-c17d97d3b4ac" width="100" height="100"/> | [https://github.com/CLM-BONNY](https://github.com/CLM-BONNY) |
 
 ### 4. 사용법
 
 소스코드제출시 설치법이나 사용법을 작성하세요.
 
-### 5. 기타
+### 5. 기술 스택
+#### 프론트엔드
+<img width="80%" style="align-self: center" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/8e0d953d-abac-456a-a9e1-b642c88494c9" />
+
+#### 백엔드
+<img width="80%" style="align-self: center" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/da2ac33e-142c-40af-9c11-be222bea9e83" />
+
+#### AI
 
 추가적인 내용은 자유롭게 작성하세요.
 
@@ -77,3 +86,4 @@ Syntax highlighted code block
 ### Support or Contact
 
 readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
+</div>
