@@ -11,7 +11,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findById(Long memberId);
 
-    Optional<Member> findBykakaoEmail(String kakaoEmail); // 카카오로그인 이메일로 찾기
+    Optional<Member> findBySocialId(String socialId); // 카카오로그인 아이디로 찾기
 
     Optional<Member> findByloginId(String loginId); // 일반 로그인 아이디로 찾기
 

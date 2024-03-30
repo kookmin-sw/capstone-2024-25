@@ -1,14 +1,12 @@
 package capstone.allbom.medicine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
-import capstone.allbom.common.exception.ErrorCode;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domaiin.Member;
 import capstone.allbom.member.domaiin.MemberRepository;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
