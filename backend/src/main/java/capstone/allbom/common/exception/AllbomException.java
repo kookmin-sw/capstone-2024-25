@@ -4,24 +4,24 @@ import org.springframework.core.NestedRuntimeException;
 
 public abstract class AllbomException extends NestedRuntimeException {
 
-    private final DefaultErrorCode errorCode;
+    private final ErrorCode errorCode;
 
-    protected AllbomException(DefaultErrorCode errorCode) {
+    protected AllbomException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
 
-    protected AllbomException(DefaultErrorCode errorCode, Throwable cause) {
+    protected AllbomException(ErrorCode errorCode, Throwable cause) {
         super(errorCode.getMessage(), cause);
         this.errorCode = errorCode;
     }
 
-    protected AllbomException(DefaultErrorCode errorCode, String message) {
+    protected AllbomException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public DefaultErrorCode getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 }

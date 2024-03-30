@@ -2,7 +2,7 @@ package capstone.allbom.common.exception;
 
 public class NotFoundException extends AllbomException{
 
-    public NotFoundException(DefaultErrorCode errorCode) {
+    public NotFoundException(ErrorCode errorCode) {
         super(errorCode);
     }
 }
