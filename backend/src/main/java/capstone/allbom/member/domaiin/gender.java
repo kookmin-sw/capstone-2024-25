@@ -1,5 +1,5 @@
 package capstone.allbom.member.domaiin;
 
-public enum gender {
+public enum Gender {
     FEMALE, MALE
 }
