@@ -1,7 +1,7 @@
 // Input/index.js
 
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BirthModal from '../Modal/birth2';
 
@@ -27,10 +27,6 @@ const InputStyled = styled.input`
     color: var(--unselected-color);
   }
 `;
-const CalendarIcon = styled.img`
-  position: absolute;
-  right: 0;
-`;
 const InputInfo = styled.div`
   font-size: 16px;
   color: ${({ infoState }) =>
@@ -50,7 +46,6 @@ const Input = ({
   type,
   onClick,
   fontSize,
-  readonly,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
@@ -75,42 +70,17 @@ const Input = ({
   const handleBlur = () => {
     setShowCalendar(false);
   };
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    return `${year}년 ${month}월 ${day}일`;
-  };
 
   return (
     <InputWrapper>
       <InputStyled
+        id="input-styled"
         placeholder={inputInfo}
-        value={
-          type === 'date'
-            ? displayValue && formatDate(displayValue)
-            : displayValue
-        }
+        value={displayValue}
         onChange={handleChange}
         onClick={onClick}
         fontSize={fontSize}
       />
-      <BirthModal
-        isOpen={showCalendar}
-        closeModal={handleBlur}
-        birth={displayValue ? displayValue : new Date()}
-        setBirth={setInputValue}
-        formatDate={formatDate}
-      />
-      {type === 'date' && (
-        <CalendarIcon
-          src={process.env.PUBLIC_URL + '/images/calendar.svg'}
-          onClick={handleFocus}
-        />
-      )}
       <InputInfo infoState={infoState}>{infoText}</InputInfo>
     </InputWrapper>
   );
