@@ -21,8 +21,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/auth/kakao/callback",
             "/auth/logout",
             "/auth/login",
-            "/auth/signup"
-
+            "/auth/signup",
+            "/login"
     );
 
     private static final List<String> ALLOWED_START_URIS = List.of(

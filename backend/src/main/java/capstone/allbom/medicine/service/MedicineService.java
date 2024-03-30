@@ -2,6 +2,7 @@ package capstone.allbom.medicine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.ErrorCode;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;

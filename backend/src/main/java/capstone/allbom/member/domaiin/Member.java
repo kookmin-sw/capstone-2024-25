@@ -1,5 +1,6 @@
 package capstone.allbom.member.domaiin;
 
+import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.routine.domain.Routine;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String kakaoEmail;
+    private String socialId;
 
     private String loginId;
 
@@ -53,6 +54,16 @@ public class Member {
     @Builder.Default
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
     private List<Medicine> medicines = new ArrayList<>();
+
+    public static Member from(final KakaoMemberResponse response) {
+        return Member.builder()
+                .socialId(String.valueOf(response.id()))
+                .build();
+    }
+
+    public boolean hasEssentialInfo() {
+        return (this.gender != null && this.birthday != null);
+    }
 
 //    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 //    private Routine routine;
