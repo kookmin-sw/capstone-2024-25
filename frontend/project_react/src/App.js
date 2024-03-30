@@ -12,13 +12,15 @@ import CrossWordIntro from './pages/games/crossWord/1st_CrossWordIntro';
 import WordOrderIntro from './pages/games/wordOrder/2nd_WordOrderIntro';
 import TwentyHeadsIntro from './pages/games/twentyHeads/1st_TwentyHeadsIntro';
 import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
+import Chatbot from './pages/Chatbot';
 
 function App() {
   return (
     <div id="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignIn />} />
+          {/*<Route path="/" element={<SignIn />} />*/}
+          <Route path="/" element={<Chatbot />} />
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/auth/*" element={<SignUp />} />
