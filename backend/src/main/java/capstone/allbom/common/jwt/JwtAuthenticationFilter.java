@@ -1,24 +1,25 @@
 package capstone.allbom.common.jwt;
 
+import capstone.allbom.common.log.context.MemberIdHolder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> ALLOWED_URIS = List.of(
-            "/auth/kakao/callback",
+            "/auth/kakao/callback?",
             "/auth/logout",
             "/auth/login",
             "/auth/signup",
@@ -43,6 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              */
     );
 
+    private final MemberIdHolder memberIdHolder;
     private final TokenProcessor tokenProcessor;
 
 
@@ -52,21 +54,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final HttpServletResponse response,
             final FilterChain filterChain
     ) throws ServletException, IOException {
-        System.out.println("doFilterInternal.request = " + request);
         final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         final String tokenWithoutType = tokenProcessor.resolveToken(token);
         tokenProcessor.validateToken(tokenWithoutType);
         final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+        memberIdHolder.setId(tokenPayload.memberId());
         filterChain.doFilter(request, response);
     }
 
-    /**
-     * TODO
-     */
     @Override
     protected boolean shouldNotFilter(final HttpServletRequest request) {
-        return containsAllowedUris(request) || startsWithAllowedStartUris(request)
-                || matchesUriPattern(request);
+        /**
+         * TODO
+         * ALLOWED_START_URIS 설정 후에 return 값에 startsWithAllowedStartUris(request) 추가
+         */
+
+
+        return containsAllowedUris(request) || matchesUriPattern(request);
+//        return containsAllowedUris(request) || startsWithAllowedStartUris(request)
+//                || matchesUriPattern(request);
     }
 
     private boolean containsAllowedUris(final HttpServletRequest request) {

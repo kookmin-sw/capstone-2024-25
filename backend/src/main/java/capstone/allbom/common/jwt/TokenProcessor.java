@@ -84,6 +84,7 @@ public class TokenProcessor {
 
     public void validateToken(final String token) {
         try {
+            System.out.println("validate token");
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
