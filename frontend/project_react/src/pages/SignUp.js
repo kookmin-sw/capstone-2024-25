@@ -21,7 +21,6 @@ const SignUpWrapper = styled.div`
   display: flex;
   height: 100vh;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   padding: 60px 24px;
   box-sizing: border-box;
@@ -34,9 +33,8 @@ const SignUpTitle = styled.div`
 `;
 
 const StepWrapper = styled.div`
-  display: flex;
-  flex: 1;
   width: 100%;
+  box-sizing: border-box;
 `;
 const ButtonWrapper = styled.div`
   display: flex;

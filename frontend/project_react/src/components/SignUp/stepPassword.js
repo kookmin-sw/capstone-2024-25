@@ -6,7 +6,7 @@ const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 98%;
+  width: 100%;
   gap: 20px;
   box-sizing: border-box;
 `;
