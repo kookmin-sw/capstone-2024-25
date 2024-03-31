@@ -1,9 +1,9 @@
 
-<h3> 팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2024-25 </h3>
+<h3> 프로젝트 페이지 주소 -> https://kookmin-sw.github.io/capstone-2024-25 </h3>
 
 </br>
 
-<h2> 1. 프로잭트 소개 </h2>
+<h2> 1. 프로젝트 소개 </h2>
 
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
 
@@ -17,12 +17,9 @@
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
 
-- 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등은 추후 추가 예정입니다.
-- Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가할 예정입니다.
-
 <h2> 2. 소개 영상 </h2>
 
-프로젝트 소개하는 영상을 추가하세요
+프로젝트 소개 영상은 추후 추가 예정입니다.
 
 <h2> 3. 팀 소개 </h2>
 
@@ -35,12 +32,10 @@
 
 <h2> 4. 사용법 </h2>
 
-소스코드제출시 설치법이나 사용법을 작성하세요.
+- 프로젝트 설치방법 및 데모, 사용 방법, 프리뷰 등은 추후 추가 예정입니다.
+- Api나 사용방법 등 내용이 많을 경우 wiki에 꾸미고 링크 추가할 예정입니다.
 
 <h2> 5. 기술 스택 </h2>
-
-</br>
-
 <h3> 프론트엔드 </h3>
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/d5550222-c615-441f-a81a-3a24881b55a9" />
 
@@ -50,7 +45,7 @@
 <h3> AI </h3>
 <img width="60%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/a966529e-66d4-4f88-8d25-bddedfcf7db0" />
 
-<h3> 데이터 </h3>
+<h3> 데이터 전처리 </h3>
 <img width="80%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/fb8c1b5c-90a5-40f4-b87e-32b5eea67077" />
 
 <h3> 인프라 </h3>
@@ -60,4 +55,4 @@
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
 
 <h3> 서비스 흐름도 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/feb7dfb7-0d41-42fa-a0b7-3c40c641fdb5" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/abea4f02-d8e7-4723-b891-c050b224956e" />
