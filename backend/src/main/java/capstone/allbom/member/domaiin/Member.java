@@ -58,6 +58,7 @@ public class Member {
 
     public static Member from(final KakaoMemberResponse response) {
         return Member.builder()
+                .loginType(LoginType.KAKAO)
                 .socialId(String.valueOf(response.id()))
                 .build();
     }
