@@ -48,12 +48,20 @@
 
 ### 5. 기술 스택
 #### 프론트엔드
-<img width="80%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/d5550222-c615-441f-a81a-3a24881b55a9" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/d5550222-c615-441f-a81a-3a24881b55a9" />
 
 #### 백엔드
-<img width="80%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/018fa6be-f788-4a84-9a9c-ade8ee327721" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/018fa6be-f788-4a84-9a9c-ade8ee327721" />
 
 #### AI
+<img width="60%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/a966529e-66d4-4f88-8d25-bddedfcf7db0" />
+
+#### 데이터
+<img width="80%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/fb8c1b5c-90a5-40f4-b87e-32b5eea67077" />
+
+#### 인프라
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
+
 
 추가적인 내용은 자유롭게 작성하세요.
 
