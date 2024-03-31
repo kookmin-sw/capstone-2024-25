@@ -43,9 +43,3 @@
 
 <h3> 인프라 </h3>
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
-
-
-- GitHub Pages 리파지토리 Settings > Options > GitHub Pages 
-  - Source를 marster branch
-  - Theme Chooser에서 태마선택
-  - 수정후 팀페이지 확인하여 점검.
