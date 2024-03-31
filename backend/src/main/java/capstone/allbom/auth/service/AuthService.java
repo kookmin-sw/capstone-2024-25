@@ -1,4 +1,4 @@
-package capstone.allbom.auth.service.oauth;
+package capstone.allbom.auth.service;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
@@ -31,7 +31,7 @@ public class AuthService {
     private final RedisTemplate<String, Long> redisTemplate;
 
     @Transactional
-    public LoginTokenDto register(final String code) {
+    public LoginTokenDto kakaoRegister(final String code) {
         final String kakaoAccessToken = kakaoOAuthClient.getAccessToken(code);
         final KakaoMemberResponse response = kakaoOAuthClient.getMemberInfo(kakaoAccessToken);
 
