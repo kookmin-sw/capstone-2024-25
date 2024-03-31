@@ -53,21 +53,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return filterBean;
     }
 
-    @Bean
-    public FilterRegistrationBean<RequestResponseCacheFilter> requestResponseCacheFilter() {
-        final FilterRegistrationBean<RequestResponseCacheFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new RequestResponseCacheFilter());
-        filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.setOrder(1);
-        return filterRegistrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<RequestResponseCacheFilter> requestResponseCacheFilter() {
+//        final FilterRegistrationBean<RequestResponseCacheFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+//        filterRegistrationBean.setFilter(new RequestResponseCacheFilter());
+//        filterRegistrationBean.addUrlPatterns("/*");
+//        filterRegistrationBean.setOrder(1);
+//        return filterRegistrationBean;
+//    }
 
     @Bean
     public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilter() {
         final FilterRegistrationBean<JwtAuthenticationFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new JwtAuthenticationFilter(memberIdHolder, tokenProcessor));
         filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.setOrder(1);
         /**
          * TODO
          * setOrder(2) -> (1)
@@ -76,12 +76,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
-    @Override
-    public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(requestLogInterceptor)
-                .addPathPatterns("/**")
-                .order(1);
-    }
+//    @Override
+//    public void addInterceptors(final InterceptorRegistry registry) {
+//        registry.addInterceptor(requestLogInterceptor)
+//                .addPathPatterns("/**")
+//                .order(1);
+//    }
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
