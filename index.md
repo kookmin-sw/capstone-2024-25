@@ -1,8 +1,6 @@
 
 <h3> 프로젝트 페이지 주소 -> https://kookmin-sw.github.io/capstone-2024-25 </h3>
 
-</br>
-
 <h2> 1. 프로젝트 소개 </h2>
 
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
