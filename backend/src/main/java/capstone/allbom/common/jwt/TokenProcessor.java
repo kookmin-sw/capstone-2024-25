@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 @Slf4j
 @Component
 public class TokenProcessor {
@@ -29,7 +32,7 @@ public class TokenProcessor {
     private static final String BEARER_TOKEN_PREFIX = "Bearer ";
     private static final String BLANK = " ";
 
-    private final Key key;
+    private final SecretKey secretKey;
     private final int tokenExpirationTime;
     private final int refreshTokenExpirationTime;
     private final ObjectMapper objectMapper;
@@ -40,8 +43,8 @@ public class TokenProcessor {
             @Value("${jwt.token.refresh-expiration-time}") final int refreshTokenExpirationTime,
             final ObjectMapper objectMapper
     ) {
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+//        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         this.tokenExpirationTime = tokenExpirationTime;
         this.refreshTokenExpirationTime = refreshTokenExpirationTime;
         this.objectMapper = objectMapper;
@@ -54,7 +57,7 @@ public class TokenProcessor {
                 .claim("memberId", memberId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenExpirationTime))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -65,7 +68,7 @@ public class TokenProcessor {
                 .claim("memberId", memberId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationTime))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -84,8 +87,9 @@ public class TokenProcessor {
 
     public void validateToken(final String token) {
         try {
+            System.out.println("validate token");
             Jwts.parserBuilder()
-                    .setSigningKey(key)
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
         } catch (final UnsupportedJwtException e) {

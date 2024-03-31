@@ -7,6 +7,7 @@ public enum DefaultErrorCode implements ErrorCode{
     NOT_FOUND_MEMBER_ID(400, "요청한 ID에 해당하는 멤버가 존재하지 않습니다."),
     NOT_FOUND_MEDICINE_ID(400, "요청한 ID에 해당하는 약이 존재하지 않습니다."),
     DUPLICATED_MEDICINE(400, "중복된 약입니다."),
+    INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
 
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),

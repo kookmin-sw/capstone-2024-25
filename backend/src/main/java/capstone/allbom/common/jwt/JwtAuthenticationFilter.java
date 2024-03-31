@@ -1,19 +1,22 @@
 package capstone.allbom.common.jwt;
 
+import capstone.allbom.common.log.context.MemberIdHolder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -43,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              */
     );
 
+    private final MemberIdHolder memberIdHolder;
     private final TokenProcessor tokenProcessor;
 
 
@@ -52,21 +56,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final HttpServletResponse response,
             final FilterChain filterChain
     ) throws ServletException, IOException {
-        System.out.println("doFilterInternal.request = " + request);
+        log.info("doFilter internal");
+
         final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        log.info("token!!!!!!!!!!!!!!!!!!!!!!!! = {}", token);
+        System.out.println("token!!!!!!!!!!!!!!!!!!!!!!!! = " + token);
+
         final String tokenWithoutType = tokenProcessor.resolveToken(token);
+//        log.info("tokenWithoutType!!!!!!!!!!!!!!!!!!! = {}", tokenWithoutType);
+        System.out.println("tokenWithoutType!!!!!!!!!!!!!!!!!!! = " + tokenWithoutType);
+
         tokenProcessor.validateToken(tokenWithoutType);
         final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+        memberIdHolder.setId(tokenPayload.memberId());
         filterChain.doFilter(request, response);
     }
 
-    /**
-     * TODO
-     */
     @Override
     protected boolean shouldNotFilter(final HttpServletRequest request) {
-        return containsAllowedUris(request) || startsWithAllowedStartUris(request)
-                || matchesUriPattern(request);
+        /**
+         * TODO
+         * ALLOWED_START_URIS 설정 후에 return 값에 startsWithAllowedStartUris(request) 추가
+         */
+
+        log.info("shouldnotFilter1 = {}", containsAllowedUris(request));
+        log.info("shouldnotFilter2 = {}", matchesUriPattern(request));
+
+        return containsAllowedUris(request) || matchesUriPattern(request);
+//        return containsAllowedUris(request) || startsWithAllowedStartUris(request)
+//                || matchesUriPattern(request);
     }
 
     private boolean containsAllowedUris(final HttpServletRequest request) {
