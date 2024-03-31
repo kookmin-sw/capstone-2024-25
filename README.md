@@ -5,6 +5,18 @@
 
 <h2> 1. 프로잭트 소개 </h2>
 
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
+
+<br/>
+
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
+
 - 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등은 추후 추가 예정입니다.
 - Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가할 예정입니다.
 
@@ -43,3 +55,9 @@
 
 <h3> 인프라 </h3>
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
+
+<h3> 서비스 아키텍처 </h3>
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
+
+<h3> 서비스 흐름도 </h3>
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/feb7dfb7-0d41-42fa-a0b7-3c40c641fdb5" />
