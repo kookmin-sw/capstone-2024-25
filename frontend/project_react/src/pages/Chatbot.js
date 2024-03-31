@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import ChatbotHeader from '../components/Header/ChatbotHeader';
+import ChatbotModalFirst from '../components/Modal/ChatbotFirst';
+import { useState } from 'react';
 
 const ChatbotContainer = styled.div`
   display: flex;
@@ -11,9 +13,15 @@ const ChatbotContainer = styled.div`
 `;
 
 const Chatbot = () => {
+  const [isOpenFirst, setIsOpenFirst] = useState(true);
+
   return (
     <ChatbotContainer>
       <ChatbotHeader />
+      <ChatbotModalFirst
+        isOpen={isOpenFirst}
+        close={() => setIsOpenFirst(false)}
+      />
     </ChatbotContainer>
   );
 };
