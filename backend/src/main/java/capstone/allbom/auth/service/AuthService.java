@@ -3,6 +3,7 @@ package capstone.allbom.auth.service;
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.request.GeneralLoginRequest;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
+import capstone.allbom.auth.dto.response.GeneralSignUpResponse;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
@@ -37,16 +38,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public LoginTokenDto generalRegister(final GeneralSignUpRequest signUpRequest) {
+    public GeneralSignUpResponse generalRegister(final GeneralSignUpRequest signUpRequest) {
         memberService.validateDuplicateLoginId(signUpRequest.loginId());
         String encryptPassword = passwordEncoder.encode(signUpRequest.loginPassword());
 
         final Member member = Member.from(signUpRequest, encryptPassword);
         final Member registeredMember = memberService.registerFromGeneral(member);
-        final String accessToken = tokenProcessor.generateAccessToken(registeredMember.getId());
-        final String refreshToken = tokenProcessor.generateRefreshToken(registeredMember.getId());
-        redisTemplate.opsForValue().set(refreshToken, registeredMember.getId(), Duration.ofDays(14L));
-        return new LoginTokenDto(accessToken, refreshToken, registeredMember.hasEssentialInfo());
+
+        return GeneralSignUpResponse.from(registeredMember);
     }
 
     @Transactional
