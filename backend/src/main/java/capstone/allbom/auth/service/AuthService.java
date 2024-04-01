@@ -1,6 +1,7 @@
 package capstone.allbom.auth.service;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
+import capstone.allbom.auth.dto.request.GeneralLoginRequest;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
@@ -9,11 +10,12 @@ import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.auth.service.dto.TokenPayloadDto;
 import capstone.allbom.auth.service.general.PasswordEncoder;
 import capstone.allbom.auth.service.oauth.kakao.KakaoOAuthClient;
-import capstone.allbom.common.exception.BadRequestException;
-import capstone.allbom.common.exception.JsonErrorCode;
+import capstone.allbom.common.exception.*;
 import capstone.allbom.common.jwt.TokenPayload;
 import capstone.allbom.common.jwt.TokenProcessor;
 import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.domain.MemberRepository;
+import capstone.allbom.member.exception.MemberErrorCode;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -29,21 +31,35 @@ import java.util.Objects;
 public class AuthService {
     private final KakaoOAuthClient kakaoOAuthClient;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
     private final TokenProcessor tokenProcessor;
     private final RedisTemplate<String, Long> redisTemplate;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public LoginTokenDto generalRegister(final GeneralSignUpRequest generalSignUpRequest) {
-        memberService.validateDuplicateLoginId(generalSignUpRequest.loginId());
-        String encryptPassword = passwordEncoder.encrypt(generalSignUpRequest.loginId(), generalSignUpRequest.loginPassword());
+    public LoginTokenDto generalRegister(final GeneralSignUpRequest signUpRequest) {
+        memberService.validateDuplicateLoginId(signUpRequest.loginId());
+        String encryptPassword = passwordEncoder.encode(signUpRequest.loginPassword());
 
-        final Member member = Member.from(generalSignUpRequest, encryptPassword);
+        final Member member = Member.from(signUpRequest, encryptPassword);
         final Member registeredMember = memberService.registerFromGeneral(member);
         final String accessToken = tokenProcessor.generateAccessToken(registeredMember.getId());
         final String refreshToken = tokenProcessor.generateRefreshToken(registeredMember.getId());
         redisTemplate.opsForValue().set(refreshToken, registeredMember.getId(), Duration.ofDays(14L));
         return new LoginTokenDto(accessToken, refreshToken, registeredMember.hasEssentialInfo());
+    }
+
+    @Transactional
+    public LoginTokenDto generalLogin(final GeneralLoginRequest loginRequest) {
+        Member member = memberRepository.findByLoginId(loginRequest.loginId())
+                .orElseThrow(() -> new NotFoundException(MemberErrorCode.NON_EXISTENT_MEMBER));
+
+        if (!passwordEncoder.matches(loginRequest.loginPassword(), member.getLoginPassword()))
+            throw new UnauthorizedException(DefaultErrorCode.INCORRECT_PASSWORD_OR_ACCOUNT);
+        final String accessToken = tokenProcessor.generateAccessToken(member.getId());
+        final String refreshToken = tokenProcessor.generateRefreshToken(member.getId());
+        redisTemplate.opsForValue().set(refreshToken, member.getId(), Duration.ofDays(14L));
+        return new LoginTokenDto(accessToken, refreshToken, member.hasEssentialInfo());
     }
 
     @Transactional
