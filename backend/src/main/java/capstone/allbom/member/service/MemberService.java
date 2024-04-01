@@ -1,5 +1,7 @@
 package capstone.allbom.member.service;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.member.domaiin.Member;
 import capstone.allbom.member.domaiin.MemberRepository;
@@ -32,5 +34,11 @@ public class MemberService {
             final Member savedMember = memberRepository.save(member);
             return savedMember;
         });
+    }
+
+    public void validateDuplicateLoginId(String loginId) {
+        if (memberRepository.findByLoginId(loginId).isPresent()){
+            throw new BadRequestException(DefaultErrorCode.DUPLICATED_LOGIN_ID);
+        }
     }
 }

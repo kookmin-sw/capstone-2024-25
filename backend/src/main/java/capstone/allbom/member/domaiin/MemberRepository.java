@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByLoginId(String loginId); // 일반 로그인 아이디로 찾기
 
-    boolean existsById(Long id);
+    boolean existsById(Long memberId);
 
     List<Member> findAll();
 }
