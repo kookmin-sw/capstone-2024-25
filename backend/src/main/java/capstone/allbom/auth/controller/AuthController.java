@@ -33,6 +33,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+//    @Operation(description = "카카오 로그인 시 redirect한다.")
     @GetMapping("/kakao/callback")
     public ResponseEntity<LoginResponse> loginByKakao(
             @RequestParam final String code,
@@ -50,6 +51,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    //    @Operation(description = "일반 로그인 시 회원을 등록한다.")
     @PostMapping("/register")
     public ResponseEntity<GeneralSignUpResponse> registerByGeneral(
             @RequestBody GeneralSignUpRequest generalSignUpRequest,
@@ -60,6 +62,7 @@ public class AuthController {
         return ResponseEntity.ok(signUpResponse);
     }
 
+    //    @Operation(description = "일반 로그인을 수행한다.")
     @PostMapping("/general/login")
     public ResponseEntity<LoginResponse> loginByGeneral(
             @RequestBody GeneralLoginRequest generalLoginRequest,
@@ -76,7 +79,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-
+    //    @Operation(description = "refresh token을 재발급하여 로그인을 연장한다. (Get으로 요청시 405 주의)")
     @PostMapping("/login")
     public ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
             @RequestBody @Valid final AccessTokenRequest request,
@@ -92,6 +95,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    //    @Operation(description = "로그아웃을 수행한다.")
     @DeleteMapping("/logout")
     public ResponseEntity<Void> logout(
             final HttpServletRequest httpServletRequest,
