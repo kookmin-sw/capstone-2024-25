@@ -1,6 +1,16 @@
 package capstone.allbom.auth.dto.request;
 
-public record GeneralLoginRequest(
+import capstone.allbom.common.util.Validator;
+import lombok.Builder;
 
+@Builder
+public record GeneralLoginRequest(
+        String loginId,
+        String loginPassword
 ) {
+    public GeneralLoginRequest {
+        Validator.notNull(loginId, "loginId");
+        Validator.notNull(loginPassword, "loginPassword");
+
+    }
 }
