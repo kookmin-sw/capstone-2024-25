@@ -67,4 +67,50 @@ class AuthServiceTest {
         }
 
     }
+
+    @Nested
+    class generalLoginMember {
+
+        GeneralSignUpRequest signUpRequest = new GeneralSignUpRequest(
+                "esssun",
+                "kookmin123"
+        );
+
+        GeneralLoginRequest loginRequest = new GeneralLoginRequest(
+                "esssun",
+                "kookmin123"
+        );
+
+        @Test
+        void 일반_로그인_시_입력한_비밀번호를_해시화하면_DB에_저장된_비밀번호와_같아야_한다() {
+            // given
+            GeneralSignUpResponse signUpResponse = authService.generalRegister(signUpRequest);
+            Member member = memberRepository.findByLoginId(signUpResponse.loginId())
+                    .orElseThrow(() -> new NotFoundException(NON_EXISTENT_MEMBER));
+
+            // when & then
+            assertTrue(passwordEncoder.matches(loginRequest.loginPassword(), member.getLoginPassword()));
+            assertThat(loginRequest.loginPassword()).isEqualTo("kookmin123");
+            assertThat(member.getLoginPassword()).isEqualTo(passwordEncoder.encode("kookmin123"));
+        }
+
+        @Test
+        void 일반_로그인_시_해당_아이디가_존재하지_않으면_예외가_발생한다() {
+            // given
+            authService.generalRegister(signUpRequest);
+            var loginRequest = new GeneralLoginRequest(
+                    "esssun1",
+                    "kookmin123"
+            );
+
+            // when
+            NotFoundException e = assertThrows(NotFoundException.class, ()
+                    -> authService.generalLogin(loginRequest));
+
+            // then
+            assertThat(e.getErrorCode()).isEqualTo(NON_EXISTENT_MEMBER);
+            assertThat(e.getMessage()).isEqualTo("해당 회원이 존재하지 않습니다.");
+
+        }
+    }
 }
