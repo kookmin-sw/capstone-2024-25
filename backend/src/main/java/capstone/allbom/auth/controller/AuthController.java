@@ -63,7 +63,7 @@ public class AuthController {
     }
 
     //    @Operation(description = "일반 로그인을 수행한다.")
-    @PostMapping("/general/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginByGeneral(
             @RequestBody GeneralLoginRequest generalLoginRequest,
             final HttpServletResponse httpServletResponse) {
@@ -80,7 +80,7 @@ public class AuthController {
     }
 
     //    @Operation(description = "refresh token을 재발급하여 로그인을 연장한다. (Get으로 요청시 405 주의)")
-    @PostMapping("/login")
+    @PostMapping("/token")
     public ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
             @RequestBody @Valid final AccessTokenRequest request,
             final HttpServletRequest httpServletRequest,
