@@ -59,15 +59,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("doFilter internal");
 
         final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        log.info("token!!!!!!!!!!!!!!!!!!!!!!!! = {}", token);
-        System.out.println("token!!!!!!!!!!!!!!!!!!!!!!!! = " + token);
+//        log.info("token = {}", token);
+        System.out.println("token = " + token);
 
         final String tokenWithoutType = tokenProcessor.resolveToken(token);
-//        log.info("tokenWithoutType!!!!!!!!!!!!!!!!!!! = {}", tokenWithoutType);
-        System.out.println("tokenWithoutType!!!!!!!!!!!!!!!!!!! = " + tokenWithoutType);
+//        log.info("tokenWithoutType = {}", tokenWithoutType);
+        System.out.println("tokenWithoutType = " + tokenWithoutType);
 
         tokenProcessor.validateToken(tokenWithoutType);
         final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+        System.out.println("tokenPayload.memberId = " + tokenPayload.memberId());
         memberIdHolder.setId(tokenPayload.memberId());
         filterChain.doFilter(request, response);
     }

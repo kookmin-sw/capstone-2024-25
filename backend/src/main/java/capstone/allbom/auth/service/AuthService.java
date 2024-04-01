@@ -64,6 +64,7 @@ public class AuthService {
     }
 
     private void validateTokenInfo(final TokenPayload accessTokenPayload, final TokenPayload refreshTokenPayload) {
+//        System.out.println("accessTokenPayload = " + accessTokenPayload.memberId());
         if (!Objects.equals(accessTokenPayload.memberId(), refreshTokenPayload.memberId())) {
             throw new BadRequestException(AuthErrorCode.UNMATCHED_INFORMATION_BETWEEN_TOKEN);
         }

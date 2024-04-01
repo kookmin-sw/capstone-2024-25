@@ -4,12 +4,7 @@ import capstone.allbom.auth.exception.AuthErrorCode;
 import capstone.allbom.common.exception.BadRequestException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -109,4 +104,6 @@ public class TokenProcessor {
             throw new BadRequestException(AuthErrorCode.UNKNOWN_TOKEN);
         }
     }
+
+
 }
