@@ -3,6 +3,7 @@ package capstone.allbom.auth.controller;
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.request.GeneralLoginRequest;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
+import capstone.allbom.auth.dto.response.GeneralSignUpResponse;
 import capstone.allbom.auth.dto.response.LoginResponse;
 import capstone.allbom.auth.dto.response.ReissuedAccessTokenResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
@@ -50,19 +51,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> registerByGeneral(
+    public ResponseEntity<GeneralSignUpResponse> registerByGeneral(
             @RequestBody GeneralSignUpRequest generalSignUpRequest,
             final HttpServletResponse httpServletResponse) {
 
-        final LoginTokenDto loginTokenDto = authService.generalRegister(generalSignUpRequest);
-        System.out.println("GenralRegisterTokenDto = " + loginTokenDto);
+        GeneralSignUpResponse signUpResponse = authService.generalRegister(generalSignUpRequest);
 
-        addRefreshTokenToCookie(httpServletResponse, loginTokenDto.refreshToken());
-        final LoginResponse response =
-                new LoginResponse(loginTokenDto.accessToken(), loginTokenDto.hasEssentialInfo());
-
-        System.out.println("GeneralRegisterResponse = " + response);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(signUpResponse);
     }
 
     @PostMapping("/general/login")
