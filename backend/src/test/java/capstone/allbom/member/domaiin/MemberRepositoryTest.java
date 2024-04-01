@@ -27,12 +27,12 @@ class MemberRepositoryTest {
                 .birthday(LocalDate.now())
                 .latitude(37.6014512)
                 .longitude(127.0166146)
-                .kakaoEmail("eunsun2080@naver.com")
+                .socialId("3414231234")
                 .build();
         memberRepository.save(member);
 
         // then
-        assertThat(member.getKakaoEmail()).isEqualTo(memberRepository.findBykakaoEmail("eunsun2080@naver.com").get().getKakaoEmail());
+        assertThat(member.getSocialId()).isEqualTo(memberRepository.findBySocialId("3414231234").get().getSocialId());
     }
 
     @Test
@@ -45,7 +45,7 @@ class MemberRepositoryTest {
         memberRepository.save(member);
 
         // then
-        assertThat(member.getLoginId()).isEqualTo(memberRepository.findByloginId("eunsun").get().getLoginId());
+        assertThat(member.getLoginId()).isEqualTo(memberRepository.findByLoginId("eunsun").get().getLoginId());
     }
 
 }

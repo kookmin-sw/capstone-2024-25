@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findBySocialId(String socialId); // 카카오로그인 아이디로 찾기
 
-    Optional<Member> findByloginId(String loginId); // 일반 로그인 아이디로 찾기
+    Optional<Member> findByLoginId(String loginId); // 일반 로그인 아이디로 찾기
 
     boolean existsById(Long id);
 
