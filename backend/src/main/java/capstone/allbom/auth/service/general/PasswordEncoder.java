@@ -14,25 +14,19 @@ import java.util.Base64;
 @Component
 public class PasswordEncoder {
 
-    public String encrypt(String id, String password) {
+    public String encode(String password) {
         try {
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), getSalt(id), 85319, 128);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
 
-            byte[] hash = factory.generateSecret(spec).getEncoded();
             return Base64.getEncoder().encodeToString(hash);
-
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Failed to encode password", e);
         }
     }
 
-    private byte[] getSalt(String email)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException {
-
-        MessageDigest digest = MessageDigest.getInstance("SHA-512");
-        byte[] keyBytes = email.getBytes("UTF-8");
-
-        return digest.digest(keyBytes);
+    public boolean matches(String rawPassword, String encodedPassword) {
+        String encodedRawPassword = encode(rawPassword);
+        return encodedRawPassword.equals(encodedPassword);
     }
 }
