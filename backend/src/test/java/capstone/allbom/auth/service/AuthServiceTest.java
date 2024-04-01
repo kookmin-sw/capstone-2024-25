@@ -112,5 +112,25 @@ class AuthServiceTest {
             assertThat(e.getMessage()).isEqualTo("해당 회원이 존재하지 않습니다.");
 
         }
+
+        @Test
+        void 일반_로그인_시_비밀번호가_다르면_예외가_발생한다() {
+            // given
+            authService.generalRegister(signUpRequest);
+            var loginRequest = new GeneralLoginRequest(
+                    "esssun",
+                    "kookmin1234"
+            );
+
+            // when
+            UnauthorizedException e = assertThrows(UnauthorizedException.class, ()
+                    -> authService.generalLogin(loginRequest));
+
+            // then
+            assertThat(e.getErrorCode()).isEqualTo(INCORRECT_PASSWORD_OR_ACCOUNT);
+            assertThat(e.getMessage()).isEqualTo("비밀번호가 틀렸거나, 해당 계정이 없습니다.");
+
+        }
+
     }
 }
