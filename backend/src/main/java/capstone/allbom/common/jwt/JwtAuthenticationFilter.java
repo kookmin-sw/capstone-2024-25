@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/auth/kakao/callback",
             "/auth/logout",
             "/auth/login",
-            "/auth/signup",
+            "/auth/register",
             "/login"
     );
 
