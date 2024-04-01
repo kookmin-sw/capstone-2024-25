@@ -132,5 +132,21 @@ class AuthServiceTest {
 
         }
 
+        @Test
+        void 예외가_발생하지_않으면_로그인이_성공한다() throws JsonProcessingException {
+            // given
+            authService.generalRegister(signUpRequest);
+            Member member = memberRepository.findByLoginId(loginRequest.loginId())
+                    .orElseThrow(() -> new NotFoundException(NON_EXISTENT_MEMBER));
+
+            // when
+            LoginTokenDto loginTokenDto = authService.generalLogin(loginRequest);
+            String token = "Bearer " + loginTokenDto.accessToken();
+            final String tokenWithoutType = tokenProcessor.resolveToken(token);
+            final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+
+            // then
+            assertThat(member.getId()).isEqualTo(tokenPayload.memberId());
+        }
     }
 }
