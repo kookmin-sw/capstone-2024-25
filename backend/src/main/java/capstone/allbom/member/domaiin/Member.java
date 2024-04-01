@@ -1,5 +1,6 @@
 package capstone.allbom.member.domaiin;
 
+import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.medicine.domain.Medicine;
 import jakarta.persistence.*;
@@ -60,6 +61,14 @@ public class Member {
         return Member.builder()
                 .loginType(LoginType.KAKAO)
                 .socialId(String.valueOf(response.id()))
+                .build();
+    }
+
+    public static Member from(final GeneralSignUpRequest request, String encryptPassword) {
+        return Member.builder()
+                .loginType(LoginType.GENERAL)
+                .loginId(request.loginId())
+                .loginPassword(encryptPassword)
                 .build();
     }
 
