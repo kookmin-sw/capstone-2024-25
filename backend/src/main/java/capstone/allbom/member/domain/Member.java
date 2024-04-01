@@ -1,4 +1,4 @@
-package capstone.allbom.member.domaiin;
+package capstone.allbom.member.domain;
 
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;

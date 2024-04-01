@@ -1,6 +1,5 @@
 package capstone.allbom.chatbot.domain;
 
-import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package capstone.allbom.medicine.domain;
 
 import capstone.allbom.common.StringListConverter;
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 

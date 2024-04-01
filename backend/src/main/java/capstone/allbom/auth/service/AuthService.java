@@ -1,17 +1,19 @@
 package capstone.allbom.auth.service;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
+import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
 import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.auth.service.dto.TokenPayloadDto;
+import capstone.allbom.auth.service.general.PasswordEncoder;
 import capstone.allbom.auth.service.oauth.kakao.KakaoOAuthClient;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.JsonErrorCode;
 import capstone.allbom.common.jwt.TokenPayload;
 import capstone.allbom.common.jwt.TokenProcessor;
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,20 @@ public class AuthService {
     private final MemberService memberService;
     private final TokenProcessor tokenProcessor;
     private final RedisTemplate<String, Long> redisTemplate;
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional
+    public LoginTokenDto generalRegister(final GeneralSignUpRequest generalSignUpRequest) {
+        memberService.validateDuplicateLoginId(generalSignUpRequest.loginId());
+        String encryptPassword = passwordEncoder.encrypt(generalSignUpRequest.loginId(), generalSignUpRequest.loginPassword());
+
+        final Member member = Member.from(generalSignUpRequest, encryptPassword);
+        final Member registeredMember = memberService.registerFromGeneral(member);
+        final String accessToken = tokenProcessor.generateAccessToken(registeredMember.getId());
+        final String refreshToken = tokenProcessor.generateRefreshToken(registeredMember.getId());
+        redisTemplate.opsForValue().set(refreshToken, registeredMember.getId(), Duration.ofDays(14L));
+        return new LoginTokenDto(accessToken, refreshToken, registeredMember.hasEssentialInfo());
+    }
 
     @Transactional
     public LoginTokenDto kakaoRegister(final String code) {

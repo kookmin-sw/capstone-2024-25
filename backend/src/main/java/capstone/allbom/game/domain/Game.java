@@ -1,13 +1,11 @@
 package capstone.allbom.game.domain;
 
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
