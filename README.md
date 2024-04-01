@@ -1,6 +1,11 @@
 
-<h3> 프로젝트 페이지 주소 -> https://kookmin-sw.github.io/capstone-2024-25 </h3>
+<h3> 🔗 프로젝트 페이지 주소 </h3>
+https://kookmin-sw.github.io/capstone-2024-25 
 
+<h3> 🔗 중간발표자료, 중간보고서 다운로드 주소 </h3>
+https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing 
+
+</br>
 </br>
 
 <h2> 1. 프로젝트 소개 </h2>
