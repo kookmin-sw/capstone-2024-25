@@ -1,7 +1,6 @@
-package capstone.allbom.member.domaiin;
+package capstone.allbom.member.domain;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import lombok.Getter;
 
 @Embeddable // JPA 내장 type

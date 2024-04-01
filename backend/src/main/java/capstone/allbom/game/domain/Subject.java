@@ -1,7 +1,5 @@
 package capstone.allbom.game.domain;
 
-import capstone.allbom.Facility.domain.FacilityType;
-import capstone.allbom.member.domaiin.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
