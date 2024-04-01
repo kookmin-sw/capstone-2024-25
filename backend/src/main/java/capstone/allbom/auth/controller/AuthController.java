@@ -1,10 +1,11 @@
 package capstone.allbom.auth.controller;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
+import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.LoginResponse;
 import capstone.allbom.auth.dto.response.ReissuedAccessTokenResponse;
 import capstone.allbom.auth.exception.AuthErrorCode;
-import capstone.allbom.auth.service.oauth.AuthService;
+import capstone.allbom.auth.service.AuthService;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
 import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.common.exception.BadRequestException;
@@ -35,7 +36,7 @@ public class AuthController {
             @RequestParam final String code,
             final HttpServletResponse httpServletResponse
     ) {
-        final LoginTokenDto loginTokenDto = authService.register(code);
+        final LoginTokenDto loginTokenDto = authService.kakaoRegister(code);
 
         System.out.println("loginTokenDto = " + loginTokenDto);
 
@@ -46,6 +47,23 @@ public class AuthController {
         System.out.println("kakao.callback.response = " + response);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<LoginResponse> registerByGeneral(
+            @RequestBody GeneralSignUpRequest generalSignUpRequest,
+            final HttpServletResponse httpServletResponse) {
+
+        final LoginTokenDto loginTokenDto = authService.generalRegister(generalSignUpRequest);
+        System.out.println("GenralLoginTokenDto = " + loginTokenDto);
+
+        addRefreshTokenToCookie(httpServletResponse, loginTokenDto.refreshToken());
+        final LoginResponse response =
+                new LoginResponse(loginTokenDto.accessToken(), loginTokenDto.hasEssentialInfo());
+
+        System.out.println("GeneralLoginResponse = " + response);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
@@ -80,6 +98,7 @@ public class AuthController {
 //        return ResponseEntity.noContent().build();
 //    }
 
+    // 클라이언트쪽에 refresh token set-cookie 해주는 함수
     private void addRefreshTokenToCookie(final HttpServletResponse httpServletResponse, final String refreshToken) {
         final ResponseCookie responseCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)

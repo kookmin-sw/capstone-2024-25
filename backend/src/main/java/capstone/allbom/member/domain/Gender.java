@@ -1,4 +1,4 @@
-package capstone.allbom.member.domaiin;
+package capstone.allbom.member.domain;
 
 public enum Gender {
     FEMALE, MALE

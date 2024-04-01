@@ -1,6 +1,6 @@
 package capstone.allbom.common.jwt;
 
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
