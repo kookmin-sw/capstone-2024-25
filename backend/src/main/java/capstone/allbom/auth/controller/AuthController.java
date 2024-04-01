@@ -1,6 +1,7 @@
 package capstone.allbom.auth.controller;
 
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
+import capstone.allbom.auth.dto.request.GeneralLoginRequest;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.LoginResponse;
 import capstone.allbom.auth.dto.response.ReissuedAccessTokenResponse;
@@ -54,6 +55,22 @@ public class AuthController {
             final HttpServletResponse httpServletResponse) {
 
         final LoginTokenDto loginTokenDto = authService.generalRegister(generalSignUpRequest);
+        System.out.println("GenralRegisterTokenDto = " + loginTokenDto);
+
+        addRefreshTokenToCookie(httpServletResponse, loginTokenDto.refreshToken());
+        final LoginResponse response =
+                new LoginResponse(loginTokenDto.accessToken(), loginTokenDto.hasEssentialInfo());
+
+        System.out.println("GeneralRegisterResponse = " + response);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/general/login")
+    public ResponseEntity<LoginResponse> loginByGeneral(
+            @RequestBody GeneralLoginRequest generalLoginRequest,
+            final HttpServletResponse httpServletResponse) {
+
+        final LoginTokenDto loginTokenDto = authService.generalLogin(generalLoginRequest);
         System.out.println("GenralLoginTokenDto = " + loginTokenDto);
 
         addRefreshTokenToCookie(httpServletResponse, loginTokenDto.refreshToken());
