@@ -20,6 +20,7 @@ import capstone.allbom.member.exception.MemberErrorCode;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.util.Objects;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -53,10 +55,13 @@ public class AuthService {
         Member member = memberRepository.findByLoginId(loginRequest.loginId())
                 .orElseThrow(() -> new NotFoundException(MemberErrorCode.NON_EXISTENT_MEMBER));
 
+        System.out.println("AuthService.member.getId() = " + member.getId());
+
         if (!passwordEncoder.matches(loginRequest.loginPassword(), member.getLoginPassword()))
             throw new UnauthorizedException(DefaultErrorCode.INCORRECT_PASSWORD_OR_ACCOUNT);
         final String accessToken = tokenProcessor.generateAccessToken(member.getId());
         final String refreshToken = tokenProcessor.generateRefreshToken(member.getId());
+
         redisTemplate.opsForValue().set(refreshToken, member.getId(), Duration.ofDays(14L));
         return new LoginTokenDto(accessToken, refreshToken, member.hasEssentialInfo());
     }
@@ -70,6 +75,7 @@ public class AuthService {
         final Member registeredMember = memberService.registerFromKakao(member);
         final String accessToken = tokenProcessor.generateAccessToken(registeredMember.getId());
         final String refreshToken = tokenProcessor.generateRefreshToken(registeredMember.getId());
+
         redisTemplate.opsForValue().set(refreshToken, registeredMember.getId(), Duration.ofDays(14L));
         return new LoginTokenDto(accessToken, refreshToken, registeredMember.hasEssentialInfo());
     }
@@ -79,7 +85,13 @@ public class AuthService {
             final AccessTokenRequest request,
             final String refreshTokenByRequest
     ) {
-        tokenProcessor.validateToken(refreshTokenByRequest);
+        log.info("refreshTokenByRequest = {}", refreshTokenByRequest);
+        log.info("request.accessToken() = {}", request.accessToken());
+        
+        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshTokenByRequest, request.accessToken())) {
+            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
+        }
+//        tokenProcessor.validateToken(refreshTokenByRequest);
 
         final TokenPayloadDto tokenPayloadDto = parseTokens(request.accessToken(), refreshTokenByRequest);
         final TokenPayload accessTokenPayload = tokenPayloadDto.accessTokenPayload();
@@ -105,8 +117,8 @@ public class AuthService {
         final TokenPayload accessTokenPayload;
         final TokenPayload refreshTokenPayload;
         try {
-            accessTokenPayload = tokenProcessor.parseToken(accessToken);
-            refreshTokenPayload = tokenProcessor.parseToken(refreshToken);
+            accessTokenPayload = tokenProcessor.decodeToken(accessToken);
+            refreshTokenPayload = tokenProcessor.decodeToken(refreshToken);
         } catch (final JsonProcessingException e) {
             throw new BadRequestException(JsonErrorCode.UNEXPECTED_EXCEPTION);
         }

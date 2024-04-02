@@ -79,7 +79,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    //    @Operation(description = "refresh token을 재발급하여 로그인을 연장한다. (Get으로 요청시 405 주의)")
+    //    @Operation(description = "refresh token으로 access token을 재발급하여 로그인을 연장한다. (Get으로 요청시 405 주의)")
     @PostMapping("/token")
     public ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
             @RequestBody @Valid final AccessTokenRequest request,

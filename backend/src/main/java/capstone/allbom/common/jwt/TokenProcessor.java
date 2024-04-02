@@ -74,19 +74,23 @@ public class TokenProcessor {
         throw new BadRequestException(AuthErrorCode.INVALID_TOKEN);
     }
 
-    public TokenPayload parseToken(final String token) throws JsonProcessingException {
+    public TokenPayload decodeToken(final String token) throws JsonProcessingException {
         final String[] chunks = token.split(TOKEN_DELIMITER);
         final String payload = new String(Decoders.BASE64.decode(chunks[1]));
         return objectMapper.readValue(payload, TokenPayload.class);
     }
 
+    private Jws<Claims> parseToken(final String token) {
+        System.out.println("validate token");
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token);
+    }
+
     public void validateToken(final String token) {
         try {
-            System.out.println("validate token");
-            Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token);
+            parseToken(token);
         } catch (final UnsupportedJwtException e) {
             log.info("지원하지 않는 JWT입니다.");
             throw new BadRequestException(AuthErrorCode.UNSUPPORTED_TOKEN);
@@ -103,6 +107,16 @@ public class TokenProcessor {
             log.info("알 수 없는 토큰 유효성 문제가 발생했습니다.");
             throw new BadRequestException(AuthErrorCode.UNKNOWN_TOKEN);
         }
+    }
+
+    public boolean isValidRefreshAndInvalidAccess(final String refreshToken, final String accessToken) {
+        validateToken(refreshToken);
+        try {
+            validateToken(accessToken);
+        } catch (final ExpiredJwtException e) {
+            return true;
+        }
+        return false;
     }
 
 
