@@ -80,13 +80,17 @@ public class TokenProcessor {
         return objectMapper.readValue(payload, TokenPayload.class);
     }
 
+    private Jws<Claims> parseToken(final String token) {
+        System.out.println("validate token");
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token);
+    }
+
     public void validateToken(final String token) {
         try {
-            System.out.println("validate token");
-            Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
-                    .build()
-                    .parseClaimsJws(token);
+            parseToken(token);
         } catch (final UnsupportedJwtException e) {
             log.info("지원하지 않는 JWT입니다.");
             throw new BadRequestException(AuthErrorCode.UNSUPPORTED_TOKEN);
@@ -104,6 +108,5 @@ public class TokenProcessor {
             throw new BadRequestException(AuthErrorCode.UNKNOWN_TOKEN);
         }
     }
-
 
 }
