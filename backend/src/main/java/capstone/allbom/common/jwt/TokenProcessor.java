@@ -74,7 +74,7 @@ public class TokenProcessor {
         throw new BadRequestException(AuthErrorCode.INVALID_TOKEN);
     }
 
-    public TokenPayload extractToken(final String token) throws JsonProcessingException {
+    public TokenPayload decodeToken(final String token) throws JsonProcessingException {
         final String[] chunks = token.split(TOKEN_DELIMITER);
         final String payload = new String(Decoders.BASE64.decode(chunks[1]));
         return objectMapper.readValue(payload, TokenPayload.class);

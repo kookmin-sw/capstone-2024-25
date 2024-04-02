@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("tokenWithoutType = " + tokenWithoutType);
 
         tokenProcessor.validateToken(tokenWithoutType);
-        final TokenPayload tokenPayload = tokenProcessor.extractToken(tokenWithoutType);
+        final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
         System.out.println("tokenPayload.memberId = " + tokenPayload.memberId());
         memberIdHolder.setId(tokenPayload.memberId());
         filterChain.doFilter(request, response);

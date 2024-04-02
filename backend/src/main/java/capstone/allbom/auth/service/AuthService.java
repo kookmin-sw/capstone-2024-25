@@ -1,7 +1,5 @@
 package capstone.allbom.auth.service;
 
-import capstone.allbom.auth.domain.RefreshToken;
-import capstone.allbom.auth.domain.RefreshTokenRepository;
 import capstone.allbom.auth.dto.request.AccessTokenRequest;
 import capstone.allbom.auth.dto.request.GeneralLoginRequest;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
@@ -37,7 +35,6 @@ public class AuthService {
     private final KakaoOAuthClient kakaoOAuthClient;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProcessor tokenProcessor;
     private final RedisTemplate<String, Long> redisTemplate;
     private final PasswordEncoder passwordEncoder;
@@ -65,8 +62,6 @@ public class AuthService {
         final String accessToken = tokenProcessor.generateAccessToken(member.getId());
         final String refreshToken = tokenProcessor.generateRefreshToken(member.getId());
 
-//        final RefreshToken savedRefreshToken = new RefreshToken(refreshToken, member.getId());
-//        refreshTokenRepository.save(savedRefreshToken);
         redisTemplate.opsForValue().set(refreshToken, member.getId(), Duration.ofDays(14L));
         return new LoginTokenDto(accessToken, refreshToken, member.hasEssentialInfo());
     }
@@ -81,8 +76,6 @@ public class AuthService {
         final String accessToken = tokenProcessor.generateAccessToken(registeredMember.getId());
         final String refreshToken = tokenProcessor.generateRefreshToken(registeredMember.getId());
 
-//        final RefreshToken savedRefreshToken = new RefreshToken(refreshToken, member.getId());
-//        refreshTokenRepository.save(savedRefreshToken);
         redisTemplate.opsForValue().set(refreshToken, registeredMember.getId(), Duration.ofDays(14L));
         return new LoginTokenDto(accessToken, refreshToken, registeredMember.hasEssentialInfo());
     }

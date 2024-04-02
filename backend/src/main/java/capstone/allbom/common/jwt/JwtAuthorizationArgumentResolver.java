@@ -35,7 +35,7 @@ public class JwtAuthorizationArgumentResolver implements HandlerMethodArgumentRe
         final String token = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
         final String tokenWithoutType = tokenProcessor.resolveToken(token);
         tokenProcessor.validateToken(tokenWithoutType);
-        final TokenPayload tokenPayload = tokenProcessor.extractToken(tokenWithoutType);
+        final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
         return memberService.findById(tokenPayload.memberId());
     }
 }

@@ -143,7 +143,7 @@ class AuthServiceTest {
             LoginTokenDto loginTokenDto = authService.generalLogin(loginRequest);
             String token = "Bearer " + loginTokenDto.accessToken();
             final String tokenWithoutType = tokenProcessor.resolveToken(token);
-            final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+            final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
 
             // then
             assertThat(member.getId()).isEqualTo(tokenPayload.memberId());
