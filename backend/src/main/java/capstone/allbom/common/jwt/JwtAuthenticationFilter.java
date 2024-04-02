@@ -49,7 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final MemberIdHolder memberIdHolder;
     private final TokenProcessor tokenProcessor;
 
-
     @Override
     protected void doFilterInternal(
             final HttpServletRequest request,
@@ -67,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("tokenWithoutType = " + tokenWithoutType);
 
         tokenProcessor.validateToken(tokenWithoutType);
-        final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+        final TokenPayload tokenPayload = tokenProcessor.extractToken(tokenWithoutType);
         System.out.println("tokenPayload.memberId = " + tokenPayload.memberId());
         memberIdHolder.setId(tokenPayload.memberId());
         filterChain.doFilter(request, response);

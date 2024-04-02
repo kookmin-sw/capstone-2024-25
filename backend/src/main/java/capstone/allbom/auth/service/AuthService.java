@@ -53,6 +53,8 @@ public class AuthService {
         Member member = memberRepository.findByLoginId(loginRequest.loginId())
                 .orElseThrow(() -> new NotFoundException(MemberErrorCode.NON_EXISTENT_MEMBER));
 
+        System.out.println("AuthService.member.getId() = " + member.getId());
+
         if (!passwordEncoder.matches(loginRequest.loginPassword(), member.getLoginPassword()))
             throw new UnauthorizedException(DefaultErrorCode.INCORRECT_PASSWORD_OR_ACCOUNT);
         final String accessToken = tokenProcessor.generateAccessToken(member.getId());
@@ -105,8 +107,8 @@ public class AuthService {
         final TokenPayload accessTokenPayload;
         final TokenPayload refreshTokenPayload;
         try {
-            accessTokenPayload = tokenProcessor.parseToken(accessToken);
-            refreshTokenPayload = tokenProcessor.parseToken(refreshToken);
+            accessTokenPayload = tokenProcessor.extractToken(accessToken);
+            refreshTokenPayload = tokenProcessor.extractToken(refreshToken);
         } catch (final JsonProcessingException e) {
             throw new BadRequestException(JsonErrorCode.UNEXPECTED_EXCEPTION);
         }
