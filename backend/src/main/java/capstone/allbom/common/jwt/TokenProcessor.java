@@ -67,7 +67,7 @@ public class TokenProcessor {
                 .compact();
     }
 
-    public String resolveToken(final String token) {
+    public String extractAccessToken(final String token) {
         if (StringUtils.hasText(token) && token.startsWith(BEARER_TOKEN_PREFIX)) {
             return token.split(BLANK)[1];
         }

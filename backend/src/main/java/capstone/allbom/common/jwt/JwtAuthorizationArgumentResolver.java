@@ -33,7 +33,7 @@ public class JwtAuthorizationArgumentResolver implements HandlerMethodArgumentRe
             final WebDataBinderFactory binderFactory
     ) throws JsonProcessingException {
         final String token = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        final String tokenWithoutType = tokenProcessor.resolveToken(token);
+        final String tokenWithoutType = tokenProcessor.extractAccessToken(token);
         tokenProcessor.validateToken(tokenWithoutType);
         final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
         return memberService.findById(tokenPayload.memberId());

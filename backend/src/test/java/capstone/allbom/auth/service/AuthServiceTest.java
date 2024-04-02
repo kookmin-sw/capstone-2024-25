@@ -142,7 +142,7 @@ class AuthServiceTest {
             // when
             LoginTokenDto loginTokenDto = authService.generalLogin(loginRequest);
             String token = "Bearer " + loginTokenDto.accessToken();
-            final String tokenWithoutType = tokenProcessor.resolveToken(token);
+            final String tokenWithoutType = tokenProcessor.extractAccessToken(token);
             final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
 
             // then
