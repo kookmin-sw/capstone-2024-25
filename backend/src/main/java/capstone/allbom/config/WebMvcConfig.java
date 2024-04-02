@@ -1,5 +1,6 @@
 package capstone.allbom.config;
 
+import capstone.allbom.common.jwt.BearerAuthorizationExtractor;
 import capstone.allbom.common.jwt.JwtAuthenticationFilter;
 import capstone.allbom.common.jwt.JwtAuthorizationArgumentResolver;
 import capstone.allbom.common.jwt.TokenProcessor;
@@ -31,6 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private final MemberIdHolder memberIdHolder;
     private final RequestLogInterceptor requestLogInterceptor;
     private final TokenProcessor tokenProcessor;
+    private final BearerAuthorizationExtractor bearerExtractor;
     private final JwtAuthorizationArgumentResolver jwtAuthorizationArgumentResolver;
 
     @Bean
@@ -65,7 +67,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilter() {
         final FilterRegistrationBean<JwtAuthenticationFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new JwtAuthenticationFilter(memberIdHolder, tokenProcessor));
+        filterRegistrationBean.setFilter(new JwtAuthenticationFilter(memberIdHolder, tokenProcessor, bearerExtractor));
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.setOrder(1);
         /**

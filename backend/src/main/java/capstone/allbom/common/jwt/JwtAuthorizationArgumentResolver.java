@@ -17,6 +17,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class JwtAuthorizationArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final TokenProcessor tokenProcessor;
+    private final BearerAuthorizationExtractor bearerExtractor;
     private final MemberService memberService;
 
     @Override
@@ -33,7 +34,7 @@ public class JwtAuthorizationArgumentResolver implements HandlerMethodArgumentRe
             final WebDataBinderFactory binderFactory
     ) throws JsonProcessingException {
         final String token = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        final String tokenWithoutType = tokenProcessor.resolveToken(token);
+        final String tokenWithoutType = bearerExtractor.extractAccessToken(token);
         tokenProcessor.validateToken(tokenWithoutType);
         final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
         return memberService.findById(tokenPayload.memberId());

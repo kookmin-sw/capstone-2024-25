@@ -48,6 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final MemberIdHolder memberIdHolder;
     private final TokenProcessor tokenProcessor;
+    private final BearerAuthorizationExtractor bearerExtractor;
 
     @Override
     protected void doFilterInternal(
@@ -61,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //        log.info("token = {}", token);
         System.out.println("token = " + token);
 
-        final String tokenWithoutType = tokenProcessor.resolveToken(token);
+        final String tokenWithoutType = bearerExtractor.extractAccessToken(token);
 //        log.info("tokenWithoutType = {}", tokenWithoutType);
         System.out.println("tokenWithoutType = " + tokenWithoutType);
 

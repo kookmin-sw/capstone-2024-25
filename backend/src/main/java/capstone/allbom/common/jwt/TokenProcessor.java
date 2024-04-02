@@ -24,8 +24,6 @@ import javax.crypto.spec.SecretKeySpec;
 public class TokenProcessor {
 
     private static final String TOKEN_DELIMITER = "\\.";
-    private static final String BEARER_TOKEN_PREFIX = "Bearer ";
-    private static final String BLANK = " ";
 
     private final SecretKey secretKey;
     private final int tokenExpirationTime;
@@ -65,13 +63,6 @@ public class TokenProcessor {
                 .setExpiration(new Date(now.getTime() + refreshTokenExpirationTime))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
-    }
-
-    public String resolveToken(final String token) {
-        if (StringUtils.hasText(token) && token.startsWith(BEARER_TOKEN_PREFIX)) {
-            return token.split(BLANK)[1];
-        }
-        throw new BadRequestException(AuthErrorCode.INVALID_TOKEN);
     }
 
     public TokenPayload decodeToken(final String token) throws JsonProcessingException {

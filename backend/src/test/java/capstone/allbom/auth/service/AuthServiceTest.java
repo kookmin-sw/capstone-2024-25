@@ -8,6 +8,7 @@ import capstone.allbom.auth.service.general.PasswordEncoder;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.common.exception.UnauthorizedException;
+import capstone.allbom.common.jwt.BearerAuthorizationExtractor;
 import capstone.allbom.common.jwt.TokenPayload;
 import capstone.allbom.common.jwt.TokenProcessor;
 import capstone.allbom.member.domain.Member;
@@ -38,6 +39,7 @@ class AuthServiceTest {
     @Autowired PasswordEncoder passwordEncoder;
     @Autowired MemberRepository memberRepository;
     @Autowired TokenProcessor tokenProcessor;
+    @Autowired BearerAuthorizationExtractor bearerExtractor;
 
     @Nested
     class registerMember {
@@ -142,7 +144,7 @@ class AuthServiceTest {
             // when
             LoginTokenDto loginTokenDto = authService.generalLogin(loginRequest);
             String token = "Bearer " + loginTokenDto.accessToken();
-            final String tokenWithoutType = tokenProcessor.resolveToken(token);
+            final String tokenWithoutType = bearerExtractor.extractAccessToken(token);
             final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
 
             // then
