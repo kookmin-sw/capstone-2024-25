@@ -88,10 +88,10 @@ public class AuthService {
         log.info("refreshTokenByRequest = {}", refreshTokenByRequest);
         log.info("request.accessToken() = {}", request.accessToken());
         
-        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshTokenByRequest, request.accessToken())) {
-            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
-        }
-//        tokenProcessor.validateToken(refreshTokenByRequest);
+//        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshTokenByRequest, request.accessToken())) {
+//            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
+//        }
+        tokenProcessor.validateToken(refreshTokenByRequest);
 
         final TokenPayloadDto tokenPayloadDto = parseTokens(request.accessToken(), refreshTokenByRequest);
         final TokenPayload accessTokenPayload = tokenPayloadDto.accessTokenPayload();

@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //        log.info("token = {}", token);
         System.out.println("token = " + token);
 
-        final String tokenWithoutType = tokenProcessor.resolveToken(token);
+        final String tokenWithoutType = tokenProcessor.extractAccessToken(token);
 //        log.info("tokenWithoutType = {}", tokenWithoutType);
         System.out.println("tokenWithoutType = " + tokenWithoutType);
 

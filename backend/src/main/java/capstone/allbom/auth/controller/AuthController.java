@@ -82,13 +82,13 @@ public class AuthController {
     //    @Operation(description = "refresh token으로 access token을 재발급하여 로그인을 연장한다. (Get으로 요청시 405 주의)")
     @PostMapping("/token")
     public ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
-            @RequestBody @Valid final AccessTokenRequest request,
+            @RequestHeader("Authorization") final String authorizationHeader,
             final HttpServletRequest httpServletRequest,
             final HttpServletResponse httpServletResponse
     ) {
         final String refreshToken = getRefreshTokenFromCookie(httpServletRequest);
         log.info("refreshToken={}", refreshToken);
-        final ReissuedTokenDto reissuedTokenDto = authService.reissueAuthToken(request, refreshToken);
+        final ReissuedTokenDto reissuedTokenDto = authService.reissueAuthToken(authorizationHeader, refreshToken);
 
         addRefreshTokenToCookie(httpServletResponse, reissuedTokenDto.refreshToken());
         final ReissuedAccessTokenResponse response = new ReissuedAccessTokenResponse(reissuedTokenDto.accessToken());
