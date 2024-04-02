@@ -20,6 +20,7 @@ import capstone.allbom.member.exception.MemberErrorCode;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.util.Objects;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -81,6 +83,12 @@ public class AuthService {
             final AccessTokenRequest request,
             final String refreshTokenByRequest
     ) {
+        log.info("refreshTokenByRequest = {}", refreshTokenByRequest);
+        log.info("request.accessToken() = {}", request.accessToken());
+
+        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshTokenByRequest, request.accessToken())) {
+            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
+        }
         tokenProcessor.validateToken(refreshTokenByRequest);
 
         final TokenPayloadDto tokenPayloadDto = parseTokens(request.accessToken(), refreshTokenByRequest);
