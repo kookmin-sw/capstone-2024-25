@@ -109,4 +109,15 @@ public class TokenProcessor {
         }
     }
 
+    public boolean isValidRefreshAndInvalidAccess(final String refreshToken, final String accessToken) {
+        validateToken(refreshToken);
+        try {
+            validateToken(accessToken);
+        } catch (final ExpiredJwtException e) {
+            return true;
+        }
+        return false;
+    }
+
+
 }
