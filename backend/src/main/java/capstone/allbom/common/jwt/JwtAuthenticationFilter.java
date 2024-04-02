@@ -25,7 +25,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/auth/logout",
             "/auth/login",
             "/auth/register",
-            "/auth/general/login"
+            "/auth/general/login",
+            "auth/token"
     );
 
     private static final List<String> ALLOWED_START_URIS = List.of(

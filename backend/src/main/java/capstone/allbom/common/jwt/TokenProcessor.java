@@ -101,7 +101,7 @@ public class TokenProcessor {
             log.info("토큰의 서명 유효성 검사가 실패했습니다.");
             throw new BadRequestException(AuthErrorCode.SIGNATURE_TOKEN);
         } catch (final ExpiredJwtException e) {
-            log.info("토큰의 유효시간이 만료되었습니다.");
+            log.info("토큰의 유효시간이 만료되었습니다.={}", token);
             throw new BadRequestException(AuthErrorCode.EXPIRED_TOKEN);
         } catch (final Exception e) {
             log.info("알 수 없는 토큰 유효성 문제가 발생했습니다.");
