@@ -81,23 +81,22 @@ public class AuthService {
     }
 
     @Transactional
-    public ReissuedTokenDto reissueAuthToken(
-            final AccessTokenRequest request,
-            final String refreshTokenByRequest
-    ) {
-        log.info("refreshTokenByRequest = {}", refreshTokenByRequest);
-        log.info("request.accessToken() = {}", request.accessToken());
-        
-//        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshTokenByRequest, request.accessToken())) {
-//            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
-//        }
-        tokenProcessor.validateToken(refreshTokenByRequest);
+    public ReissuedTokenDto reissueAuthToken(final String authorizationHeader, final String refreshToken) {
+        log.info("refreshTokenByRequest = {}", refreshToken);
+        log.info("request.accessToken() = {}", authorizationHeader);
 
-        final TokenPayloadDto tokenPayloadDto = parseTokens(request.accessToken(), refreshTokenByRequest);
+        final String accessToken = tokenProcessor.extractAccessToken(authorizationHeader);
+        
+        if ( !tokenProcessor.isValidRefreshAndInvalidAccess(refreshToken, accessToken)) {
+            throw new AuthException(AuthErrorCode.FAIL_TO_VALIDATE_TOKEN);
+        }
+//        tokenProcessor.validateToken(refreshToken);
+
+        final TokenPayloadDto tokenPayloadDto = parseTokens(accessToken, refreshToken);
         final TokenPayload accessTokenPayload = tokenPayloadDto.accessTokenPayload();
         final TokenPayload refreshTokenPayload = tokenPayloadDto.refreshTokenPayload();
 
-        redisTemplate.delete(refreshTokenByRequest);
+        redisTemplate.delete(refreshToken);
         validateTokenInfo(accessTokenPayload, refreshTokenPayload);
 
         final String newAccessToken = tokenProcessor.generateAccessToken(accessTokenPayload.memberId());
@@ -107,7 +106,8 @@ public class AuthService {
     }
 
     private void validateTokenInfo(final TokenPayload accessTokenPayload, final TokenPayload refreshTokenPayload) {
-//        System.out.println("accessTokenPayload = " + accessTokenPayload.memberId());
+        System.out.println("accessTokenPayload = " + accessTokenPayload.memberId());
+        System.out.println("refreshTokenPayload = " + refreshTokenPayload.memberId());
         if (!Objects.equals(accessTokenPayload.memberId(), refreshTokenPayload.memberId())) {
             throw new BadRequestException(AuthErrorCode.UNMATCHED_INFORMATION_BETWEEN_TOKEN);
         }
