@@ -48,6 +48,14 @@ public class MedicineService {
         medicine.setMedicineTime(medicineRequest.medicineTime());
     }
 
+    @Transactional
+    public void deleteMedicine(final Member member, Long medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+        validateMemberIsSame(member.getId(), medicine.getMember().getId());
+        medicineRepository.deleteById(medicineId);
+    }
+
     private void validateMemberIsSame(Long requestMemberId, Long medicineMemberId) {
         if (requestMemberId != medicineMemberId) {
             throw new BadRequestException(DefaultErrorCode.INVALID_UPDATE_MEDICINE);
@@ -58,12 +66,5 @@ public class MedicineService {
         if (medicine.isSameNameAndTime(medicineRequest.medicineName(), medicineRequest.medicineTime())) {
             throw new BadRequestException(DefaultErrorCode.DUPLICATED_MEDICINE);
         }
-    }
-
-    @Transactional
-    public void deleteMedicine(Long medicineId) {
-        medicineRepository.findById(medicineId)
-                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
-        medicineRepository.deleteById(medicineId);
     }
 }
