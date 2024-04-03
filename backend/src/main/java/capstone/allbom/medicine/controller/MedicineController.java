@@ -41,6 +41,15 @@ public class MedicineController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/medicine/{medicineId}")
+    public ResponseEntity<Void> deleteMedicine(
+            @Auth Member member,
+            @PathVariable Long medicineId
+    ) {
+        medicineService.deleteMedicine(member, medicineId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/medicine")
     public ResponseEntity<Void> saveMedicine(@Auth Member member, @RequestBody MedicineRequest medicineRequest) {
         System.out.println("member = " + member);
