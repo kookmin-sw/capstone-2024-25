@@ -55,7 +55,7 @@ class MedicineServiceTest {
             Member memberSaved = memberRepository.save(member);
 
             // when
-            Long medicineId = medicineService.saveMedicine(memberSaved.getId(), medicineRequest);
+            Long medicineId = medicineService.saveMedicine(memberSaved, medicineRequest);
             Medicine medicine = medicineRepository.findById(medicineId).get();
 
             // then

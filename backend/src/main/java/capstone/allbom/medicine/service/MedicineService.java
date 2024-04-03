@@ -27,12 +27,12 @@ public class MedicineService {
     }
 
     @Transactional
-    public Long saveMedicine(Long memberId, MedicineRequest medicineRequest) {
-        Member member = memberRepository.findById(memberId)
+    public Long saveMedicine(final Member member, MedicineRequest medicineRequest) {
+        Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
         Medicine medicine = medicineRequest.toDomain();
-        medicine.setMember(member);
+        medicine.setMember(savedMember);
         return medicineRepository.save(medicine).getId();
 
     }

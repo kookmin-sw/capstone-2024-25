@@ -1,10 +1,11 @@
 package capstone.allbom.medicine.controller;
 
-import capstone.allbom.auth.annotation.Member;
+import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.MedicineService;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
+import capstone.allbom.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class MedicineController {
 
     @PostMapping("/medicine")
 //    public ResponseEntity<Void> saveMedicine(@Member Long memberId, @RequestBody MedicineRequest medicineRequest) {
-    public ResponseEntity<Void> saveMedicine(@RequestParam Long memberId, @RequestBody MedicineRequest medicineRequest) {
-        Long medicineId = medicineService.saveMedicine(memberId, medicineRequest);
+    public ResponseEntity<Void> saveMedicine(@Auth Member member, @RequestBody MedicineRequest medicineRequest) {
+        Long medicineId = medicineService.saveMedicine(member, medicineRequest);
         return ResponseEntity.ok()
                 .build();
     }
