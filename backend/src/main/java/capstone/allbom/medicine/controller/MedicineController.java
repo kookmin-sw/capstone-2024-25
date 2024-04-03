@@ -35,7 +35,7 @@ public class MedicineController {
     public ResponseEntity<Void> updateMedicine(
             @Auth Member member,
             @PathVariable Long medicineId,
-            @RequestBody @Valid final MedicineRequest medicineRequest
+            @RequestBody final MedicineRequest medicineRequest
     ) {
         medicineService.updateMedicine(member, medicineId, medicineRequest);
         return ResponseEntity.noContent().build();
