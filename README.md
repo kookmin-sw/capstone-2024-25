@@ -60,5 +60,6 @@ https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sha
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
 
 <h3> 서비스 흐름도 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/8c0042cc-3478-4bcd-83e1-39c67e20cfc8">
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eaf699c2-5411-450b-828b-e5398ac15cfa">
+
 
