@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { useState } from 'react';
+import Button from '../Button';
 
 const customModalStyles = {
   overlay: {
@@ -13,8 +14,8 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '280px',
-    height: '520px',
+    width: '320px',
+    height: 'fit-content',
     zIndex: '150',
     position: 'absolute',
     top: '50%',
@@ -24,15 +25,17 @@ const customModalStyles = {
     boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    overflowX: 'hidden',
+    overflow: 'hidden',
+    padding: '40px 12px',
+    gap: '20px',
   },
 };
 
 const ModalTitle = styled.span`
   align-self: center;
+  font-size: 16px;
 `;
 
 const ModalContent = styled.div`
@@ -42,10 +45,9 @@ const ModalContent = styled.div`
   gap: 12px;
   align-items: flex-start;
   justify-content: flex-start;
-  border: 1px solid red;
 `;
 
-const ContentText = styled.p`
+const ContentText = styled.span`
   font-size: 16px;
 `;
 
@@ -66,6 +68,13 @@ const ChatbotModalFirst = ({ isOpen, close }) => {
         <ContentText>· 음성 혹은 자판 둘 다 사용 가능합니다.</ContentText>
         <ContentText>· 챗봇 아바타를 선택해주세요 !</ContentText>
       </ModalContent>
+      <Button
+        text={'다음'}
+        size="Large"
+        height="Short"
+        type="Primary"
+        // onClick={handleNext}
+      />
     </Modal>
   );
 };
