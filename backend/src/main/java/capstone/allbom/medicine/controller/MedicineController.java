@@ -31,15 +31,10 @@ public class MedicineController {
     }
 
     @PostMapping("/medicine")
-//    public ResponseEntity<Void> saveMedicine(@Member Long memberId, @RequestBody MedicineRequest medicineRequest) {
     public ResponseEntity<Void> saveMedicine(@Auth Member member, @RequestBody MedicineRequest medicineRequest) {
+        System.out.println("member = " + member);
         Long medicineId = medicineService.saveMedicine(member, medicineRequest);
         return ResponseEntity.ok()
                 .build();
     }
-    /**
-     * TODO
-     * medicine post할 때 memberId 전달방식 고려
-     */
-
 }
