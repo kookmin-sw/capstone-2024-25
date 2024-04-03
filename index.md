@@ -57,4 +57,5 @@
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
 
 <h3> 서비스 흐름도 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/abea4f02-d8e7-4723-b891-c050b224956e" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/2fec6ae0-55d8-4395-b805-d9c5ae22a1ad">
+
