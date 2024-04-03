@@ -6,6 +6,7 @@ import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.MedicineService;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Member;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,25 @@ public class MedicineController {
     public ResponseEntity<MedicineDetailResponse> findMedicine(@PathVariable Long medicineId) {
         Medicine medicine = medicineService.findById(medicineId);
         return ResponseEntity.ok(MedicineDetailResponse.from(medicine));
+    }
+
+    @PatchMapping("/medicine/{medicineId}")
+    public ResponseEntity<Void> updateMedicine(
+            @Auth Member member,
+            @PathVariable Long medicineId,
+            @RequestBody final MedicineRequest medicineRequest
+    ) {
+        medicineService.updateMedicine(member, medicineId, medicineRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/medicine/{medicineId}")
+    public ResponseEntity<Void> deleteMedicine(
+            @Auth Member member,
+            @PathVariable Long medicineId
+    ) {
+        medicineService.deleteMedicine(member, medicineId);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/medicine")

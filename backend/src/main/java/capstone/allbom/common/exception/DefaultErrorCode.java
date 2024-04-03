@@ -9,6 +9,7 @@ public enum DefaultErrorCode implements ErrorCode{
     DUPLICATED_LOGIN_ID(400, "이미 존재하는 로그인 아이디입니다."),
     DUPLICATED_MEDICINE(400, "중복된 약입니다."),
     INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
+    INVALID_UPDATE_MEDICINE(400, "자신의 약만 수정할 수 있습니다"),
 
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),
