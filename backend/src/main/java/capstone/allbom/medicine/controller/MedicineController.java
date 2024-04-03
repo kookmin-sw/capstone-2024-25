@@ -37,4 +37,9 @@ public class MedicineController {
         return ResponseEntity.ok()
                 .build();
     }
+    /**
+     * TODO
+     * Accessor 클래스 생성하여 memberId, authority만 부여
+     * @Auth Member로 Member 객체 전체를 받는게 아닌 @Auth Accessor로 제한된 정보 제공하도록 변경
+     */
 }
