@@ -38,13 +38,20 @@ public class MedicineService {
     }
 
     @Transactional
-    public void updateMedicine(Long medicineId, MedicineRequest medicineRequest){
+    public void updateMedicine(final Member member, Long medicineId, MedicineRequest medicineRequest){
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
 
+        validateMemberIsSame(member.getId(), medicine.getMember().getId());
         validateMedicineDuplicate(medicine, medicineRequest);
         medicine.setMedicineName(medicineRequest.medicineName());
         medicine.setMedicineTime(medicineRequest.medicineTime());
+    }
+
+    private void validateMemberIsSame(Long requestMemberId, Long medicineMemberId) {
+        if (requestMemberId != medicineMemberId) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_UPDATE_MEDICINE);
+        }
     }
 
     private void validateMedicineDuplicate(Medicine medicine, MedicineRequest medicineRequest) {
