@@ -4,6 +4,9 @@ import capstone.allbom.common.service.S3FileService;
 import capstone.allbom.game.domain.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -40,4 +43,22 @@ public class RestTemplateGameRequester {
         log.info("sentenceData={}", sentenceData);
         return sentenceData;
     }
+
+    public JSONObject getSubjectData(String type, String problemNum) {
+        String sentence;
+        JSONObject subjectData = null;
+        try {
+            String sentenceData = requestGame();
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(sentenceData);
+            log.info("jsonObject={}", jsonObject);
+
+            subjectData = (JSONObject) jsonObject.get(type);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return subjectData;
+    }
+
 }
