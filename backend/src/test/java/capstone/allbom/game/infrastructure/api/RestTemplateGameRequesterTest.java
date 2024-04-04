@@ -45,4 +45,14 @@ class RestTemplateGameRequesterTest {
         assertThat(e.getMessage()).isEqualTo("요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다.");
     }
 
+    @Test
+    public void 존재하지_않는_번호로_문장을_조회한다() {
+        // when
+        BadRequestException e = assertThrows(BadRequestException.class, ()
+                -> restTemplateGameRequester.getSentence("법률", "101"));
+
+        // then
+        assertThat(e.getErrorCode()).isIn(INVALID_GAME_SUBJECT_TYPE, INVALID_GAME_SENTENCE_NUMBER);
+    }
+
 }
