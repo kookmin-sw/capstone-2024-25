@@ -1,5 +1,7 @@
 package capstone.allbom.game.infrastructure.api;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.service.S3FileService;
 import capstone.allbom.game.domain.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -40,11 +43,11 @@ public class RestTemplateGameRequester {
                 .exchange(requestEntity, String.class)
                 .getBody();
 
-        log.info("sentenceData={}", sentenceData);
+//        log.info("sentenceData={}", sentenceData);
         return sentenceData;
     }
 
-    public JSONObject getSubjectData(String type, String problemNum) {
+    public JSONObject getSubjectData(String subjectType) {
         String sentence;
         JSONObject subjectData = null;
         try {
@@ -52,13 +55,26 @@ public class RestTemplateGameRequester {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(sentenceData);
-            log.info("jsonObject={}", jsonObject);
 
-            subjectData = (JSONObject) jsonObject.get(type);
+            subjectData = (JSONObject) jsonObject.get(subjectType);
+//            System.out.println("해당 과목 전체 데이터 = " + subjectData);
+            log.info("{} 전체 데이터={}", subjectType, subjectData);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return subjectData;
     }
 
+    public String getSentence(String subjectType, String problemNum) {
+        String sentence = "";
+        try {
+            JSONObject subjectData = getSubjectData(subjectType);
+            sentence = (String) subjectData.get(problemNum);
+            log.info("sentence={}", sentence);
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SENTENCE);
+//            e.printStackTrace();
+        }
+        return sentence;
+    }
 }
