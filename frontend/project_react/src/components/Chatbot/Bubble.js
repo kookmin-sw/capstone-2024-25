@@ -10,8 +10,7 @@ const BubbleContainer = styled.div`
     props.type === 'System' ? 'var(--primary-color)' : '#FFFFFF'};
   border: ${(props) =>
     props.type === 'System' ? 'none' : '1px solid #F1F1F1'};
-  box-shadow: ${(props) =>
-    props.type === 'System' ? 'none' : '0px 2px 4px rgba(0, 0, 0, 0.1)'};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
 `;
 const BubbleValue = styled.span`
@@ -24,7 +23,6 @@ const BubbleValue = styled.span`
 `;
 
 const Bubble = ({ text, type }) => {
-  console.log('type : ', type);
   return (
     <BubbleContainer type={type}>
       <BubbleValue type={type}>{text}</BubbleValue>

@@ -131,11 +131,9 @@ const BirthModal = ({ isOpen, closeModal, setBirth, birth, formatDate }) => {
   const [showMonth, setShowMonth] = useState(false);
 
   const toggleYear = () => {
-    console.log('toggleYear');
     setShowYear(!showYear);
   };
   const toggleMonth = () => {
-    console.log('toggleMonth');
     setShowMonth(!showMonth);
   };
 
