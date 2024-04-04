@@ -10,7 +10,8 @@ public enum DefaultErrorCode implements ErrorCode{
     DUPLICATED_MEDICINE(400, "중복된 약입니다."),
     INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
     INVALID_UPDATE_MEDICINE(400, "자신의 약만 변경할 수 있습니다"),
-
+    INVALID_GAME_SUBJECT_TYPE(400, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
+    INVALID_GAME_SENTENCE_NUMBER(400, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),
     INVALID_AUTH_TOKEN(401, "올바르지 않은 로그인 토큰입니다."),
