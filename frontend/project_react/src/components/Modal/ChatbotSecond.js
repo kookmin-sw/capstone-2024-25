@@ -1,6 +1,5 @@
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { useState } from 'react';
 import Button from '../Button';
 import useStore from '../../stores/store'; // 스토어 임포트
 
