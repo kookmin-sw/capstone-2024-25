@@ -66,15 +66,19 @@ public class RestTemplateGameRequester {
     }
 
     public String getSentence(String subjectType, String problemNum) {
-        String sentence = "";
-        try {
-            JSONObject subjectData = getSubjectData(subjectType);
-            sentence = (String) subjectData.get(problemNum);
-            log.info("sentence={}", sentence);
-        } catch (IllegalArgumentException | NoSuchElementException e) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SENTENCE);
-//            e.printStackTrace();
+        String sentence;
+        JSONObject subjectData = getSubjectData(subjectType);
+
+        if (subjectData == null || !subjectData.containsKey(problemNum)) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SUBJECT_TYPE);
         }
+
+        sentence = (String) subjectData.get(problemNum);
+        if (sentence == null ) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SENTENCE_NUMBER);
+        }
+
+//        log.info("sentence={}", sentence);
         return sentence;
     }
 }
