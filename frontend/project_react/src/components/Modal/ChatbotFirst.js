@@ -1,6 +1,5 @@
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { useState } from 'react';
 import Button from '../Button';
 
 const customModalStyles = {
@@ -42,9 +41,9 @@ const ModalTitle = styled.span`
 const ModalContent = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1px auto; // 점과 텍스트를 위한 두 열 생성
+  grid-template-columns: 1px auto;
   gap: 12px;
-  align-items: start; // 줄바꿈 발생 시 텍스트를 위쪽에 정렬
+  align-items: start;
 `;
 
 const ContentText = styled.span`
