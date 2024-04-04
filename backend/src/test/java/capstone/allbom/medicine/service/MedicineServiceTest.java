@@ -55,7 +55,7 @@ class MedicineServiceTest {
             Member memberSaved = memberRepository.save(member);
 
             // when
-            Long medicineId = medicineService.saveMedicine(memberSaved, medicineRequest);
+            Long medicineId = medicineService.saveMedicine(memberSaved.getId(), medicineRequest);
             Medicine medicine = medicineRepository.findById(medicineId).get();
 
             // then
@@ -72,7 +72,6 @@ class MedicineServiceTest {
                 "타이레놀",
                 Arrays.asList("아침", "저녁")
         );
-        Member member = memberRepository.save(new Member());
 
         @BeforeEach
         void setUp() {
@@ -82,6 +81,7 @@ class MedicineServiceTest {
                     "지르텍",
                     Arrays.asList("아침", "점심")
             );
+            Member member = memberRepository.save(new Member());
             medicine.setMember(member);
             medicineRepository.save(medicine);
         }
@@ -97,7 +97,7 @@ class MedicineServiceTest {
 
             // when
             BadRequestException e = assertThrows(BadRequestException.class, ()
-                    -> medicineService.updateMedicine(member, medicineId, medicineRequest));
+                    -> medicineService.updateMedicine(medicineId, medicineRequest));
 
 //            assertThatThrownBy(() -> medicineService.updateMedicine(medicineId, medicineRequest))
 //                    .isInstanceOf(BadRequestException.class)
@@ -116,7 +116,7 @@ class MedicineServiceTest {
             Long medicineId = medicine.getId();
 
             // when
-            medicineService.updateMedicine(member, medicineId, medicineRequest);
+            medicineService.updateMedicine(medicineId, medicineRequest);
 
             // then
             Medicine updatedMedicine = medicineRepository.findById(medicineId).orElseThrow();
@@ -129,7 +129,6 @@ class MedicineServiceTest {
         @Nested
         class deleteMedicine {
             Medicine medicine;
-            Member member = memberRepository.save(new Member());
 
             @BeforeEach
             void setUp() {
@@ -139,6 +138,7 @@ class MedicineServiceTest {
                         "지르텍",
                         Arrays.asList("아침", "점심")
                 );
+                Member member = memberRepository.save(new Member());
                 medicine.setMember(member);
                 medicineRepository.save(medicine);
             }
@@ -149,7 +149,7 @@ class MedicineServiceTest {
                 Long medicineId = medicine.getId();
 
                 // when
-                medicineService.deleteMedicine(member, medicineId);
+                medicineService.deleteMedicine(medicineId);
 
                 // then
                 assertThat(medicineRepository.findById(medicineId)).isEmpty();

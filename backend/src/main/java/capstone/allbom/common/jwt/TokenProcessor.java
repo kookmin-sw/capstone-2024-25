@@ -2,7 +2,6 @@ package capstone.allbom.common.jwt;
 
 import capstone.allbom.auth.exception.AuthErrorCode;
 import capstone.allbom.common.exception.BadRequestException;
-import capstone.allbom.common.exception.ExpiredPeriodJwtException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
@@ -102,8 +101,8 @@ public class TokenProcessor {
             log.info("토큰의 서명 유효성 검사가 실패했습니다.");
             throw new BadRequestException(AuthErrorCode.SIGNATURE_TOKEN);
         } catch (final ExpiredJwtException e) {
-            log.info("토큰의 유효시간이 만료되었습니다.={}", token);
-            throw new ExpiredPeriodJwtException(AuthErrorCode.EXPIRED_TOKEN);
+            log.info("토큰의 유효시간이 만료되었습니다.");
+            throw new BadRequestException(AuthErrorCode.EXPIRED_TOKEN);
         } catch (final Exception e) {
             log.info("알 수 없는 토큰 유효성 문제가 발생했습니다.");
             throw new BadRequestException(AuthErrorCode.UNKNOWN_TOKEN);
@@ -114,7 +113,7 @@ public class TokenProcessor {
         validateToken(refreshToken);
         try {
             validateToken(accessToken);
-        } catch (final ExpiredJwtException | ExpiredPeriodJwtException e) {
+        } catch (final ExpiredJwtException e) {
             return true;
         }
         return false;
