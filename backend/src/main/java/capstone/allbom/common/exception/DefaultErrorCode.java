@@ -23,6 +23,9 @@ public enum DefaultErrorCode implements ErrorCode{
     // 403
     NOT_ENOUGH_PERMISSION(403, "해당 권한이 없습니다."),
 
+    // 404
+    NOT_FOUND_GAME_SUBJECT(404, "요청한 gameId와 과목명에 해당하는 문장 순서 맞추기 카테고리가 존재하지 않습니다."),
+
     // 429
     TOO_FREQUENT_REQUESTS(429, "너무 잦은 요청입니다. 잠시 후 다시 시도해주세요."),
 
