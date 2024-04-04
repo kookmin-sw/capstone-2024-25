@@ -24,4 +24,17 @@ public class SubjectService {
         return subjectRepository.findByGameAndType(gameId, type)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
     }
+
+    @Transactional(readOnly = true)
+    public String getCurrSentence(SubjectType type, Integer problemNum) {
+        String requestType = switch (type) {
+            case LITERATURE -> "문학";
+            case SCIENCE -> "과학";
+            case SOCIETY -> "사회";
+            case HISTORY -> "역사";
+            case LEGISLATION -> "법률";
+        };
+        return gameRequester.getSentence(requestType, problemNum.toString());
+    }
+
 }
