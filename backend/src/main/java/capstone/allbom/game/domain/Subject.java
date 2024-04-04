@@ -28,6 +28,8 @@ public class Subject {
 
     Integer currProblem;
 
+    boolean completeExcludePassed = false; // 건너뛴 문제 제외하고, 나머지 모든 문제들을 완료했는지의 여부
+
     private List<Integer> passedProblems = new ArrayList<>(); // 건너뛴 문제 기록
 
     public void setGame(Game game) {
