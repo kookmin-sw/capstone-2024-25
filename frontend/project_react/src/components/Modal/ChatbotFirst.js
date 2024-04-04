@@ -30,6 +30,7 @@ const customModalStyles = {
     overflow: 'hidden',
     padding: '40px 12px',
     gap: '20px',
+    boxSizing: 'border-box',
   },
 };
 
@@ -40,11 +41,10 @@ const ModalTitle = styled.span`
 
 const ModalContent = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1px auto; // 점과 텍스트를 위한 두 열 생성
   gap: 12px;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: start; // 줄바꿈 발생 시 텍스트를 위쪽에 정렬
 `;
 
 const ContentText = styled.span`
@@ -56,24 +56,30 @@ const ChatbotModalFirst = ({ isOpen, close }) => {
     <Modal isOpen={isOpen} style={customModalStyles}>
       <ModalTitle>올봄 챗봇에 오신 것을 환영합니다.</ModalTitle>
       <ModalContent>
-        <ContentText>· 무엇이든 물어보세요 !</ContentText>
-        <ContentText>· 또는, 추천 키워드들을 통해 질문해주세요 !</ContentText>
+        <ContentText>·</ContentText>
+        <ContentText>무엇이든 물어보세요 !</ContentText>
+        <ContentText>·</ContentText>
+        <ContentText>또는, 추천 키워드들을 통해 질문해주세요 !</ContentText>
+        <ContentText>·</ContentText>
         <ContentText>
-          · 추천 키워드를 사용하면 현재 위치를 기반으로 날씨, 뉴스, 문화,
+          추천 키워드를 사용하면 현재 위치를 기반으로 날씨, 뉴스, 문화,
           방문서비스 정보를 얻을 수 있습니다!
         </ContentText>
+        <ContentText>·</ContentText>
         <ContentText>
-          · 또는, 손자, 손녀처럼 편하게 말동무 해드립니다.
+          또는, 손자, 손녀처럼 편하게 말동무 해드립니다.
         </ContentText>
-        <ContentText>· 음성 혹은 자판 둘 다 사용 가능합니다.</ContentText>
-        <ContentText>· 챗봇 아바타를 선택해주세요 !</ContentText>
+        <ContentText>·</ContentText>
+        <ContentText>음성 혹은 자판 둘 다 사용 가능합니다.</ContentText>
+        <ContentText>·</ContentText>
+        <ContentText>챗봇 아바타를 선택해주세요 !</ContentText>
       </ModalContent>
       <Button
         text={'다음'}
         size="Large"
         height="Short"
         type="Primary"
-        // onClick={handleNext}
+        onClick={close}
       />
     </Modal>
   );

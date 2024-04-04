@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import ChatbotHeader from '../components/Header/ChatbotHeader';
 import ChatbotModalFirst from '../components/Modal/ChatbotFirst';
+import ChatbotModalSecond from '../components/Modal/ChatbotSecond';
+
 import { useState } from 'react';
 
 const ChatbotContainer = styled.div`
@@ -13,15 +15,27 @@ const ChatbotContainer = styled.div`
 `;
 
 const Chatbot = () => {
-  const [isOpenFirst, setIsOpenFirst] = useState(true);
-
+  const [isOpenFirst, setIsOpenFirst] = useState(false);
+  const [isOpenSecond, setIsOpenSecond] = useState(false);
   return (
     <ChatbotContainer>
       <ChatbotHeader />
       <ChatbotModalFirst
         isOpen={isOpenFirst}
-        close={() => setIsOpenFirst(false)}
+        close={() => {
+          setIsOpenSecond(true);
+          setIsOpenFirst(false);
+        }}
       />
+      <ChatbotModalSecond
+        isOpen={isOpenSecond}
+        handlePrev={() => {
+          setIsOpenFirst(true);
+          setIsOpenSecond(false);
+        }}
+        handleNext={() => setIsOpenSecond(false)}
+      />
+      <button onClick={() => setIsOpenFirst(true)}>gmlgml</button>
     </ChatbotContainer>
   );
 };
