@@ -17,5 +17,11 @@ class RestTemplateGameRequesterTest {
         String sentenceData = restTemplateGameRequester.requestGame();
         System.out.println("sentenceData = " + sentenceData);
     }
+    
+    @Test
+    public void 과목명과_문장_번호로_문장을_조회한다() {
+        String legislationSentence = restTemplateGameRequester.getSentence("법률", "3");
+        System.out.println("법률 데이터 = " + legislationSentence);
+    }
 
 }
