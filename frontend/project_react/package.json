@@ -20,7 +20,8 @@
     "react-slick": "^0.30.2",
     "styled-components": "^6.1.8",
     "sweetalert2": "^11.10.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

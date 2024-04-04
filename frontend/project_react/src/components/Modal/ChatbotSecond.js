@@ -2,6 +2,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Button from '../Button';
+import useStore from '../../stores/store'; // 스토어 임포트
 
 const customModalStyles = {
   overlay: {
@@ -99,8 +100,8 @@ const ButtonWrapper = styled.div`
 `;
 
 const ChatbotModalSecond = ({ isOpen, handlePrev, handleNext }) => {
-  const [selectedAvatar, setSelectedAvatar] = useState(0);
-
+  const selectedAvatar = useStore((state) => state.selectedAvatar);
+  const setSelectedAvatar = useStore((state) => state.setSelectedAvatar);
   const clickMale = () => {
     setSelectedAvatar(0);
   };

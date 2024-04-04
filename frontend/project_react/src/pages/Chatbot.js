@@ -14,6 +14,10 @@ const ChatbotContainer = styled.div`
   box-sizing: border-box;
 `;
 
+const ChatbotContent = styled.div`
+  border: 1px solid red;
+`;
+
 const Chatbot = () => {
   const [isOpenFirst, setIsOpenFirst] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
@@ -36,6 +40,7 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       <button onClick={() => setIsOpenFirst(true)}>gmlgml</button>
+      <ChatbotContent></ChatbotContent>
     </ChatbotContainer>
   );
 };
