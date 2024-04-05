@@ -8,6 +8,8 @@ https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sha
 </br>
 </br>
 
+# 올봄: AI 기반 노인 돌봄 통합형 서비스
+
 <h2> 1. 프로젝트 소개 </h2>
 
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
@@ -61,5 +63,3 @@ https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sha
 
 <h3> 서비스 흐름도 </h3>
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eaf699c2-5411-450b-828b-e5398ac15cfa">
-
-
