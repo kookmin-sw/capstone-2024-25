@@ -1,9 +1,14 @@
 
 <h3> 🔗 프로젝트 페이지 주소 </h3>
-<a href="https://kookmin-sw.github.io/capstone-2024-25">https://kookmin-sw.github.io/capstone-2024-25</a> 
+https://kookmin-sw.github.io/capstone-2024-25 
 
 <h3> 🔗 중간발표자료, 중간보고서 다운로드 주소 </h3>
-<a href="https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing">https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing</a> 
+https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing 
+
+</br>
+</br>
+
+# 올봄: AI 기반 노인 돌봄 통합형 서비스
 
 <h2> 1. 프로젝트 소개 </h2>
 
@@ -21,8 +26,8 @@
 
 <h2> 2. 소개 영상 </h2>
 
-프로젝트 소개 영상은 추후 추가 예정입니다.
-
+아래 이미지 클릭 시 소개 영상 링크로 이동합니다.
+[![올봄 소개역](https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/2df19a94-7bdf-47e0-95a4-687508297656)](https://youtu.be/oeedMYw1dUg)
 <h2> 3. 팀 소개 </h2>
 
 |이름|학번|포지션|프로필 사진|깃허브|
@@ -57,5 +62,4 @@
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
 
 <h3> 서비스 흐름도 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/2fec6ae0-55d8-4395-b805-d9c5ae22a1ad">
-
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eaf699c2-5411-450b-828b-e5398ac15cfa">
