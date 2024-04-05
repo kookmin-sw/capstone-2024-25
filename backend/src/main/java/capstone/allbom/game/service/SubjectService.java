@@ -49,9 +49,15 @@ public class SubjectService {
         return requestType;
     }
 
-//    public boolean compareWithAnswer(Long subjectId, GameSentenceRequest gameSentenceRequest) {
-//
-//    }
+    public boolean compareWithAnswer(Long subjectId, GameSentenceRequest gameSentenceRequest) {
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
+
+        String answer = getCurrSentence(subject.getType(), subject.getCurrProblem());
+        if (answer.equals(gameSentenceRequest.sentence()))
+            return true;
+        return false;
+    }
 
     public void plusToPassedProblems(Subject subject) {
         Integer currProblem = subject.getCurrProblem();
