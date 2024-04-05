@@ -1,12 +1,10 @@
 
 <h3> 🔗 프로젝트 페이지 주소 </h3>
-https://kookmin-sw.github.io/capstone-2024-25 
+<a href="https://kookmin-sw.github.io/capstone-2024-25">https://kookmin-sw.github.io/capstone-2024-25</a> 
 
 <h3> 🔗 중간발표자료, 중간보고서 다운로드 주소 </h3>
-https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing 
+<a href="https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing">https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing</a> 
 
-</br>
-</br>
 
 # 올봄: AI 기반 노인 돌봄 통합형 서비스
 
