@@ -60,6 +60,27 @@ class SubjectServiceTest {
             // then
             Assertions.assertThat(science.getCurrProblem()).isEqualTo(3);
         }
+
+        @Test
+        void 현재_문제가_해당_교과목의_마지막_문제이면_건너뛴_문제로_되돌아간다() {
+            // given
+            var science = new Subject(
+                    null,
+                    null,
+                    SubjectType.SCIENCE,
+                    100,
+                    false,
+                    new ArrayList<>() // Arrays.asList()로 생성한 리스트는 크기가 고정되어 있어 수정이 불가능
+            );
+            science.getPassedProblems().add(22);
+            science.getPassedProblems().add(31);
+
+            // when
+            subjectService.updateToNextProblem(science);
+
+            // then
+            Assertions.assertThat(science.getCurrProblem()).isEqualTo(22);
+        }
     }
 
 }
