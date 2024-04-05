@@ -6,6 +6,7 @@ import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.game.domain.Subject;
 import capstone.allbom.game.domain.SubjectRepository;
 import capstone.allbom.game.domain.SubjectType;
+import capstone.allbom.game.dto.GameSentenceRequest;
 import capstone.allbom.game.infrastructure.api.RestTemplateGameRequester;
 import capstone.allbom.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class SubjectService {
 
     @Transactional(readOnly = true)
     public Subject findByGameAndType(final Member member, Long gameId, SubjectType type) {
+        /**
+         * TODO
+         * memberId와 gameId로 찾은 memberId가 같은지 검사 후 예외처리
+         */
+
         return subjectRepository.findByGameAndType(gameId, type)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
     }
@@ -42,6 +48,12 @@ public class SubjectService {
         };
         return requestType;
     }
+
+//    public boolean compareWithAnswer(Long subjectId, GameSentenceRequest gameSentenceRequest) {
+//
+//    }
+
+//    public void plusToPassedProblems()
 
     @Transactional
     public void updateToNextProblem(Subject subject) {
