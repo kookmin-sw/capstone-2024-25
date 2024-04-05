@@ -47,27 +47,25 @@ public class SubjectService {
     public void updateToNextProblem(Subject subject) {
         String subjectType = convertToRequestType(subject.getType());
         if (subject.isCompleteExcludePassed()) { // 건너뛴 문제 제외하고 모든 문제 완료
-            if (subject.getPassedProblems().size() > 0) {
-                subject.setCurrProblem(subject.getPassedProblems().get(0));
-                subject.getPassedProblems().remove(0);
-            } else { // 모든 문제 완료
-                throw new BadRequestException(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
-            }
+            checkPassedProblems(subject);
         } else {
             if (gameRequester.getSubjectData(subjectType).size() <= subject.getCurrProblem()) { // 현재의 문제가 마지막 문제이거나 인덱스 범위를 초과했다면
                 subject.setCompleteExcludePassed(true);
-                if (subject.getPassedProblems().size() > 0) {
-                    subject.setCurrProblem(subject.getPassedProblems().get(0));
-                    subject.getPassedProblems().remove(0);
-                } else { // 모든 문제 완료
-                    throw new BadRequestException(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
-                }
+                checkPassedProblems(subject);
             } else {
                 subject.setCurrProblem(subject.getCurrProblem() + 1);
             }
         }
     }
 
+    private void checkPassedProblems(Subject subject) {
+        if (subject.getPassedProblems().size() > 0) {
+            subject.setCurrProblem(subject.getPassedProblems().get(0));
+            subject.getPassedProblems().remove(0);
+        } else { // 모든 문제 완료
+            throw new BadRequestException(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
+        }
+    }
 
 
 }
