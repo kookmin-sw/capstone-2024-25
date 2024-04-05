@@ -53,7 +53,10 @@ public class SubjectService {
 //
 //    }
 
-//    public void plusToPassedProblems()
+    public void plusToPassedProblems(Subject subject) {
+        Integer currProblem = subject.getCurrProblem();
+        subject.getPassedProblems().add(currProblem);
+    }
 
     @Transactional
     public void updateToNextProblem(Subject subject) {
