@@ -1,5 +1,7 @@
 package capstone.allbom.game.service;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.game.domain.*;
 import capstone.allbom.game.dto.GameSentenceRequest;
 import capstone.allbom.member.domain.Member;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -58,7 +61,7 @@ class SubjectServiceTest {
             subjectService.updateToNextProblem(science);
 
             // then
-            Assertions.assertThat(science.getCurrProblem()).isEqualTo(3);
+            assertThat(science.getCurrProblem()).isEqualTo(3);
         }
 
         @Test
@@ -75,12 +78,53 @@ class SubjectServiceTest {
             science.getPassedProblems().add(22);
             science.getPassedProblems().add(31);
 
-            // when
+            // when & then
             subjectService.updateToNextProblem(science);
+            assertThat(science.getCurrProblem()).isEqualTo(22);
+            subjectService.updateToNextProblem(science);
+            assertThat(science.getCurrProblem()).isEqualTo(31);
+        }
+
+        @Test
+        void 모든_문제를_완료했는데_수정하려_할시_예외가_발생한다() {
+            // given
+            Subject literature = new Subject(
+                    null,
+                    null,
+                    SubjectType.LITERATURE,
+                    100,
+                    false,
+                    new ArrayList<>() // Arrays.asList()로 생성한 리스트는 크기가 고정되어 있어 수정이 불가능
+            );
+            literature.getPassedProblems().add(84);
+            Subject savedLiterature = subjectRepository.save(literature);
+
+            Subject society = new Subject(
+                    null,
+                    null,
+                    SubjectType.SOCIETY,
+                    100,
+                    false,
+                    new ArrayList<>()
+            );
+            Subject savedSociety = subjectRepository.save(society);
+
+            // when
+            subjectService.updateToNextProblem(literature);
+            assertThat(literature.getCurrProblem()).isEqualTo(84);
+            BadRequestException e1 = assertThrows(BadRequestException.class, ()
+                    -> subjectService.updateToNextProblem(literature));
+
+            BadRequestException e2 = assertThrows(BadRequestException.class, ()
+                    -> subjectService.updateToNextProblem(society));
 
             // then
-            Assertions.assertThat(science.getCurrProblem()).isEqualTo(22);
+            Subject updatedLiterature = subjectRepository.findById(literature.getId()).orElseThrow();
+            Subject updatedSociety = subjectRepository.findById(savedSociety.getId()).orElseThrow();
+            assertThat(updatedLiterature.getCurrProblem()).isEqualTo(84);
+            assertThat(updatedSociety.getCurrProblem()).isEqualTo(100);
+            assertThat(e1.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
+            assertThat(e2.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
         }
     }
-
 }
