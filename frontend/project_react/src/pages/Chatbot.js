@@ -15,16 +15,18 @@ const ChatbotContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   border: 1px solid yellow;
+  overflow-x: hidden;
 `;
 
-const ChatbotContent = styled.div`
+const ChattingWrapper = styled.div`
   display: flex;
   flex: 1;
   overflow-y: scroll;
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px;
-  padding: 0 24px;
+  padding: 0 24px 12px 24px;
+  box-sizing: border-box;
   width: 100%;
   border: 1px solid red;
 `;
@@ -116,11 +118,11 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
-      <ChatbotContent>
+      <ChattingWrapper>
         {chatListDummy.map((chat) => (
           <Chat text={chat.text} type={chat.type} key={chat.id} />
         ))}
-      </ChatbotContent>
+      </ChattingWrapper>
       <ChatInput userText={userText} setUserText={setUserText} />
       {/*<Footer>하단바 영역</Footer>*/}
       {/*  하단바는 플러터로 구현할 예정이므로 겹치는건 문제 없을 것이라고 판단 */}

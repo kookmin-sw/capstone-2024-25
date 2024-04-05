@@ -6,6 +6,7 @@ const ChatInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   padding: 12px 14px;
   width: 100%;
   border: 1px solid green;
