@@ -29,6 +29,7 @@ class SubjectRepositoryTest {
                 game,
                 SubjectType.SCIENCE,
                 1,
+                false,
                 Arrays.asList()
         );
 
@@ -37,6 +38,7 @@ class SubjectRepositoryTest {
                 game,
                 SubjectType.SOCIETY,
                 1,
+                false,
                 Arrays.asList()
         );
 
@@ -45,6 +47,7 @@ class SubjectRepositoryTest {
                 game2,
                 SubjectType.SCIENCE,
                 1,
+                false,
                 Arrays.asList()
         );
 
@@ -53,6 +56,7 @@ class SubjectRepositoryTest {
                 game2,
                 SubjectType.SOCIETY,
                 1,
+                false,
                 Arrays.asList()
         );
         subjectRepository.save(science);
