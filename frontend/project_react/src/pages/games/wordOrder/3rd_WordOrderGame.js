@@ -6,8 +6,7 @@ import axios from 'axios';
 
 export default function WordOrderGame() {
   const navigate = useNavigate();
-  const { category } = useParams()
-
+  const { category } = useParams();
 
   const [sentenceData, setSentenceData] = useState(null);
   const [wordList, setWordList] = useState([]);
@@ -19,15 +18,16 @@ export default function WordOrderGame() {
   }, []);
 
   useEffect(() => {
-    if (userSelection.length > 0) { // 초기 userSelection이 빈 배열이 아닐 때만 실행
+    if (userSelection.length > 0) {
+      // 초기 userSelection이 빈 배열이 아닐 때만 실행
       console.log('userSelection:', userSelection);
       isCorrectAnswer();
     }
   }, [userSelection]);
 
-  function getSentence() {
+  async function getSentence() {
     setIsLoading(true);
-    axios
+    await axios
       .get(process.env.PUBLIC_URL + '/wordOrderDummy.json')
       .then((response) => {
         const data = response.data;
@@ -146,7 +146,7 @@ const UserSelectWords = styled.div`
 `;
 
 const WordButtons = styled.div`
-width: 100%;
+  width: 100%;
   height: 100px;
   gap: 4px;
 `;
