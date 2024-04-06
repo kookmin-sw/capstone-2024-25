@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Game {
 
     @Id
@@ -26,4 +26,13 @@ public class Game {
     private List<Subject> subjects = new ArrayList<>();
 
     private String dailySentence;
-}
+
+    public Game() {
+        SubjectType[] types = SubjectType.values();
+        for (int i = 0; i < 5; i++) {
+            Subject subject = new Subject();
+            subject.setType(types[i]);
+            subject.setGame(this);
+        }
+    }
+    }
