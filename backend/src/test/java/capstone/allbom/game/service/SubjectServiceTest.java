@@ -95,6 +95,22 @@ class SubjectServiceTest {
         }
 
         @Test
+        void 사용자의_문장_입력과_정답이_다른지_비교한다() {
+            // given
+            GameSentenceRequest request = new GameSentenceRequest(
+                    "정치적 분열이 사회의 안정을 위협하고 있다다."
+            );
+            var science = game.getSubjects().get(2);
+            science.setCurrProblem(84);
+
+            // when
+            boolean isFalse = subjectService.compareWithAnswer(science.getType(), science.getCurrProblem(), request);
+
+//            // then
+            assertThat(isFalse).isFalse();
+        }
+
+        @Test
         void 과목별로_문장의_총갯수와_건너뛴_문제를_고려하여_현재_문제를_업데이트한다() {
             // when
             subjectService.updateToNextProblem(science);
