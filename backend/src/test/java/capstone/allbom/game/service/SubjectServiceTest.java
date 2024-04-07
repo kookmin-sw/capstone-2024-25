@@ -57,6 +57,21 @@ class SubjectServiceTest {
         }
 
         @Test
+        void 문제를_건너뛰면_리스트에_현재_번호가_추가된다() {
+            // given
+            var science = game.getSubjects().get(1);
+            science.setCurrProblem(77);
+
+            // when
+            subjectService.plusToPassedProblems(science);
+            List<Integer> passedProblems = science.getPassedProblems();
+
+            // then
+            assertThat(passedProblems.size()).isEqualTo(1);
+            assertThat(passedProblems).contains(77);
+        }
+
+        @Test
         void 과목별로_문장의_총갯수와_건너뛴_문제를_고려하여_현재_문제를_업데이트한다() {
             // when
             subjectService.updateToNextProblem(science);
