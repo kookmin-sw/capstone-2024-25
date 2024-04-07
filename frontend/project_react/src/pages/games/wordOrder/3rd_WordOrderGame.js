@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
-import axios from 'axios';
+import { wordOrderApis } from '../../../api/apis/gameApis';
 
 export default function WordOrderGame() {
   const navigate = useNavigate();
@@ -27,26 +27,23 @@ export default function WordOrderGame() {
 
   async function getSentence() {
     setIsLoading(true);
-    await axios
-      .get(process.env.PUBLIC_URL + '/wordOrderDummy.json')
-      .then((response) => {
-        const data = response.data;
-        const selectedCategory = data[category];
-        const keys = Object.keys(selectedCategory);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const randomSentence = selectedCategory[randomKey];
-        let wordArr = randomSentence.split(' ');
-        shuffle(wordArr);
-        setSentenceData(randomSentence);
-        setWordList(wordArr);
-        console.log('sentenceData:', randomSentence);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const sentence = await wordOrderApis.getSentenceCategory();
+      const data = sentence.data;
+      const selectedCategory = data[category];
+      const keys = Object.keys(selectedCategory);
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      const randomSentence = selectedCategory[randomKey];
+      let wordArr = randomSentence.split(' ');
+      shuffle(wordArr);
+      setSentenceData(randomSentence);
+      setWordList(wordArr);
+      console.log('sentenceData:', randomSentence);
+    } catch (error) {
+      console.error('Get Sentence Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function shuffle(array) {

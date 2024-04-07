@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { wordOrderApis } from '../../../api/apis/gameApis';
 import { useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
 
@@ -19,23 +19,19 @@ export default function WordOrderSelection() {
 
   async function getSentenceCategry() {
     setIsLoading(true);
-    await axios
-      .get(process.env.PUBLIC_URL + '/wordOrderDummy.json')
-      .then((response) => {
-        const data = response.data;
-        const categories = Object.keys(data);
-        //categories를 10배 해서 set하도록
-        categories.push(...categories);
-        categories.push(...categories);
-        categories.push(...categories);
-        setSentenceCategories(categories);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const sentenceCategory = await wordOrderApis.getSentenceCategory();
+      const data = sentenceCategory.data;
+      const categories = Object.keys(data);
+      categories.push(...categories);
+      categories.push(...categories);
+      categories.push(...categories);
+      setSentenceCategories(categories);
+    } catch (error) {
+      console.error('Get Sentence Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
