@@ -33,6 +33,7 @@ public class Game {
             Subject subject = new Subject();
             subject.setType(types[i]);
             subject.setGame(this);
+            this.subjects.add(subject);
         }
     }
-    }
+}

@@ -36,6 +36,6 @@ public class Subject {
 
     public void setGame(Game game) {
         this.game = game;
-        game.getSubjects().add(this);
+//        game.getSubjects().add(this);
     }
 }
