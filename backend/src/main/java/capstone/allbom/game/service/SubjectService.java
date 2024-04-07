@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class SubjectService {
 
@@ -49,11 +49,18 @@ public class SubjectService {
         return requestType;
     }
 
-//    public boolean compareWithAnswer(Long subjectId, GameSentenceRequest gameSentenceRequest) {
-//
-//    }
+    public boolean compareWithAnswer(SubjectType type, Integer currProblem, GameSentenceRequest gameSentenceRequest) {
+        String answer = getCurrSentence(type, currProblem);
+        System.out.println("answer = " + answer);
+        if (answer.equals(gameSentenceRequest.sentence()))
+            return true;
+        return false;
+    }
 
-//    public void plusToPassedProblems()
+    public void plusToPassedProblems(Subject subject) {
+        Integer currProblem = subject.getCurrProblem();
+        subject.getPassedProblems().add(currProblem);
+    }
 
     @Transactional
     public void updateToNextProblem(Subject subject) {
