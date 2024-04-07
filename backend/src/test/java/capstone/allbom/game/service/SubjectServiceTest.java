@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -125,6 +126,28 @@ class SubjectServiceTest {
             assertThat(updatedSociety.getCurrProblem()).isEqualTo(100);
             assertThat(e1.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
             assertThat(e2.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
+        }
+
+        @Test
+        void 게임_객체를_생성하면_5개의_과목_객체가_생성된다() {
+            // given
+            Game game = new Game();
+
+            // when
+            gameRepository.save(game);
+            List<Subject> subjects = game.getSubjects();
+
+            // then
+            assertThat(subjects.size()).isEqualTo(5);
+            for (Subject subject : subjects) {
+                assertThat(subject.getType()).isIn(
+                        SubjectType.LITERATURE,
+                        SubjectType.SCIENCE,
+                        SubjectType.SOCIETY,
+                        SubjectType.HISTORY,
+                        SubjectType.LEGISLATION
+                );
+            }
         }
     }
 }
