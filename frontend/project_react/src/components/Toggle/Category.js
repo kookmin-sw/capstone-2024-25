@@ -19,6 +19,7 @@ const ToggleStyled = styled.button`
   border-radius: 30px;
   ${({ selected, color }) => selecteds[selected]}
   position: relative;
+  font-size: 20px;
 `;
 // Selected 이고 values.length 가 0이 아니면 띄울 놈
 const InnerValues = styled.div`
