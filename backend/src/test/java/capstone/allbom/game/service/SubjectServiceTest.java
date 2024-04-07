@@ -41,19 +41,26 @@ class SubjectServiceTest {
         Member member = memberRepository.save(new Member());
         Game game = gameRepository.save(new Game());
 
+//        @BeforeEach
+//        void setUp() {
+//            science = new Subject(
+//                    null,
+//                    null,
+//                    SubjectType.SCIENCE,
+//                    2,
+//                    false,
+//                    new ArrayList<>()
+//            );
+//            game.setMember(member);
+//            science.setGame(game);
+//            subjectRepository.save(science);
+//        }
+
         @BeforeEach
         void setUp() {
-            science = new Subject(
-                    null,
-                    null,
-                    SubjectType.SCIENCE,
-                    2,
-                    false,
-                    new ArrayList<>()
-            );
             game.setMember(member);
-            science.setGame(game);
-            subjectRepository.save(science);
+            science = game.getSubjects().get(1);
+            science.setCurrProblem(2);
         }
 
         @Test
@@ -69,6 +76,22 @@ class SubjectServiceTest {
             // then
             assertThat(passedProblems.size()).isEqualTo(1);
             assertThat(passedProblems).contains(77);
+        }
+
+        @Test
+        void 사용자의_문장_입력과_정답이_같은지_비교한다() {
+            // given
+            GameSentenceRequest request = new GameSentenceRequest(
+              "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다."
+            );
+            var science = game.getSubjects().get(1);
+            science.setCurrProblem(77);
+
+            // when
+            boolean isTrue = subjectService.compareWithAnswer(science.getType(), science.getCurrProblem(), request);
+
+//            // then
+            assertThat(isTrue).isTrue();
         }
 
         @Test
