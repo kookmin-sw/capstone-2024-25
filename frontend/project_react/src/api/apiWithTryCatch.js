@@ -6,7 +6,7 @@ export const api_get = async (url, config) => {
         const response = await instance.get(url, config);
         return response;
     } catch (error) {
-        console.error(error);
+        throw new Error('[API GET Error]', error);
     }
 }
 
@@ -16,7 +16,7 @@ export const api_post = async (url, data, config) => {
         const response = await instance.post(url, data, config);
         return response;
     } catch (error) {
-        console.error(error);
+        throw new Error('[API GET Error]', error);
     }
 }
 
@@ -26,7 +26,7 @@ export const api_patch = async (url, data, config) => {
         const response = await instance.patch(url, data, config);
         return response;
     } catch (error) {
-        console.error(error);
+        throw new Error('[API PATCH Error]', error);
     }
 }
 
@@ -36,6 +36,6 @@ export const api_delete = async (url, config) => {
         const response = await instance.delete(url, config);
         return response;
     } catch (error) {
-        console.error(error);
+        throw new Error('[API DELETE Error]', error);
     }
 }

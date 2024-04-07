@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export default instance = axios.create({
-  baseURL: process.env.PUBLIC_URL,
+const instance = axios.create({
+  // baseURL: 'url을 여기에...'
   // 추후 토큰 인증을 위한 코드
   // headers: {
   //   access_token: cookies.get('access_token'),
@@ -11,3 +11,5 @@ export default instance = axios.create({
   // },
   timeout: 1000,
 });
+
+export default instance;
