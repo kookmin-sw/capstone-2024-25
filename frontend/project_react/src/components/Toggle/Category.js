@@ -28,7 +28,7 @@ const ToggleStyled = styled.button`
   font-size: 20px;
   white-space: nowrap;
 `;
-const InnerValues = styled.div`
+const SubCategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -43,7 +43,7 @@ const InnerValues = styled.div`
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e8e8e8;
+  border: 1px solid #e8e8e8;
 `;
 const TailImg = styled.img`
   position: absolute;
@@ -76,7 +76,7 @@ const Category = ({
       {text}
       {selected && showSubCategory && values.length > 0 && (
         <>
-          <InnerValues>
+          <SubCategoryWrapper>
             {values.map((value) => (
               <Category
                 key={value.id}
@@ -91,7 +91,7 @@ const Category = ({
                 }}
               />
             ))}
-          </InnerValues>
+          </SubCategoryWrapper>
           <TailImg
             src={
               process.env.PUBLIC_URL + 'images/Chatbot/category-bubble-tail.svg'
