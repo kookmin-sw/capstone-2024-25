@@ -6,6 +6,7 @@ import ChatbotModalFirst from '../components/Modal/ChatbotFirst';
 import ChatbotModalSecond from '../components/Modal/ChatbotSecond';
 import Chat from '../components/Chatbot/Chat';
 import Category from '../components/Toggle/Category';
+import SelectInputMode from '../components/Chatbot/SelectInputMode';
 import { useEffect, useRef, useState } from 'react';
 
 const ChatbotContainer = styled.div`
@@ -37,12 +38,43 @@ const CategoryWrapper = styled.div`
   background-color: #ffffff;
 `;
 
-const TempInput = styled.div`
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 158px;
   position: fixed;
   bottom: 0;
   left: 0;
+`;
+
+const InputVoiceWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+  width: 88%;
+  height: 84px;
+  box-sizing: border-box;
+  border: 1px solid var(--unselected-color);
+  border-radius: 4px;
+  background-color: #ffffff;
+  position: relative;
+`;
+const MicImg = styled.img`
+  width: 42px;
+`;
+const InputVoiceText = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  white-space: pre-wrap;
+`;
+
+const XImg = styled.img`
+  position: absolute;
+  width: 20px;
+  top: 12px;
+  right: 12px;
 `;
 
 const ChatInputWrapper = styled.div`
@@ -142,6 +174,9 @@ const Chatbot = () => {
     },
   ]);
 
+  const [selectMode, setSelectMode] = useState('select');
+  const inputVoiceInfo =
+    '질문을 말씀해주세요 ! \n5초 동안 말씀이 없으시면 종료됩니다.';
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
@@ -392,7 +427,7 @@ const Chatbot = () => {
   /* 모바일 가상 키보드 end */
 
   return (
-    <ChatbotContainer id="gun" ref={containerRef}>
+    <ChatbotContainer ref={containerRef}>
       <ChatbotHeader
         onClick={() => {
           console.log('categoryList : ', categoryList);
@@ -414,49 +449,73 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
-      <ChattingWrapper id="chatting-wrapper" ref={wrapperRef}>
+      <ChattingWrapper ref={wrapperRef}>
         {chatListDummy.map((chat) => (
           <Chat text={chat.text} type={chat.type} key={chat.id} />
         ))}
-        <TempInput ref={inputRef}>
-          <CategoryWrapper>
-            {categoryList.map((category) => (
-              <Category
-                parentCategoryId={category.id}
-                key={category.id}
-                text={category.title}
-                selected={category.selected}
-                color={'var(--primary-color)'}
-                values={category.values}
-                categoryClick={() => categoryClick(category.id)}
-                subCategoryClick={subCategoryClick}
-                showSubCategory={showSubCategory}
-                setShowSubCategory={setShowSubCategory}
-                unselectedColor={'var(--primary-color)'}
+        <BottomWrapper ref={inputRef}>
+          {selectMode === 'voice' && (
+            <InputVoiceWrapper>
+              <MicImg
+                src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
               />
-            ))}
-          </CategoryWrapper>
-          <ChatInputWrapper>
-            <XImage src={process.env.PUBLIC_URL + 'images/x-img.svg'} />
-            <InputText
-              type="text"
-              onClick={handleViewportResize}
-              onChange={(e) => setUserText(e.target.value)}
-            />
-            {userText === '' ? (
-              <SendButton
-                src={
-                  process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
-                }
+              <InputVoiceText>{inputVoiceInfo}</InputVoiceText>
+              <XImg
+                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                onClick={() => setSelectMode('select')}
               />
-            ) : (
-              <SendButton
-                src={process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'}
+            </InputVoiceWrapper>
+          )}
+          {selectMode !== 'voice' && (
+            <CategoryWrapper>
+              {categoryList.map((category) => (
+                <Category
+                  parentCategoryId={category.id}
+                  key={category.id}
+                  text={category.title}
+                  selected={category.selected}
+                  color={'var(--primary-color)'}
+                  values={category.values}
+                  categoryClick={() => categoryClick(category.id)}
+                  subCategoryClick={subCategoryClick}
+                  showSubCategory={showSubCategory}
+                  setShowSubCategory={setShowSubCategory}
+                  unselectedColor={'var(--primary-color)'}
+                />
+              ))}
+            </CategoryWrapper>
+          )}
+          {selectMode === 'select' && (
+            <SelectInputMode setSelectMode={setSelectMode} />
+          )}
+          {selectMode === 'keyboard' && (
+            <ChatInputWrapper>
+              <XImage
+                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                onClick={() => setSelectMode('select')}
               />
-            )}
-          </ChatInputWrapper>
+              <InputText
+                type="text"
+                onClick={handleViewportResize}
+                onChange={(e) => setUserText(e.target.value)}
+              />
+              {userText === '' ? (
+                <SendButton
+                  src={
+                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
+                  }
+                />
+              ) : (
+                <SendButton
+                  src={
+                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
+                  }
+                />
+              )}
+            </ChatInputWrapper>
+          )}
           <Footer ref={footerRef}>하단바 영역</Footer>
-        </TempInput>
+        </BottomWrapper>
       </ChattingWrapper>
 
       {/*<Footer>하단바 영역</Footer>*/}

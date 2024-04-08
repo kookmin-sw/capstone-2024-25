@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Input from '../Input';
-import BirthModal from '../Modal/birth2';
+import BirthModal from '../Modal/Birth2';
 import { useState } from 'react';
 
 const StepWrapper = styled.div`
