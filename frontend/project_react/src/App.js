@@ -20,10 +20,9 @@ function App() {
     <div id="App">
       <BrowserRouter>
         <Routes>
-          {/*<Route path="/" element={<SignIn />} />*/}
-          <Route path="/" element={<JobDetailPage />} />
+          <Route path="/" element={<SignIn />} />
           <Route path="/chatbot" element={<Chatbot />} />
-          {/*<Route path="/job" element={<JobPage />} />*/}
+          <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail" element={<JobDetailPage />} />
 
           {/*<Route path="/" element={<InputTest />} />*/}
