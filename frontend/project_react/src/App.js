@@ -18,8 +18,8 @@ function App() {
     <div id="App">
       <BrowserRouter>
         <Routes>
-          {/*<Route path="/" element={<SignIn />} />*/}
-          <Route path="/" element={<Chatbot />} />
+          <Route path="/" element={<SignIn />} />
+          {/*<Route path="/" element={<Chatbot />} />*/}
           {/*<Route path="/" element={<InputTest />} />*/}
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
