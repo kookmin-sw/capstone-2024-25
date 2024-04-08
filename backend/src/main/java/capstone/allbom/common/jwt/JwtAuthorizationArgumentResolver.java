@@ -1,6 +1,6 @@
 package capstone.allbom.common.jwt;
 
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +33,9 @@ public class JwtAuthorizationArgumentResolver implements HandlerMethodArgumentRe
             final WebDataBinderFactory binderFactory
     ) throws JsonProcessingException {
         final String token = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        final String tokenWithoutType = tokenProcessor.resolveToken(token);
+        final String tokenWithoutType = tokenProcessor.extractAccessToken(token);
         tokenProcessor.validateToken(tokenWithoutType);
-        final TokenPayload tokenPayload = tokenProcessor.parseToken(tokenWithoutType);
+        final TokenPayload tokenPayload = tokenProcessor.decodeToken(tokenWithoutType);
         return memberService.findById(tokenPayload.memberId());
     }
 }

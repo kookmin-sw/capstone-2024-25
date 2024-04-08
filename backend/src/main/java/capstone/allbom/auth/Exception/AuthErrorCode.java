@@ -13,7 +13,8 @@ public enum AuthErrorCode implements ErrorCode {
     MALFORMED_TOKEN(304, "잘못된 JWT 서명입니다."),
     SIGNATURE_TOKEN(305, "토큰의 서명 유효성 검사가 실패했습니다."),
     EXPIRED_TOKEN(306, "토큰의 유효기간이 만료되었습니다."),
-    UNKNOWN_TOKEN(307, "알 수 없는 토큰 유효성 문제가 발생했습니다.");
+    UNKNOWN_TOKEN(307, "알 수 없는 토큰 유효성 문제가 발생했습니다."),
+    FAIL_TO_VALIDATE_TOKEN(403, "AccessToken이 아직 유효합니다.");
 
     private final int code;
     private final String message;

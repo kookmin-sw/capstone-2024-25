@@ -1,7 +1,6 @@
 package capstone.allbom.game.domain;
 
-import capstone.allbom.Facility.domain.FacilityType;
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.common.StringListConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,12 +27,15 @@ public class Subject {
     @Enumerated(EnumType.STRING)
     private SubjectType type;
 
-    Integer currProblem;
+    Integer currProblem = 1;
 
+    private boolean completeExcludePassed = false; // 건너뛴 문제 제외하고, 나머지 모든 문제들을 완료했는지의 여부
+
+//    @Convert(converter = StringListConverter.class)
     private List<Integer> passedProblems = new ArrayList<>(); // 건너뛴 문제 기록
 
     public void setGame(Game game) {
         this.game = game;
-        game.getSubjects().add(this);
+//        game.getSubjects().add(this);
     }
 }

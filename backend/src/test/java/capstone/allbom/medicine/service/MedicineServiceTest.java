@@ -4,8 +4,8 @@ import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
-import capstone.allbom.member.domaiin.Member;
-import capstone.allbom.member.domaiin.MemberRepository;
+import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.domain.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -55,7 +55,7 @@ class MedicineServiceTest {
             Member memberSaved = memberRepository.save(member);
 
             // when
-            Long medicineId = medicineService.saveMedicine(memberSaved.getId(), medicineRequest);
+            Long medicineId = medicineService.saveMedicine(memberSaved, medicineRequest);
             Medicine medicine = medicineRepository.findById(medicineId).get();
 
             // then
@@ -72,6 +72,7 @@ class MedicineServiceTest {
                 "타이레놀",
                 Arrays.asList("아침", "저녁")
         );
+        Member member = memberRepository.save(new Member());
 
         @BeforeEach
         void setUp() {
@@ -81,7 +82,6 @@ class MedicineServiceTest {
                     "지르텍",
                     Arrays.asList("아침", "점심")
             );
-            Member member = memberRepository.save(new Member());
             medicine.setMember(member);
             medicineRepository.save(medicine);
         }
@@ -97,7 +97,7 @@ class MedicineServiceTest {
 
             // when
             BadRequestException e = assertThrows(BadRequestException.class, ()
-                    -> medicineService.updateMedicine(medicineId, medicineRequest));
+                    -> medicineService.updateMedicine(member, medicineId, medicineRequest));
 
 //            assertThatThrownBy(() -> medicineService.updateMedicine(medicineId, medicineRequest))
 //                    .isInstanceOf(BadRequestException.class)
@@ -116,7 +116,7 @@ class MedicineServiceTest {
             Long medicineId = medicine.getId();
 
             // when
-            medicineService.updateMedicine(medicineId, medicineRequest);
+            medicineService.updateMedicine(member, medicineId, medicineRequest);
 
             // then
             Medicine updatedMedicine = medicineRepository.findById(medicineId).orElseThrow();
@@ -129,6 +129,7 @@ class MedicineServiceTest {
         @Nested
         class deleteMedicine {
             Medicine medicine;
+            Member member = memberRepository.save(new Member());
 
             @BeforeEach
             void setUp() {
@@ -138,7 +139,6 @@ class MedicineServiceTest {
                         "지르텍",
                         Arrays.asList("아침", "점심")
                 );
-                Member member = memberRepository.save(new Member());
                 medicine.setMember(member);
                 medicineRepository.save(medicine);
             }
@@ -149,7 +149,7 @@ class MedicineServiceTest {
                 Long medicineId = medicine.getId();
 
                 // when
-                medicineService.deleteMedicine(medicineId);
+                medicineService.deleteMedicine(member, medicineId);
 
                 // then
                 assertThat(medicineRepository.findById(medicineId)).isEmpty();

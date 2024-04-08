@@ -3,7 +3,7 @@ package capstone.allbom.auth.service.oauth.kakao;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
 import capstone.allbom.auth.dto.response.OAuthAccessTokenResponse;
 import capstone.allbom.auth.dto.response.OAuthDisconnectResponse;
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -45,6 +45,8 @@ public class KakaoOAuthClient {
                 httpEntity,
                 OAuthAccessTokenResponse.class
         ).getBody();
+
+        System.out.println("kakaoOauthClient.getAccessToken = " + response);
         return response.accessToken();
     }
 
