@@ -1,18 +1,16 @@
 package capstone.allbom.game.domain;
 
-import capstone.allbom.member.domaiin.Member;
+import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static lombok.AccessLevel.PROTECTED;
-
 @Entity
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Game {
 
     @Id
@@ -28,4 +26,14 @@ public class Game {
     private List<Subject> subjects = new ArrayList<>();
 
     private String dailySentence;
+
+    public Game() {
+        SubjectType[] types = SubjectType.values();
+        for (int i = 0; i < 5; i++) {
+            Subject subject = new Subject();
+            subject.setType(types[i]);
+            subject.setGame(this);
+            this.subjects.add(subject);
+        }
+    }
 }
