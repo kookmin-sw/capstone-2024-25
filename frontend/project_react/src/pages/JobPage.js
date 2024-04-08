@@ -22,7 +22,6 @@ const JobPageContent = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
   overflow-y: auto;
   gap: 24px;
   box-sizing: border-box;
@@ -33,7 +32,6 @@ const EmploymentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border: 1px solid blue;
   box-sizing: border-box;
   margin-top: 24px;
 `;
