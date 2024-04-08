@@ -37,6 +37,11 @@ const ButtonStyled = styled.button`
   font-size: 16px;
   text-align: center;
   border-radius: 10px;
+  ${({ fontSize }) =>
+    fontSize &&
+    css`
+      font-size: ${fontSize}px;
+    `}
   ${({ size }) => sizes[size]}
   ${({ height }) => heights[height]}
   ${({ type }) => types[type]}
@@ -50,7 +55,7 @@ const ButtonStyled = styled.button`
     `}
 `;
 
-const Button = ({ text, size, height, type, disabled, onClick }) => {
+const Button = ({ text, size, height, type, disabled, onClick, fontSize }) => {
   return (
     <ButtonStyled
       size={size}
@@ -58,6 +63,7 @@ const Button = ({ text, size, height, type, disabled, onClick }) => {
       type={type}
       disabled={disabled}
       onClick={onClick}
+      fontSize={fontSize}
     >
       {text}
     </ButtonStyled>
