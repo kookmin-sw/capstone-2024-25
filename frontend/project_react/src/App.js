@@ -13,13 +13,18 @@ import WordOrderIntro from './pages/games/wordOrder/2nd_WordOrderIntro';
 import TwentyHeadsIntro from './pages/games/twentyHeads/1st_TwentyHeadsIntro';
 import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
 import Chatbot from './pages/Chatbot';
+import JobPage from './pages/JobPage';
+import JobDetailPage from './pages/JobDetail';
 function App() {
   return (
     <div id="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          {/*<Route path="/" element={<Chatbot />} />*/}
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/job" element={<JobPage />} />
+          <Route path="/job-detail" element={<JobDetailPage />} />
+
           {/*<Route path="/" element={<InputTest />} />*/}
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
