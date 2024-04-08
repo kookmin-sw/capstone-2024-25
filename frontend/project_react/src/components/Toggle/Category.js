@@ -1,4 +1,7 @@
+// Category.js
+
 import styled, { css } from 'styled-components';
+import { useState } from 'react';
 
 const selecteds = {
   true: css`
@@ -8,8 +11,11 @@ const selecteds = {
   `,
   false: css`
     background-color: #ffffff;
-    color: var(--unselected-color);
-    border: 2px solid #808080;
+    color: ${({ unselectedColor }) =>
+      unselectedColor ? unselectedColor : 'var(--unselected-color)'};
+    border: 2px solid
+      ${({ unselectedColor }) =>
+        unselectedColor ? unselectedColor : 'var(--unselected-color)'};
   `,
 };
 
@@ -20,38 +26,78 @@ const ToggleStyled = styled.button`
   ${({ selected, color }) => selecteds[selected]}
   position: relative;
   font-size: 20px;
+  white-space: nowrap;
 `;
-// Selected 이고 values.length 가 0이 아니면 띄울 놈
 const InnerValues = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
-  //width: fit-content;
-  background: url(process.env.PUBLIC_URL + '/images/Chatbot/category-bubble-small.svg')
-    no-repeat;
+  width: fit-content;
   position: absolute;
-  top: 100%;
+  bottom: 160%;
   left: 50%;
+  transform: translate(-50%);
+  padding: 6px 12px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e8e8e8;
+`;
+const TailImg = styled.img`
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
 `;
 
-const Category = ({ text, selected, color, values, onClick }) => {
+const Category = ({
+  text,
+  selected,
+  color,
+  values,
+  categoryClick,
+  subCategoryClick,
+  showSubCategory,
+  unselectedColor,
+}) => {
   return (
-    <ToggleStyled selected={selected} color={color} onClick={onClick}>
+    <ToggleStyled
+      selected={selected}
+      color={color}
+      onClick={(e) => {
+        e.stopPropagation();
+        categoryClick(e);
+      }}
+      unselectedColor={unselectedColor}
+    >
       {text}
-      {selected && values.length > 0 && (
-        <InnerValues>
-          {values.map((value) => (
-            <Category
-              key={value.id}
-              text={value.title}
-              selected={value.selected}
-              color={color}
-              values={value.values}
-            />
-          ))}
-        </InnerValues>
+      {selected && showSubCategory && values.length > 0 && (
+        <>
+          <InnerValues>
+            {values.map((value) => (
+              <Category
+                key={value.id}
+                text={value.title}
+                selected={value.selected}
+                color={color}
+                values={value.values}
+                unselectedColor={unselectedColor}
+                categoryClick={(e) => {
+                  e.stopPropagation();
+                  subCategoryClick(value.id);
+                }}
+              />
+            ))}
+          </InnerValues>
+          <TailImg
+            src={
+              process.env.PUBLIC_URL + 'images/Chatbot/category-bubble-tail.svg'
+            }
+          />
+        </>
       )}
     </ToggleStyled>
   );

@@ -15,9 +15,9 @@ const MyPageImg = styled.img`
   top: 12px;
 `;
 
-const ChatbotHeader = () => {
+const ChatbotHeader = ({ onClick }) => {
   return (
-    <HeaderFrame>
+    <HeaderFrame onClick={onClick}>
       <img
         src={process.env.PUBLIC_URL + '/images/Chatbot/header-title.svg'}
         alt="chatbot"
