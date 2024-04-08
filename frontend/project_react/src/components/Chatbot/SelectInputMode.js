@@ -19,7 +19,7 @@ const SelectItem = styled.div`
   border: 1px solid var(--unselected-color);
   border-radius: 10px;
   padding: 8px 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* X축 0, Y축 4px로 적당한 그림자 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 const ItemText = styled.span`
   font-size: 16px;

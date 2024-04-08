@@ -60,6 +60,7 @@ const InputVoiceWrapper = styled.div`
   border-radius: 4px;
   background-color: #ffffff;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 const MicImg = styled.img`
   width: 42px;
