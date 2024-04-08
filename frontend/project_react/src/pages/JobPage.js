@@ -71,48 +71,48 @@ const JobPage = () => {
       title: '산책',
       content: '개 키우는 사람 ~',
     },
-    {
-      id: 5,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 6,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 7,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 8,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 9,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 10,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 11,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
+    // {
+    //   id: 5,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 6,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 7,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 8,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 9,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 10,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
+    // {
+    //   id: 11,
+    //   company: '희건희건희',
+    //   title: '산책',
+    //   content: '개 키우는 사람 ~',
+    // },
   ];
 
   return (
