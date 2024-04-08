@@ -12,7 +12,7 @@ const RegionWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 6px 12px;
+  padding: 4px 12px;
   border: 1px solid #000000;
   border-radius: 10px;
   box-sizing: border-box;
@@ -20,6 +20,7 @@ const RegionWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 124px;
+  background-color: #ffffff;
 `;
 const FilterSelect = styled(RegionWrapper)`
   width: fit-content;
