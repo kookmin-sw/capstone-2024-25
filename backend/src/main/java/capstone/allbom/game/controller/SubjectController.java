@@ -40,6 +40,7 @@ public class SubjectController {
     ) {
         SubjectType subjectType = SubjectType.valueOf(type.toUpperCase());
         Subject subject = subjectService.findByMemberAndType(member, subjectType);
+        subjectService.plusToPassedProblems(subject);
         subjectService.updateToNextProblem(subject);
         String sentence = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
         return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
