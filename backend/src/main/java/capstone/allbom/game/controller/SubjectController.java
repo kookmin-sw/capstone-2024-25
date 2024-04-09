@@ -33,4 +33,16 @@ public class SubjectController {
         return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
     }
 
+    @PostMapping
+    public ResponseEntity<SentenceResponse> skipSentence(
+            @Auth final Member member,
+            @RequestParam final String type
+    ) {
+        SubjectType subjectType = SubjectType.valueOf(type.toUpperCase());
+        Subject subject = subjectService.findByMemberAndType(member, subjectType);
+        subjectService.updateToNextProblem(subject);
+        String sentence = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
+        return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
+    }
+
 }
