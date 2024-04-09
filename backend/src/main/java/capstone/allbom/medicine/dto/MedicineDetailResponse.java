@@ -8,7 +8,6 @@ public record MedicineDetailResponse(
         Long id,
         String medicineName,
         List<String> medicineTime
-
 ) {
     public MedicineDetailResponse {
     }

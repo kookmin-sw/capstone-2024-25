@@ -101,6 +101,10 @@ public class AuthController {
             final HttpServletRequest httpServletRequest,
             final HttpServletResponse httpServletResponse
     ) {
+        /**
+         * TODO
+         * access 토큰 처리
+         */
         final String refreshToken = getRefreshTokenFromCookie(httpServletRequest);
         authService.deleteRefreshToken(refreshToken);
 
