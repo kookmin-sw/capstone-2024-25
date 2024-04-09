@@ -5,6 +5,7 @@ import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
+import capstone.allbom.member.dto.MemberUpdateRequest;
 import capstone.allbom.member.exception.MemberErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateMember(Member member) {
+    public void updateMember(final Member member, MemberUpdateRequest memberUpdateRequest) {
 
     }
 }
