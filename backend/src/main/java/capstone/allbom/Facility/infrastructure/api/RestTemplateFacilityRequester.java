@@ -1,20 +1,18 @@
-package capstone.allbom.Facility.infrastructure.api;
+package capstone.allbom.facility.infrastructure.api;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.service.FacilityService;
-import capstone.allbom.Facility.service.dto.FacilityRequest;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.service.FacilityService;
+import capstone.allbom.facility.service.dto.FacilityRequest;
 import capstone.allbom.common.service.S3FileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;

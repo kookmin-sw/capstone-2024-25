@@ -1,4 +1,4 @@
-package capstone.allbom.Facility.domain;
+package capstone.allbom.facility.domain;
 
 public enum FacilityType {
     HOSPITAL, PHARMACY, WELFAREHOUSE, WELFARECENTER, CARECENTER

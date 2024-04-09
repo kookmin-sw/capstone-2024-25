@@ -1,8 +1,7 @@
-package capstone.allbom.Facility.infrastructure.api;
+package capstone.allbom.facility.infrastructure.api;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.domain.FacilityRepository;
-import capstone.allbom.game.infrastructure.api.RestTemplateGameRequester;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.domain.FacilityRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

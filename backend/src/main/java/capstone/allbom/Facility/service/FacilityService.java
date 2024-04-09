@@ -1,9 +1,7 @@
-package capstone.allbom.Facility.service;
+package capstone.allbom.facility.service;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.domain.FacilityRepository;
-import capstone.allbom.Facility.infrastructure.api.RestTemplateFacilityRequester;
-import capstone.allbom.game.domain.SubjectRepository;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.domain.FacilityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
