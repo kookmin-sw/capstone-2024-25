@@ -3,11 +3,10 @@ package capstone.allbom.game.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.game.domain.*;
-import capstone.allbom.game.dto.GameSentenceRequest;
+import capstone.allbom.game.dto.SentenceRequest;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +33,7 @@ class SubjectServiceTest {
     @Nested
     class updateSubject {
         Subject science;
-        GameSentenceRequest request = new GameSentenceRequest(
+        SentenceRequest request = new SentenceRequest(
                 "DNA는 생명체의 유전 정보를 담고 있는 분자이다."
         );
         Member member = memberRepository.save(new Member());
@@ -81,7 +79,7 @@ class SubjectServiceTest {
         @Test
         void 사용자의_문장_입력과_정답이_같은지_비교한다() {
             // given
-            GameSentenceRequest request = new GameSentenceRequest(
+            SentenceRequest request = new SentenceRequest(
               "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다."
             );
             var science = game.getSubjects().get(1);
@@ -97,7 +95,7 @@ class SubjectServiceTest {
         @Test
         void 사용자의_문장_입력과_정답이_다른지_비교한다() {
             // given
-            GameSentenceRequest request = new GameSentenceRequest(
+            SentenceRequest request = new SentenceRequest(
                     "정치적 분열이 사회의 안정을 위협하고 있다다."
             );
             var science = game.getSubjects().get(2);
