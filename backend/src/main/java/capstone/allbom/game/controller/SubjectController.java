@@ -46,4 +46,27 @@ public class SubjectController {
         String sentence = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
         return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
     }
+
+    @PostMapping
+    public ResponseEntity<SentenceAnswerResponse> submitSentence(
+            @Auth final Member member,
+            @RequestParam final String type,
+            @RequestBody SentenceRequest sentenceRequest
+    ) {
+        SubjectType subjectType = SubjectType.valueOf(type.toUpperCase());
+        Subject subject = subjectService.findByMemberAndType(member, subjectType);
+
+        /**
+         * TODO
+         * update 후 subject 리턴 객체 확인
+         */
+
+        String answer = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
+        boolean isAnswer = subjectService.compareWithAnswer(subjectType, subject.getCurrProblem(), sentenceRequest);
+        if (isAnswer) {
+            subjectService.updateToNextProblem(subject);
+        }
+        return ResponseEntity.ok(SentenceAnswerResponse.from(subject, answer, isAnswer));
+    }
+
 }
