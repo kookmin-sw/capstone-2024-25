@@ -2,7 +2,7 @@ package capstone.allbom.game.dto;
 import capstone.allbom.game.domain.Subject;
 
 public record SentenceAnswerResponse(
-        Integer currProblem,
+        Integer nextProblem,
         String sentence,
         Boolean isAnswer
 ) {

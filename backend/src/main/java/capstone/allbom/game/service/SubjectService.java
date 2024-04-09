@@ -60,8 +60,7 @@ public class SubjectService {
         return requestType;
     }
 
-    public boolean compareWithAnswer(SubjectType type, Integer currProblem, SentenceRequest gameSentenceRequest) {
-        String answer = getCurrSentence(type, currProblem);
+    public boolean compareWithAnswer(SubjectType type, String answer, SentenceRequest gameSentenceRequest) {
         System.out.println("answer = " + answer);
         if (answer.equals(gameSentenceRequest.sentence()))
             return true;

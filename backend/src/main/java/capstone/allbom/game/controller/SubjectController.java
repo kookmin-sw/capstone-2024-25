@@ -62,7 +62,7 @@ public class SubjectController {
          */
 
         String answer = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
-        boolean isAnswer = subjectService.compareWithAnswer(subjectType, subject.getCurrProblem(), sentenceRequest);
+        boolean isAnswer = subjectService.compareWithAnswer(subjectType, answer, sentenceRequest);
         if (isAnswer) {
             subjectService.updateToNextProblem(subject);
         }
