@@ -1,0 +1,1402 @@
+name,type,address
+중앙시장,culture_shopping,강원도 강릉시 성남동 50 중앙시장
+강릉성남시장,culture_shopping,강원도 강릉시 성남동 53-8
+강릉동부시장,culture_shopping,강원도 강릉시 옥천동 48-1
+강릉서부시장,culture_shopping,강원도 강릉시 용강동 29 서부시장
+주문진건어물시장,culture_shopping,강원도 강릉시 주문진읍 주문리 312-708
+주문진수산시장,culture_shopping,강원도 강릉시 주문진읍 주문리 312-91
+주문진종합시장,culture_shopping,강원도 강릉시 주문진읍 주문리 321-52
+간성전통시장(천년고성시장),culture_shopping,강원도 고성군 간성읍 신안리 311-9 제일정육점
+거진시장,culture_shopping,강원도 고성군 거진읍 거진리 272 거진전통시장
+동해남부재래시장,culture_shopping,"강원도 동해시 동회동 442 대동아파트, 동회동 현대아파트"
+묵호시장,culture_shopping,강원도 동해시 묵호진동 15-61 장안할인마트
+동쪽바다중앙시장,culture_shopping,강원도 동해시 발한동 7-1 뉴월드상가
+북평민속시장,culture_shopping,강원도 동해시 북평동 15-5 동서약국
+삼척중앙시장,culture_shopping,강원도 삼척시 남양동 55-4 중앙시장
+도계중앙시장,culture_shopping,강원도 삼척시 도계읍 도계리 390-1 도계중앙시장
+도계전두시장,culture_shopping,강원도 삼척시 도계읍 전두리 81-20 고려가방
+삼척번개시장,culture_shopping,강원도 삼척시 사직동 50-11
+속초종합중앙시장,culture_shopping,강원도 속초시 중앙동 471-4
+속초관광수산시장(구 속초중앙전통시장),culture_shopping,강원도 속초시 중앙동 493-3
+양구중앙시장,culture_shopping,강원도 양구군 양구읍 상리 235 중앙시장
+양양전통시장,culture_shopping,강원도 양양군 양양읍 남문리 57 양양시장조합상가
+서부아침시장,culture_shopping,강원도 영월군 영월읍 영흥리 947-57 서부시장
+영월종합상가시장,culture_shopping,강원도 영월군 영월읍 하송리 11-1
+서부공설시장,culture_shopping,강원도 영월군 영월읍 하송리 5-10
+원주남부시장,culture_shopping,강원도 원주시 명륜동 26 남부시장
+문막시장,culture_shopping,강원도 원주시 문막읍 문막리 240-1 문막시장
+중앙시민전통시장,culture_shopping,강원도 원주시 중앙동 48
+자유시장,culture_shopping,강원도 원주시 중앙동 57 자유시장
+미로예술원주중앙시장(원주중앙시장),culture_shopping,강원도 원주시 중앙동 60-56 중앙시장
+북원상가시장,culture_shopping,강원도 원주시 태장동 1379-23 북원상가
+민속풍물시장,culture_shopping,강원도 원주시 평원동 134-1
+원통시장,culture_shopping,강원도 인제군 북면 원통리 647-40
+인제시장,culture_shopping,강원도 인제군 인제읍 상동리 264-20
+고한구공탄시장(고한시장),culture_shopping,강원도 정선군 고한읍 고한리 62-14
+정선사북시장,culture_shopping,강원도 정선군 사북읍 사북리 366-59 사북시장조합사무실
+임계사통팔달시장,culture_shopping,강원도 정선군 임계면 송계리 774-5 임계시장 상인회관
+정선아리랑시장,culture_shopping,강원도 정선군 정선읍 봉양리 349-20
+신철원시장,culture_shopping,강원도 철원군 갈말읍 신철원리 697
+동송전통시장,culture_shopping,강원도 철원군 동송읍 이평리 678-49 서울떡집
+동송시장,culture_shopping,강원도 철원군 동송읍 이평리 680-1 동송시장
+와수시장,culture_shopping,강원도 철원군 서면 와수리 1171-92 와수시장 번영회 사무실
+춘천번개시장,culture_shopping,강원도 춘천시 소양로1가 93-10
+춘천서부시장,culture_shopping,강원도 춘천시 소양로2가 172-1 신동아아파트
+춘천풍물시장,culture_shopping,강원도 춘천시 온의동 148-1 풍물시장
+춘천동부시장,culture_shopping,강원도 춘천시 운교동 183 동부시장현대아파트
+제일종합시장,culture_shopping,강원도 춘천시 죽림동 32 제일백화점
+춘천중앙시장,culture_shopping,강원도 춘천시 중앙로2가 42-68
+춘천남부시장,culture_shopping,강원도 춘천시 효자동 684-11 남부시장
+춘천후평시장,culture_shopping,강원도 춘천시 후평동 691-22
+장성중앙시장,culture_shopping,강원도 태백시 장성동 159-2 장성시장
+황지자유시장,culture_shopping,강원도 태백시 통동 75-32
+평창대화시장,culture_shopping,강원도 평창군 대화면 대화리 1001-14
+봉평전통시장(봉평시장),culture_shopping,강원도 평창군 봉평면 창동리 397-34
+진부전통시장,culture_shopping,강원도 평창군 진부면 하진부리 206-95 진부전통시장 상인회
+평창올림픽시장(평창전통시장),culture_shopping,강원도 평창군 평창읍 하리 139-1
+홍천시장,culture_shopping,강원도 홍천군 홍천읍 신장대리 11-32
+홍천중앙시장,culture_shopping,강원도 홍천군 홍천읍 신장대리 5-3
+화천재래시장,culture_shopping,강원도 화천군 화천읍 하리 50-7 태흥운수
+횡성시장,culture_shopping,강원도 횡성군 횡성읍 읍상리 277-3
+가평잣고을전통시장,culture_shopping,경기도 가평군 가평읍 읍내리 473-15 가평금방
+청평여울시장,culture_shopping,경기도 가평군 청평면 청평리 424-7
+원당시장,culture_shopping,경기도 고양시 덕양구 성사동 697-14 영프라자
+능곡시장,culture_shopping,경기도 고양시 덕양구 토당동 347
+덕이동패션1번지,culture_shopping,경기도 고양시 일산서구 덕이동 384-1
+일산시장,culture_shopping,경기도 고양시 일산서구 일산동 617-20
+제일쇼핑시장,culture_shopping,경기도 과천시 별양동 1-13 제일쇼핑
+과천새서울프라자시장,culture_shopping,경기도 과천시 별양동 1-18 새서울프라자
+광명전통시장,culture_shopping,경기도 광명시 광명동 158-44
+광명새마을시장,culture_shopping,경기도 광명시 광명동 342-12
+경안시장,culture_shopping,경기도 광주시 경안동 254-19
+구리전통시장,culture_shopping,경기도 구리시 수택동 417 구리전통시장 공영주차장
+군포역전시장,culture_shopping,경기도 군포시 당동 749-41
+산본시장,culture_shopping,경기도 군포시 산본동 251-4
+양곡시장,culture_shopping,경기도 김포시 양촌읍 양곡리 415-6 양곡농약사
+양곡오라니장터시장,culture_shopping,경기도 김포시 양촌읍 양곡리 419-4
+통진시장,culture_shopping,경기도 김포시 통진읍 서암리 721-8
+남양주장현 전통시장,culture_shopping,경기도 남양주시 진접읍 장현리 634-4 장현프라자
+중앙시장,culture_shopping,경기도 동두천시 생연동 607-27
+동두천큰시장,culture_shopping,경기도 동두천시 생연동 698-1
+세아프라자상가,culture_shopping,경기도 동두천시 생연동 809 세아프라자
+동두천제일시장,culture_shopping,경기도 동두천시 생연동 823-1
+고리울동굴시장,culture_shopping,경기도 부천시 고강동 407
+역곡남부시장,culture_shopping,경기도 부천시 괴안동 107-8 유영연립
+조공시장,culture_shopping,경기도 부천시 괴안동 40 화성연립
+강남시장,culture_shopping,경기도 부천시 도당동 276-4
+신흥시장,culture_shopping,경기도 부천시 삼정동 315 삼정빌딩
+부천상동시장,culture_shopping,경기도 부천시 상동 236-5 상동시장 고객지원센터
+부천한신시장,culture_shopping,경기도 부천시 소사본동 196-9
+소사종합시장,culture_shopping,경기도 부천시 소사본동 78-34
+부천자유시장,culture_shopping,경기도 부천시 심곡본동 543
+역곡상상시장(역곡북부시장),culture_shopping,경기도 부천시 역곡동 84-7 역곡 북부시장 고객편의센터
+오정시장,culture_shopping,경기도 부천시 오정동 582-30
+원미부흥시장,culture_shopping,경기도 부천시 원미동 118-18
+원미종합시장,culture_shopping,경기도 부천시 원미동 97-12 원미재래시장고객편의센타
+원종중앙시장,culture_shopping,경기도 부천시 원종동 209-5
+부천제일시장,culture_shopping,경기도 부천시 원종동 298
+원종종합시장,culture_shopping,경기도 부천시 원종동 372-1
+중동사랑시장(부천중동시장),culture_shopping,경기도 부천시 중동 725-11
+미금현대벤처빌시장,culture_shopping,경기도 성남시 분당구 구미동 26 구미1동 행정복지센터
+코코프라자시장,culture_shopping,경기도 성남시 분당구 서현동 248-5 코코프라자
+미래그린시장,culture_shopping,경기도 성남시 분당구 서현동 307 효자촌미래타운아파트
+미래타운제2종합시장,culture_shopping,경기도 성남시 분당구 서현동 311 효자촌주상복합
+범한프라자시장,culture_shopping,경기도 성남시 분당구 서현동 312-3 범한프라자
+현대시장(분당),culture_shopping,경기도 성남시 분당구 서현동 94 현대근린상가
+분당우성시장,culture_shopping,경기도 성남시 분당구 서현동 94-3 우성종합상가
+금호행복시장(금호시장),culture_shopping,경기도 성남시 분당구 수내동 32 양지마을금호아파트
+청구문화시장,culture_shopping,경기도 성남시 분당구 수내동 32 양지마을금호아파트
+돌고래시장,culture_shopping,경기도 성남시 분당구 수내동 53 파크타운서안아파트
+코끼리시장,culture_shopping,경기도 성남시 분당구 수내동 56 파크타운대림아파트
+동신종합시장,culture_shopping,경기도 성남시 분당구 수내동 63-2 동신코아빌딩
+현대프라자시장,culture_shopping,경기도 성남시 분당구 수내동 79-2 현대제일상가
+분당종합시장,culture_shopping,경기도 성남시 분당구 수내동 83-1 동한프라자
+야탑에이스코아시장,culture_shopping,경기도 성남시 분당구 야탑동 502 야탑시장
+현대시장,culture_shopping,경기도 성남시 수정구 태평동 3683 현대시장
+단대전통시장,culture_shopping,경기도 성남시 중원구 금광동 10 단대쇼핑센타
+금광시장,culture_shopping,경기도 성남시 중원구 금광동 4622
+상대원시장,culture_shopping,경기도 성남시 중원구 상대원동 2985-1 상대원프라자
+모란가축시장,culture_shopping,경기도 성남시 중원구 성남동 4182 한성빌딩
+모란종합시장,culture_shopping,경기도 성남시 중원구 성남동 4182 한성빌딩
+모란전통기름시장,culture_shopping,경기도 성남시 중원구 성남동 4222
+은행시장,culture_shopping,경기도 성남시 중원구 은행동 1553 은행시장
+성남남한산성시장(은행골목시장),culture_shopping,경기도 성남시 중원구 은행동 1565
+하대원공설시장,culture_shopping,경기도 성남시 중원구 하대원동 266-1 성남수산물도매시장
+권선종합시장,culture_shopping,경기도 수원시 권선구 권선동 1051
+구매탄시장,culture_shopping,경기도 수원시 영통구 매탄동 172-72
+연무시장,culture_shopping,경기도 수원시 장안구 연무동 249 연무새마을금고
+장안문거북시장,culture_shopping,경기도 수원시 장안구 영화동 250-1 영화동 행정복지센터 및 공영주차장
+정자시장,culture_shopping,경기도 수원시 장안구 정자동 73-10 정자종합시장
+조원시장,culture_shopping,경기도 수원시 장안구 조원동 743-7
+북수원시장,culture_shopping,경기도 수원시 장안구 파장동 572-35 솔나무떡집
+남문로데오시장,culture_shopping,경기도 수원시 팔달구 교동 3-6
+구천동공구상가,culture_shopping,경기도 수원시 팔달구 구천동 86-1
+역전시장,culture_shopping,경기도 수원시 팔달구 매산로1가 57-3 역전시장
+매산시장,culture_shopping,경기도 수원시 팔달구 매산로2가 90 대한대우아파트
+시민상가시장,culture_shopping,경기도 수원시 팔달구 영동 10-18 시민백화점
+남문패션1번가시장,culture_shopping,경기도 수원시 팔달구 영동 43-5
+팔달문시장,culture_shopping,경기도 수원시 팔달구 영동 6-14
+영동시장,culture_shopping,경기도 수원시 팔달구 영동 8 영동시장
+못골종합시장,culture_shopping,경기도 수원시 팔달구 지동 387-1
+미나리광시장,culture_shopping,경기도 수원시 팔달구 지동 400-12
+지동시장,culture_shopping,경기도 수원시 팔달구 지동 402-2 지동시장
+화서시장,culture_shopping,경기도 수원시 팔달구 화서동 97-1 화서상가
+도일시장,culture_shopping,경기도 시흥시 거모동 1669-22
+시흥삼미시장,culture_shopping,경기도 시흥시 신천동 738-4 소망교회
+정왕시장,culture_shopping,경기도 시흥시 정왕동 1203 정왕시장
+오이도전통수산시장,culture_shopping,경기도 시흥시 정왕동 2003-8
+안산시시민시장,culture_shopping,경기도 안산시 단원구 초지동 604-4 안산시민시장
+신안코아,culture_shopping,경기도 안산시 상록구 본오동 871 신안1차아파트
+신안프라자전통시장,culture_shopping,경기도 안산시 상록구 본오동 871 신안프라자
+월드프라자,culture_shopping,경기도 안산시 상록구 본오동 872 월드아파트
+안산패션타운전통시장,culture_shopping,경기도 안산시 상록구 사동 1530 안산의류상설할인매장
+스타프라자전통시장,culture_shopping,경기도 안산시 상록구 성포동 583 스타프라자
+안산 다농마트 전통시장,culture_shopping,경기도 안산시 상록구 월피동 445 다농마트
+안성맞춤시장,culture_shopping,경기도 안성시 서인동 13-1
+중앙시장,culture_shopping,경기도 안성시 서인동 81
+일죽시장,culture_shopping,경기도 안성시 일죽면 송천리 15-18
+죽산시장,culture_shopping,경기도 안성시 죽산면 죽산리 439-3
+안양관양시장,culture_shopping,경기도 안양시 동안구 관양동 1407-8
+안양호계종합시장,culture_shopping,경기도 안양시 동안구 호계동 997 청도아파트
+박달시장,culture_shopping,경기도 안양시 만안구 박달동 21-8
+석수시장,culture_shopping,경기도 안양시 만안구 석수동 287
+중부농수산물시장,culture_shopping,경기도 안양시 만안구 안양동 622-337
+안양남부시장,culture_shopping,경기도 안양시 만안구 안양동 622-378
+중앙시장,culture_shopping,경기도 안양시 만안구 안양동 676-44 중앙시장
+안양중앙인정시장,culture_shopping,경기도 안양시 만안구 안양동 711-280
+양동쌍학시장,culture_shopping,경기도 양평군 양동면 쌍학리 227-3
+양수리전통시장(양평양수리시장),culture_shopping,경기도 양평군 양서면 양수리 556-3 한강체육관
+양평물맑은시장,culture_shopping,경기도 양평군 양평읍 양근리 166-8 양평시장번영회
+용문천년시장,culture_shopping,경기도 양평군 용문면 다문리 307-5
+여주한글시장(여주중앙로상점가),culture_shopping,경기도 여주시 하동 268-4
+전곡재래시장,culture_shopping,경기도 연천군 전곡읍 전곡리 479-31 경기도상인연합회연천군전곡지부
+오색시장,culture_shopping,경기도 오산시 오산동 853-27 수월청과공판장
+죽전로데오상점가전통시장,culture_shopping,경기도 용인시 수지구 죽전동 1003-53 죽전유표빌딩
+용인중앙시장,culture_shopping,경기도 용인시 처인구 김량장동 137-1
+부곡도깨비시장,culture_shopping,경기도 의왕시 삼동 192-554
+의정부시장,culture_shopping,경기도 의정부시 의정부동 148-5
+의정부제일시장,culture_shopping,경기도 의정부시 의정부동 160 의정부제일시장
+의정부청과야채시장,culture_shopping,경기도 의정부시 의정부동 30-8
+관고전통시장,culture_shopping,경기도 이천시 관고동 10-13
+사기막골도자기시장,culture_shopping,경기도 이천시 사음동 536
+장호원전통시장,culture_shopping,경기도 이천시 장호원읍 장호원리 350
+광탄시장,culture_shopping,경기도 파주시 광탄면 신산리 222-7
+금촌명동로시장,culture_shopping,경기도 파주시 금촌동 323-1 현대서점
+금촌전통시장,culture_shopping,경기도 파주시 금촌동 64-19
+금촌문화로시장,culture_shopping,경기도 파주시 금촌동 66-4
+문산자유시장,culture_shopping,경기도 파주시 문산읍 문산리 10-23
+적성전통시장,culture_shopping,경기도 파주시 적성면 마지리 46-8 적성정보통신
+봉일천시장,culture_shopping,경기도 파주시 조리읍 봉일천리 168-4 현대25시편의점
+서정리시장,culture_shopping,경기도 평택시 서정동 328-8
+통복시장,culture_shopping,경기도 평택시 신장동 318-24
+중앙시장,culture_shopping,경기도 평택시 신장동 318-24
+안중시장,culture_shopping,경기도 평택시 안중읍 안중리 267-1
+송탄시장,culture_shopping,경기도 평택시 지산동 745-14
+운천전통시장,culture_shopping,경기도 포천시 영북면 운천리 513-15 운천상설시장
+일동전통시장,culture_shopping,경기도 포천시 일동면 기산리 94-10
+덕풍전통시장,culture_shopping,경기도 하남시 덕풍동 328-12
+신장전통시장,culture_shopping,경기도 하남시 신장동 429-1 신장전통재래시장 주차장
+남양시장,culture_shopping,경기도 화성시 남양읍 남양리 1165-25
+사강시장,culture_shopping,경기도 화성시 송산면 사강리 662-2 사강새마을금고
+조암시장,culture_shopping,경기도 화성시 우정읍 조암리 311-9
+발안시장,culture_shopping,경기도 화성시 향남읍 평리 81-51
+거제읍내시장,culture_shopping,경상남도 거제시 거제면 서상리 325-2 거제종합시장
+한라프라자,culture_shopping,경상남도 거제시 고현동 961-153 한라프라자
+회원프라자,culture_shopping,경상남도 거제시 고현동 961-59 회원프라자
+거제고현시장,culture_shopping,경상남도 거제시 고현동 98-27 고현종합시장
+옥수시장,culture_shopping,경상남도 거제시 능포동 633-215 삼진상가
+옥수동새시장,culture_shopping,경상남도 거제시 능포동 680-1
+옥현상가,culture_shopping,경상남도 거제시 옥포동 1293-1 옥현시장
+옥포국제시장,culture_shopping,경상남도 거제시 옥포동 529-1
+신부시장,culture_shopping,경상남도 거제시 장승포동 283
+장평종합시장,culture_shopping,경상남도 거제시 장평동 56-1 장평종합상가
+거창시장,culture_shopping,경상남도 거창군 거창읍 중앙리 122-9 거창시장
+고성시장,culture_shopping,경상남도 고성군 고성읍 서외리 1-6 고성시장상가
+고성공룡시장,culture_shopping,경상남도 고성군 고성읍 성내리 212-3
+영오시장,culture_shopping,경상남도 고성군 영오면 영산리 232-1
+배둔시장,culture_shopping,경상남도 고성군 회화면 배둔리 826-14
+김해전통시장(김해동상시장),culture_shopping,경상남도 김해시 동상동 877-2
+장유전통시장(장유중앙시장),culture_shopping,경상남도 김해시 무계동 189-3
+삼방시장,culture_shopping,경상남도 김해시 삼방동 673-9
+외동전통시장,culture_shopping,경상남도 김해시 외동 1254-2 네오프라자
+진례전통시장,culture_shopping,경상남도 김해시 진례면 초전리 376-5
+진영전통시장,culture_shopping,경상남도 김해시 진영읍 진영리 235-16
+남면공설시장,culture_shopping,경상남도 남해군 남면 당항리 1381-5
+남해전통시장,culture_shopping,경상남도 남해군 남해읍 북변리 246-1
+이동공설시장,culture_shopping,경상남도 남해군 이동면 무림리 1140
+내일전통시장,culture_shopping,경상남도 밀양시 내일동 174-9
+밀양아리랑시장,culture_shopping,경상남도 밀양시 내일동 583-1
+무안시장(무안임시시장),culture_shopping,경상남도 밀양시 무안면 무안리 814-9
+송백시장,culture_shopping,경상남도 밀양시 산내면 송백리 1319-13
+송지시장,culture_shopping,경상남도 밀양시 삼랑진읍 송지리 359-15
+수산시장,culture_shopping,경상남도 밀양시 하남읍 수산리 815-18
+완사시장,culture_shopping,경상남도 사천시 곤명면 정곡리 842 완사시장
+곤양종합시장,culture_shopping,경상남도 사천시 곤양면 남문외리 48-4 곤양종합시장
+삼천포종합시장,culture_shopping,경상남도 사천시 동금동 88-4 경남아파트
+삼천포용궁수산시장,culture_shopping,경상남도 사천시 동동 485-2 삼천포 용궁수산시장
+사천읍시장,culture_shopping,경상남도 사천시 사천읍 정의리 393-8 사천읍시장
+삼천포전통수산시장,culture_shopping,경상남도 사천시 서동 311-112
+삼천포중앙시장,culture_shopping,경상남도 사천시 선구동 17-5 농협공판장
+단성시장,culture_shopping,경상남도 산청군 단성면 성내리 178 단성시장1
+산청시장,culture_shopping,경상남도 산청군 산청읍 산청리 250-2 산청시장약초상설매장
+생초시장,culture_shopping,경상남도 산청군 생초면 어서리 259-13
+덕산시장,culture_shopping,경상남도 산청군 시천면 사리 931-3 덕산시장
+단계시장,culture_shopping,경상남도 산청군 신등면 단계리 784 단계시장
+덕계종합상설시장,culture_shopping,경상남도 양산시 덕계동 754-1 덕계종합상설시장
+양산북부시장,culture_shopping,경상남도 양산시 북부동 148-19 북부시장
+서창시장,culture_shopping,경상남도 양산시 삼호동 525 서창시장
+석계시장,culture_shopping,경상남도 양산시 상북면 석계리 34-9
+양산남부시장상가,culture_shopping,경상남도 양산시 중부동 407-3
+양산남부시장,culture_shopping,경상남도 양산시 중부동 423-5 남부시장
+신평시장,culture_shopping,경상남도 양산시 하북면 순지리 575 신평시장
+신반시장,culture_shopping,경상남도 의령군 부림면 신반리 519-3
+의령시장,culture_shopping,경상남도 의령군 의령읍 중동리 386-7 의령전통시장 화장실
+진주동성상가,culture_shopping,경상남도 진주시 강남동 219 동성가든타워
+금곡시장,culture_shopping,경상남도 진주시 금곡면 두문리 639-1
+대곡시장,culture_shopping,경상남도 진주시 대곡면 광석리 321-7
+진주중앙시장,culture_shopping,경상남도 진주시 대안동 8-600
+문산시장,culture_shopping,경상남도 진주시 문산읍 소문리 112-6
+동부종합상가,culture_shopping,경상남도 진주시 상대동 193-1 동부시장
+자유시장,culture_shopping,경상남도 진주시 상대동 276-9 자유시장
+진주청과시장,culture_shopping,경상남도 진주시 수정동 25-28 서부농협
+이현종합상가,culture_shopping,경상남도 진주시 이현동 21-3 이현종합시장
+일반성상가(일반성시장),culture_shopping,경상남도 진주시 일반성면 창촌리 92
+진주논개시장(장대시장),culture_shopping,경상남도 진주시 장대동 58-8
+천전시장,culture_shopping,경상남도 진주시 칠암동 306-1
+평거한보하이타운,culture_shopping,경상남도 진주시 평거동 301-1 한보하이타운
+남지시장,culture_shopping,경상남도 창녕군 남지읍 남지리 531 남지시장
+영산시장,culture_shopping,경상남도 창녕군 영산면 성내리 516-4
+이방정기시장,culture_shopping,경상남도 창녕군 이방면 거남리 430-5 이방시장
+창녕상설시장,culture_shopping,경상남도 창녕군 창녕읍 술정리 45-1
+마산수산시장,culture_shopping,경상남도 창원시 마산합포구 남성동 229-1
+정우새어시장,culture_shopping,경상남도 창원시 마산합포구 동성동 313
+마산어시장,culture_shopping,경상남도 창원시 마산합포구 동성동 314 어시장유료주차장
+신마산반월시장(반월시장),culture_shopping,경상남도 창원시 마산합포구 반월동 84-13
+부림시장,culture_shopping,경상남도 창원시 마산합포구 부림동 83-1 변경희피아노
+부림상시장,culture_shopping,경상남도 창원시 마산합포구 부림동 83-24
+산호시장,culture_shopping,경상남도 창원시 마산합포구 산호동 28-8 한진아파트
+북마산중앙시장,culture_shopping,경상남도 창원시 마산합포구 상남동 40-1 북마산중앙시장
+기산프라자,culture_shopping,경상남도 창원시 마산합포구 오동동 18-61 기산상가아파트
+진동전통시장,culture_shopping,경상남도 창원시 마산합포구 진동면 진동리 264-3
+진동시장,culture_shopping,경상남도 창원시 마산합포구 진동면 진동리 359-6 쌍둥이과일집
+북마산가구시장,culture_shopping,경상남도 창원시 마산합포구 추산동 7-6
+월영대시장,culture_shopping,경상남도 창원시 마산합포구 해운동 14-15 (구)월영동행정복지센터
+대동씨코아상가시장,culture_shopping,경상남도 창원시 마산합포구 해운동 37-4 대동씨코아
+신마산시장,culture_shopping,경상남도 창원시 마산합포구 해운동 64 신마산시장
+구암현대시장,culture_shopping,경상남도 창원시 마산회원구 구암동 18-2 교직원아파트
+구암시장,culture_shopping,경상남도 창원시 마산회원구 구암동 87 구암대동타운 주상가
+코오롱타운상가,culture_shopping,경상남도 창원시 마산회원구 내서읍 호계리 10 코오롱하늘채1차아파트
+서마산시장,culture_shopping,경상남도 창원시 마산회원구 석전동 155-1
+역전통합시장,culture_shopping,경상남도 창원시 마산회원구 석전동 226-2 마산역전통합시장
+마산역번개시장,culture_shopping,경상남도 창원시 마산회원구 석전동 226-8 가야모텔
+석전시장,culture_shopping,경상남도 창원시 마산회원구 석전동 257-1 역전상가
+양덕중앙시장,culture_shopping,경상남도 창원시 마산회원구 양덕동 15-1 양덕중앙시장
+경민인터빌상가,culture_shopping,경상남도 창원시 마산회원구 양덕동 15-27 경민 인터빌
+합성옛길시장,culture_shopping,경상남도 창원시 마산회원구 양덕동 7-1
+합성동상가,culture_shopping,경상남도 창원시 마산회원구 합성동 125-3
+동마산시장,culture_shopping,경상남도 창원시 마산회원구 합성동 326-1 동마산시장
+합성대로상가,culture_shopping,경상남도 창원시 마산회원구 합성동 85-8
+회성종합시장,culture_shopping,경상남도 창원시 마산회원구 회성동 450-2 회성종합시장
+가음정대상가,culture_shopping,경상남도 창원시 성산구 가음동 21-20 가음시장대상가
+가음정시장,culture_shopping,경상남도 창원시 성산구 가음동 21-3
+성원3차상가,culture_shopping,경상남도 창원시 성산구 대방동 355 성원3차아파트상가
+대방덕산1차상가,culture_shopping,경상남도 창원시 성산구 대방동 356 대방덕산타운
+대동훼미리코아상가,culture_shopping,경상남도 창원시 성산구 대방동 358 대방대동아파트
+반송시장,culture_shopping,경상남도 창원시 성산구 반림동 17-13 공단인테리어총판
+대동그린코아상가,culture_shopping,경상남도 창원시 성산구 반지동 23 반송대동아파트
+사파동성종합상가,culture_shopping,경상남도 창원시 성산구 사파동 93 사파동성아파트
+상남시장,culture_shopping,경상남도 창원시 성산구 상남동 16 상남재래시장
+성원그랜드쇼핑상가,culture_shopping,경상남도 창원시 성산구 상남동 45-1 성원아파트 성원종합상가
+창원코아상가,culture_shopping,경상남도 창원시 성산구 상남동 73-4 창원코아상가
+경창상가,culture_shopping,경상남도 창원시 성산구 상남동 73-5 경창종합상가
+토월복합상가시장,culture_shopping,경상남도 창원시 성산구 신월동 68-1 토월복합상가
+유신종합상가,culture_shopping,경상남도 창원시 성산구 신촌동 15-6 유신종합상가
+양곡종합상가,culture_shopping,경상남도 창원시 성산구 신촌동 33-2 양곡상가아파트
+롯데종합상가,culture_shopping,경상남도 창원시 성산구 용호동 63 롯데아파트
+중앙시장(창원중앙시장),culture_shopping,경상남도 창원시 성산구 중앙동 8-10
+동성올림픽타운,culture_shopping,경상남도 창원시 성산구 중앙동 97-2 동성올림픽타운
+창원캔버라상가,culture_shopping,경상남도 창원시 성산구 중앙동 97-6 캔버라호텔
+덕산그린피아상가,culture_shopping,경상남도 창원시 성산구 중앙동 98-6 덕산그린피아
+창원도계부부시장,culture_shopping,경상남도 창원시 의창구 도계동 400-1
+명서시장,culture_shopping,경상남도 창원시 의창구 명서동 48-10
+명곡종합상가,culture_shopping,경상남도 창원시 의창구 명서동 75-16 명곡종합상가
+봉곡민속체험시장(봉곡시장),culture_shopping,경상남도 창원시 의창구 봉곡동 145-1
+봉곡프라자상가,culture_shopping,경상남도 창원시 의창구 봉곡동 61-10 봉곡프라자
+지귀시장,culture_shopping,경상남도 창원시 의창구 봉곡동 80-14
+소답시장,culture_shopping,경상남도 창원시 의창구 북동 247-9
+북동공설시장,culture_shopping,경상남도 창원시 의창구 북동 249-1 창원공설시장
+소계옛길시장,culture_shopping,경상남도 창원시 의창구 소계동 723-3
+소계시장,culture_shopping,경상남도 창원시 의창구 소계동 724-4 소계시장
+대동중앙상가,culture_shopping,경상남도 창원시 의창구 팔용동 124-3 대동차룡아파트 상가
+창원기계공구상가,culture_shopping,경상남도 창원시 의창구 팔용동 16-1 창원기계공구상가
+진해중부시장,culture_shopping,경상남도 창원시 진해구 경화동 1164-1 중부상가아파트
+경화시장,culture_shopping,경상남도 창원시 진해구 경화동 726
+마천시장,culture_shopping,경상남도 창원시 진해구 마천동 131-22 슈바우애견샵
+웅천시장,culture_shopping,경상남도 창원시 진해구 성내동 327
+진해중앙시장,culture_shopping,경상남도 창원시 진해구 화천동 60-14 중앙상가아파트
+북신전통시장,culture_shopping,경상남도 통영시 북신동 665-16
+서호전통시장,culture_shopping,경상남도 통영시 서호동 163-42
+통영중앙전통시장,culture_shopping,경상남도 통영시 중앙동 38-4 중앙상가
+계천공설시장(계천시장),culture_shopping,경상남도 하동군 금남면 계천리 355-3 계천시장
+북천공설시장,culture_shopping,경상남도 하동군 북천면 직전리 597-15 북천식육식당
+옥종공설시장,culture_shopping,경상남도 하동군 옥종면 청룡리 124-15 옥종공설시장
+진교공설시장,culture_shopping,경상남도 하동군 진교면 진교리 302-4
+하동공설시장,culture_shopping,경상남도 하동군 하동읍 읍내리 258-1 하동시장번영회
+화개장터,culture_shopping,경상남도 하동군 화개면 탑리 726-10 화개장터
+횡천공설시장(횡천시장),culture_shopping,경상남도 하동군 횡천면 횡천리 507-2
+가야상설시장(가야시장),culture_shopping,경상남도 함안군 가야읍 말산리 470-1 가야시장
+군복공설시장,culture_shopping,경상남도 함안군 군북면 중암리 66-50
+대산공설시장,culture_shopping,경상남도 함안군 대산면 구혜리 221-3
+칠원공설시장,culture_shopping,경상남도 함안군 칠원읍 구성리 728-98 매일목공소
+마천전통시장,culture_shopping,경상남도 함양군 마천면 가흥리 609-2
+안의시장,culture_shopping,경상남도 함양군 안의면 석천리 243
+함양토종약초시장,culture_shopping,경상남도 함양군 안의면 이전리 15 함양토종약초시장
+지리산함양시장,culture_shopping,경상남도 함양군 함양읍 용평리 607-104
+가야시장,culture_shopping,경상남도 합천군 가야면 황산리 17-1
+삼가시장,culture_shopping,경상남도 합천군 삼가면 일부리 921-1
+야로시장,culture_shopping,경상남도 합천군 야로면 구정리 273-4
+초계시장,culture_shopping,경상남도 합천군 초계면 초계리 50-1
+합천시장,culture_shopping,경상남도 합천군 합천읍 합천리 473-1 합천시장
+경산공설시장,culture_shopping,경상북도 경산시 서상동 10 경산공설시장A지구
+자인공설시장,culture_shopping,경상북도 경산시 자인면 서부리 254
+하양공설시장,culture_shopping,경상북도 경산시 하양읍 금락리 35-6
+감포시장,culture_shopping,경상북도 경주시 감포읍 감포리 436-1
+건천시장,culture_shopping,경상북도 경주시 건천읍 건천리 339-4
+불국시장,culture_shopping,경상북도 경주시 구정동 429-7 불국공설시장
+제2경주중심상가시장,culture_shopping,경상북도 경주시 노동동 230
+양북시장,culture_shopping,경상북도 경주시 문무대왕면 어일리 1295-556
+서면시장,culture_shopping,경상북도 경주시 서면 아화리 240-2
+경주중앙시장,culture_shopping,경상북도 경주시 성건동 339-2 경주중앙시장
+북부상가시장,culture_shopping,경상북도 경주시 성건동 629-10 북부상가아파트
+경주성동공설시장,culture_shopping,경상북도 경주시 성동동 57-38 성동시장
+안강공설시장,culture_shopping,경상북도 경주시 안강읍 양월리 1350-1 안강공설시장번영회관
+양남시장,culture_shopping,경상북도 경주시 양남면 하서리 1466-2
+불국사상가시장,culture_shopping,경상북도 경주시 진현동 66-5
+경주중심상가시장,culture_shopping,경상북도 경주시 황오동 234-1
+북정로중심상가시장,culture_shopping,경상북도 경주시 황오동 242-4
+고령대가야시장,culture_shopping,경상북도 고령군 대가야읍 지산리 222-2
+구미공단종합시장,culture_shopping,경상북도 구미시 공단동 107
+제일시장상가,culture_shopping,경상북도 구미시 공단동 264-18
+구미파크시장,culture_shopping,경상북도 구미시 도량동 77 파크맨션
+선산봉황시장,culture_shopping,경상북도 구미시 선산읍 완전리 253 선산시장
+신평전통시장,culture_shopping,경상북도 구미시 신평동 150-4
+금오시장,culture_shopping,경상북도 구미시 원평동 1028-2 금오시장
+구미새마을중앙시장,culture_shopping,경상북도 구미시 원평동 117-20
+종합제일시장,culture_shopping,경상북도 구미시 원평동 118-31
+구미종합상가,culture_shopping,경상북도 구미시 원평동 119-15
+현대유통쇼핑센타,culture_shopping,경상북도 구미시 원평동 119-2
+구미산업유통단지,culture_shopping,경상북도 구미시 임수동 92-9 구미공구상가
+장천시장,culture_shopping,경상북도 구미시 장천면 상장리 918
+해평공설시장,culture_shopping,경상북도 구미시 해평면 낙성리 138-25
+형곡시장프라자,culture_shopping,경상북도 구미시 형곡동 147-1
+형곡중앙시장,culture_shopping,경상북도 구미시 형곡동 321 형곡중앙시장
+인동시장,culture_shopping,경상북도 구미시 황상동 307-7
+군위전통시장,culture_shopping,경상북도 군위군 군위읍 서부리 18-1
+의흥시장,culture_shopping,경상북도 군위군 의흥면 읍내리 594-1 의흥시장
+중앙시장,culture_shopping,경상북도 김천시 모암동 157-20
+부곡시장,culture_shopping,경상북도 김천시 부곡동 409-1
+평화시장,culture_shopping,경상북도 김천시 평화동 259-1
+황금시장,culture_shopping,경상북도 김천시 황금동 31-1
+가은아자개시장,culture_shopping,경상북도 문경시 가은읍 왕능리 275-26
+문경전통시장,culture_shopping,경상북도 문경시 문경읍 하리 88-2
+점촌역전상점가,culture_shopping,경상북도 문경시 점촌동 166-6
+(유)문경시중앙시장,culture_shopping,경상북도 문경시 점촌동 197-14
+문화의거리 행복상점가,culture_shopping,경상북도 문경시 점촌동 249-15
+점촌전통시장 (구 신흥시장),culture_shopping,경상북도 문경시 흥덕동 794-1 신흥상가
+문경중앙시장,culture_shopping,경상북도 문경시 흥덕동 794-1 신흥상가
+봉화내성시장,culture_shopping,경상북도 봉화군 봉화읍 내성리 192-1
+봉화상설시장,culture_shopping,경상북도 봉화군 봉화읍 내성리 394-1 제2상설시장
+봉화춘양시장(춘양시장),culture_shopping,경상북도 봉화군 춘양면 의양리 357-29 억지춘양시장상인회관
+풍물시장,culture_shopping,경상북도 상주시 남성동 113-28
+남성시장,culture_shopping,경상북도 상주시 남성동 2-8
+상주중앙시장,culture_shopping,경상북도 상주시 남성동 85-10
+은척시장,culture_shopping,경상북도 상주시 은척면 봉중리 383-12
+함창시장,culture_shopping,경상북도 상주시 함창읍 구향리 122-16
+화령시장,culture_shopping,경상북도 상주시 화서면 신봉리 134-10
+성주시장,culture_shopping,경상북도 성주군 성주읍 경산리 718-63
+안동구시장,culture_shopping,경상북도 안동시 서부동 181-1
+중앙신시장,culture_shopping,경상북도 안동시 옥야동 285-1
+용상공설시장,culture_shopping,경상북도 안동시 용상동 1242
+북문시장,culture_shopping,경상북도 안동시 율세동 409
+풍산공설시장,culture_shopping,경상북도 안동시 풍산읍 하리리 234-6
+구담공설시장,culture_shopping,경상북도 안동시 풍천면 구담리 494-19
+강구시장,culture_shopping,경상북도 영덕군 강구면 오포리 535-5
+남정시장,culture_shopping,경상북도 영덕군 남정면 장사리 365-1
+영덕시장,culture_shopping,경상북도 영덕군 영덕읍 남석리 26-50 영덕시장
+영해만세시장,culture_shopping,경상북도 영덕군 영해면 성내리 468-1
+영양시장,culture_shopping,경상북도 영양군 영양읍 서부리 288-3 영양시장
+영주골목시장,culture_shopping,경상북도 영주시 영주동 315-6
+후생시장,culture_shopping,경상북도 영주시 영주동 334-9
+선비골전통시장,culture_shopping,경상북도 영주시 영주동 373-5 전통한우직판장
+영주문화시장,culture_shopping,경상북도 영주시 영주동 376-1
+영주중앙시장,culture_shopping,경상북도 영주시 영주동 547
+풍기선비골인삼시장,culture_shopping,경상북도 영주시 풍기읍 산법리 446-4
+풍기인삼시장,culture_shopping,경상북도 영주시 풍기읍 서부리 145-3 인삼시장
+풍기중앙시장,culture_shopping,경상북도 영주시 풍기읍 성내리 1-4 삼성마트
+풍기토종인삼시장,culture_shopping,경상북도 영주시 풍기읍 성내리 148
+영주공설시장,culture_shopping,경상북도 영주시 하망동 362-4 화성머리방
+영주소백쇼핑몰,culture_shopping,경상북도 영주시 하망동 364-30 권해숙한복연구실
+영주종합시장,culture_shopping,경상북도 영주시 휴천동 305 종합시장
+신영주번개시장,culture_shopping,경상북도 영주시 휴천동 306-7
+금호공설시장,culture_shopping,경상북도 영천시 금호읍 교대리 167-35 영천금호전통시장
+신녕공설시장,culture_shopping,경상북도 영천시 신녕면 화성리 866-1 신녕공설시장
+영천공설시장,culture_shopping,경상북도 영천시 완산동 982-3 영천공설시장
+예천맛고을시장,culture_shopping,경상북도 예천군 예천읍 노하리 74-16 맥시칸양념통닭
+예천중앙시장,culture_shopping,경상북도 예천군 예천읍 동본리 497-1 태양특수세탁공장
+예천상설시장,culture_shopping,경상북도 예천군 예천읍 동본리 553
+용궁시장,culture_shopping,경상북도 예천군 용궁면 읍부리 329-1 대은곡물
+풍양시장,culture_shopping,경상북도 예천군 풍양면 낙상리 157-7 야식소주방
+울진바지게시장,culture_shopping,경상북도 울진군 울진읍 읍내리 62 포항상회
+죽변시장,culture_shopping,경상북도 울진군 죽변면 죽변리 36-8 죽변시장
+평해시장,culture_shopping,경상북도 울진군 평해읍 평해리 879-3
+후포시장,culture_shopping,경상북도 울진군 후포면 삼율리 126 후포공설시장
+금성시장,culture_shopping,경상북도 의성군 금성면 대리리 66-7
+단촌정기시장,culture_shopping,경상북도 의성군 단촌면 하화리 1097-9
+봉양시장,culture_shopping,경상북도 의성군 봉양면 화전리 99-5
+안계공설시장,culture_shopping,경상북도 의성군 안계면 용기리 467-1
+의성공설재래시장,culture_shopping,경상북도 의성군 의성읍 도동리 758-4
+의성염매시장,culture_shopping,경상북도 의성군 의성읍 후죽리 688-6
+동곡공설시장,culture_shopping,경상북도 청도군 금천면 동곡리 776
+이서공설시장,culture_shopping,경상북도 청도군 이서면 학산리 579-2
+청도공설시장,culture_shopping,경상북도 청도군 청도읍 고수리 785-3
+풍각공설시장,culture_shopping,경상북도 청도군 풍각면 송서리 569-10
+부남시장,culture_shopping,경상북도 청송군 부남면 대전리 64-16
+안덕시장,culture_shopping,경상북도 청송군 안덕면 명당리 379-22
+진보시장,culture_shopping,경상북도 청송군 진보면 진안리 121-3
+청송시장,culture_shopping,경상북도 청송군 청송읍 월막리 423-1
+도평시장,culture_shopping,경상북도 청송군 현동면 도평리 839-103
+화목시장,culture_shopping,경상북도 청송군 현서면 구산리 100-14
+왜관시장,culture_shopping,경상북도 칠곡군 왜관읍 왜관리 211-187 왜관시장
+구룡포시장,culture_shopping,경상북도 포항시 남구 구룡포읍 구룡포리 963-2
+해도5(형산)시장,culture_shopping,경상북도 포항시 남구 대도동 143-1 형산시장
+영남시장,culture_shopping,경상북도 포항시 남구 동해면 약전리 436-3 영남종합상가
+상대종합시장,culture_shopping,경상북도 포항시 남구 상도동 1-12 상대종합시장
+남부시장,culture_shopping,경상북도 포항시 남구 상도동 629 남부시장
+포항운하송림시장,culture_shopping,경상북도 포항시 남구 송도동 493-11
+연일전통시장,culture_shopping,경상북도 포항시 남구 연일읍 생지리 194-1
+오천삼광시장,culture_shopping,경상북도 포항시 남구 오천읍 구정리 35-27
+오천시장,culture_shopping,경상북도 포항시 남구 오천읍 세계리 847-5
+청림시장,culture_shopping,경상북도 포항시 남구 청림동 588-2 청림시장
+큰동해시장,culture_shopping,경상북도 포항시 남구 해도동 435-23
+대해불빛시장,culture_shopping,경상북도 포항시 남구 해도동 79-1 대해종합시장
+효자시장,culture_shopping,경상북도 포항시 남구 효자동 289-1
+기계시장,culture_shopping,경상북도 포항시 북구 기계면 현내리 639 서포항농업협동조합
+영일대북부시장,culture_shopping,경상북도 포항시 북구 대신동 64-5
+장량성도시장,culture_shopping,경상북도 포항시 북구 두호동 1079
+중앙상가,culture_shopping,경상북도 포항시 북구 상원동 468-23
+한라종합시장,culture_shopping,경상북도 포항시 북구 용흥동 357-1 경포한의원
+용흥시장,culture_shopping,경상북도 포항시 북구 용흥동 366 우방타운
+그린종합시장,culture_shopping,경상북도 포항시 북구 장성동 1352-1 그린종합상가
+죽도시장,culture_shopping,경상북도 포항시 북구 죽도동 1-22 포항수산종합어시장
+죽도농산물시장,culture_shopping,경상북도 포항시 북구 죽도동 5-22
+죽도어시장,culture_shopping,경상북도 포항시 북구 죽도동 574-4
+두호1시장,culture_shopping,경상북도 포항시 북구 창포동 630 두호종합시장
+청하시장,culture_shopping,경상북도 포항시 북구 청하면 미남리 382-3
+양학시장,culture_shopping,경상북도 포항시 북구 학잠동 83 양학시장
+환호그린빌시장,culture_shopping,경상북도 포항시 북구 환호동 377-5 환호종합시장
+흥해시장,culture_shopping,경상북도 포항시 북구 흥해읍 성내리 61-2
+비아5일시장,culture_shopping,광주광역시 광산구 비아동 83-5
+송정매일시장,culture_shopping,광주광역시 광산구 송정동 813-1
+송정5일시장,culture_shopping,광주광역시 광산구 송정동 884-1
+1913송정역시장(송정역전매일시장),culture_shopping,광주광역시 광산구 송정동 971-1
+우산매일시장,culture_shopping,광주광역시 광산구 우산동 1611-1
+월곡시장,culture_shopping,광주광역시 광산구 월곡동 687-3 월곡시장
+봉선시장,culture_shopping,광주광역시 남구 봉선동 997-1 두루축산물유통센타
+무등시장,culture_shopping,광주광역시 남구 주월동 974-107 무등시장상가
+대인시장,culture_shopping,광주광역시 동구 대인동 310-8
+산수시장,culture_shopping,광주광역시 동구 산수동 558-58
+남광주해뜨는시장,culture_shopping,광주광역시 동구 학동 55-57 남광주종합상가
+남광주시장,culture_shopping,광주광역시 동구 학동 84-23
+두암시장,culture_shopping,광주광역시 북구 두암동 856-5
+말바우시장,culture_shopping,광주광역시 북구 우산동 190-1 말바우시장2주차장
+운암시장,culture_shopping,광주광역시 북구 운암동 94-7 운암시장
+동부시장,culture_shopping,광주광역시 북구 중흥동 272-6
+양동경열로시장,culture_shopping,광주광역시 서구 양동 307-28
+양동복개상가,culture_shopping,광주광역시 서구 양동 441 양동복개상가
+광주양동시장,culture_shopping,광주광역시 서구 양동 5-101 양동시장
+양동건어물시장,culture_shopping,광주광역시 서구 양동 5-160
+양동수산전통시장,culture_shopping,광주광역시 서구 양동 5-254 양동수산물직판장
+양동닭전길시장,culture_shopping,광주광역시 서구 양동 5-56
+양동산업용품시장,culture_shopping,광주광역시 서구 양동 62-1
+화정동서부시장,culture_shopping,광주광역시 서구 화정동 783-5
+대명중앙시장,culture_shopping,대구광역시 남구 대명동 1040-1 대명중앙시장
+관문상가시장,culture_shopping,대구광역시 남구 대명동 1135-4
+관문시장,culture_shopping,대구광역시 남구 대명동 1160 관문시장
+명덕시장,culture_shopping,대구광역시 남구 대명동 141-1
+영선신시장,culture_shopping,대구광역시 남구 대명동 2014-204
+대명시장,culture_shopping,대구광역시 남구 대명동 2276-5 대명시장
+대명신시장,culture_shopping,대구광역시 남구 대명동 2277-1 대명시장
+성당시장,culture_shopping,대구광역시 남구 대명동 3023-23 성당시장
+광덕시장,culture_shopping,대구광역시 남구 대명동 460-1 광덕시장
+남부시장,culture_shopping,대구광역시 남구 대명동 797-1 남부시장
+안지랑시장,culture_shopping,대구광역시 남구 대명동 829-2
+봉덕신시장,culture_shopping,대구광역시 남구 봉덕동 953-31 봉덕시장
+봉덕시장,culture_shopping,대구광역시 남구 봉덕동 961-39 봉덕시장
+서남시장,culture_shopping,대구광역시 달서구 감삼동 55-5
+서남신시장,culture_shopping,대구광역시 달서구 감삼동 62-4
+대곡시장,culture_shopping,대구광역시 달서구 도원동 1432
+도원시장,culture_shopping,대구광역시 달서구 도원동 1437-1
+서대구시장,culture_shopping,대구광역시 달서구 두류동 1216-1 서대구시장
+대구예전우시장,culture_shopping,대구광역시 달서구 두류동 136-6
+신내당시장,culture_shopping,대구광역시 달서구 두류동 486-1 신내당시장아파트
+달서송림시장,culture_shopping,대구광역시 달서구 본동 225-1 송림시장
+달서시장,culture_shopping,대구광역시 달서구 본리동 145-2 달서종합상가
+대구대동시장,culture_shopping,대구광역시 달서구 상인동 1472-1
+상인영남상가,culture_shopping,대구광역시 달서구 상인동 1517 상인영남화성타운
+상원시장,culture_shopping,대구광역시 달서구 상인동 1582-4
+보성은하상가,culture_shopping,대구광역시 달서구 상인동 42 보성은하아파트
+두류종합시장,culture_shopping,대구광역시 달서구 성당동 704-5 두류종합상가
+두류신시장,culture_shopping,대구광역시 달서구 성당동 706-21
+송경종합시장,culture_shopping,대구광역시 달서구 송현동 1941-3 송경시장
+송현주공시장(월촌역시장),culture_shopping,대구광역시 달서구 송현동 1948-3
+와룡시장,culture_shopping,대구광역시 달서구 신당동 1788-3
+성서용산시장,culture_shopping,대구광역시 달서구 용산동 421-1
+용산종합큰시장,culture_shopping,대구광역시 달서구 용산동 933
+월성청구시장,culture_shopping,대구광역시 달서구 월성동 89-2 월성청구코아
+성서보성화성상가,culture_shopping,대구광역시 달서구 이곡동 1191 성서보성화성타운
+월배시장,culture_shopping,대구광역시 달서구 진천동 241-3 월배시장
+논공중앙시장,culture_shopping,대구광역시 달성군 논공읍 북리 824-33
+현풍백년도깨비시장,culture_shopping,대구광역시 달성군 현풍읍 원교리 12-5 현풍백년도깨비시장
+화원시장,culture_shopping,대구광역시 달성군 화원읍 천내리 892-1
+방촌시장,culture_shopping,대구광역시 동구 방촌동 1067-2
+반야월종합시장,culture_shopping,대구광역시 동구 신기동 174-1 동부프라자
+목련시장,culture_shopping,대구광역시 동구 신기동 271-2
+평화시장,culture_shopping,대구광역시 동구 신암동 597-14
+동서시장,culture_shopping,대구광역시 동구 신암동 94-14
+동대구역전시장,culture_shopping,대구광역시 동구 신천동 278 역전시장
+송라시장,culture_shopping,대구광역시 동구 신천동 537-13
+불로전통시장,culture_shopping,대구광역시 동구 용계동 702-31 무지개타운
+공항시장,culture_shopping,대구광역시 동구 지저동 694-41
+동구시장,culture_shopping,대구광역시 동구 효목동 533 동구시장
+팔달신시장,culture_shopping,대구광역시 북구 노원동3가 366-3
+동대구신시장,culture_shopping,대구광역시 북구 대현동 270-8
+동대구시장,culture_shopping,대구광역시 북구 대현동 390
+산격종합시장,culture_shopping,대구광역시 북구 산격동 1258
+전자관,culture_shopping,대구광역시 북구 산격동 1621 유통단지전자관
+전자상가,culture_shopping,대구광역시 북구 산격동 1626 전자상가
+산업용재관,culture_shopping,대구광역시 북구 산격동 1629 유통단지산업용재관
+전기재료관,culture_shopping,대구광역시 북구 산격동 1665 전기재료관
+전기조명관,culture_shopping,대구광역시 북구 산격동 1666 전기조명관
+섬유제품관,culture_shopping,대구광역시 북구 산격동 1667 섬유제품관
+서변중앙시장,culture_shopping,대구광역시 북구 서변동 1751
+칠곡시장,culture_shopping,대구광역시 북구 읍내동 1201-1 칠곡시장
+칠성상가시장,culture_shopping,대구광역시 북구 칠성동1가 150-2
+대구능금시장,culture_shopping,대구광역시 북구 칠성동1가 234-9
+대구청과시장,culture_shopping,대구광역시 북구 칠성동1가 276-102
+삼성시장,culture_shopping,대구광역시 북구 칠성동1가 276-108
+칠성시장,culture_shopping,대구광역시 북구 칠성동1가 276-163
+칠성진시장,culture_shopping,대구광역시 북구 칠성동1가 89
+칠성본시장,culture_shopping,대구광역시 북구 칠성동1가 97-1
+칠성전자주방시장,culture_shopping,대구광역시 북구 칠성동2가 409-711
+중앙시장,culture_shopping,대구광역시 북구 태전동 156-1
+새길시장,culture_shopping,대구광역시 서구 내당동 968-7
+서부시장,culture_shopping,대구광역시 서구 비산동 434-13
+원고개시장,culture_shopping,대구광역시 서구 비산동 566-2
+원대신시장,culture_shopping,대구광역시 서구 원대동3가 1434-4
+서구시장,culture_shopping,대구광역시 서구 평리동 1085-1 서구시장
+신평리시장,culture_shopping,대구광역시 서구 평리동 1205
+중평시장,culture_shopping,대구광역시 서구 평리동 1437-5 중평시장
+이현시장,culture_shopping,대구광역시 서구 평리동 606-8 이현시장
+대평리시장,culture_shopping,대구광역시 서구 평리동 676-7
+청구시장,culture_shopping,대구광역시 수성구 만촌동 984-1
+동성시장,culture_shopping,대구광역시 수성구 수성동2가 39-16
+태백시장,culture_shopping,대구광역시 수성구 수성동2가 39-4 수성종합시장
+수성시장,culture_shopping,대구광역시 수성구 수성동2가 39-76
+신매시장,culture_shopping,대구광역시 수성구 신매동 576-2
+지산목련시장(지산종합시장),culture_shopping,대구광역시 수성구 지산동 1199-10
+황금시장,culture_shopping,대구광역시 수성구 황금동 746 황금시장
+염매시장,culture_shopping,대구광역시 중구 계산동2가 252
+교동시장,culture_shopping,대구광역시 중구 교동 51-1 교동공영주차장
+남문시장,culture_shopping,대구광역시 중구 남산동 698-22 남문아파트1지구
+약령시장,culture_shopping,대구광역시 중구 남성로 52-2
+방천시장,culture_shopping,대구광역시 중구 대봉동 13-8
+명품프라자상가,culture_shopping,대구광역시 중구 대신동 115-112 명품프라자
+동산상가,culture_shopping,대구광역시 중구 대신동 115-30 동산상가
+서문시장제1지구포목시장,culture_shopping,대구광역시 중구 대신동 115-379 서문시장 1지구
+서문시장제1지구직물시장,culture_shopping,대구광역시 중구 대신동 115-379 서문시장 1지구
+서문시장 아진상가 상점가,culture_shopping,대구광역시 중구 대신동 115-381
+서문시장5지구,culture_shopping,대구광역시 중구 대신동 115-400 서문시장 5지구
+서문시장2지구종합상가,culture_shopping,대구광역시 중구 대신동 2105 서문시장 2지구
+서문시장건해산물상가,culture_shopping,대구광역시 중구 대신동 265-5
+서문시장4지구종합대체상가(베네시움),culture_shopping,대구광역시 중구 동산동 562 베네시움
+번개시장,culture_shopping,대구광역시 중구 태평로1가 1-152 번개시장
+법동시장,culture_shopping,대전광역시 대덕구 법동 200-7
+신탄진시장,culture_shopping,대전광역시 대덕구 석봉동 417-43
+송촌시장,culture_shopping,대전광역시 대덕구 송촌동 476-1
+중리시장,culture_shopping,대전광역시 대덕구 중리동 372-6 중리시장 고객지원센터
+신도시장,culture_shopping,대전광역시 동구 가양동 38-5 신도상가
+가양시장,culture_shopping,대전광역시 동구 가양동 434 가양시장
+용운시장,culture_shopping,대전광역시 동구 용운동 305-14
+전통중앙도매상가,culture_shopping,대전광역시 동구 원동 20-49
+신중앙시장,culture_shopping,대전광역시 동구 원동 40-1
+중앙메가프라자,culture_shopping,대전광역시 동구 원동 42-1
+중앙도매시장,culture_shopping,대전광역시 동구 원동 51-1
+정원시장,culture_shopping,대전광역시 동구 원동 64-1
+자유도매시장,culture_shopping,대전광역시 동구 원동 64-1 자유도매시장
+중앙종합시장,culture_shopping,대전광역시 동구 원동 65-7
+인동시장,culture_shopping,대전광역시 동구 인동 30-2
+대전상가시장,culture_shopping,대전광역시 동구 인동 52-1
+중앙상가시장,culture_shopping,대전광역시 동구 중동 28-45
+대전도매시장,culture_shopping,대전광역시 동구 중동 76-1
+한민시장,culture_shopping,대전광역시 서구 괴정동 88-34
+도마큰시장,culture_shopping,대전광역시 서구 도마동 132-13
+송강시장,culture_shopping,대전광역시 유성구 송강동 49-10
+문창전통시장,culture_shopping,대전광역시 중구 문창동 116-8
+부사전통시장,culture_shopping,대전광역시 중구 부사동 148-6
+산성전통시장,culture_shopping,대전광역시 중구 산성동 285-1 광민빌딩
+오류전통시장,culture_shopping,대전광역시 중구 오류동 162-13
+용두전통시장,culture_shopping,대전광역시 중구 용두동 12-2
+유천전통시장,culture_shopping,대전광역시 중구 유천동 303-10
+태평전통시장,culture_shopping,대전광역시 중구 태평동 333-8
+명지시장,culture_shopping,부산광역시 강서구 명지동 1-377
+구서오시게시장,culture_shopping,부산광역시 금정구 구서동 87-9 구서오시게시장
+금사제일상가시장,culture_shopping,부산광역시 금정구 금사동 68-14 금사시장아파트
+부곡상가시장,culture_shopping,부산광역시 금정구 부곡동 304-1 부곡상가맨션
+서동향토시장,culture_shopping,부산광역시 금정구 서동 194-1
+서동시장,culture_shopping,부산광역시 금정구 서동 302
+서동전통골목시장,culture_shopping,부산광역시 금정구 서동 340-27
+장성시장,culture_shopping,부산광역시 금정구 장전동 155-17
+장전상가시장,culture_shopping,부산광역시 금정구 장전동 421-7 장전상가아파트
+기장시장,culture_shopping,부산광역시 기장군 기장읍 대라리 68-5 청해상가
+새감만종합시장,culture_shopping,부산광역시 남구 감만동 163-2
+감만시장,culture_shopping,부산광역시 남구 감만동 171-9
+남광시장,culture_shopping,부산광역시 남구 대연동 1169-1 남광
+못골골목시장,culture_shopping,부산광역시 남구 대연동 1416-23
+동성하이타운시장,culture_shopping,부산광역시 남구 대연동 1756-9 동성하이타운
+대연시장,culture_shopping,부산광역시 남구 대연동 1760-1 대연시장
+용호삼성시장,culture_shopping,부산광역시 남구 용호동 128-1
+용호1동골목시장,culture_shopping,부산광역시 남구 용호동 215-14
+용호골목시장,culture_shopping,부산광역시 남구 용호동 494-19 용호김밥
+용호시장,culture_shopping,부산광역시 남구 용호동 516-10 용호시장
+우암골목시장,culture_shopping,부산광역시 남구 우암동 189-720
+범일골목시장,culture_shopping,부산광역시 동구 범일동 1308-41
+성북시장,culture_shopping,부산광역시 동구 범일동 1430-14
+부산진시장,culture_shopping,부산광역시 동구 범일동 290-1 부산진시장
+부산남문시장,culture_shopping,부산광역시 동구 범일동 290-3 남문시장
+부산자유시장,culture_shopping,부산광역시 동구 범일동 830-24
+수정시장,culture_shopping,부산광역시 동구 수정동 170-1 수정상가아파트
+수정전통시장,culture_shopping,부산광역시 동구 수정동 248-3
+초량상가시장,culture_shopping,부산광역시 동구 초량동 200 초량상가아파트
+초량전통시장,culture_shopping,부산광역시 동구 초량동 308-1
+명장시장,culture_shopping,부산광역시 동래구 명장동 145-9 명장시장아파트
+동래시장,culture_shopping,부산광역시 동래구 복천동 229-42 동래시장
+국민시장,culture_shopping,부산광역시 동래구 사직동 44-1 국민시장
+사직시장,culture_shopping,부산광역시 동래구 사직동 49-1 사직시장
+수안인정시장,culture_shopping,부산광역시 동래구 수안동 275-2
+서원시장,culture_shopping,부산광역시 동래구 안락동 425-51 서원시장
+충렬상가시장,culture_shopping,부산광역시 동래구 안락동 464-21 충렬상가아파트
+안락상가시장,culture_shopping,부산광역시 동래구 안락동 603-1 안락시장상가아파트
+금성상가시장,culture_shopping,부산광역시 동래구 온천동 1407-2
+온천인정시장,culture_shopping,부산광역시 동래구 온천동 146-29
+가야벽산상가,culture_shopping,부산광역시 부산진구 가야동 669-9 가야벽산아파트
+개금골목시장,culture_shopping,부산광역시 부산진구 개금동 173-2
+개금큰시장,culture_shopping,부산광역시 부산진구 개금동 615-16
+당감시장,culture_shopping,부산광역시 부산진구 당감동 238-98
+당감골목시장,culture_shopping,부산광역시 부산진구 당감동 262-61
+당감새시장,culture_shopping,부산광역시 부산진구 당감동 292-118
+동평새시장,culture_shopping,부산광역시 부산진구 당감동 315-4
+국제상가,culture_shopping,부산광역시 부산진구 당감동 791 국제백양아파트
+골드테마거리,culture_shopping,부산광역시 부산진구 범천동 836-1 중앙빌딩
+부산평화시장,culture_shopping,부산광역시 부산진구 범천동 839-212 평화도매시장
+철뚝시장,culture_shopping,부산광역시 부산진구 범천동 839-36
+서면시장,culture_shopping,부산광역시 부산진구 부전동 256-6
+부전상가,culture_shopping,부산광역시 부산진구 부전동 265-25
+부산전자종합시장,culture_shopping,부산광역시 부산진구 부전동 27-1 부산전자종합상가
+부전기장골목시장,culture_shopping,부산광역시 부산진구 부전동 341-70
+부전농수산물새벽시장,culture_shopping,부산광역시 부산진구 부전동 347-1
+서면종합시장,culture_shopping,부산광역시 부산진구 부전동 347-40 서면종합상가시장
+부전시장,culture_shopping,부산광역시 부산진구 부전동 573-3 부전시장
+부전인삼시장,culture_shopping,부산광역시 부산진구 부전동 573-3 부전시장
+양정전통시장,culture_shopping,부산광역시 부산진구 양정동 370-1 양정동근린생활시설
+양정시장,culture_shopping,부산광역시 부산진구 양정동 390 양정상가아파트
+연지시장,culture_shopping,부산광역시 부산진구 연지동 190-40
+전포놀이터시장,culture_shopping,부산광역시 부산진구 전포동 197-6
+서면중앙시장,culture_shopping,부산광역시 부산진구 전포동 608-1 신우빌딩
+초읍시장,culture_shopping,부산광역시 부산진구 초읍동 225 성지맨션
+성곡종합시장,culture_shopping,부산광역시 부산진구 초읍동 271-6 성곡아파트
+구포축산물도매시장,culture_shopping,부산광역시 북구 구포동 1188-3
+정이있는구포시장,culture_shopping,부산광역시 북구 구포동 599-39
+덕천시장,culture_shopping,부산광역시 북구 덕천동 411-5
+만덕시장,culture_shopping,부산광역시 북구 만덕동 829 만덕시장
+만덕2동제일상가시장,culture_shopping,부산광역시 북구 만덕동 945-2 테니스장관리사무소
+감전제일상가시장,culture_shopping,부산광역시 사상구 감전동 121-12 진주초장
+감전시장,culture_shopping,부산광역시 사상구 감전동 121-12 호우초장집
+부산새벽시장,culture_shopping,부산광역시 사상구 감전동 143-16 부산새벽청과시장
+부산산업용재유통상가,culture_shopping,부산광역시 사상구 감전동 152-2 부산산업용재유통상가
+사상시장,culture_shopping,부산광역시 사상구 괘법동 379-1 영재건물
+르네시떼시장,culture_shopping,부산광역시 사상구 괘법동 529-1 르네시떼
+고려쇼핑센터,culture_shopping,부산광역시 사상구 괘법동 535-11 이바돔감자탕
+부산산업용품상협동조합,culture_shopping,부산광역시 사상구 괘법동 578 산업용품유통상가
+복이있는덕포시장,culture_shopping,부산광역시 사상구 덕포동 421-13
+모라전통시장,culture_shopping,부산광역시 사상구 모라동 1089-3 모라1동 마을건강센터
+우신종합상가,culture_shopping,부산광역시 사상구 모라동 1362 우신모라아파트
+부산광역시건축자재판매협동조합,culture_shopping,부산광역시 사상구 엄궁동 642 부산건축자재판매단지
+부산광역시철강판매협동조합,culture_shopping,부산광역시 사상구 엄궁동 643-4 철강판매단지
+주례현대무지개상가,culture_shopping,부산광역시 사상구 주례동 530-5 현대무지개타운
+주례럭키종합상가,culture_shopping,부산광역시 사상구 주례동 595-4 럭키주례아파트
+구덕대림상가,culture_shopping,부산광역시 사상구 학장동 167-3 학장대림아파트
+영해종합시장,culture_shopping,부산광역시 사상구 학장동 570-2
+학장반도보라상가,culture_shopping,부산광역시 사상구 학장동 573-1 학장반도보라타운
+감천2동시장,culture_shopping,부산광역시 사하구 감천동 13-13
+감천시장,culture_shopping,부산광역시 사하구 감천동 471
+사하시장,culture_shopping,부산광역시 사하구 괴정동 550-38
+괴정골목시장,culture_shopping,부산광역시 사하구 괴정동 964-17
+다대씨-파크,culture_shopping,부산광역시 사하구 다대동 680-2 다대씨파크활어회센타
+당리시장,culture_shopping,부산광역시 사하구 당리동 143-1 당리시장
+하단시장,culture_shopping,부산광역시 사하구 당리동 302-7 하단시장
+신평종합시장,culture_shopping,부산광역시 사하구 신평동 111-213 신평시장상가아파트
+신평골목시장,culture_shopping,부산광역시 사하구 신평동 111-282
+장림골목시장,culture_shopping,부산광역시 사하구 장림동 641-268
+장림시장,culture_shopping,부산광역시 사하구 장림동 792-7
+가락타운상가시장,culture_shopping,부산광역시 사하구 하단동 1175 가락타운2·3단지
+에덴시장,culture_shopping,부산광역시 사하구 하단동 487-6 에덴종합시장
+에덴골목시장,culture_shopping,부산광역시 사하구 하단동 500-29
+하단오일상설시장,culture_shopping,부산광역시 사하구 하단동 620-8
+충무동새벽시장,culture_shopping,부산광역시 서구 남부민동 684
+대신시장,culture_shopping,부산광역시 서구 동대신동1가 113-1 동대맨션
+동대신1동골목시장,culture_shopping,부산광역시 서구 동대신동1가 129-6
+서대신1동골목시장,culture_shopping,부산광역시 서구 서대신동1가 149-4
+서대신동골목시장,culture_shopping,부산광역시 서구 서대신동2가 99-5 서대신골목시장 고객쉼터
+아미시장,culture_shopping,부산광역시 서구 아미동2가 96-11
+송남시장,culture_shopping,부산광역시 서구 암남동 346-2 송남상가아파트
+충무동해안시장,culture_shopping,부산광역시 서구 충무동1가 1-74
+충무동골목시장,culture_shopping,부산광역시 서구 충무동1가 38-32 충무동골목시장 고객지원센터
+광안시장,culture_shopping,부산광역시 수영구 광안동 559-2 광안상가
+광안종합시장,culture_shopping,부산광역시 수영구 광안동 94-1 광안종합시장
+삼익비치A상가시장,culture_shopping,부산광역시 수영구 남천동 148-4 비치아파트
+삼익비치B상가시장,culture_shopping,부산광역시 수영구 남천동 148-5 비치아파트 비상가
+세흥시장,culture_shopping,부산광역시 수영구 남천동 26-5 세흥시장
+남천해변시장,culture_shopping,부산광역시 수영구 남천동 556 남천해변시장
+망미중앙시장,culture_shopping,부산광역시 수영구 망미동 420-25
+망미삼성상가시장,culture_shopping,부산광역시 수영구 망미동 777 삼성아파트
+망미종합시장,culture_shopping,부산광역시 수영구 망미동 804-1
+망미새상가시장,culture_shopping,부산광역시 수영구 망미동 831-1
+동방시장,culture_shopping,부산광역시 수영구 민락동 161-7
+민락씨랜드시장,culture_shopping,부산광역시 수영구 민락동 181-228 민락동씨랜드활어센타
+광안어패류시장,culture_shopping,부산광역시 수영구 민락동 181-72 광안어패류종합센타
+민락어패류시장,culture_shopping,부산광역시 수영구 민락동 181-8
+민락회타운시장,culture_shopping,부산광역시 수영구 민락동 184-36
+민락골목시장,culture_shopping,부산광역시 수영구 민락동 231-40
+수영팔도시장,culture_shopping,부산광역시 수영구 수영동 305-3
+현대종합상가시장,culture_shopping,부산광역시 수영구 수영동 541 현대아파트
+거제시장,culture_shopping,부산광역시 연제구 거제동 486-1 (주)거제시장
+거성시장,culture_shopping,부산광역시 연제구 거제동 987-10 거성시장
+영남종합시장,culture_shopping,부산광역시 연제구 연산동 1364-2
+연미새시장,culture_shopping,부산광역시 연제구 연산동 2122-26
+연동시장,culture_shopping,부산광역시 연제구 연산동 312-18 연동시장
+연천시장,culture_shopping,부산광역시 연제구 연산동 364-1 연천시장
+연일시장,culture_shopping,부산광역시 연제구 연산동 636-28 연일아파트
+영도봉래시장,culture_shopping,부산광역시 영도구 봉래동3가 13-2
+남항시장,culture_shopping,부산광역시 영도구 영선동2가 64-6
+청학시장,culture_shopping,부산광역시 영도구 청학동 297-1 청학시장
+남포동건어물도매시장,culture_shopping,부산광역시 중구 남포동1가 62-1 부산시수협
+자갈치시장,culture_shopping,부산광역시 중구 남포동4가 37-1 자갈치시장
+부산자갈밭시장,culture_shopping,부산광역시 중구 남포동4가 37-1 자갈치시장
+신동아수산물종합시장,culture_shopping,부산광역시 중구 남포동5가 92 신동아빌딩
+신천지시장,culture_shopping,부산광역시 중구 남포동6가 3 신천지
+보수종합시장,culture_shopping,부산광역시 중구 보수동3가 46-1 보수종합시장
+창선상가,culture_shopping,부산광역시 중구 부평동1가 13-6
+부평깡통시장,culture_shopping,부산광역시 중구 부평동2가 16
+월드밸리,culture_shopping,부산광역시 중구 부평동2가 2 월드밸리
+신창상가,culture_shopping,부산광역시 중구 신창동1가 19-2
+아리랑거리,culture_shopping,부산광역시 중구 신창동3가 17-1
+만물의거리시장,culture_shopping,부산광역시 중구 신창동4가 10-5
+국제시장,culture_shopping,부산광역시 중구 신창동4가 38-3 국제시장3공구
+새영주시장,culture_shopping,부산광역시 중구 영주동 20-16
+영주시장,culture_shopping,부산광역시 중구 영주동 595-3
+부산데파트,culture_shopping,부산광역시 중구 중앙동7가 20-1 롯데백화점광복점
+반송골목시장,culture_shopping,부산광역시 해운대구 반송동 250-371
+반송큰시장(반송2동시장),culture_shopping,부산광역시 해운대구 반송동 40-762
+반송시장,culture_shopping,부산광역시 해운대구 반송동 709-12 반송시장
+반여2동상가시장,culture_shopping,부산광역시 해운대구 반여동 1291-1425
+반여시장,culture_shopping,부산광역시 해운대구 반여동 1291-2 반여1동새마을경로당
+반여3동골목시장,culture_shopping,부산광역시 해운대구 반여동 1607-2 문훈치과
+우동종합상가시장,culture_shopping,부산광역시 해운대구 우동 1092-1
+재송시장,culture_shopping,부산광역시 해운대구 재송동 1080-5 서해재송아파트
+재송한마음시장,culture_shopping,부산광역시 해운대구 재송동 1089-18
+좌동재래시장,culture_shopping,부산광역시 해운대구 좌동 892
+해운대시장,culture_shopping,부산광역시 해운대구 중동 1394-193
+영동전통시장,culture_shopping,서울특별시 강남구 논현동 140 영동프라자
+강남시장,culture_shopping,서울특별시 강남구 신사동 510-11 ---------
+신사상가,culture_shopping,서울특별시 강남구 압구정동 454 신사상가
+청담삼익시장,culture_shopping,서울특별시 강남구 청담동 134-20 청담 삼익상가
+길동복조리시장,culture_shopping,서울특별시 강동구 길동 400 길동우성아파트
+명일전통시장,culture_shopping,서울특별시 강동구 명일동 333-2 명일시장
+성내전통시장,culture_shopping,서울특별시 강동구 성내동 144-12
+둔촌역전통시장,culture_shopping,서울특별시 강동구 성내동 416-12
+암사종합시장,culture_shopping,서울특별시 강동구 암사동 501-18
+고분다리전통시장,culture_shopping,서울특별시 강동구 천호동 393-32
+숭인시장,culture_shopping,서울특별시 강북구 미아동 60-5 숭인시장
+동북시장,culture_shopping,서울특별시 강북구 미아동 701-3 동북프라자
+강북북부시장,culture_shopping,서울특별시 강북구 번동 413-3 강북 북부시장
+우이시장,culture_shopping,서울특별시 강북구 수유동 270-185 우이시장
+장미원골목시장,culture_shopping,서울특별시 강북구 수유동 316-11
+수유중앙시장,culture_shopping,서울특별시 강북구 수유동 32-2 수유중앙시장
+수유북부시장,culture_shopping,서울특별시 강북구 수유동 413-2
+수유재래시장,culture_shopping,서울특별시 강북구 수유동 50-77
+수유전통시장(수유골목시장),culture_shopping,서울특별시 강북구 수유동 54-5 수유시장
+수유시장,culture_shopping,서울특별시 강북구 수유동 54-5 수유시장
+수유프라자,culture_shopping,"서울특별시 강북구 수유동 63 삼호아파트, 수유프라자"
+등마루시장,culture_shopping,서울특별시 강서구 등촌동 637-10
+방신전통시장,culture_shopping,서울특별시 강서구 방화동 579-1
+대원종합시장,culture_shopping,서울특별시 강서구 화곡동 1023
+까치산시장,culture_shopping,서울특별시 강서구 화곡동 342-16 까치산시장 주차장
+화곡중앙골목시장,culture_shopping,서울특별시 강서구 화곡동 362-144 화곡중앙골목시장 고객만족센터
+남부골목시장,culture_shopping,서울특별시 강서구 화곡동 797-7 남부골목시장 주차장
+남부화곡시장,culture_shopping,서울특별시 강서구 화곡동 830-1
+신월중앙시장,culture_shopping,서울특별시 강서구 화곡동 929-1
+화곡본동시장,culture_shopping,서울특별시 강서구 화곡동 98-45
+인헌시장,culture_shopping,서울특별시 관악구 봉천동 1636-4 인헌시장 고객편의센터
+봉천중앙시장,culture_shopping,서울특별시 관악구 봉천동 32-2
+봉천현대시장,culture_shopping,서울특별시 관악구 봉천동 503-2
+봉천제일종합시장,culture_shopping,서울특별시 관악구 봉천동 921-1
+봉일시장,culture_shopping,서울특별시 관악구 봉천동 951-25 봉일프라자
+신원시장,culture_shopping,서울특별시 관악구 신림동 1599-3
+관악종합시장,culture_shopping,서울특별시 관악구 신림동 1602-1
+신림현대종합상가,culture_shopping,서울특별시 관악구 신림동 1694 신림현대종합상가
+신신림시장,culture_shopping,서울특별시 관악구 신림동 390-1
+관악신사시장,culture_shopping,서울특별시 관악구 신림동 494-34
+신림종합시장,culture_shopping,서울특별시 관악구 신림동 505-1
+펭귄시장,culture_shopping,서울특별시 관악구 신림동 541 신림중앙시장
+신림중앙시장,culture_shopping,서울특별시 관악구 신림동 541 신림중앙시장
+우림시장,culture_shopping,서울특별시 관악구 신림동 638-50
+영동교골목시장,culture_shopping,서울특별시 광진구 자양동 40-38
+노룬산시장(건물형),culture_shopping,서울특별시 광진구 자양동 44-2 노룬산시장
+능동로골목시장,culture_shopping,서울특별시 광진구 자양동 553-219
+조양시장(건물형),culture_shopping,서울특별시 광진구 자양동 6-20
+자양전통시장,culture_shopping,서울특별시 광진구 자양동 613-11
+노룬산골목시장(인정시장),culture_shopping,서울특별시 광진구 자양동 681-37
+중곡제일전통시장(중곡제일시장),culture_shopping,서울특별시 광진구 중곡동 221-6 중곡제일시장 고객쉼터
+광성시장,culture_shopping,서울특별시 광진구 중곡동 229-15 광성시장
+중곡제일시장(이오상사),culture_shopping,서울특별시 광진구 중곡동 229-5 제일시장
+신성종합시장(건물형),culture_shopping,서울특별시 광진구 중곡동 79-7
+한아름시장,culture_shopping,서울특별시 광진구 화양동 10-1 한아름건물
+화양제일골목시장,culture_shopping,서울특별시 광진구 화양동 34-72
+가리봉시장,culture_shopping,서울특별시 구로구 가리봉동 123-62
+개봉중앙시장,culture_shopping,서울특별시 구로구 개봉동 324-1 중앙시장
+개봉프라자,culture_shopping,서울특별시 구로구 고척동 269-1 개봉청구아파트
+고척근린시장,culture_shopping,서울특별시 구로구 고척동 269-1 개봉청구아파트
+고척골목시장상점가,culture_shopping,서울특별시 구로구 고척동 51-10
+남구로시장,culture_shopping,서울특별시 구로구 구로동 730-52
+구로시장,culture_shopping,서울특별시 구로구 구로동 734-17
+남문시장,culture_shopping,서울특별시 금천구 독산동 984-10
+은행나무시장,culture_shopping,서울특별시 금천구 시흥동 828-45
+비단길현대시장,culture_shopping,서울특별시 금천구 시흥동 848-31 현대시장고객주민편의시설
+대명여울빛거리시장,culture_shopping,서울특별시 금천구 시흥동 889-13
+공릉동도깨비시장,culture_shopping,서울특별시 노원구 공릉동 566-20 공릉상가
+상계중앙시장,culture_shopping,서울특별시 노원구 상계동 389-681
+신도봉시장,culture_shopping,서울특별시 도봉구 도봉동 611 신도봉시장
+방학동도깨비시장,culture_shopping,서울특별시 도봉구 방학동 633-15
+백운시장,culture_shopping,서울특별시 도봉구 쌍문동 495-80
+쌍문시장,culture_shopping,서울특별시 도봉구 쌍문동 94-29
+창동골목시장,culture_shopping,서울특별시 도봉구 창동 557-45
+창동신창시장,culture_shopping,서울특별시 도봉구 창동 578-47
+동부시장,culture_shopping,서울특별시 동대문구 답십리동 495-1
+답십리건축자재시장,culture_shopping,서울특별시 동대문구 답십리동 530-11
+답십리시장,culture_shopping,서울특별시 동대문구 답십리동 66-39
+답십리현대시장,culture_shopping,서울특별시 동대문구 답십리동 967-5
+청량리수산시장,culture_shopping,서울특별시 동대문구 용두동 20-1
+전농로터리시장,culture_shopping,서울특별시 동대문구 전농동 295-52
+경동시장,culture_shopping,서울특별시 동대문구 제기동 1015 경동시장
+서울약령시장,culture_shopping,서울특별시 동대문구 제기동 1082 서울한방진흥센터
+청량리전통시장,culture_shopping,서울특별시 동대문구 제기동 632
+동서시장,culture_shopping,서울특별시 동대문구 제기동 650
+청량종합도매시장(깡통시장),culture_shopping,서울특별시 동대문구 제기동 846-38
+청량리농수산물시장,culture_shopping,서울특별시 동대문구 제기동 899-1
+경동광성상가,culture_shopping,서울특별시 동대문구 제기동 917
+청량리청과물시장,culture_shopping,서울특별시 동대문구 제기동 995
+청량리종합시장,culture_shopping,서울특별시 동대문구 제기동 998
+회기시장,culture_shopping,서울특별시 동대문구 회기동 57-22
+본동인정시장,culture_shopping,서울특별시 동작구 본동 187-1
+남성역골목시장,culture_shopping,서울특별시 동작구 사당동 267-4
+사당시장,culture_shopping,서울특별시 동작구 사당동 318-8 사당시장
+남성시장,culture_shopping,서울특별시 동작구 사당동 88-3
+성대시장,culture_shopping,서울특별시 동작구 상도동 320-21 성대시장
+성대전통시장,culture_shopping,서울특별시 동작구 상도동 324-68
+상도전통시장,culture_shopping,서울특별시 동작구 상도동 464-33
+강남시장,culture_shopping,서울특별시 동작구 상도동 488
+공덕시장,culture_shopping,서울특별시 마포구 공덕동 256-10 공덕시장
+마포시장,culture_shopping,서울특별시 마포구 공덕동 256-5 마포시장
+망원동월드컵시장,culture_shopping,서울특별시 마포구 망원동 424-7
+망원시장,culture_shopping,서울특별시 마포구 망원동 486-37
+서교시장,culture_shopping,서울특별시 마포구 서교동 357-1 서교오피스텔
+영진시장,culture_shopping,서울특별시 마포구 서교동 485-14
+마포농수산물시장,culture_shopping,"서울특별시 마포구 성산동 533-1 마포농수산물시장,마포구시설관리공단"
+아현시장,culture_shopping,서울특별시 마포구 아현동 327-40
+동진시장,culture_shopping,서울특별시 마포구 연남동 227-15
+백련시장,culture_shopping,서울특별시 서대문구 남가좌동 345-4 가재울백련아파트
+연희사러가,culture_shopping,서울특별시 서대문구 연희동 131-1 사러가쇼핑
+영천시장,culture_shopping,서울특별시 서대문구 영천동 323 동성건물
+포방터시장,culture_shopping,서울특별시 서대문구 홍은동 9-123
+유진상가,culture_shopping,"서울특별시 서대문구 홍제동 294-46 유진상가, 유진아파트,공유캠퍼스"
+인왕시장,culture_shopping,서울특별시 서대문구 홍제동 298-7
+남부종합시장,culture_shopping,서울특별시 서초구 방배동 767-1 남부종합시장
+양재시장,culture_shopping,서울특별시 서초구 양재동 1-7 양재종합시장
+금남시장,culture_shopping,서울특별시 성동구 금호동3가 308
+마장축산물시장,culture_shopping,서울특별시 성동구 마장동 439-1 마축일축산물시장
+뚝도시장,culture_shopping,서울특별시 성동구 성수동2가 335-16
+용답상가시장,culture_shopping,서울특별시 성동구 용답동 57-17
+길음시장,culture_shopping,서울특별시 성북구 길음동 535-8 길음시장
+돈암시장,culture_shopping,서울특별시 성북구 동소문동5가 59-1
+돌곶이시장(구 석관황금시장),culture_shopping,서울특별시 성북구 석관동 279-16
+장위전통시장,culture_shopping,서울특별시 성북구 장위동 68-225
+정릉시장,culture_shopping,서울특별시 성북구 정릉동 400-8
+정릉아리랑시장,culture_shopping,서울특별시 성북구 정릉동 443-1
+마천시장,culture_shopping,서울특별시 송파구 마천동 140-2
+마천중앙시장,culture_shopping,서울특별시 송파구 마천동 146-7
+방이시장,culture_shopping,서울특별시 송파구 방이동 124-20 황옥민산부인과
+석촌시장,culture_shopping,서울특별시 송파구 석촌동 274-8
+새마을시장,culture_shopping,서울특별시 송파구 잠실동 207-4
+풍납시장,culture_shopping,서울특별시 송파구 풍납동 142-1
+목2동시장,culture_shopping,서울특별시 양천구 목동 526
+목동깨비시장 (목3동시장),culture_shopping,서울특별시 양천구 목동 617-13 목3동시장 고객지원센터
+목사랑시장 (목4동시장),culture_shopping,서울특별시 양천구 목동 726-18 목4동시장고객지원센터
+월정로시장,culture_shopping,서울특별시 양천구 신월동 114-1
+신월1동신영시장,culture_shopping,서울특별시 양천구 신월동 114-18 신영시장고객지원센터
+경창시장,culture_shopping,서울특별시 양천구 신월동 447-8
+신곡종합시장,culture_shopping,서울특별시 양천구 신월동 575-17
+우성상가시장,culture_shopping,서울특별시 양천구 신월동 928-1 우성상가
+신정제일시장,culture_shopping,서울특별시 양천구 신정동 1030-6
+영등포유통상가,culture_shopping,서울특별시 영등포구 당산동2가 30-2 영등포유통상가
+대림중앙시장,culture_shopping,서울특별시 영등포구 대림동 1028-4
+영일시장,culture_shopping,서울특별시 영등포구 문래동3가 10
+대신시장,culture_shopping,서울특별시 영등포구 신길동 116-15
+영진시장(A동),culture_shopping,서울특별시 영등포구 신길동 2365
+영신상가,culture_shopping,서울특별시 영등포구 영등포동5가 18-1
+삼구시장,culture_shopping,서울특별시 영등포구 영등포동5가 20-62
+동남상가,culture_shopping,서울특별시 영등포구 영등포동5가 24 동남상가아파트
+보광시장,culture_shopping,서울특별시 용산구 보광동 260-8 보광시장상가(주)
+만리시장,culture_shopping,서울특별시 용산구 서계동 260-1 만리시장
+용산용문시장,culture_shopping,서울특별시 용산구 용문동 41-44
+신흥시장,culture_shopping,서울특별시 용산구 용산동2가 1-480
+이촌종합시장,culture_shopping,서울특별시 용산구 이촌동 301-154
+이태원시장,culture_shopping,서울특별시 용산구 이태원동 56-9 이태원시장
+후암시장,culture_shopping,서울특별시 용산구 후암동 103-6 후암시장
+제일시장,culture_shopping,서울특별시 은평구 대조동 14-1
+대조시장,culture_shopping,서울특별시 은평구 대조동 14-64
+연서시장,culture_shopping,서울특별시 은평구 불광동 310-211
+신응암시장,culture_shopping,서울특별시 은평구 응암동 427-130
+대림골목시장,culture_shopping,서울특별시 은평구 응암동 602-1
+대림시장,culture_shopping,서울특별시 은평구 응암동 754-1 양지시장
+증산종합시장,culture_shopping,서울특별시 은평구 증산동 184-9 증산시장
+신설종합시장,culture_shopping,서울특별시 종로구 숭인동 206-9 신설종합시장
+광장시장,culture_shopping,서울특별시 종로구 예지동 2-1
+종로신진시장,culture_shopping,서울특별시 종로구 종로5가 225-21
+한일상가,culture_shopping,서울특별시 종로구 종로5가 314-7 청오가방도매상가
+동대문종합시장,culture_shopping,서울특별시 종로구 종로6가 262-1 동대문종합시장
+동대문종합시장D동상가,culture_shopping,서울특별시 종로구 종로6가 262-1 동대문종합시장
+동대문종합시장 신관(동대문쇼핑타운),culture_shopping,서울특별시 종로구 종로6가 289-57 동대문종합시장 신관
+동문시장㈜,culture_shopping,서울특별시 종로구 창신동 436-41 동문상가
+통인시장,culture_shopping,서울특별시 종로구 통인동 10-3
+남대문시장,culture_shopping,서울특별시 중구 남창동 49-1
+삼익패션타운,culture_shopping,서울특별시 중구 남창동 5
+숭례문수입상가,culture_shopping,서울특별시 중구 남창동 51-1 에티버스타워
+청계상가,culture_shopping,서울특별시 중구 산림동 207-1 세운청계상가
+Team204,culture_shopping,서울특별시 중구 신당동 204-48 Team204
+테크노상가,culture_shopping,서울특별시 중구 신당동 213-51 엠씨프라자
+신평화패션타운,culture_shopping,서울특별시 중구 신당동 217-1 신평화상가
+청평화시장,culture_shopping,서울특별시 중구 신당동 217-91 청평화시장
+동평화시장,culture_shopping,서울특별시 중구 신당동 217-92 동평화의류상가
+약수시장,culture_shopping,서울특별시 중구 신당동 368-54
+남평화시장,culture_shopping,서울특별시 중구 신당동 772 남평화시장
+제일평화시장,culture_shopping,서울특별시 중구 신당동 775 제일평화시장
+에리어식스(벨포스트),culture_shopping,서울특별시 중구 신당동 776 서울운동장 평화시장
+광희패션몰,culture_shopping,서울특별시 중구 신당동 777 광희시장
+중부시장,culture_shopping,서울특별시 중구 오장동 139-11
+신중부시장,culture_shopping,서울특별시 중구 오장동 44-8 중부빌딩
+대림상가,culture_shopping,서울특별시 중구 을지로4가 157-1
+통일상가,culture_shopping,서울특별시 중구 을지로6가 17-18 통일종합의류상가
+동화상가,culture_shopping,서울특별시 중구 을지로6가 17-415
+평화시장,culture_shopping,서울특별시 중구 을지로6가 17-48
+방산종합시장,culture_shopping,서울특별시 중구 주교동 19-1 방산종합시장
+황학시장,culture_shopping,서울특별시 중구 황학동 442
+신중앙시장,culture_shopping,서울특별시 중구 황학동 442
+서울중앙시장,culture_shopping,서울특별시 중구 황학동 442
+자유상가,culture_shopping,서울특별시 중구 회현동1가 202-1
+우림골목시장,culture_shopping,서울특별시 중랑구 망우동 463-44 우림시장 편의시설
+동원시장,culture_shopping,서울특별시 중랑구 면목동 101-1 동원시장
+사가정시장,culture_shopping,서울특별시 중랑구 면목동 472-45
+면목시장,culture_shopping,서울특별시 중랑구 면목동 650 카멜리아쇼핑센타
+면목골목시장,culture_shopping,서울특별시 중랑구 면목동 666-15
+동원전통종합시장,culture_shopping,서울특별시 중랑구 면목동 74-58
+장미제일시장,culture_shopping,서울특별시 중랑구 묵동 249-104
+중랑교종합상가,culture_shopping,서울특별시 중랑구 상봉동 129-9 중랑교쇼핑센터
+중랑동부시장(동부골목시장),culture_shopping,서울특별시 중랑구 상봉동 130-161
+신아타운,culture_shopping,서울특별시 중랑구 신내동 666 신아타운
+동성타워프라자,culture_shopping,서울특별시 중랑구 신내동 786 동성타워프라자
+태능엔터피아,culture_shopping,서울특별시 중랑구 중화동 314-1 태능에셈빌
+세종대평시장,culture_shopping,세종특별자치시 금남면 용포리 205-42
+부강전통시장,culture_shopping,세종특별자치시 부강면 부강리 475-1
+전의왕의물시장,culture_shopping,세종특별자치시 전의면 읍내리 236-2 전의시장고객편의시설
+세종전통시장,culture_shopping,세종특별자치시 조치원읍 정리 19-1
+울산산업공구월드,culture_shopping,울산광역시 남구 삼산동 1591-4 울산산업공구월드
+신정평화시장,culture_shopping,울산광역시 남구 신정동 1600-3 신정평화시장
+신정상가시장,culture_shopping,울산광역시 남구 신정동 616-1
+(주)신정시장,culture_shopping,울산광역시 남구 신정동 630-1
+울산번개시장,culture_shopping,울산광역시 남구 야음동 375-55
+수암상가시장,culture_shopping,울산광역시 남구 야음동 697-9
+수암종합시장,culture_shopping,울산광역시 남구 야음동 698-1
+야음상가시장,culture_shopping,울산광역시 남구 야음동 815-10
+(주)야음시장,culture_shopping,울산광역시 남구 야음동 815-22
+남목전통시장,culture_shopping,울산광역시 동구 동부동 310-2 남목시장
+월봉시장,culture_shopping,울산광역시 동구 전하동 647-2
+동울산종합시장,culture_shopping,울산광역시 동구 전하동 661-1
+대송농수산물시장,culture_shopping,울산광역시 동구 화정동 171-4 농수산물유통센타
+염포시장(신전시장),culture_shopping,울산광역시 북구 염포동 194-1
+호계공설시장,culture_shopping,울산광역시 북구 호계동 869-1 호계공설시장
+화봉시장(화봉종합시장),culture_shopping,울산광역시 북구 화봉동 448-2
+봉계공설시장,culture_shopping,울산광역시 울주군 두동면 봉계리 525 봉계재래시장
+언양종합상가시장,culture_shopping,울산광역시 울주군 언양읍 남부리 124-2
+언양알프스시장,culture_shopping,울산광역시 울주군 언양읍 남부리 174-1
+언양공설시장,culture_shopping,울산광역시 울주군 언양읍 남부리 336-24
+덕신1차시장,culture_shopping,울산광역시 울주군 온산읍 덕신리 1280-21 덕신종합상설시장
+덕신2차시장,culture_shopping,울산광역시 울주군 온산읍 덕신리 429
+남창옹기종기시장,culture_shopping,울산광역시 울주군 온양읍 남창리 146 남창옹기종기시장
+곡천공설시장,culture_shopping,울산광역시 울주군 웅촌면 곡천리 320-2
+덕하시장(덕하공설시장),culture_shopping,울산광역시 울주군 청량읍 상남리 574-5 홈세일마트
+병영시장,culture_shopping,울산광역시 중구 남외동 257-1 병영시장
+선우시장,culture_shopping,울산광역시 중구 남외동 385-3 선우시장/선화아파트
+신울산종합시장,culture_shopping,울산광역시 중구 반구동 100-1
+반구시장,culture_shopping,울산광역시 중구 반구동 453-39
+서동시장,culture_shopping,울산광역시 중구 서동 38-6
+성남프라자,culture_shopping,울산광역시 중구 성남동 190-239 성남프라자
+옥골시장,culture_shopping,울산광역시 중구 옥교동 125-13
+중앙전통시장,culture_shopping,울산광역시 중구 옥교동 275-4
+우정전통시장,culture_shopping,울산광역시 중구 우정동 284-8 우정아파트
+태화종합시장,culture_shopping,울산광역시 중구 태화동 22-27
+울산시장,culture_shopping,울산광역시 중구 학산동 47-10 신중앙시장
+구역전전통시장,culture_shopping,울산광역시 중구 학산동 61-9
+학성새벽시장,culture_shopping,울산광역시 중구 학성동 359-2
+구역전시장,culture_shopping,울산광역시 중구 학성동 432-438
+강화풍물시장,culture_shopping,인천광역시 강화군 강화읍 갑곳리 849 강화풍물시장
+강화터미널상가,culture_shopping,인천광역시 강화군 강화읍 남산리 222 강화여객자동차터미널
+강화중앙시장(a동b동),culture_shopping,인천광역시 강화군 강화읍 신문리 205-5 중앙시장
+계산시장,culture_shopping,인천광역시 계양구 계산동 960-27
+계양산전통시장,culture_shopping,인천광역시 계양구 병방동 383 진달래아파트
+작전시장,culture_shopping,인천광역시 계양구 작전동 862
+간석자유시장,culture_shopping,인천광역시 남동구 간석동 41-1 간석자유시장
+남동산업용품상가,culture_shopping,인천광역시 남동구 고잔동 630 남동공단산업용품상가
+구월도매전통시장,culture_shopping,인천광역시 남동구 구월동 1175-15
+인천모래내전통시장,culture_shopping,인천광역시 남동구 구월동 1263-3
+구월시장,culture_shopping,인천광역시 남동구 구월동 1267-4
+소래포구전통어시장,culture_shopping,인천광역시 남동구 논현동 111-65
+장승백이전통시장,culture_shopping,인천광역시 남동구 만수동 1082-1 창대장터상가
+만수시장,culture_shopping,인천광역시 남동구 만수동 868-40
+인천산업유통사업협동조합,culture_shopping,인천광역시 동구 송림동 294 인천산업용품유통단지
+송림공구상가,culture_shopping,인천광역시 동구 송림동 296 송림동공구상가
+현대시장,culture_shopping,인천광역시 동구 송림동 50-1
+동부시장,culture_shopping,인천광역시 동구 송림동 50-95
+중앙시장,culture_shopping,인천광역시 동구 송현동 100-12
+송현자유시장,culture_shopping,인천광역시 동구 송현동 100-179
+송현시장,culture_shopping,인천광역시 동구 송현동 88-19
+인천용남시장,culture_shopping,인천광역시 미추홀구 용현동 4-2
+용현시장,culture_shopping,인천광역시 미추홀구 용현동 459-92
+토지금고시장,culture_shopping,인천광역시 미추홀구 용현동 617-55
+신기시장,culture_shopping,인천광역시 미추홀구 주안동 1313-17
+인천남부종합시장,culture_shopping,인천광역시 미추홀구 주안동 1315-19 남부종합상가
+석바위시장,culture_shopping,인천광역시 미추홀구 주안동 953-3
+학익시장,culture_shopping,인천광역시 미추홀구 학익동 264-6 학익시장
+부평문화의거리,culture_shopping,인천광역시 부평구 부평동 201-1
+부평깡시장,culture_shopping,인천광역시 부평구 부평동 252-3
+진흥종합시장,culture_shopping,인천광역시 부평구 부평동 252-35
+부평종합시장,culture_shopping,인천광역시 부평구 부평동 360-1
+십정종합시장(열우물전통시장),culture_shopping,인천광역시 부평구 십정동 321
+일신시장(부일종합시장),culture_shopping,인천광역시 부평구 일신동 107
+정서진중앙시장,culture_shopping,인천광역시 서구 가정동 509-17
+가좌시장,culture_shopping,인천광역시 서구 가좌동 30-56 주민편의시설
+인천축산물시장,culture_shopping,인천광역시 서구 가좌동 480-19
+인천강남시장,culture_shopping,인천광역시 서구 석남동 454-19
+신거북시장,culture_shopping,인천광역시 서구 석남동 541-15 금정빌딩
+연수송도역전시장,culture_shopping,인천광역시 연수구 옥련동 308-18
+연수구옥련시장,culture_shopping,인천광역시 연수구 옥련동 462-32 대명빌딩
+신흥시장,culture_shopping,인천광역시 중구 선화동 29-10
+신포시장,culture_shopping,인천광역시 중구 신포동 3-2
+인천종합어시장,culture_shopping,인천광역시 중구 항동7가 27-69 인천종합어시장
+강진읍시장,culture_shopping,전라남도 강진군 강진읍 동성리 187-5
+마량5일시장,culture_shopping,전라남도 강진군 마량면 마량리 987-11 마량5일시장
+병영5일시장,culture_shopping,전라남도 강진군 병영면 삼인리 318
+고흥전통시장,culture_shopping,전라남도 고흥군 고흥읍 남계리 628
+과역전통시장,culture_shopping,전라남도 고흥군 과역면 과역리 162
+녹동전통시장,culture_shopping,전라남도 고흥군 도양읍 봉암리 2699-70
+도화전통시장,culture_shopping,전라남도 고흥군 도화면 당오리 568-1
+동강전통시장,culture_shopping,전라남도 고흥군 동강면 유둔리 7-1
+곡성기차마을전통시장,culture_shopping,전라남도 곡성군 곡성읍 읍내리 208
+석곡전통시장,culture_shopping,전라남도 곡성군 석곡면 석곡리 80-2 석곡면사무소
+옥과5일시장,culture_shopping,전라남도 곡성군 옥과면 리문리 254-5
+광양5일시장,culture_shopping,전라남도 광양시 광양읍 목성리 696-3 광양5일시장
+광양매일시장,culture_shopping,전라남도 광양시 광양읍 읍내리 239-61
+광영상설시장,culture_shopping,전라남도 광양시 광영동 682
+옥곡5일시장,culture_shopping,전라남도 광양시 옥곡면 신금리 1337-1
+중마시장,culture_shopping,전라남도 광양시 중동 1732-3 중마시장
+구례5일시장,culture_shopping,전라남도 구례군 구례읍 봉동리 190-1 5일시장
+구례상설시장,culture_shopping,전라남도 구례군 구례읍 봉동리 378-1 상설시장
+지리산나들이장터,culture_shopping,전라남도 구례군 산동면 원촌리 38 지리산광고
+남평5일시장,culture_shopping,전라남도 나주시 남평읍 남평리 69-1 남평시장
+다시5일시장,culture_shopping,전라남도 나주시 다시면 동곡리 599
+나주목사고을시장,culture_shopping,전라남도 나주시 삼도동 1388-2 나주목사고을시장
+영산포풍물시장,culture_shopping,전라남도 나주시 이창동 764 영산포풍물시장
+창평전통시장,culture_shopping,전라남도 담양군 창평면 창평리 209-1
+목포종합수산시장,culture_shopping,전라남도 목포시 광동1가 4-13
+중앙먹통시장,culture_shopping,전라남도 목포시 남교동 88-29
+자유시장,culture_shopping,전라남도 목포시 산정동 1383 자유시장
+신중앙시장,culture_shopping,전라남도 목포시 산정동 1732
+우수영5일시장,culture_shopping,전라남도 목포시 산정동 1750
+청호시장,culture_shopping,전라남도 목포시 석현동 1171 청호시장
+항동시장,culture_shopping,전라남도 목포시 수강동1가 1
+동부시장,culture_shopping,전라남도 목포시 용당동 1053-8
+무안전통시장,culture_shopping,전라남도 무안군 무안읍 성내리 21-6
+일로전통시장,culture_shopping,전라남도 무안군 일로읍 월암리 112
+벌교매일시장,culture_shopping,전라남도 보성군 벌교읍 벌교리 887-22
+벌교5일시장,culture_shopping,전라남도 보성군 벌교읍 회정리 663-23
+보성매일시장,culture_shopping,전라남도 보성군 보성읍 보성리 895-3
+녹차골보성향토시장(보성읍5일시장),culture_shopping,전라남도 보성군 보성읍 원봉리 2-22
+복내5일시장,culture_shopping,전라남도 보성군 복내면 복내리 152-14
+조성5일시장,culture_shopping,전라남도 보성군 조성면 조성리 513-1
+중앙시장,culture_shopping,전라남도 순천시 남내동 119-1 화성상회
+역전시장,culture_shopping,전라남도 순천시 덕암동 227-1 역전시장
+웃장,culture_shopping,전라남도 순천시 동외동 168-1
+승주시장,culture_shopping,전라남도 순천시 승주읍 서평리 산43-2
+주암시장,culture_shopping,전라남도 순천시 주암면 광천리 53
+순천시아랫장(순천아랫장),culture_shopping,전라남도 순천시 풍덕동 1264
+괴목시장,culture_shopping,전라남도 순천시 황전면 괴목리 45-21
+지도시장,culture_shopping,전라남도 신안군 지도읍 읍내리 168-6 지도읍 상설시장
+중앙시장,culture_shopping,전라남도 여수시 교동 400-1
+해안로건어물상가시장,culture_shopping,전라남도 여수시 교동 481
+교동시장,culture_shopping,전라남도 여수시 교동 606-1
+(주)여수수산시장,culture_shopping,전라남도 여수시 교동 680
+여수수산물특화시장,culture_shopping,전라남도 여수시 남산동 4 (주)여수수산물특화시장
+봉산시장,culture_shopping,전라남도 여수시 봉산동 274-4
+(주)서시장,culture_shopping,전라남도 여수시 서교동 280 서시장
+여수서시장주변시장,culture_shopping,전라남도 여수시 서교동 534-20
+덕양시장,culture_shopping,전라남도 여수시 소라면 덕양리 1270-1
+중앙선어시장,culture_shopping,전라남도 여수시 중앙동 366
+진남시장,culture_shopping,전라남도 여수시 학동 35-1 진남시장
+제일시장,culture_shopping,전라남도 여수시 학동 35-2 제일시장
+쌍봉시장,culture_shopping,전라남도 여수시 학동 35-3 쌍봉시장
+도깨비시장,culture_shopping,전라남도 여수시 학동 58-7
+영광터미널시장,culture_shopping,전라남도 영광군 영광읍 남천리 321-1
+굴비골영광시장(구 영광매일시장),culture_shopping,전라남도 영광군 영광읍 도동리 186
+영광고추특화시장,culture_shopping,전라남도 영광군 영광읍 신하리 324-3
+구림5일시장,culture_shopping,전라남도 영암군 군서면 동구림리 34-7
+시종5일시장,culture_shopping,전라남도 영암군 시종면 만수리 937-9
+영암5일시장,culture_shopping,전라남도 영암군 영암읍 동무리 17-3 영암5일시장
+노화읍5일시장,culture_shopping,전라남도 완도군 노화읍 이포리 678-13
+완도전통시장(구 완도5일시장),culture_shopping,전라남도 완도군 완도읍 군내리 1249-2
+완도중앙시장,culture_shopping,전라남도 완도군 완도읍 군내리 1371
+사거리시장,culture_shopping,전라남도 장성군 북이면 사거리 699 사거리시장
+사창시장,culture_shopping,전라남도 장성군 삼계면 사창리 482-44 삼계면복지회관
+황룡시장,culture_shopping,전라남도 장성군 황룡면 월평리 151-1
+천관산관광시장,culture_shopping,전라남도 장흥군 관산읍 옥당리 489-1
+대덕읍전통시장(대덕시장),culture_shopping,전라남도 장흥군 대덕읍 신월리 111 대덕재래시장
+정남진장흥토요시장,culture_shopping,전라남도 장흥군 장흥읍 예양리 158-2 장흥군토요시장
+회진시장,culture_shopping,전라남도 장흥군 회진면 회진리 2138-12
+임회면십일시장,culture_shopping,전라남도 진도군 임회면 석교리 245-1 십일시장
+진도상설시장,culture_shopping,전라남도 진도군 진도읍 남동리 487-5
+진도읍조금시장,culture_shopping,전라남도 진도군 진도읍 남동리 731 조금5일시장
+나산시장,culture_shopping,전라남도 함평군 나산면 삼축리 344-3
+월야시장,culture_shopping,전라남도 함평군 월야면 월야리 713-69
+해보시장,culture_shopping,전라남도 함평군 해보면 금덕리 414-9
+좌일5일시장,culture_shopping,전라남도 해남군 북일면 흥촌리 161 좌일청과
+북평면남창5일시장,culture_shopping,전라남도 해남군 북평면 남창리 1279-1 남창수산물직판장
+송지산정5일시장,culture_shopping,전라남도 해남군 송지면 산정리 772-3 송지면사무소
+해남읍5일시장,culture_shopping,전라남도 해남군 해남읍 고도리 102-4 일광상회
+화원5일시장,culture_shopping,전라남도 해남군 화원면 금평리 239 복지회관
+남리5일시장,culture_shopping,전라남도 해남군 황산면 남리리 7 풍년방앗간
+능주전통시장,culture_shopping,전라남도 화순군 능주면 관영리 94-8 능주전통시장
+이양전통시장,culture_shopping,전라남도 화순군 이양면 이양리 309-3
+화순전통시장(화순읍전통시장),culture_shopping,전라남도 화순군 화순읍 삼천리 621 화순전통시장
+고창전통시장,culture_shopping,전라북도 고창군 고창읍 읍내리 367
+대산전통시장,culture_shopping,전라북도 고창군 대산면 매산리 200-13 대산시장
+무장전통시장,culture_shopping,전라북도 고창군 무장면 무장리 85-1 무장시장
+상하전통시장,culture_shopping,전라북도 고창군 상하면 하장리 939-3 상하시장
+해리전통시장,culture_shopping,전라북도 고창군 해리면 하련리 685-55
+흥덕전통시장,culture_shopping,전라북도 고창군 흥덕면 흥덕리 240-4 시장
+군산수산물종합센터,culture_shopping,전라북도 군산시 금동 57-4 수산물종합센터
+군산주공시장,culture_shopping,전라북도 군산시 나운동 836-11 제일종합수퍼
+역전종합시장,culture_shopping,전라북도 군산시 대명동 138-151 문화한우암돼지도매백화점
+대야전통시장,culture_shopping,전라북도 군산시 대야면 산월리 401-1 화성비디오
+명산시장,culture_shopping,전라북도 군산시 명산동 14-27
+군산공설시장,culture_shopping,전라북도 군산시 신영동 18-1 군산공설시장
+군산신영시장,culture_shopping,전라북도 군산시 신영동 19-5
+원평공설시장(김제원평시장),culture_shopping,전라북도 김제시 금산면 원평리 91
+역전시장,culture_shopping,전라북도 김제시 신풍동 40-2
+금만시장,culture_shopping,전라북도 김제시 요촌동 194-7
+김제전통시장,culture_shopping,전라북도 김제시 요촌동 415
+남원공설시장,culture_shopping,전라북도 남원시 금동 264-1 공설시장
+남원인월시장,culture_shopping,전라북도 남원시 인월면 인월리 252-1 인월재래시장
+용남시장,culture_shopping,전라북도 남원시 하정동 138 남원용남시장
+무주시장(반딧불장터),culture_shopping,전라북도 무주군 무주읍 읍내리 1152 무주반딧불장터
+무풍시장(대덕산장터),culture_shopping,전라북도 무주군 무풍면 현내리 259-5 대덕산장터
+설천시장(삼도봉장터),culture_shopping,전라북도 무주군 설천면 소천리 904-29
+안성시장(덕유산장터),culture_shopping,전라북도 무주군 안성면 장기리 1511-123
+부안상설시장,culture_shopping,전라북도 부안군 부안읍 서외리 21 상설시장
+줄포시장,culture_shopping,전라북도 부안군 줄포면 줄포리 728-3 줄포시장
+동계시장,culture_shopping,전라북도 순창군 동계면 현포리 623
+복흥시장,culture_shopping,전라북도 순창군 복흥면 정산리 282-1
+순창시장,culture_shopping,전라북도 순창군 순창읍 남계리 800
+고산미소시장,culture_shopping,전라북도 완주군 고산면 읍내리 884-4
+봉동시장,culture_shopping,전라북도 완주군 봉동읍 장기리 217-13
+삼례시장,culture_shopping,전라북도 완주군 삼례읍 삼례리 923-8 삼례시장
+익산금마시장,culture_shopping,전라북도 익산시 금마면 동고도리 701-2
+익산장(익산북부장),culture_shopping,전라북도 익산시 남중동 35-9
+북부시장,culture_shopping,전라북도 익산시 남중동 72-7
+익산 구시장,culture_shopping,전라북도 익산시 인화동1가 131-8
+익산남부시장,culture_shopping,전라북도 익산시 인화동2가 7 남부시장
+서동시장,culture_shopping,전라북도 익산시 창인동1가 115-13
+중앙시장,culture_shopping,전라북도 익산시 창인동1가 137-1 중앙시장상가
+매일시장,culture_shopping,전라북도 익산시 창인동1가 88-5
+함열시장,culture_shopping,전라북도 익산시 함열읍 와리 544-34 함열시장
+황등시장,culture_shopping,전라북도 익산시 황등면 황등리 58
+강진시장,culture_shopping,전라북도 임실군 강진면 갈담리 515-4 강진 시장
+관촌시장,culture_shopping,전라북도 임실군 관촌면 관촌리 586 임실군 고추 상설 직판장
+오수시장,culture_shopping,전라북도 임실군 오수면 오수리 351-1 시장
+임실시장,culture_shopping,전라북도 임실군 임실읍 이도리 233-1 임실재래시장
+산서시장,culture_shopping,전라북도 장수군 산서면 동화리 839-73
+장계시장,culture_shopping,전라북도 장수군 장계면 장계리 464-1 장계재래시장장옥A블럭
+장수시장,culture_shopping,전라북도 장수군 장수읍 장수리 460-15 장수시장
+모래내시장(전주),culture_shopping,전라북도 전주시 덕진구 인후동2가 203-10
+전주남부시장,culture_shopping,전라북도 전주시 완산구 전동 295-4
+전주중앙상가,culture_shopping,전라북도 전주시 완산구 태평동 36-1 중앙아파트
+전주신중앙시장(신중앙시장),culture_shopping,전라북도 전주시 완산구 태평동 41-5
+서부시장상점가(서부시장 통합),culture_shopping,전라북도 전주시 완산구 효자동1가 201-63
+샘고을시장,culture_shopping,전라북도 정읍시 시기동 280-4 샘고을시장 고객쉼터
+신태인시장,culture_shopping,전라북도 정읍시 신태인읍 신태인리 85-10 새롬보습전문학원
+정읍연지시장(정읍제2시장),culture_shopping,전라북도 정읍시 연지동 31-1
+진안고원시장,culture_shopping,전라북도 진안군 진안읍 군상리 406-7 진안고원시장
+대정오일시장,culture_shopping,제주특별자치도 서귀포시 대정읍 하모리 1089-15
+모슬포중앙시장,culture_shopping,제주특별자치도 서귀포시 대정읍 하모리 824-2 신협
+서귀포향토오일시장,culture_shopping,제주특별자치도 서귀포시 동홍동 779-1
+서귀포매일올레시장,culture_shopping,제주특별자치도 서귀포시 서귀동 277-1 서귀포시공영주차장
+고성오일시장,culture_shopping,제주특별자치도 서귀포시 성산읍 고성리 1180-34
+중문오일시장,culture_shopping,제주특별자치도 서귀포시 중문동 2123-1
+표선오일시장,culture_shopping,제주특별자치도 서귀포시 표선면 표선리 1001-1 표선민속오일시장
+세화오일시장,culture_shopping,제주특별자치도 제주시 구좌읍 세화리 1500-5
+도남시장,culture_shopping,제주특별자치도 제주시 도남동 923
+제주시민속오일시장,culture_shopping,제주특별자치도 제주시 도두일동 1212
+제주시서문공설시장,culture_shopping,제주특별자치도 제주시 용담일동 135-9 서문공설시장
+보성시장,culture_shopping,제주특별자치도 제주시 이도일동 1289-5
+제주동문수산시장,culture_shopping,제주특별자치도 제주시 이도일동 1348-1
+제주시동문재래시장,culture_shopping,제주특별자치도 제주시 이도일동 1436-7
+중앙로상점가,culture_shopping,제주특별자치도 제주시 이도일동 1460
+신산시장,culture_shopping,제주특별자치도 제주시 일도이동 377-11 신산아파트
+제주시동문공설시장,culture_shopping,"제주특별자치도 제주시 일도일동 1103 동문공설시장, 동문공영주차장"
+동문시장(주),culture_shopping,제주특별자치도 제주시 일도일동 1148-2
+제주칠성로상점가(칠성로상점가),culture_shopping,제주특별자치도 제주시 일도일동 1476-20
+함덕오일시장,culture_shopping,제주특별자치도 제주시 조천읍 함덕리 972-7 함덕민속오일시장
+한림민속오일시장(한림오일시장),culture_shopping,제주특별자치도 제주시 한림읍 대림리 1698-4
+한림매일시장,culture_shopping,제주특별자치도 제주시 한림읍 한림리 1315-4
+공주산성시장,culture_shopping,충청남도 공주시 산성동 190-1 산성시장고객지원센터
+유구시장,culture_shopping,충청남도 공주시 유구읍 석남리 276-5
+산성시장활성화구역,culture_shopping,충청남도 공주시 중동 63
+중부프라자,culture_shopping,충청남도 금산군 금산읍 상리 89-4 중부프라자
+금산수삼센타,culture_shopping,충청남도 금산군 금산읍 중도리 24 금산인삼수삼센터
+금산약초시장,culture_shopping,충청남도 금산군 금산읍 중도리 31 약초도매시장
+금산인삼전통시장,culture_shopping,충청남도 금산군 금산읍 중도리 531-1 삼농인삼사
+금산인삼쇼핑센타,culture_shopping,충청남도 금산군 금산읍 중도리 7-1 인삼호텔
+금산국제인삼시장(금산인삼국제시장),culture_shopping,"충청남도 금산군 금산읍 중도리 8-1 금산국제인삼시장조합, 약초상가"
+금산금빛시장(금산시장),culture_shopping,충청남도 금산군 금산읍 하옥리 335-12 금산시장
+마전시장,culture_shopping,충청남도 금산군 추부면 마전리 547-1 마전이불집
+강경대흥시장,culture_shopping,충청남도 논산시 강경읍 대흥리 17-8
+강경젓갈시장,culture_shopping,충청남도 논산시 강경읍 황산리 198
+화지중앙시장,culture_shopping,충청남도 논산시 대교동 70-6
+연무안심시장,culture_shopping,충청남도 논산시 연무읍 안심리 14-2
+연산전통시장,culture_shopping,충청남도 논산시 연산면 연산리 392-8
+당진전통시장,culture_shopping,충청남도 당진시 읍내동 145-13
+합덕전통시장,culture_shopping,충청남도 당진시 합덕읍 운산리 253-47 시장조합사무실
+보령한내시장,culture_shopping,충청남도 보령시 대천동 197-1
+보령중앙시장,culture_shopping,충청남도 보령시 대천동 331-7
+동부시장,culture_shopping,충청남도 보령시 대천동 618-64
+현대시장(현대상가시장),culture_shopping,충청남도 보령시 대천동 618-69 구상가아파트
+대천항종합수산물시장,culture_shopping,충청남도 보령시 신흑동 2240-7 신흑7통마을회관
+웅천시장,culture_shopping,충청남도 보령시 웅천읍 대창리 432-1
+부여중앙시장,culture_shopping,충청남도 부여군 부여읍 구아리 164-1
+부여 새시장,culture_shopping,충청남도 부여군 부여읍 구아리 395-7
+부여시장,culture_shopping,충청남도 부여군 부여읍 구아리 432
+홍산시장,culture_shopping,충청남도 부여군 홍산면 남촌리 133-7
+대산종합시장,culture_shopping,충청남도 서산시 대산읍 대산리 119 대산종합시장
+서산동부전통시장(동부시장),culture_shopping,충청남도 서산시 동문동 900-3
+해미종합시장,culture_shopping,충청남도 서산시 해미면 읍내리 184-1 해미구시장재개발
+해미시장,culture_shopping,충청남도 서산시 해미면 읍내리 202
+서천특화시장,culture_shopping,충청남도 서천군 서천읍 군사리 686-1 서천시장
+장항전통시장,culture_shopping,충청남도 서천군 장항읍 신창리 110
+둔포전통시장(둔포시장),culture_shopping,충청남도 아산시 둔포면 둔포리 450-8
+온양온천시장(온양전통시장),culture_shopping,충청남도 아산시 온천동 94-6 시민문화복지센터
+고덕시장,culture_shopping,충청남도 예산군 고덕면 대천리 783-3
+광시시장,culture_shopping,충청남도 예산군 광시면 광시리 87-1
+덕산시장,culture_shopping,충청남도 예산군 덕산면 읍내리 356-4
+삽교시장,culture_shopping,충청남도 예산군 삽교읍 두리 568-37
+역전시장,culture_shopping,충청남도 예산군 예산읍 산성리 356-7
+예산시장,culture_shopping,충청남도 예산군 예산읍 예산리 333-1
+예산상설시장,culture_shopping,충청남도 예산군 예산읍 예산리 333-1
+천안역전시장,culture_shopping,충청남도 천안시 동남구 대흥동 60-5
+병천시장,culture_shopping,충청남도 천안시 동남구 병천면 병천리 163-2 동광주방생활용품
+천안중앙시장(구 남산중앙시장),culture_shopping,충청남도 천안시 동남구 사직동 202-15 천안중앙신협
+성정시장,culture_shopping,충청남도 천안시 서북구 성정동 736-7 성정5단지시장 주차장
+성환이화시장,culture_shopping,충청남도 천안시 서북구 성환읍 성환리 373-16 제일사진관
+정산시장,culture_shopping,충청남도 청양군 정산면 서정리 163
+청양전통시장,culture_shopping,충청남도 청양군 청양읍 읍내리 178-4 재래시장
+안면도수산시장(안면도장터),culture_shopping,충청남도 태안군 안면읍 승언리 1249
+태안서부시장,culture_shopping,충청남도 태안군 태안읍 남문리 169-7
+태안동부시장(태안특산물전통시장),culture_shopping,충청남도 태안군 태안읍 동문리 284
+갈산정기시장,culture_shopping,충청남도 홍성군 갈산면 상촌리 240-16
+광천원동시장,culture_shopping,충청남도 홍성군 광천읍 광천리 185-27
+광천전통시장,culture_shopping,충청남도 홍성군 광천읍 광천리 230-32
+홍성전통시장,culture_shopping,충청남도 홍성군 홍성읍 대교리 400-1
+홍성상설시장,culture_shopping,충청남도 홍성군 홍성읍 오관리 397-6
+괴산전통시장,culture_shopping,충청북도 괴산군 괴산읍 동부리 560-1
+목도재래시장,culture_shopping,충청북도 괴산군 불정면 목도리 308-9
+연풍전통시장,culture_shopping,충청북도 괴산군 연풍면 행촌리 611-1
+청천전통시장,culture_shopping,충청북도 괴산군 청천면 청천리 62-11 청천상인회고객지원센터
+단양구경시장(단양인정시장),culture_shopping,충청북도 단양군 단양읍 도전리 615 단양시장
+매포전통시장(매포재래시장),culture_shopping,충청북도 단양군 매포읍 평동리 1139
+마로관기시장(관기재래시장),culture_shopping,충청북도 보은군 마로면 관기리 377-1
+보은전통시장,culture_shopping,충청북도 보은군 보은읍 삼산리 139-20
+결초보은시장(구 보은종합시장),culture_shopping,충청북도 보은군 보은읍 삼산리 31-15
+삼승원남시장(원남재래시장),culture_shopping,충청북도 보은군 삼승면 원남리 191-1
+회인재래시장,culture_shopping,충청북도 보은군 회인면 중앙리 59-15 닭집
+영동중앙시장,culture_shopping,충청북도 영동군 영동읍 계산리 693-27
+영동전통시장,culture_shopping,충청북도 영동군 영동읍 계산리 694-16 주차장
+옥천공설시장,culture_shopping,충청북도 옥천군 옥천읍 금구리 5-68 옥천공설시장 주1동
+옥천상가,culture_shopping,충청북도 옥천군 옥천읍 금구리 5-7 옥천공설시장
+감곡시장,culture_shopping,충청북도 음성군 감곡면 왕장리 525-8
+무극시장,culture_shopping,충청북도 음성군 금왕읍 무극리 77-17
+대소시장,culture_shopping,충청북도 음성군 대소면 오산리 186-6
+삼성시장,culture_shopping,충청북도 음성군 삼성면 덕정리 534-17
+음성시장,culture_shopping,충청북도 음성군 음성읍 읍내리 249-11
+덕산면전통시장,culture_shopping,충청북도 제천시 덕산면 도전리 431-2
+박달재전통시장,culture_shopping,충청북도 제천시 백운면 평동리 220-2
+제천고추시장,culture_shopping,충청북도 제천시 신월동 1138-1 신월농산물유통단지
+내토전통시장,culture_shopping,충청북도 제천시 중앙로1가 34-1 내토시장 고객지원센터
+제천중앙시장,culture_shopping,충청북도 제천시 중앙로1가 77 중앙시장상가
+동문전통시장,culture_shopping,충청북도 제천시 중앙로2가 117-1
+제천역전한마음시장,culture_shopping,충청북도 제천시 화산동 207-3
+제천약초시장,culture_shopping,충청북도 제천시 화산동 987 약초시장
+증평장뜰재래시장,culture_shopping,충청북도 증평군 증평읍 중동리 97-1
+운수대통 생거진천전통시장,culture_shopping,충청북도 진천군 진천읍 성석리 969
+진천중앙시장,culture_shopping,충청북도 진천군 진천읍 읍내리 305-12 진천중앙시장 고객지원센터
+중앙시장,culture_shopping,충청북도 청주시 상당구 북문로2가 92-2 중앙 아파트
+서문시장,culture_shopping,충청북도 청주시 상당구 서문동 166-43
+육거리종합시장,culture_shopping,충청북도 청주시 상당구 석교동 60-4 육거리종합시장회관
+원마루시장,culture_shopping,충청북도 청주시 서원구 분평동 1335
+사직시장,culture_shopping,충청북도 청주시 서원구 사직동 267-12
+청주사창시장,culture_shopping,충청북도 청주시 서원구 사창동 286-22
+청주두꺼비시장(구수곡시장),culture_shopping,충청북도 청주시 서원구 수곡동 862
+밤고개자연시장(구 내덕자연시장),culture_shopping,충청북도 청주시 청원구 내덕동 396-7
+내수전통시장,culture_shopping,충청북도 청주시 청원구 내수읍 마산리 169-6
+오창전통시장,culture_shopping,충청북도 청주시 청원구 오창읍 장대리 309-4 도라돌아노래방
+북부시장,culture_shopping,충청북도 청주시 청원구 우암동 344-10
+가경터미널시장,culture_shopping,충청북도 청주시 흥덕구 가경동 1342
+복대가경시장,culture_shopping,충청북도 청주시 흥덕구 복대동 1116
+하복대시장,culture_shopping,충청북도 청주시 흥덕구 복대동 2541
+직지시장,culture_shopping,충청북도 청주시 흥덕구 봉명동 472-6
+충주농산물종합시장(중앙청과시장),culture_shopping,충청북도 충주시 목행동 526-29
+목행시장,culture_shopping,충청북도 충주시 목행동 600-15
+무학시장,culture_shopping,충청북도 충주시 봉방동 8-6
+관아골상가,culture_shopping,충청북도 충주시 성내동 429 충주에스엠새마을금고
+"성서중심시장(성서시장,문화의거리 통합)",culture_shopping,충청북도 충주시 성서동 178
+중앙어울림시장,culture_shopping,충청북도 충주시 성서동 306 중앙 어울림시장
+엄정내창시장,culture_shopping,충청북도 충주시 엄정면 미내리 159-15
+연수상가,culture_shopping,충청북도 충주시 연수동 522-1
+연원시장,culture_shopping,충청북도 충주시 연수동 547-6 연수종합시장
+충주옹달샘시장,culture_shopping,충청북도 충주시 지현동 1076 옹달샘시장 고객지원센터
+충주자유시장,culture_shopping,충청북도 충주시 충의동 192 명인한의원
