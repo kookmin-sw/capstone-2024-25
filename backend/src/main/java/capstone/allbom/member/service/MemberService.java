@@ -3,6 +3,12 @@ package capstone.allbom.member.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.game.domain.Game;
+import capstone.allbom.game.domain.GameRepository;
+import capstone.allbom.game.domain.SubjectType;
+import capstone.allbom.medicine.domain.MedicineRepository;
+import capstone.allbom.medicine.service.dto.MedicineRequest;
+import capstone.allbom.member.domain.Gender;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import capstone.allbom.member.dto.MemberUpdateRequest;
@@ -11,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +26,8 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MedicineRepository medicineRepository;
+    private final GameRepository gameRepository;
 
     @Transactional(readOnly = true)
     public Member findById(final Long memberId) {
@@ -56,6 +65,27 @@ public class MemberService {
 
     @Transactional
     public void updateMember(final Member member, MemberUpdateRequest memberUpdateRequest) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
+        Gender gender = Gender.valueOf(memberUpdateRequest.gender().toUpperCase());
+
+        savedMember.setName(memberUpdateRequest.name());
+        savedMember.setBirthday(memberUpdateRequest.birthday());
+        savedMember.setGender(gender);
+        savedMember.setAddress(memberUpdateRequest.address());
+        savedMember.setDetailAddress(memberUpdateRequest.detailAddress());
+        savedMember.setPhoneNumber(memberUpdateRequest.phoneNumber());
+        savedMember.setGuardianNumber(memberUpdateRequest.guardianNumber());
+
+        /**
+         * TODO
+         * address -> 위경도 변환
+         * gender에 따른 profile_image 설정
+         * 이미 값이 있는데 API 호출시 예외 처리 (무조건 1번만 호출되도록)
+         */
+
+        Game game = gameRepository.save(new Game());
+        game.setMember(savedMember);
     }
 }
