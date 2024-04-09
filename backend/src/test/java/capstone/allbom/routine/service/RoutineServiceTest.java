@@ -1,11 +1,8 @@
 package capstone.allbom.routine.service;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.domain.FacilityType;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

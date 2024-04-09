@@ -1,7 +1,7 @@
-package capstone.allbom.Facility.service.dto;
+package capstone.allbom.facility.service.dto;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.domain.FacilityType;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.domain.FacilityType;
 
 public record FacilityRequest(
         String name,

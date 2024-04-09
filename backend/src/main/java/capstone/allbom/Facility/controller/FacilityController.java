@@ -1,8 +1,7 @@
-package capstone.allbom.Facility.controller;
+package capstone.allbom.facility.controller;
 
-import capstone.allbom.Facility.domain.Facility;
-import capstone.allbom.Facility.infrastructure.api.RestTemplateFacilityRequester;
-import capstone.allbom.medicine.dto.MedicineDetailResponse;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.infrastructure.api.RestTemplateFacilityRequester;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
