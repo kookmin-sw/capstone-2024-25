@@ -56,4 +56,22 @@ public class RestTemplateFacilityRequester {
         return makeFacilities(mapData);
     }
 
+    private List<Facility> makeFacilities(String rawData) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        List<FacilityRequest> facilityRequests;
+
+        try {
+            facilityRequests = objectMapper.readValue(rawData, new TypeReference<List<FacilityRequest>>() {
+            });
+        } catch (JsonProcessingException e) {
+            log.error("객체로 변환하는 과정에서 문제가 발생했습니다.");
+            throw new RuntimeException(e);
+        }
+
+        return facilityRequests.stream()
+                .map(FacilityRequest::toFacility)
+                .peek(facilityService::saveFacility)
+                .toList();
+    }
 }
