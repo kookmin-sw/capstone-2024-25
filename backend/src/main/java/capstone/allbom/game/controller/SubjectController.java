@@ -4,6 +4,7 @@ import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.game.domain.Subject;
 import capstone.allbom.game.domain.SubjectType;
 import capstone.allbom.game.dto.SentenceAnswerResponse;
+import capstone.allbom.game.dto.SentenceRequest;
 import capstone.allbom.game.dto.SentenceResponse;
 import capstone.allbom.game.service.SubjectService;
 import capstone.allbom.member.domain.Member;
@@ -33,7 +34,7 @@ public class SubjectController {
         return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
     }
 
-    @PostMapping
+    @PostMapping("/skip")
     public ResponseEntity<SentenceResponse> skipSentence(
             @Auth final Member member,
             @RequestParam final String type
@@ -45,5 +46,4 @@ public class SubjectController {
         String sentence = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
         return ResponseEntity.ok(SentenceResponse.from(subject, sentence));
     }
-
 }
