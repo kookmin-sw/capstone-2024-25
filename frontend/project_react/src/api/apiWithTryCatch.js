@@ -16,7 +16,7 @@ export const api_post = async (url, data, config) => {
         const response = await instance.post(url, data, config);
         return response;
     } catch (error) {
-        throw new Error('[API GET Error]', error);
+        throw new Error('[API POST Error]', error);
     }
 }
 

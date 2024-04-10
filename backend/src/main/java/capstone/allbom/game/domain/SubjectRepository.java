@@ -15,4 +15,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
     @Query("SELECT s FROM Subject s WHERE s.game.id = :gameId AND s.type = :type")
     Optional<Subject> findByGameAndType(Long gameId, SubjectType type);
+
+    @Query("SELECT s FROM Subject s WHERE s.game.member.id = :memberId AND s.type = :type")
+    Optional<Subject> findByMemberAndType(Long memberId, SubjectType type);
 }

@@ -52,4 +52,9 @@ public class MemberService {
             throw new BadRequestException(DefaultErrorCode.DUPLICATED_LOGIN_ID);
         }
     }
+
+    @Transactional
+    public void updateMember(Member member) {
+
+    }
 }
