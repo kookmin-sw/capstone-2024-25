@@ -50,7 +50,21 @@ public class GeocodingRequester {
                 String.class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("response = " + response);
+            JSONParser parser = new JSONParser();
+            try {
+                JSONObject jsonResponse = (JSONObject) parser.parse(response.getBody());
+                JSONArray addresses = (JSONArray) jsonResponse.get("addresses");
+                if (addresses != null && !addresses.isEmpty()) {
+                    JSONObject addressObj = (JSONObject) addresses.get(0); // Assuming there's only one address
+                    String latitude = (String) addressObj.get("y");
+                    String longitude = (String) addressObj.get("x");
+                    log.info("Latitude={}", latitude);
+                    log.info("Longitude={}", longitude);
+                    return GeocodingResponse.from(latitude, longitude);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     return null;
     }
