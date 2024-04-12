@@ -8,6 +8,7 @@ public enum DefaultErrorCode implements ErrorCode{
     NOT_FOUND_MEDICINE_ID(400, "요청한 ID에 해당하는 약이 존재하지 않습니다."),
     DUPLICATED_LOGIN_ID(400, "이미 존재하는 로그인 아이디입니다."),
     DUPLICATED_MEDICINE(400, "중복된 약입니다."),
+    DUPLICATED_REGISTER(400, "이미 모든 회원가입을 완료했습니다."),
     INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
     INVALID_UPDATE_MEDICINE(400, "자신의 약만 변경할 수 있습니다"),
     INVALID_GAME_SUBJECT_TYPE(400, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
