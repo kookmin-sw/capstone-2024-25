@@ -1,3 +1,5 @@
+// SelectInputMode.js
+
 import styled from 'styled-components';
 
 const SelectWrapper = styled.div`
@@ -26,10 +28,14 @@ const ItemText = styled.span`
   font-weight: bold;
 `;
 
-const SelectInputMode = ({ setSelectMode }) => {
+const SelectInputMode = ({ setSelectMode, clickVoice }) => {
+  const modeVoice = () => {
+    setSelectMode('voice');
+    clickVoice();
+  };
   return (
     <SelectWrapper>
-      <SelectItem onClick={() => setSelectMode('voice')}>
+      <SelectItem onClick={() => modeVoice()}>
         <img src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'} />
         <ItemText>음성으로 입력하기</ItemText>
       </SelectItem>

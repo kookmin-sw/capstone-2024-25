@@ -7,6 +7,10 @@ import ChatbotModalSecond from '../components/Modal/ChatbotSecond';
 import Chat from '../components/Chatbot/Chat';
 import Category from '../components/Toggle/Category';
 import SelectInputMode from '../components/Chatbot/SelectInputMode';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition';
+
 import { useEffect, useRef, useState } from 'react';
 
 const ChatbotContainer = styled.div`
@@ -137,6 +141,43 @@ const Chatbot = () => {
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
 
   const [showSubCategory, setShowSubCategory] = useState(false);
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+  // const [timer, setTimer] = useState(null);
+  // const [startTimer, setStartTimer] = useState(null);
+  const clickVoice = () => {
+    SpeechRecognition.startListening({ continuous: true });
+    console.log('gugu 실행');
+  };
+  const voiceXClick = () => {
+    resetTranscript();
+    SpeechRecognition.stopListening();
+    setSelectMode('select');
+  };
+  const [voiceInputStartTime, setVoiceInputStartTime] = useState(null);
+
+  useEffect(() => {
+    if (listening) {
+      setVoiceInputStartTime(Date.now());
+    }
+
+    const checkEndTimer = () => {
+      if (voiceInputStartTime && Date.now() - voiceInputStartTime >= 2000) {
+        setVoiceInputStartTime(null);
+        resetTranscript();
+        SpeechRecognition.stopListening();
+      }
+    };
+
+    const timerId = setTimeout(checkEndTimer, 2000);
+
+    return () => clearTimeout(timerId);
+  }, [listening, transcript, voiceInputStartTime]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -460,7 +501,7 @@ const Chatbot = () => {
               <MicImg
                 src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
               />
-              <InputVoiceText>{inputVoiceInfo}</InputVoiceText>
+              <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
               <XImg
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
                 onClick={() => setSelectMode('select')}
@@ -487,13 +528,16 @@ const Chatbot = () => {
             </CategoryWrapper>
           )}
           {selectMode === 'select' && (
-            <SelectInputMode setSelectMode={setSelectMode} />
+            <SelectInputMode
+              setSelectMode={setSelectMode}
+              clickVoice={clickVoice}
+            />
           )}
           {selectMode === 'keyboard' && (
             <ChatInputWrapper>
               <XImage
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => setSelectMode('select')}
+                onClick={() => voiceXClick()}
               />
               <InputText
                 type="text"
