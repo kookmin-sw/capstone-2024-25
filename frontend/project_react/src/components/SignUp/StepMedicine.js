@@ -1,10 +1,10 @@
-// stepMedicine.js
+// StepMedicine.js
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import Toggle from '../Toggle';
 import Button from '../Button';
-import MedicineModal from '../Modal/medicine';
+import MedicineModal from '../Modal/Medicine';
 import Swal from 'sweetalert2';
 
 const StepWrapper = styled.div`

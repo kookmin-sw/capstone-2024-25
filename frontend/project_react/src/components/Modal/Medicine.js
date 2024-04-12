@@ -1,4 +1,4 @@
-// medicine.js
+// Medicine.js
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Button from '../Button';
