@@ -97,12 +97,9 @@ public class MemberService {
         savedMember.setPhoneNumber(memberUpdateRequest.phoneNumber());
         savedMember.setGuardianNumber(memberUpdateRequest.guardianNumber());
 
-        /**
-         * TODO
-         * address -> 위경도 변환
-         * gender에 따른 profile_image 설정
-         * 이미 값이 있는데 API 호출시 예외 처리 (무조건 1번만 호출되도록)
-         */
+        GeocodingResponse geocodingResponse = geocodingRequester.convertAddress(memberUpdateRequest.address());
+        savedMember.setLatitude(geocodingResponse.latitude());
+        savedMember.setLongitude(geocodingResponse.longitude());
 
         Game game = gameRepository.save(new Game());
         game.setMember(savedMember);
