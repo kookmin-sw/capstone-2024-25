@@ -11,9 +11,12 @@ import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Gender;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
+import capstone.allbom.member.dto.GeocodingResponse;
 import capstone.allbom.member.dto.MemberUpdateRequest;
 import capstone.allbom.member.exception.MemberErrorCode;
+import capstone.allbom.member.infrastructure.api.GeocodingRequester;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +31,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MedicineRepository medicineRepository;
     private final GameRepository gameRepository;
+    private final GeocodingRequester geocodingRequester;
+
+    @Value("${member.profile-image.female}")
+    private String FEMALE_IMAGE_URL;
+    @Value("${member.profile-image.male}")
+    private String MALE_IMAGE_URL;
 
     @Transactional(readOnly = true)
     public Member findById(final Long memberId) {
@@ -69,6 +78,12 @@ public class MemberService {
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
         Gender gender = Gender.valueOf(memberUpdateRequest.gender().toUpperCase());
+
+        if (gender == Gender.FEMALE) {
+            savedMember.setProfileImageUrl(FEMALE_IMAGE_URL);
+        } else {
+            savedMember.setPhoneNumber(MALE_IMAGE_URL);
+        }
 
         savedMember.setName(memberUpdateRequest.name());
         savedMember.setBirthday(memberUpdateRequest.birthday());
