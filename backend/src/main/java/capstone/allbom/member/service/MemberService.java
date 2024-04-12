@@ -77,6 +77,10 @@ public class MemberService {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
+        if (savedMember.getName() != null || savedMember.getPhoneNumber() != null) {
+            throw new BadRequestException(DefaultErrorCode.DUPLICATED_REGISTER);
+        }
+
         Gender gender = Gender.valueOf(memberUpdateRequest.gender().toUpperCase());
 
         if (gender == Gender.FEMALE) {
