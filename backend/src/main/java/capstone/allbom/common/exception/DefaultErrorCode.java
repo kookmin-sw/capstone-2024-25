@@ -35,6 +35,7 @@ public enum DefaultErrorCode implements ErrorCode{
     INTERNAL_SERVER_ERROR(500, "서버 내부에 문제가 발생했습니다."),
     OAUTH2_PROVIDER_NOT_RESPONSE(500, "OAuth2 제공자 서버에 문제가 발생했습니다."),
     FOR_TEST_ERROR(500, "테스트용 에러입니다."),
+    INVALID_SOLVED_PROBLEMS_SIZE(500, "과목별 푼 문제를 계산하는 과정에서 서버에 문제가 발생했습니다."),
     ;
 
     private final int code;
