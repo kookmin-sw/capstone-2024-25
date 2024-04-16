@@ -24,5 +24,10 @@ public interface FacilityRepository extends JpaRepository<Facility, Long> {
                                              @Param("northEastLatitude") Double northEastLatitude,
                                              @Param("northEastLongitude") Double northEastLongitude);
 
-//    List<Facility> findFacilitiesInRectangleAndType
+    @Query("SELECT f FROM Facility f WHERE f.latitude BETWEEN :southWestLatitude AND :northEastLatitude AND f.longitude BETWEEN :southWestLongitude AND :northEastLongitude AND f.type = :facilityType")
+    List<Facility> findFacilitiesInRectangleAndType(@Param("southWestLatitude") Double southWestLatitude,
+                                                    @Param("southWestLongitude") Double southWestLongitude,
+                                                    @Param("northEastLatitude") Double northEastLatitude,
+                                                    @Param("northEastLongitude") Double northEastLongitude,
+                                                    @Param("facilityType") FacilityType facilityType);
 }
