@@ -1,13 +1,12 @@
 package capstone.allbom.facility.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -41,7 +40,7 @@ class FacilityRepositoryTest {
         List<Facility> hospitalList = facilityRepository.findByType(FacilityType.HOSPITAL);
 
         // then
-        assertThat(hospitalList).containsExactly(facility1, facility2);
+        Assertions.assertThat(hospitalList).containsExactly(facility1, facility2);
 
     }
 
