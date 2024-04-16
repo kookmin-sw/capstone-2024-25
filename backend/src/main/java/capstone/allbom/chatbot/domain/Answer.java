@@ -27,4 +27,6 @@ public class Answer {
     private String details;
 
     private LocalDateTime createdAt;
+
+    private AnswerType type;
 }

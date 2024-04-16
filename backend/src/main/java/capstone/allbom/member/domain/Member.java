@@ -38,8 +38,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Embedded
-    private Address address;
+    private String address;
 
     private String detailAddress;
 

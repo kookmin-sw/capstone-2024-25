@@ -96,5 +96,10 @@ public class SubjectService {
         }
     }
 
+    public Integer getSubjectDataSize(SubjectType type) {
+        System.out.println("subjectType = " + type);
+        String subjectType = convertToRequestType(type);
+        return gameRequester.getSubjectData(subjectType).size();
+    }
 
 }

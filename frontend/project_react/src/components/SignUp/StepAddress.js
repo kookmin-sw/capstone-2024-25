@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Input from '../Input';
 import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import AddressModal from '../Modal/address';
+import AddressModal from '../Modal/Address';
 
 const StepWrapper = styled.div`
   display: flex;
