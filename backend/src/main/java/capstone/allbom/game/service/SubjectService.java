@@ -6,9 +6,10 @@ import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.game.domain.Subject;
 import capstone.allbom.game.domain.SubjectRepository;
 import capstone.allbom.game.domain.SubjectType;
-import capstone.allbom.game.dto.GameSentenceRequest;
+import capstone.allbom.game.dto.SentenceRequest;
 import capstone.allbom.game.infrastructure.api.RestTemplateGameRequester;
 import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
     private final RestTemplateGameRequester gameRequester;
+    private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
     public Subject findByGameAndType(final Member member, Long gameId, SubjectType type) {
@@ -29,6 +31,15 @@ public class SubjectService {
          */
 
         return subjectRepository.findByGameAndType(gameId, type)
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
+    }
+
+    @Transactional(readOnly = true)
+    public Subject findByMemberAndType(final Member member, SubjectType type) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        return subjectRepository.findByMemberAndType(savedMember.getId(), type)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
     }
 
@@ -49,8 +60,7 @@ public class SubjectService {
         return requestType;
     }
 
-    public boolean compareWithAnswer(SubjectType type, Integer currProblem, GameSentenceRequest gameSentenceRequest) {
-        String answer = getCurrSentence(type, currProblem);
+    public boolean compareWithAnswer(SubjectType type, String answer, SentenceRequest gameSentenceRequest) {
         System.out.println("answer = " + answer);
         if (answer.equals(gameSentenceRequest.sentence()))
             return true;

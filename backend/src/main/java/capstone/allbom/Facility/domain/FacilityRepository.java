@@ -1,4 +1,4 @@
-package capstone.allbom.Facility.domain;
+package capstone.allbom.facility.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

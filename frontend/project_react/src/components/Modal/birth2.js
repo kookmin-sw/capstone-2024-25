@@ -131,11 +131,9 @@ const BirthModal = ({ isOpen, closeModal, setBirth, birth, formatDate }) => {
   const [showMonth, setShowMonth] = useState(false);
 
   const toggleYear = () => {
-    console.log('toggleYear');
     setShowYear(!showYear);
   };
   const toggleMonth = () => {
-    console.log('toggleMonth');
     setShowMonth(!showMonth);
   };
 
@@ -152,8 +150,6 @@ const BirthModal = ({ isOpen, closeModal, setBirth, birth, formatDate }) => {
   };
   const dayPickerProps = {
     components: {
-      // CustomCaptionLabel 컴포넌트를 렌더링하는 함수를 정의합니다.
-      // 이 함수는 `DayPicker`로부터 `displayMonth`와 `localeUtils`를 props로 받습니다.
       CaptionLabel: ({ displayMonth, localeUtils }) => {
         const displayYear = displayMonth.getFullYear().toString();
         // const displayMonthFormatted =
