@@ -1,0 +1,49 @@
+package capstone.allbom.job.infrastructure.api;
+
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+
+@RequiredArgsConstructor
+@Component
+@Slf4j
+public class JobCrawlingProcessBuilder {
+
+    private final String PYTHON_FILE_URL = "../data/work/main.py";
+    private final RestTemplate restTemplate;
+
+//    @Async
+    @Async("threadPoolTaskExecutor")
+//    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
+    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
+    public void processPythonFile() throws IOException {
+
+        ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
+        processBuilder.redirectErrorStream(true);
+
+        Process process = processBuilder.start();
+        InputStream inputStream = process.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            // 실행 결과 처리
+            System.out.println(line);
+        }
+    }
+
+}
