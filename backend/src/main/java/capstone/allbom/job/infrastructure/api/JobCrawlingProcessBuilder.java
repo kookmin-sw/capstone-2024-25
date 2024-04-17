@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,7 +26,8 @@ public class JobCrawlingProcessBuilder {
     private final String PYTHON_FILE_URL = "../data/work/main.py";
     private final RestTemplate restTemplate;
 
-    @Async
+//    @Async
+    @Async("threadPoolTaskExecutor")
     public void processPythonFile() throws IOException {
 
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
