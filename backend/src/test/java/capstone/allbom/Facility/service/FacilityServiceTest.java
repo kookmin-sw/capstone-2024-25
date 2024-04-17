@@ -1,5 +1,6 @@
 package capstone.allbom.facility.service;
 
+import capstone.allbom.facility.domain.FacilityType;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ class FacilityServiceTest {
 
         //when
         facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude);
+    }
+
+    @Test
+    void 특정_범위의_위경도와_시설_유형으로_시설들을_조회한다() {
+        //given
+        Double SWlatitude = 37.54987714243046;
+        Double SWlongitude = 127.06742932325953;
+        Double NElatitude = 37.55118048770932;
+        Double NElongitude = 127.0726588075014;
+        FacilityType type = FacilityType.WELFARECENTER;
+
+        //when
+        facilityService.getFacilitiesByType(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
     }
 
 }
