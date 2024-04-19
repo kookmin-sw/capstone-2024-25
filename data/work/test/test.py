@@ -277,6 +277,7 @@ work = work.dropna(axis=0)
 json_data = work.to_json(orient='records', force_ascii=False)
 
 # json 파일 저장
-with open('../../../../../../../../../../data/work/data/workData.json', 'w', encoding='utf-8') as file:
+with open('../data/work/workData.json', 'w', encoding='utf-8') as file:
     file.write(json_data)
+
 
