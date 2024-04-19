@@ -16,7 +16,7 @@ public class JobCrawlingProcessBuilder {
 
 //    private final String PYTHON_FILE_URL = "../data/work/main.py";
     private final String PYTHON_FILE_URL = "../data/work/test/test.py";
-    private final RestTemplateJobRequester restTemplateJobRequester;
+    private final JobRequester jobRequester;
 
     @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
@@ -31,8 +31,8 @@ public class JobCrawlingProcessBuilder {
 
         if (process.waitFor() == 0) { // 파이썬 프로세스가 성공적으로 종료
             log.info("process success exit");
-            restTemplateJobRequester.requestJob();
-        } else { // 파이썬 프로세스가 오류로 종료
+            jobRequester.requestJob();
+        } else {
             throw new BadRequestException(DefaultErrorCode.INVALID_SOLVED_PROBLEMS_SIZE);
         }
     }

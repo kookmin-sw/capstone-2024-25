@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class RestTemplateJobRequester {
+public class JobRequester {
 
     private final JobService jobService;
     private final String JOB_REQUEST_URL = "../data/work/workData.json";
