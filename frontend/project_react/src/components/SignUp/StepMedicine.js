@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import Toggle from '../Toggle';
-import Button from '../Button';
 import MedicineModal from '../Modal/Medicine';
-import Swal from 'sweetalert2';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -34,19 +32,24 @@ const CycleWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 100%;
-  margin-top: 64px;
-`;
-
-const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
-  const [medicine, setMedicine] = useState('');
-  const [cycleMorning, setCycleMorning] = useState(false);
-  const [cycleLunch, setCycleLunch] = useState(false);
-  const [cycleDinner, setCycleDinner] = useState(false);
+const StepMedicine = ({
+  value,
+  setValue,
+  cycleMorning,
+  cycleLunch,
+  cycleDinner,
+  setCycleMorning,
+  setCycleLunch,
+  setCycleDinner,
+  medicineList,
+  setMedicineList,
+  openMedicineModal,
+  setOpenMedicineModal,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const handleInputChange = (e) => {
-    setMedicine(e.target.value);
+    // 약품 이름
+    setValue(e.target.value);
   };
 
   const handleMorning = () => {
@@ -58,39 +61,11 @@ const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
   const handleDinner = () => {
     setCycleDinner(!cycleDinner);
   };
-  const resetInfo = () => {
-    setMedicine('');
-    setCycleMorning(false);
-    setCycleLunch(false);
-    setCycleDinner(false);
-  };
-  const btnClick = () => {
-    if (medicine.length === 0) return;
-    else if (medicine.length < 3 || medicine.length > 20) {
-      Swal.fire({
-        title: '약품 이름',
-        text: '약품 이름은 3자 이상 20자 이하로 입력해주세요.',
-        type: 'warning',
-        confirmButtonText: '확인',
-      });
-      return;
-    }
-    const newMedicineInfo = {
-      medicine: medicine,
-      cycle: [cycleMorning, cycleLunch, cycleDinner],
-    };
-    setValue([...value, newMedicineInfo]);
-    resetInfo();
-  };
-  const openModal = () => {
-    setShowModal(true);
-  };
-
   return (
     <StepWrapper>
       <StepItem>
         <StepTitle>복용중인 약품 (선택)</StepTitle>
-        <Input text={medicine} inputInfo="이름" onChange={handleInputChange} />
+        <Input text={value} inputInfo="이름" onChange={handleInputChange} />
       </StepItem>
       <StepItem>
         <StepTitle>복용 주기 (선택)</StepTitle>
@@ -115,34 +90,15 @@ const StepMedicine = ({ value, setValue, secondValue, setSecondValue }) => {
           />
         </CycleWrapper>
       </StepItem>
-      {showModal === true ? (
+      {openMedicineModal === true ? (
         <MedicineModal
-          isOpen={() => setShowModal(true)}
-          closeModal={() => setShowModal(false)}
-          value={value}
-          setValue={setValue}
-          showModal={showModal}
+          isOpen={() => setOpenMedicineModal(true)}
+          closeModal={() => setOpenMedicineModal(false)}
+          value={medicineList}
+          setValue={setMedicineList}
+          showModal={openMedicineModal}
         />
       ) : null}
-      <ButtonWrapper>
-        {value.length === 0 || medicine.length !== 0 ? (
-          <Button
-            text="약품 추가"
-            size="Large"
-            height="Short"
-            type="Primary"
-            onClick={btnClick}
-          />
-        ) : (
-          <Button
-            text="추가한 약품"
-            size="Large"
-            height="Short"
-            type="Primary"
-            onClick={openModal}
-          />
-        )}
-      </ButtonWrapper>
     </StepWrapper>
   );
 };

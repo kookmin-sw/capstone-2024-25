@@ -17,7 +17,7 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '300px',
+    width: '80%',
     height: '420px',
     zIndex: '150',
     position: 'absolute',
@@ -59,7 +59,7 @@ const ModalContent = styled.div`
   justify-content: flex-start;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto; // 스크롤바 수정 필요
 `;
 const MedicineItem = styled.div`
   display: flex;
@@ -67,7 +67,8 @@ const MedicineItem = styled.div`
   min-height: 25%;
   width: 100%;
   max-width: 100%;
-  border-bottom: 2px solid var(--unselected-color);
+  border-bottom: ${(props) =>
+    props.isLastItem === true ? 'none' : '2px solid var(--unselected-color)'};
   padding-bottom: 20px;
   overflow-x: hidden;
 `;
@@ -85,6 +86,9 @@ const MedicineInfo = styled.div`
 `;
 const MedicineName = styled.span`
   font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const ModifyWrapper = styled.div`
@@ -94,12 +98,15 @@ const ModifyWrapper = styled.div`
 
 const EditBtn = styled.span`
   color: var(--select-color);
+  white-space: nowrap;
 `;
 const DeleteBtn = styled.span`
   color: var(--error-color);
+  white-space: nowrap;
 `;
 const CompleteBtn = styled.span`
   color: var(--primary-color);
+  white-space: nowrap;
 `;
 const CycleWrapper = styled.div`
   display: flex;
@@ -122,7 +129,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [newValue, setNewValue] = useState([]);
-  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     if (showModal) {
@@ -137,7 +143,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   }, [editingIndex, value]);
 
   const handleToggle = (index, cycleIndex) => {
-    setIsChanged(true);
     const updatedValue = newValue.map((item, idx) => {
       if (idx === index) {
         const updatedCycle = [...item.cycle];
@@ -150,7 +155,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   };
 
   const handleNameChange = (event) => {
-    setIsChanged(true);
     setEditingName(event.target.value);
   };
   const deleteBtn = (index) => {
@@ -170,7 +174,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   };
 
   const deleteItem = (index) => {
-    setIsChanged(true);
     const updateValue = [...newValue];
     updateValue.splice(index, 1);
     setNewValue(updateValue);
@@ -185,7 +188,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
         confirmButtonText: '확인',
       }).then((res) => {
         if (res.isConfirmed) {
-          setEditingIndex(null);
           return;
         }
       });
@@ -195,6 +197,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   };
 
   const saveEdit = () => {
+    // API 연결 시 -> 수정 사항 없는데 수정하려고 하면 400 에러 주의
     if (
       newValue[editingIndex].medicine !== editingName ||
       !Object.is(newValue[editingIndex].cycle, value[editingIndex].cycle)
@@ -208,17 +211,24 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     }
   };
 
-  const modalContentWidth =
-    document.getElementById('modal-content')?.clientWidth;
-  const modifyWrapperWidth =
-    document.getElementById('modify-wrapper')?.clientWidth;
   useEffect(() => {
     const inputWidth = editingName.trim().length * 20;
-    if (
-      document.getElementById('edit-name') &&
-      modalContentWidth >= modifyWrapperWidth + 12 + inputWidth
-    ) {
-      document.getElementById('edit-name').style.width = `${inputWidth}px`;
+    const medicineInfo = document.getElementById('medicine-info');
+    const modifyWrapper = document.getElementById('modify-wrapper');
+
+    if (document.getElementById('edit-name')) {
+      if (editingName && medicineInfo && modifyWrapper) {
+        if (
+          inputWidth <=
+          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
+        ) {
+          document.getElementById('edit-name').style.width = `${inputWidth}px`;
+        } else {
+          document.getElementById('edit-name').style.width = `${
+            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
+          }px`;
+        }
+      }
     }
   }, [editingName, editingIndex]);
 
@@ -241,7 +251,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
       </ModalHeader>
       <ModalContent id="modal-content">
         {newValue.map((item, index) => (
-          <MedicineItem key={index}>
+          <MedicineItem key={index} isLastItem={index === newValue.length - 1}>
             <MedicineInfo id="medicine-info">
               <MedicineHeader>
                 {editingIndex === index ? (
@@ -254,7 +264,9 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
                     />
                   </InputWrapper>
                 ) : (
-                  <MedicineName>{item.medicine}</MedicineName>
+                  <MedicineName id="medicine-name">
+                    {item.medicine}
+                  </MedicineName>
                 )}
                 <ModifyWrapper id="modify-wrapper">
                   {editingIndex === index ? (

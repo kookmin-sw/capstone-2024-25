@@ -17,7 +17,7 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '360px',
+    width: '80%',
     height: '520px',
     zIndex: '150',
     position: 'absolute',
