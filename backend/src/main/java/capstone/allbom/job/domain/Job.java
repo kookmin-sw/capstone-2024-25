@@ -1,6 +1,7 @@
 package capstone.allbom.job.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 @Getter @Setter
 @Slf4j
+@Builder
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Job {
 
