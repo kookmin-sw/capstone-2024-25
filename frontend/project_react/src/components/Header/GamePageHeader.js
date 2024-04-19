@@ -8,7 +8,7 @@ export default function GamePageHeader({ title, showBackButton, showDivider}) {
     return (
         <HeaderFrame>
             <Row>
-                {showBackButton && <p onClick={() => navigate(-1, { replace: true })}>빽</p>}
+                {showBackButton && <div onClick={() => navigate(-1, { replace: true })}><img src='/images/JobPage/arrow-back.svg'/></div>}
                 <Title>{title}</Title>
             </Row>
             {showDivider && <Divder />}
@@ -21,17 +21,18 @@ const HeaderFrame = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
 `;
 
 const Row = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 `;
 
 const Title = styled.p`
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     color: black;
     text-align: center;

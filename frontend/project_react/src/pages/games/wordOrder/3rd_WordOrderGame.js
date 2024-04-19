@@ -85,11 +85,11 @@ export default function WordOrderGame() {
 
   return (
     <Frame>
-      <GamePageHeader showBackButton={true}></GamePageHeader>
+      <GamePageHeader showBackButton={true} title={"문장 순서 맞추기"}></GamePageHeader>
       <p>문장 순서 맞추기</p>
       <UserSelectWords>
         {userSelection.map((Object, index) => (
-          <p key={index}>{Object['word']}</p>
+          <Word key={index}>{Object['word']}</Word>
         ))}
       </UserSelectWords>
       <WordButtons>
@@ -129,6 +129,7 @@ const Frame = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   padding: 30px;
   gap: 20px;
@@ -137,15 +138,21 @@ const Frame = styled.div`
 const UserSelectWords = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  height: 100px;
+  /* height: 100px; */
   gap: 4px;
 `;
 
 const WordButtons = styled.div`
   width: 100%;
-  height: 100px;
   gap: 4px;
+`;
+
+const Word = styled.p`
+  padding: 0px;
+  margin: 0px;
 `;
 
 const Button = styled.button`
