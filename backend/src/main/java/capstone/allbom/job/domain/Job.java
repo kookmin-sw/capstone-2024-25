@@ -42,6 +42,7 @@ public class Job {
 
     private String pay;
 
+    @Column(length = 1024)
     private String companyImageUrl;
 
     private String companyName;
@@ -50,10 +51,13 @@ public class Job {
 
     private String workType; // 근무형태 (주 몇일 근무)
 
+    @Column(length = 5096)
     private String occupation; // 모집직종
 
+    @Column(length = 5096)
     private String contents; // 직무내용
 
+    @Column(length = 1024)
     private String worknetUrl;
 
     public void updateDeadline(String dday) {
