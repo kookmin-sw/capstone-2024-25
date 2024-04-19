@@ -25,7 +25,6 @@ public class JobCrawlingProcessBuilder {
 
 //    private final String PYTHON_FILE_URL = "../data/work/main.py";
     private final String PYTHON_FILE_URL = "../data/work/main.py";
-     private final String JOB_REQUEST_URL = "../data/workData.json";
 //    private final String PYTHON_FILE_URL = "../../../test.py";
 //    private final String JOB_REQUEST_URL = "../data/workData.json";
 

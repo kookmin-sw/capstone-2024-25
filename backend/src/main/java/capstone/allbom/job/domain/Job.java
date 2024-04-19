@@ -16,6 +16,8 @@ public class Job {
     @Column(name = "job_id")
     private Long id;
 
+    private String worknetId;
+
     @Enumerated(EnumType.STRING)
     private Province province;
 
