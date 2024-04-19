@@ -1,7 +1,5 @@
 package capstone.allbom.job.infrastructure.api;
 
-import capstone.allbom.facility.domain.Facility;
-import capstone.allbom.facility.service.dto.FacilityRequest;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.dto.JobRequest;
 import capstone.allbom.job.service.JobService;
@@ -10,14 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
