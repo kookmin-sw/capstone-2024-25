@@ -17,6 +17,7 @@ import StepMedicine from '../components/SignUp/StepMedicine';
 
 import Button from '../components/Button';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const SignUpWrapper = styled.div`
   display: flex;
@@ -49,11 +50,17 @@ const SignUpFooter = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  gap: 20px;
 `;
+
+const ButtonSpace = styled.div`
+  height: 40px;
+  width: 100%;
+`;
+
 const FooterText = styled.div`
   font-size: 16px;
   color: var(--unselected-color);
-  margin-top: 20px;
 `;
 const LoginButton = styled.span`
   color: var(--primary-color);
@@ -72,6 +79,11 @@ const SignUp = () => {
   const [phoneNum, setPhoneNum] = useState('');
   const [emergencyNum, setEmergencyNum] = useState('');
   const [medicineList, setMedicineList] = useState([]);
+  const [openMedicineModal, setOpenMedicineModal] = useState(false);
+  const [medicine, setMedicine] = useState('');
+  const [cycleMorning, setCycleMorning] = useState(false);
+  const [cycleLunch, setCycleLunch] = useState(false);
+  const [cycleDinner, setCycleDinner] = useState(false);
 
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
@@ -87,7 +99,7 @@ const SignUp = () => {
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: (current) => setCurrentSlide(current), // 현재 슬라이드 인덱스 업데이트
+    beforeChange: (current, next) => setCurrentSlide(next), // 다음 슬라이드 인덱스 업데이트
     arrows: false,
     draggable: false,
     swipe: false, // 모바일 스와이프 비활성화
@@ -125,6 +137,39 @@ const SignUp = () => {
       });
   };
 
+  const resetMedicine = () => {
+    setMedicine('');
+    setCycleMorning(false);
+    setCycleLunch(false);
+    setCycleDinner(false);
+  };
+
+  const addMedicine = () => {
+    console.log('gmlgml');
+    if (medicine.length === 0) {
+      console.log('durl ??');
+      return;
+    } else if (medicine.length < 3 || medicine.length > 20) {
+      Swal.fire({
+        title: '약품 이름',
+        text: '약품 이름은 3자 이상 20자 이하로 입력해주세요.',
+        type: 'warning',
+        confirmButtonText: '확인',
+      });
+      return;
+    } else {
+      console.log('되나 ?');
+    }
+
+    const newMedicineInfo = {
+      medicine: medicine,
+      cycle: [cycleMorning, cycleLunch, cycleDinner],
+    };
+    setMedicineList([...medicineList, newMedicineInfo]);
+    console.log('newMedicineInfo : ', newMedicineInfo);
+    resetMedicine();
+  };
+
   return (
     <SignUpWrapper>
       <SignUpTitle>회원가입</SignUpTitle>
@@ -148,10 +193,44 @@ const SignUp = () => {
           />
           <StepNum value={phoneNum} setValue={setPhoneNum} />
           <StepNumEmergency value={emergencyNum} setValue={setEmergencyNum} />
-          <StepMedicine value={medicineList} setValue={setMedicineList} />
+          <StepMedicine
+            value={medicine}
+            setValue={setMedicine}
+            cycleMorning={cycleMorning}
+            setCycleMorning={setCycleMorning}
+            cycleLunch={cycleLunch}
+            setCycleLunch={setCycleLunch}
+            cycleDinner={cycleDinner}
+            setCycleDinner={setCycleDinner}
+            medicineList={medicineList}
+            setMedicineList={setMedicineList}
+            openMedicineModal={openMedicineModal}
+            setOpenMedicineModal={setOpenMedicineModal}
+          />
         </Slider>
       </StepWrapper>
       <SignUpFooter>
+        {currentSlide === 8 ? (
+          medicineList.length > 0 && medicine.length === 0 ? (
+            <Button
+              text="추가한 약품"
+              size="Large"
+              height="Short"
+              type="Primary"
+              onClick={() => setOpenMedicineModal(true)}
+            />
+          ) : (
+            <Button
+              text="약품 추가"
+              size="Large"
+              height="Short"
+              type="Primary"
+              onClick={() => addMedicine()}
+            />
+          )
+        ) : (
+          <ButtonSpace />
+        )}
         <ButtonWrapper>
           <Button
             text={currentSlide === 0 ? '취소' : '이전'}
