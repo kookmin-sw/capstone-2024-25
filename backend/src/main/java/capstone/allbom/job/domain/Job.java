@@ -56,20 +56,20 @@ public class Job {
 
     private String worknetUrl;
 
-    public void updateDeadline(String deadline) {
-        if (deadline.startsWith("D-")) {
+    public void updateDeadline(String dday) {
+        if (dday.startsWith("D-")) {
             try {
-                log.info("deadline = {}", deadline);
-                int daysLeft = Integer.parseInt(deadline.substring(2));
+                log.info("deadline = {}", dday);
+                int daysLeft = Integer.parseInt(dday.substring(2));
                 if (daysLeft >= 1) {
                     daysLeft--;
-                    deadline = "D-" + daysLeft;
-                    log.info("updateDeadline = {}", deadline);
+                    dday = "D-" + daysLeft;
+                    log.info("updateDeadline = {}", dday);
                 } else {
-                    deadline = "채용마감";
+                    dday = "채용마감";
                 }
             } catch (NumberFormatException e) {
-                log.error("올바른 형식의 {}이 아닙니다.", deadline);
+                log.error("올바른 형식의 {}이 아닙니다.", dday);
 //                System.err.println("올바른 형식의 deadline이 아닙니다.");
             }
         }
