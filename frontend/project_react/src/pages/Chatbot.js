@@ -148,36 +148,54 @@ const Chatbot = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  // const [timer, setTimer] = useState(null);
-  // const [startTimer, setStartTimer] = useState(null);
-  const clickVoice = () => {
-    SpeechRecognition.startListening({ continuous: true });
-    console.log('gugu 실행');
-  };
+
   const voiceXClick = () => {
-    resetTranscript();
-    SpeechRecognition.stopListening();
-    setSelectMode('select');
+    console.log('X 클릭 - 음성 입력 중지');
+    stopListening();
   };
+
   const [voiceInputStartTime, setVoiceInputStartTime] = useState(null);
 
+  const stopListening = () => {
+    console.log('음성 입력 중지');
+    SpeechRecognition.stopListening();
+    resetTranscript();
+    setVoiceInputStartTime(null);
+    setSelectMode('select');
+  };
+
   useEffect(() => {
-    if (listening) {
+    let timerId;
+
+    if (listening && !voiceInputStartTime) {
       setVoiceInputStartTime(Date.now());
+      timerId = setTimeout(() => {
+        console.log('5초 동안 음성 입력 감지');
+        if (transcript === '') {
+          stopListening();
+        }
+      }, 5000);
     }
 
-    const checkEndTimer = () => {
-      if (voiceInputStartTime && Date.now() - voiceInputStartTime >= 2000) {
-        setVoiceInputStartTime(null);
-        resetTranscript();
-        SpeechRecognition.stopListening();
-      }
-    };
-
-    const timerId = setTimeout(checkEndTimer, 2000);
+    if (listening && transcript !== '') {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        console.log('2초 동안 추가 입력이 없어 음성 입력 중지');
+        getSpeech(transcript);
+        stopListening();
+      }, 2000);
+    }
 
     return () => clearTimeout(timerId);
-  }, [listening, transcript, voiceInputStartTime]);
+  }, [listening, transcript]);
+
+  const handleVoiceClick = () => {
+    if (selectMode === 'select') {
+      console.log('음성 입력 시작');
+      SpeechRecognition.startListening({ continuous: true });
+      setSelectMode('voice');
+    }
+  };
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -310,6 +328,53 @@ const Chatbot = () => {
     //   type: 'User',
     // },
   ];
+
+  const getSpeech = (text) => {
+    console.log('getSpeech 실행');
+    console.log('text : ', text);
+    let voices = [];
+
+    //디바이스에 내장된 voice를 가져온다.
+    const setVoiceList = () => {
+      voices = window.speechSynthesis.getVoices();
+    };
+
+    setVoiceList();
+
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      //voice list에 변경됐을때, voice를 다시 가져온다.
+      window.speechSynthesis.onvoiceschanged = setVoiceList;
+    }
+
+    const speech = (txt) => {
+      const lang = 'ko-KR';
+      const utterThis = new SpeechSynthesisUtterance(txt);
+
+      utterThis.lang = lang;
+      utterThis.pitch = -2;
+      utterThis.rate = 1;
+
+      /* 한국어 vocie 찾기
+         디바이스 별로 한국어는 ko-KR 또는 ko_KR로 voice가 정의되어 있다.
+      */
+      const kor_voice = voices.find(
+        (elem) => elem.lang === lang || elem.lang === lang.replace('-', '_'),
+      );
+
+      //힌국어 voice가 있다면 ? utterance에 목소리를 설정한다 : 리턴하여 목소리가 나오지 않도록 한다.
+      if (kor_voice) {
+        utterThis.voice = kor_voice;
+      } else {
+        console.log('voice not found');
+        return;
+      }
+
+      //utterance를 재생(speak)한다.
+      window.speechSynthesis.speak(utterThis);
+    };
+
+    speech(text);
+  };
 
   /* 모바일 가상 키보드 start */
   const handleScroll = (e) => {
@@ -504,7 +569,7 @@ const Chatbot = () => {
               <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
               <XImg
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => setSelectMode('select')}
+                onClick={() => voiceXClick()}
               />
             </InputVoiceWrapper>
           )}
@@ -530,14 +595,15 @@ const Chatbot = () => {
           {selectMode === 'select' && (
             <SelectInputMode
               setSelectMode={setSelectMode}
-              clickVoice={clickVoice}
+              clickVoice={handleVoiceClick}
             />
           )}
           {selectMode === 'keyboard' && (
             <ChatInputWrapper>
               <XImage
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => voiceXClick()}
+                onClick={() => setSelectMode('select')}
+                ㄴ
               />
               <InputText
                 type="text"
