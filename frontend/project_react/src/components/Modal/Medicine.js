@@ -17,7 +17,7 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '300px',
+    width: '80%',
     height: '420px',
     zIndex: '150',
     position: 'absolute',
@@ -211,16 +211,22 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     }
   };
 
-  const modalContentWidth =
-    document.getElementById('modal-content')?.clientWidth;
-  const modifyWrapperWidth =
-    document.getElementById('modify-wrapper')?.clientWidth;
   useEffect(() => {
     const inputWidth = editingName.trim().length * 20;
+    const medicineInfo = document.getElementById('medicine-info');
+    const modifyWrapper = document.getElementById('modify-wrapper');
+
     if (document.getElementById('edit-name')) {
-      if (modalContentWidth >= modifyWrapperWidth + 12 + inputWidth) {
-        if (editingName) {
+      if (editingName && medicineInfo && modifyWrapper) {
+        if (
+          inputWidth <=
+          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
+        ) {
           document.getElementById('edit-name').style.width = `${inputWidth}px`;
+        } else {
+          document.getElementById('edit-name').style.width = `${
+            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
+          }px`;
         }
       }
     }
@@ -258,7 +264,9 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
                     />
                   </InputWrapper>
                 ) : (
-                  <MedicineName>{item.medicine}</MedicineName>
+                  <MedicineName id="medicine-name">
+                    {item.medicine}
+                  </MedicineName>
                 )}
                 <ModifyWrapper id="modify-wrapper">
                   {editingIndex === index ? (

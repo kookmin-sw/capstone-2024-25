@@ -145,9 +145,7 @@ const SignUp = () => {
   };
 
   const addMedicine = () => {
-    console.log('gmlgml');
     if (medicine.length === 0) {
-      console.log('durl ??');
       return;
     } else if (medicine.length < 3 || medicine.length > 20) {
       Swal.fire({
@@ -157,16 +155,12 @@ const SignUp = () => {
         confirmButtonText: '확인',
       });
       return;
-    } else {
-      console.log('되나 ?');
     }
-
     const newMedicineInfo = {
       medicine: medicine,
       cycle: [cycleMorning, cycleLunch, cycleDinner],
     };
     setMedicineList([...medicineList, newMedicineInfo]);
-    console.log('newMedicineInfo : ', newMedicineInfo);
     resetMedicine();
   };
 
@@ -175,6 +169,20 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider id="slider" ref={sliderRef} {...settings}>
+          <StepMedicine
+            value={medicine}
+            setValue={setMedicine}
+            cycleMorning={cycleMorning}
+            setCycleMorning={setCycleMorning}
+            cycleLunch={cycleLunch}
+            setCycleLunch={setCycleLunch}
+            cycleDinner={cycleDinner}
+            setCycleDinner={setCycleDinner}
+            medicineList={medicineList}
+            setMedicineList={setMedicineList}
+            openMedicineModal={openMedicineModal}
+            setOpenMedicineModal={setOpenMedicineModal}
+          />
           <StepId value={userId} setValue={setUserId} />
           <StepPassword
             value={password}
@@ -193,24 +201,25 @@ const SignUp = () => {
           />
           <StepNum value={phoneNum} setValue={setPhoneNum} />
           <StepNumEmergency value={emergencyNum} setValue={setEmergencyNum} />
-          <StepMedicine
-            value={medicine}
-            setValue={setMedicine}
-            cycleMorning={cycleMorning}
-            setCycleMorning={setCycleMorning}
-            cycleLunch={cycleLunch}
-            setCycleLunch={setCycleLunch}
-            cycleDinner={cycleDinner}
-            setCycleDinner={setCycleDinner}
-            medicineList={medicineList}
-            setMedicineList={setMedicineList}
-            openMedicineModal={openMedicineModal}
-            setOpenMedicineModal={setOpenMedicineModal}
-          />
+          {/*<StepMedicine*/}
+          {/*  value={medicine}*/}
+          {/*  setValue={setMedicine}*/}
+          {/*  cycleMorning={cycleMorning}*/}
+          {/*  setCycleMorning={setCycleMorning}*/}
+          {/*  cycleLunch={cycleLunch}*/}
+          {/*  setCycleLunch={setCycleLunch}*/}
+          {/*  cycleDinner={cycleDinner}*/}
+          {/*  setCycleDinner={setCycleDinner}*/}
+          {/*  medicineList={medicineList}*/}
+          {/*  setMedicineList={setMedicineList}*/}
+          {/*  openMedicineModal={openMedicineModal}*/}
+          {/*  setOpenMedicineModal={setOpenMedicineModal}*/}
+          {/*/>*/}
         </Slider>
       </StepWrapper>
       <SignUpFooter>
-        {currentSlide === 8 ? (
+        {/*{currentSlide === 8 ? (*/}
+        {currentSlide === 0 ? (
           medicineList.length > 0 && medicine.length === 0 ? (
             <Button
               text="추가한 약품"
