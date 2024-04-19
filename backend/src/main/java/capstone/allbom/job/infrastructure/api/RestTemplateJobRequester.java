@@ -27,7 +27,6 @@ import java.util.List;
 @Slf4j
 public class RestTemplateJobRequester {
 
-    private final RestTemplate restTemplate;
     private final JobService jobService;
     private final String JOB_REQUEST_URL = "../data/work/workData.json";
 
@@ -35,14 +34,18 @@ public class RestTemplateJobRequester {
         return new String(Files.readAllBytes(Paths.get(file)));
     }
 
-    public List<Job> requestJob() throws Exception {
+    public List<Job> requestJob(){
 
 //        Resource resource = resourceLoader.getResource("file:" + filePath);
 //        byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
 
-        String jobData = readFileAsString(JOB_REQUEST_URL);
-
-        return makeJobs(jobData);
+        try {
+            String jobData = readFileAsString(JOB_REQUEST_URL);
+            return makeJobs(jobData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<Job> makeJobs(String rawData) {

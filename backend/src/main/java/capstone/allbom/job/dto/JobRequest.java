@@ -9,8 +9,7 @@ public record JobRequest(
         String worknetId,
         String province,
         String title,
-        LocalDate deadline,
-//        String deadline,
+        String deadline,
         String dday,
         String career,
         String scholarship,
@@ -31,7 +30,7 @@ public record JobRequest(
                 .worknetId(worknetId)
                 .province(Province.valueOf(province.toUpperCase()))
                 .title(title)
-                .deadline(deadline)
+                .deadline(LocalDate.parse(deadline))
                 .dday(dday)
                 .career(career)
                 .scholarship(scholarship)

@@ -31,26 +31,26 @@ public class JobCrawlingProcessBuilder {
     @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
 //    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
-    @Scheduled(cron = "0 09 17 * * ?")
+    @Scheduled(cron = "0 40 17 * * ?")
     public void processPythonFile() throws IOException, InterruptedException {
-
-        ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
-        processBuilder.redirectErrorStream(true);
-
-        Process process = processBuilder.start();
-//        InputStream inputStream = process.getInputStream();
-
-
-
-        if (process.waitFor() == 0) { // 파이썬 프로세스가 성공적으로 종료
-            InputStream inputStream = process.getInputStream();
-            System.out.println("inputStream = " + inputStream);
-
-        } else {
-            // 파이썬 프로세스가 오류로 종료되었음을 나타냄
-            InputStream errorStream = process.getErrorStream();
-            System.out.println("inputStream = " + errorStream);
-        }
+//
+//        ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
+//        processBuilder.redirectErrorStream(true);
+//
+//        Process process = processBuilder.start();
+////        InputStream inputStream = process.getInputStream();
+//
+//
+//
+//        if (process.waitFor() == 0) { // 파이썬 프로세스가 성공적으로 종료
+//            InputStream inputStream = process.getInputStream();
+//            System.out.println("inputStream = " + inputStream);
+//
+//        } else {
+//            // 파이썬 프로세스가 오류로 종료되었음을 나타냄
+//            InputStream errorStream = process.getErrorStream();
+//            System.out.println("inputStream = " + errorStream);
+//        }
 
         restTemplateJobRequester.requestJob();
     }
