@@ -169,20 +169,6 @@ const SignUp = () => {
       <SignUpTitle>회원가입</SignUpTitle>
       <StepWrapper>
         <Slider id="slider" ref={sliderRef} {...settings}>
-          <StepMedicine
-            value={medicine}
-            setValue={setMedicine}
-            cycleMorning={cycleMorning}
-            setCycleMorning={setCycleMorning}
-            cycleLunch={cycleLunch}
-            setCycleLunch={setCycleLunch}
-            cycleDinner={cycleDinner}
-            setCycleDinner={setCycleDinner}
-            medicineList={medicineList}
-            setMedicineList={setMedicineList}
-            openMedicineModal={openMedicineModal}
-            setOpenMedicineModal={setOpenMedicineModal}
-          />
           <StepId value={userId} setValue={setUserId} />
           <StepPassword
             value={password}
@@ -201,25 +187,24 @@ const SignUp = () => {
           />
           <StepNum value={phoneNum} setValue={setPhoneNum} />
           <StepNumEmergency value={emergencyNum} setValue={setEmergencyNum} />
-          {/*<StepMedicine*/}
-          {/*  value={medicine}*/}
-          {/*  setValue={setMedicine}*/}
-          {/*  cycleMorning={cycleMorning}*/}
-          {/*  setCycleMorning={setCycleMorning}*/}
-          {/*  cycleLunch={cycleLunch}*/}
-          {/*  setCycleLunch={setCycleLunch}*/}
-          {/*  cycleDinner={cycleDinner}*/}
-          {/*  setCycleDinner={setCycleDinner}*/}
-          {/*  medicineList={medicineList}*/}
-          {/*  setMedicineList={setMedicineList}*/}
-          {/*  openMedicineModal={openMedicineModal}*/}
-          {/*  setOpenMedicineModal={setOpenMedicineModal}*/}
-          {/*/>*/}
+          <StepMedicine
+            value={medicine}
+            setValue={setMedicine}
+            cycleMorning={cycleMorning}
+            setCycleMorning={setCycleMorning}
+            cycleLunch={cycleLunch}
+            setCycleLunch={setCycleLunch}
+            cycleDinner={cycleDinner}
+            setCycleDinner={setCycleDinner}
+            medicineList={medicineList}
+            setMedicineList={setMedicineList}
+            openMedicineModal={openMedicineModal}
+            setOpenMedicineModal={setOpenMedicineModal}
+          />
         </Slider>
       </StepWrapper>
       <SignUpFooter>
-        {/*{currentSlide === 8 ? (*/}
-        {currentSlide === 0 ? (
+        {currentSlide === 8 ? (
           medicineList.length > 0 && medicine.length === 0 ? (
             <Button
               text="추가한 약품"
