@@ -16,6 +16,8 @@ import time
 import pandas as pd
 import json
 from selenium.common.exceptions import NoSuchElementException
+import os
+from dotenv import load_dotenv
 
 # dday 기준 마감일 계산 함수
 def calculate_dday(dday_element):
@@ -252,8 +254,9 @@ driver.close()
 work = pd.concat(work, ignore_index=True)
 
 # 위경도 정보 추가
-client_id = 'client_id'
-client_secret = 'client_secret'
+load_dotenv()
+client_id = os.environ.get('client_id')
+client_secret = os.environ.get('client_secret')
 
 api_url = 'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query='
 
@@ -269,6 +272,6 @@ work = work.dropna(axis=0)
 json_data = work.to_json(orient='records', force_ascii=False)
 
 # json 파일 저장
-with open('workData.json', 'w', encoding='utf-8') as file:
+with open('../data/work/workData.json', 'w', encoding='utf-8') as file:
     file.write(json_data)
 
