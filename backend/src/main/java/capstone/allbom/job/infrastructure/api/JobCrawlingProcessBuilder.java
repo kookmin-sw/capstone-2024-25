@@ -23,27 +23,47 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JobCrawlingProcessBuilder {
 
+//    private final String PYTHON_FILE_URL = "../data/work/main.py";
     private final String PYTHON_FILE_URL = "../data/work/main.py";
-    private final RestTemplate restTemplate;
+//    private final String PYTHON_FILE_URL = "../../../test.py";
+//    private final String JOB_REQUEST_URL = "../data/workData.json";
 
-//    @Async
-    @Async("threadPoolTaskExecutor")
+
+    @Async
+//    @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
-    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
-    public void processPythonFile() throws IOException {
+//    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
+    @Scheduled(cron = "0 54 14 * * ?")
+    public void processPythonFile() throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
         InputStream inputStream = process.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String jobData = convertInputStreamToString(inputStream);
+        System.out.println("jobData = " + jobData);
 
+//        if (process.waitFor() == 0) { // 파이썬 프로세스가 성공적으로 종료
+//            InputStream inputStream = process.getInputStream();
+//            String jobData = convertInputStreamToString(inputStream);
+//            System.out.println("jobData = " + jobData);
+//        } else {
+//            // 파이썬 프로세스가 오류로 종료되었음을 나타냄
+//            InputStream errorStream = process.getErrorStream();
+//            String errorMessage = convertInputStreamToString(errorStream);
+//            System.err.println("Python process error: " + errorMessage);
+//        }
+    }
+
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
         String line;
-        while ((line = reader.readLine()) != null) {
-            // 실행 결과 처리
-            System.out.println(line);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line);
         }
+        return stringBuilder.toString();
     }
 
 }
