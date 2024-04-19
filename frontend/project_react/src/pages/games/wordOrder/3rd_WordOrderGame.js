@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import GamePageHeader from '../../../components/Header/GamePageHeader';
+import CategoryLabel from '../../../components/Game/categoryLabel';
 import { wordOrderApis } from '../../../api/apis/gameApis';
 
 export default function WordOrderGame() {
@@ -86,7 +87,7 @@ export default function WordOrderGame() {
   return (
     <Frame>
       <GamePageHeader showBackButton={true} title={"문장 순서 맞추기"}></GamePageHeader>
-      <p>문장 순서 맞추기</p>
+      <CategoryLabel>{category}</CategoryLabel>
       <UserSelectWords>
         {userSelection.map((Object, index) => (
           <Word key={index}>{Object['word']}</Word>
@@ -129,10 +130,8 @@ const Frame = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 30px;
-  gap: 20px;
 `;
 
 const UserSelectWords = styled.div`
