@@ -1,18 +1,21 @@
 package capstone.allbom.job.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
 @Slf4j
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Job {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
     private Long id;
 
@@ -23,7 +26,9 @@ public class Job {
 
     private String title;
 
-    private String deadline;
+    private LocalDate deadline;
+
+    private String dday;
 
     private String career;
 

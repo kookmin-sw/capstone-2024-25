@@ -16,7 +16,7 @@ class JobCrawlingProcessBuilderTest {
     @Autowired JobCrawlingProcessBuilder jobCrawlingProcessBuilder;
 
     @Test
-    public void 일자리_크롤링_파이썬_파일을_실행한다() throws IOException {
+    public void 일자리_크롤링_파이썬_파일을_실행한다() throws IOException, InterruptedException {
         jobCrawlingProcessBuilder.processPythonFile();
     }
 
