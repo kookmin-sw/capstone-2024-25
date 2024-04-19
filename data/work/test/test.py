@@ -47,10 +47,10 @@ def get_content(soup):
     companyName_element = soup.find('strong', string='기업명').find_next_sibling('div').text.strip()
     employmentType_element = soup.find('strong', string='고용형태').find_next_sibling('span').text.strip()
     workType_element = ' '.join(soup.find('strong', string='근무형태').find_next_sibling('span').text.strip().split())
-    occupation_element = '\n'.join(
+    content_element = '\n'.join(
         [str(item).strip() for item in soup.find('caption', string='직무내용 표').find_next('td').contents if
          isinstance(item, str)])
-    content_element = soup.find('caption', string='모집요강 표2. 모집직종, 직종키워드, 관련직종 항목으로 구성').find_next('td').text.strip()
+    occupation_element = soup.find('caption', string='모집요강 표2. 모집직종, 직종키워드, 관련직종 항목으로 구성').find_next('td').text.strip()
     worknetUrl_element = driver.current_url
     worknetId_element = next((param.split('=')[1] for param in driver.current_url.split('?')[1].split('&') if
                               param.startswith('wantedAuthNo=')), None)
@@ -256,7 +256,6 @@ driver.close()
 
 # 리스트 모든 요소 하나의 데이터프레임으로 병합
 work = pd.concat(work, ignore_index=True)
-
 
 # 위경도 정보 추가
 load_dotenv()
