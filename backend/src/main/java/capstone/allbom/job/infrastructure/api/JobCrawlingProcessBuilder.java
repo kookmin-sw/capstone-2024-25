@@ -25,12 +25,13 @@ public class JobCrawlingProcessBuilder {
 
 //    private final String PYTHON_FILE_URL = "../data/work/main.py";
     private final String PYTHON_FILE_URL = "../data/work/test/test.py";
+    private final RestTemplateJobRequester restTemplateJobRequester;
 
 //    @Async
     @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
 //    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
-    @Scheduled(cron = "0 56 16 * * ?")
+    @Scheduled(cron = "0 09 17 * * ?")
     public void processPythonFile() throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
@@ -50,6 +51,8 @@ public class JobCrawlingProcessBuilder {
             InputStream errorStream = process.getErrorStream();
             System.out.println("inputStream = " + errorStream);
         }
+
+        restTemplateJobRequester.requestJob();
     }
 
 }

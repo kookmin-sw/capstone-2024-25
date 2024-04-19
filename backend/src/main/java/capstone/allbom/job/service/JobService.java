@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JobService {
 
-    private final JobCrawlingProcessBuilder jobCrawlingProcessBuilder;
     private final JobRepository jobRepository;
 
     @Transactional

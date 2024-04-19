@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,24 +27,20 @@ import java.util.List;
 @Slf4j
 public class RestTemplateJobRequester {
 
-    private final JobCrawlingProcessBuilder jobCrawlingProcessBuilder;
     private final RestTemplate restTemplate;
     private final JobService jobService;
     private final String JOB_REQUEST_URL = "../data/work/workData.json";
 
-    public List<Job> requestJob() {
+    public String readFileAsString(String file) throws Exception {
+        return new String(Files.readAllBytes(Paths.get(file)));
+    }
 
-        restTemplate.getMessageConverters()
-                .add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
+    public List<Job> requestJob() throws Exception {
 
-        RequestEntity<Void> requestEntity = RequestEntity
-                .get(URI.create(JOB_REQUEST_URL))
-                .accept(MediaType.TEXT_PLAIN)
-                .build();
+//        Resource resource = resourceLoader.getResource("file:" + filePath);
+//        byte[] bytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
 
-        String jobData = restTemplate
-                .exchange(requestEntity, String.class)
-                .getBody();
+        String jobData = readFileAsString(JOB_REQUEST_URL);
 
         return makeJobs(jobData);
     }
