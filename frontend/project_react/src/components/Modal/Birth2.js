@@ -17,7 +17,7 @@ const customModalStyles = {
     left: '0',
   },
   content: {
-    width: '360px',
+    width: '300px',
     height: '520px',
     zIndex: '150',
     position: 'absolute',
@@ -52,7 +52,6 @@ const XBtn = styled.img`
 `;
 const ModalContent = styled.div`
   width: 100%;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +59,8 @@ const ModalContent = styled.div`
   .rdp-caption_dropdowns {
     display: flex !important;
     flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
     //.rdp-dropdown_month {
     //  background-color: #379237 !important;
     //}
