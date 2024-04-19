@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter @Setter
 @Slf4j
@@ -24,7 +26,9 @@ public class Job {
 
     private String title;
 
-    private String deadline;
+    private LocalDate deadline;
+
+    private String dday;
 
     private String career;
 
