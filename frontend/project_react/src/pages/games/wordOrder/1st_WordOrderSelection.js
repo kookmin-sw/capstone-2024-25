@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { wordOrderApis } from '../../../api/apis/gameApis';
 import { useNavigate } from 'react-router-dom';
-import GamePageHeader from '../../../components/Header/GamePageHeader';
+import TitleHeader from '../../../components/Header/TitleHeader';
 
 export default function WordOrderSelection() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function WordOrderSelection() {
 
   return (
     <Frame>
-      <GamePageHeader showBackButton={true}></GamePageHeader>
+      <TitleHeader showBackButton={true}></TitleHeader>
       <p>문장 순서 맞추기 선택</p>
       <CagegoryListBox>
         {isLoading ? (

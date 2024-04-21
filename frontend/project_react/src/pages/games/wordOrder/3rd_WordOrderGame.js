@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import GamePageHeader from '../../../components/Header/GamePageHeader';
+import TitleHeader from '../../../components/Header/TitleHeader';
+import CategoryLabel from '../../../components/Game/categoryLabel';
 import { wordOrderApis } from '../../../api/apis/gameApis';
 
 export default function WordOrderGame() {
@@ -85,40 +86,47 @@ export default function WordOrderGame() {
 
   return (
     <Frame>
-      <GamePageHeader showBackButton={true}></GamePageHeader>
-      <p>문장 순서 맞추기</p>
-      <UserSelectWords>
-        {userSelection.map((Object, index) => (
-          <p key={index}>{Object['word']}</p>
-        ))}
-      </UserSelectWords>
-      <WordButtons>
-        {wordList.map((word, index) => (
-          <Button
-            key={index}
-            onClick={() => {
-              setUserSelection([
-                ...userSelection,
-                { word: word, index: index },
-              ]);
-            }}
-            style={{
-              visibility: isSelectedWord(index) ? 'hidden' : 'visible',
-            }}
-          >
-            {word}
-          </Button>
-        ))}
-      </WordButtons>
-      <button onClick={() => startNewGame()}>문장가져오기</button>
-      <button
-        onClick={() => {
-          setUserSelection([]);
-        }}
-      >
-        리셋
-      </button>
-      {isLoading && <p>로딩 중...</p>}
+      <TitleHeader
+        showBackButton={true}
+        title={'문장 순서 맞추기'}
+      ></TitleHeader>
+      <GameContent>
+        <CategoryLabel>{category}</CategoryLabel>
+        <UserSelectionDiv>
+          <UserSelectWords>
+            {userSelection.map((Object, index) => (
+              <Word key={index}>{Object['word']}</Word>
+            ))}
+          </UserSelectWords>
+        </UserSelectionDiv>
+        <WordButtons>
+          {wordList.map((word, index) => (
+            <Button
+              key={index}
+              onClick={() => {
+                setUserSelection([
+                  ...userSelection,
+                  { word: word, index: index },
+                ]);
+              }}
+              style={{
+                visibility: isSelectedWord(index) ? 'hidden' : 'visible',
+              }}
+            >
+              {word}
+            </Button>
+          ))}
+        </WordButtons>
+        <button onClick={() => startNewGame()}>문장가져오기</button>
+        <button
+          onClick={() => {
+            setUserSelection([]);
+          }}
+        >
+          리셋
+        </button>
+        {isLoading && <p>로딩 중...</p>}
+      </GameContent>
     </Frame>
   );
 }
@@ -131,21 +139,45 @@ const Frame = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 30px;
-  gap: 20px;
+`;
+
+const GameContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  gap: 30px;
 `;
 
 const UserSelectWords = styled.div`
-  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  height: 100px;
+  margin: 30px;
   gap: 4px;
+`;
+
+const UserSelectionDiv = styled.div`
+  width: 100%;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: rgb(102, 102, 102) 0px 0px 10px -2px;
 `;
 
 const WordButtons = styled.div`
   width: 100%;
-  height: 100px;
   gap: 4px;
+`;
+
+const Word = styled.p`
+  padding: 0px;
+  margin: 0px;
+  font-size: 22px;
 `;
 
 const Button = styled.button`
