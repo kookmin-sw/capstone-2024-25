@@ -13,6 +13,7 @@ const InputWrapper = styled.div`
   gap: 12px;
   box-sizing: border-box;
   position: relative;
+  border: 1px solid red;
 `;
 
 const InputStyled = styled.input`
