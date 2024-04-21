@@ -63,7 +63,13 @@ const Gugu = styled.div`
   }
 `;
 
-const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
+const AddressModal = ({
+  isOpen,
+  closeModal,
+  address,
+  setAddress,
+  saveAddress,
+}) => {
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [inputZipCodeValue, setInputZipCodeValue] = useState('');
   const [modalState, setModalState] = useState(false);
@@ -81,6 +87,9 @@ const AddressModal = ({ isOpen, closeModal, address, setAddress }) => {
     setInputAddressValue(data.address);
     setInputZipCodeValue(data.zonecode);
     setAddress(`(${data.zonecode}) ${data.address}`);
+    if (saveAddress) {
+      saveAddress();
+    }
     closeModal();
   };
 

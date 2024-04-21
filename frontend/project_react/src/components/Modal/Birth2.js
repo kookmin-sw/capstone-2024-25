@@ -123,7 +123,14 @@ const CustomCaptionLabel = ({
   );
 };
 
-const BirthModal = ({ isOpen, closeModal, setBirth, birth, formatDate }) => {
+const BirthModal = ({
+  isOpen,
+  closeModal,
+  setBirth,
+  birth,
+  formatDate,
+  saveBirth,
+}) => {
   const [selectedDay, setSelectedDay] = useState(birth);
 
   const [booked, setBooked] = useState(false);
@@ -147,6 +154,9 @@ const BirthModal = ({ isOpen, closeModal, setBirth, birth, formatDate }) => {
   };
   const btnClick = () => {
     setBirth(selectedDay);
+    if (saveBirth) {
+      saveBirth();
+    }
     closeModal();
   };
   const dayPickerProps = {
