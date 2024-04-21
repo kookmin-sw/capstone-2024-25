@@ -15,6 +15,7 @@ import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
 import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
+import MyPage from './pages/MyPage';
 function App() {
   return (
     <div id="App">
@@ -25,6 +26,7 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail" element={<JobDetailPage />} />
+          <Route path="/my-page" element={<MyPage />} />
 
           {/*<Route path="/" element={<InputTest />} />*/}
           <Route path="/test" element={<ComponentTest />} />
