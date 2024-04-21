@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import GamePageHeader from '../../../components/Header/GamePageHeader';
+import TitleHeader from '../../../components/Header/TitleHeader';
 import CategoryLabel from '../../../components/Game/categoryLabel';
 import { wordOrderApis } from '../../../api/apis/gameApis';
 
@@ -86,10 +86,10 @@ export default function WordOrderGame() {
 
   return (
     <Frame>
-      <GamePageHeader
+      <TitleHeader
         showBackButton={true}
         title={'문장 순서 맞추기'}
-      ></GamePageHeader>
+      ></TitleHeader>
       <GameContent>
         <CategoryLabel>{category}</CategoryLabel>
         <UserSelectionDiv>
