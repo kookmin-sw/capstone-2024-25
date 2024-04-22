@@ -20,6 +20,7 @@ const ChatbotContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 `;
 
 const ChattingWrapper = styled.div`
@@ -31,7 +32,6 @@ const ChattingWrapper = styled.div`
   padding: 12px 24px 100px 24px;
   box-sizing: border-box;
   width: 100%;
-  position: relative;
   height: 100%;
 `;
 
@@ -46,7 +46,6 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 158px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -116,12 +115,6 @@ const InputText = styled.input`
 const SendButton = styled.img`
   width: 32px;
   height: 32px;
-`;
-
-const Footer = styled.div`
-  width: 100%;
-  height: 78px;
-  background-color: bisque;
 `;
 
 const Chatbot = () => {
@@ -385,12 +378,12 @@ const Chatbot = () => {
         chattingWrapper.style.height = `${
           window.visualViewport.height - inputHeight
         }px`;
-        chatInput.style.top = `${window.visualViewport.height - inputHeight}px`;
-        chatInput.style.bottom = '';
+        // chatInput.style.top = `${window.visualViewport.height - inputHeight}px`;
+        // chatInput.style.bottom = '';
       } else {
         chattingWrapper.style.height = `${window.visualViewport.height}px`;
-        chatInput.style.top = '';
-        chatInput.style.bottom = '78px';
+        // chatInput.style.top = '';
+        // chatInput.style.bottom = '78px';
       }
     } else {
       if (chattingWrapper) {
@@ -404,7 +397,7 @@ const Chatbot = () => {
   };
   const handleKeyboardVisibility = () => {
     const chattingWrapper = wrapperRef.current;
-    const footer = footerRef.current;
+    // const footer = footerRef.current;
     const chatInput = inputRef.current;
     const currentHeight = window.visualViewport.height;
     // 키보드가 열렸다고 판단되면 스크롤을 막음
@@ -412,14 +405,14 @@ const Chatbot = () => {
       setKeyboardOpened(true);
       window.scroll(0, 0);
 
-      footer.style.display = 'none';
-      chatInput.style.height = '80px';
+      // footer.style.display = 'none';
+      // chatInput.style.height = '80px';
       chattingWrapper.scrollTop = chattingWrapper.scrollHeight;
       setupEventListeners(); // 스크롤 방지 이벤트 리스너 설정
     } else {
       setKeyboardOpened(false);
-      footer.style.display = 'block';
-      chatInput.style.height = '158px';
+      // footer.style.display = 'block';
+      // chatInput.style.height = '158px';
       removeEventListeners(); // 스크롤 방지 이벤트 리스너 제거
     }
   };
@@ -559,7 +552,7 @@ const Chatbot = () => {
               )}
             </ChatInputWrapper>
           )}
-          <Footer ref={footerRef}>하단바 영역</Footer>
+          {/*<Footer ref={footerRef}>하단바 영역</Footer>*/}
         </BottomWrapper>
       </ChattingWrapper>
 
