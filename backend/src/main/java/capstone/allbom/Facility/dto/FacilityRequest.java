@@ -1,6 +1,15 @@
 package capstone.allbom.facility.dto;
 
-public record FacilityRequest(
+import jakarta.validation.constraints.NotNull;
 
+public record FacilityRequest(
+        @NotNull
+        Double SWlatitude,
+        @NotNull
+        Double SWlongitude,
+        @NotNull
+        Double NElatitude,
+        @NotNull
+        Double NElongitude
 ) {
 }
