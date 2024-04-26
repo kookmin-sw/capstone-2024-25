@@ -30,13 +30,6 @@ public class FacilityService {
         return savedFacility;
     }
 
-    public List<FacilityListResponse> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude) {
-        List<Facility> facilities = facilityRepository.findFacilitiesInRectangle(SWlatitude, SWlongitude, NElatitude, NElongitude);
-        return facilities.stream()
-                .map(FacilityListResponse::from)
-                .toList();
-    }
-
     public List<FacilityListResponse> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude, String type) {
         List<Facility> facilities;
 
