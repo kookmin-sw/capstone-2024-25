@@ -34,21 +34,15 @@ public class FacilityController {
     @GetMapping
     public ResponseEntity<List<FacilityListResponse>> getFacilities(
             @Auth Member member,
-            @RequestParam(value = "type", required = false) final String type,
+            @RequestParam(value = "type", required = false, defaultValue = "") final String type,
             @RequestBody final FacilityRequest facilityRequest
             ) {
 
         final List<FacilityListResponse> mapResponses = new ArrayList<>();
 
-        if (type == null) {
-            List<FacilityListResponse> facilities = facilityService.getFacilities(
-                    facilityRequest.swLatitude(),
-                    facilityRequest.swLongitude(),
-                    facilityRequest.neLatitude(),
-                    facilityRequest.neLongitude()
-            );
-            mapResponses.addAll(facilities);
-        } else if (type.equals("job")) {
+        System.out.println("type = " + type);
+
+        if (type != null && type.equals("job")) {
             List<FacilityListResponse> jobs = jobService.getJobs(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
@@ -57,12 +51,12 @@ public class FacilityController {
             );
             mapResponses.addAll(jobs);
         } else {
-            List<FacilityListResponse> facilities = facilityService.getFacilitiesByType(
+            List<FacilityListResponse> facilities = facilityService.getFacilities(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
                     facilityRequest.neLatitude(),
                     facilityRequest.neLongitude(),
-                    FacilityType.valueOf(type.toUpperCase())
+                    type
             );
             mapResponses.addAll(facilities);
         }
