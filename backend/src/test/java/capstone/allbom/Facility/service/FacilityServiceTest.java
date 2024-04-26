@@ -29,9 +29,10 @@ class FacilityServiceTest {
         Double SWlongitude = 127.06732354734461;
         Double NElatitude = 37.54111781473867;
         Double NElongitude = 127.08400381140538;
+        String type = "HOSPITAL";
 
         //when
-        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude);
+        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
     }
 
     @Test
@@ -41,10 +42,10 @@ class FacilityServiceTest {
         Double SWlongitude = 127.06742932325953;
         Double NElatitude = 37.55118048770932;
         Double NElongitude = 127.0726588075014;
-        FacilityType type = FacilityType.WELFARECENTER;
+        String type = FacilityType.WELFARECENTER.toString();
 
         //when
-        facilityService.getFacilitiesByType(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
+        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
     }
 
 }

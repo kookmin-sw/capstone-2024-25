@@ -60,6 +60,8 @@ public class RestTemplateRoutineRequester {
                     .map(this::selectRandomRoutine)
                     .collect(Collectors.toList());
 
+            System.out.println("routines = " + routines);
+
             if (routines.get(6).equals("간식 먹기")) {
                 String replaceMent = routines.get(5) + " 먹기";
                 routines.set(6, replaceMent);
