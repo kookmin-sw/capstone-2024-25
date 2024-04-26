@@ -34,7 +34,7 @@ public class FacilityController {
     @GetMapping
     public ResponseEntity<List<FacilityListResponse>> getFacilities(
             @Auth Member member,
-            @RequestParam final String type,
+            @RequestParam(value = "type", required = false) final String type,
             @RequestBody final FacilityRequest facilityRequest
             ) {
 
