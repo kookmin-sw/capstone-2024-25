@@ -2,7 +2,6 @@ package capstone.allbom.facility.dto;
 
 import capstone.allbom.facility.domain.Facility;
 import capstone.allbom.job.domain.Job;
-import capstone.allbom.job.dto.JobMapListResponse;
 
 public record FacilityListResponse(
         Long id,

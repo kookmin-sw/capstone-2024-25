@@ -1,5 +1,7 @@
 package capstone.allbom.facility.service;
 
+import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.facility.domain.Facility;
 import capstone.allbom.facility.domain.FacilityRepository;
 import capstone.allbom.facility.domain.FacilityType;
@@ -17,15 +19,16 @@ import java.util.List;
 @Transactional
 public class FacilityService {
 
-//    private final RestTemplateFacilityRequester restTemplateFacilityRequester;
     private final FacilityRepository facilityRepository;
+
+    @Transactional(readOnly = true)
+    public Facility findById(final Long facilityId) {
+        return facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
+    }
 
     @Transactional
     public Facility saveFacility(final Facility facility) {
-        /**
-         * TODO
-         * 해당 함수 유지 고민 (repository 함수와 중복)
-         */
         Facility savedFacility = facilityRepository.save(facility);
         return savedFacility;
     }

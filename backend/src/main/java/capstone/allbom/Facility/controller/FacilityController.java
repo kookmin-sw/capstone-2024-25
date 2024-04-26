@@ -3,12 +3,15 @@ package capstone.allbom.facility.controller;
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.facility.domain.Facility;
 import capstone.allbom.facility.domain.FacilityType;
+import capstone.allbom.facility.dto.FacilityDetailResponse;
 import capstone.allbom.facility.dto.FacilityListResponse;
 import capstone.allbom.facility.dto.FacilityRequest;
+import capstone.allbom.facility.dto.MapDetailResponse;
 import capstone.allbom.facility.infrastructure.api.RestTemplateFacilityRequester;
 import capstone.allbom.facility.service.FacilityService;
 import capstone.allbom.game.domain.Subject;
 import capstone.allbom.job.domain.Job;
+import capstone.allbom.job.dto.JobMapDetailResponse;
 import capstone.allbom.job.service.JobService;
 import capstone.allbom.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +63,21 @@ public class FacilityController {
             );
             mapResponses.addAll(facilities);
         }
-
         return ResponseEntity.ok(mapResponses);
     }
 
-//    @GetMapping("/{mapId}")
-//    public ResponseEntity<>
+    @GetMapping("/{mapId}")
+    public ResponseEntity<MapDetailResponse> getFacility(
+            @Auth Member member,
+            @PathVariable Long mapId,
+            @RequestParam final String type
+    ) {
+        if (type.equals("job")) {
+            Job job = jobService.findById(mapId);
+            return ResponseEntity.ok(JobMapDetailResponse.from(job));
+        }
+
+        Facility facility = facilityService.findById(mapId);
+        return ResponseEntity.ok(FacilityDetailResponse.from(facility));
+    }
 }
