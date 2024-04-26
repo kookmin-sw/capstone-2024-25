@@ -3,6 +3,7 @@ package capstone.allbom.facility.service;
 import capstone.allbom.facility.domain.Facility;
 import capstone.allbom.facility.domain.FacilityRepository;
 import capstone.allbom.facility.domain.FacilityType;
+import capstone.allbom.facility.dto.FacilityListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,48 +30,16 @@ public class FacilityService {
         return savedFacility;
     }
 
-    public List<Facility> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude) {
-        /**
-         * TODO
-         * 반환값과 인자 변경 필요
+    public List<FacilityListResponse> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude, String type) {
+        List<Facility> facilities;
 
-         */
-        List<Facility> facilitiesInRectangle = facilityRepository.findFacilitiesInRectangle(SWlatitude, SWlongitude, NElatitude, NElongitude);
-        System.out.println("facilitiesInRectangle = " + facilitiesInRectangle.size());
-        for (Facility facility : facilitiesInRectangle) {
-            System.out.println("facility.getId() = " + facility.getId());
-            System.out.println("facility.getName() = " + facility.getName());
-            System.out.println("facility.getAddress() = " + facility.getAddress());
-            System.out.println("facility.getLatitude() = " + facility.getLatitude());
-            System.out.println("facility.getLongitude() = " + facility.getLongitude());
+        if (type.length() == 0 || type == null) {
+            facilities = facilityRepository.findFacilitiesInRectangle(SWlatitude, SWlongitude, NElatitude, NElongitude);
+        } else {
+            facilities = facilityRepository.findFacilitiesInRectangleAndType(SWlatitude, SWlongitude, NElatitude, NElongitude, FacilityType.valueOf(type.toUpperCase()));
         }
-        return facilitiesInRectangle;
+        return facilities.stream()
+                .map(FacilityListResponse::from)
+                .toList();
     }
-
-    public List<Facility> getFacilitiesByType(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude, FacilityType type) {
-        /**
-         * TODO
-         * 반환값과 인자 변경 필요
-
-         */
-        List<Facility> facilitiesInRectangle = facilityRepository.findFacilitiesInRectangleAndType(
-                SWlatitude,
-                SWlongitude,
-                NElatitude,
-                NElongitude,
-                type
-        );
-
-        System.out.println("facilitiesInRectangle = " + facilitiesInRectangle.size());
-        for (Facility facility : facilitiesInRectangle) {
-            System.out.println("facility.getId() = " + facility.getId());
-            System.out.println("facility.getName() = " + facility.getName());
-            System.out.println("facility.getAddress() = " + facility.getAddress());
-            System.out.println("facility.getLatitude() = " + facility.getLatitude());
-            System.out.println("facility.getLongitude() = " + facility.getLongitude());
-        }
-        return facilitiesInRectangle;
-    }
-
-
 }
