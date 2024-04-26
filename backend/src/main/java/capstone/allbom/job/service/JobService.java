@@ -1,5 +1,7 @@
 package capstone.allbom.job.service;
 
+import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.facility.dto.FacilityListResponse;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.JobRepository;
@@ -18,12 +20,14 @@ public class JobService {
 
     private final JobRepository jobRepository;
 
+    @Transactional(readOnly = true)
+    public Job findById(final Long jobId) {
+        return jobRepository.findById(jobId)
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
+    }
+
     @Transactional
     public Job saveJob(final Job job) {
-        /**
-         * TODO
-         * 해당 함수 유지 고민 (repository 함수와 중복)
-         */
         Job savedJob = jobRepository.save(job);
         return savedJob;
     }
