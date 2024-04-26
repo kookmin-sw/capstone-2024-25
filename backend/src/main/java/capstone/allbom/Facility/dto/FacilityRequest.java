@@ -4,12 +4,12 @@ import jakarta.validation.constraints.NotNull;
 
 public record FacilityRequest(
         @NotNull
-        Double SWlatitude,
+        Double swLatitude,
         @NotNull
-        Double SWlongitude,
+        Double swLongitude,
         @NotNull
-        Double NElatitude,
+        Double neLatitude,
         @NotNull
-        Double NElongitude
+        Double neLongitude
 ) {
 }
