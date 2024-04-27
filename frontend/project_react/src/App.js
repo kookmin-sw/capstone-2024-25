@@ -16,6 +16,7 @@ import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
 import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
+
 function App() {
   return (
     <div id="App">
