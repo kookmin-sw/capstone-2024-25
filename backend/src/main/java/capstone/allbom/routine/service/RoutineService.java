@@ -130,5 +130,19 @@ public class RoutineService {
         }
     }
 
+    public List<Integer> randomRoutine() {
+        List<String> categories = Arrays.asList("운동", "휴식", "성장", "취미", "과일", "간식", "식사");
+        return categories.stream()
+                    .map(category -> (JSONObject) routineRequester.getRoutineData(category))
+                    .map(this::selectRandomRoutine)
+                    .collect(Collectors.toList());
+    }
+
+    public Integer selectRandomRoutine(JSONObject routineData) {
+        Random random = new Random();
+        int randomIndex = random.nextInt(routineData.size()) + 1;
+
+        return randomIndex;
+    }
 
 }
