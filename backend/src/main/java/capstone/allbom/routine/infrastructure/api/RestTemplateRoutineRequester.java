@@ -64,6 +64,22 @@ public class RestTemplateRoutineRequester {
         return routineData;
     }
 
+    public String getRoutine(String routineType, String routineNum) {
+        String routine;
+        JSONObject routineData = getRoutineData(routineType);
+
+        log.info("routineData={}", routineData);
+        log.info("routineNum={}", routineNum);
+
+        if (routineData == null || !routineData.containsKey(routineNum)) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
+        }
+
+        routine = (String) routineData.get(routineNum);
+
+        return routine;
+    }
+
 //    public List<Integer> getRandomRoutineFields() {
 //        List<Integer> routines = new ArrayList<>();
 //        try {
