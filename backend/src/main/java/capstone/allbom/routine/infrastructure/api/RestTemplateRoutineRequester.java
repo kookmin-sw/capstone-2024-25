@@ -79,37 +79,4 @@ public class RestTemplateRoutineRequester {
 
         return routine;
     }
-
-//    public List<Integer> getRandomRoutineFields() {
-//        List<Integer> routines = new ArrayList<>();
-//        try {
-//            String routineData = requestRoutine();
-//
-//            JSONParser jsonParser = new JSONParser();
-//            JSONObject jsonObject = (JSONObject) jsonParser.parse(routineData);
-//            log.info("jsonObject={}", jsonObject);
-//
-//            List<String> categories = Arrays.asList("운동", "휴식", "성장", "취미", "과일", "간식", "식사");
-//            routines = categories.stream()
-//                    .map(category -> (JSONObject) jsonObject.get(category))
-//                    .map(this::selectRandomRoutine)
-//                    .collect(Collectors.toList());
-//
-//            System.out.println("routines = " + routines);
-//
-////            if (routines.get(6).equals("간식 먹기")) {
-////                String replaceMent = routines.get(5) + " 먹기";
-////                routines.set(6, replaceMent);
-////            } else if (routines.get(6).equals("과일 먹기")) {
-////                String replaceMent = routines.get(4) + " 먹기";
-////                routines.set(6, replaceMent);
-////            }
-////            log.info("newRoutines={}", routines);
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return routines;
-//    }
-
 }
