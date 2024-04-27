@@ -142,6 +142,53 @@ public class RoutineService {
         }
     }
 
+    @Transactional
+    public void updateToPreviousRoutine(Routine routine, String type) {
+        /**
+         * TODO
+         * daily status가 false인 경우에민 query 호출 가능하도록 예외 처리
+         */
+        String requestType = convertToRequestType(type);
+        Integer totalSize = routineRequester.getRoutineData(requestType).size();
+
+        switch (type) {
+            case "exercise":
+                if (routine.getDailyExercise() <= 1) {
+                    routine.setDailyExercise(totalSize);
+                } else {
+                    routine.setDailyExercise(routine.getDailyExercise() - 1);
+                }
+                break;
+            case "growth":
+                if (routine.getDailyGrowth() <= 1) {
+                    routine.setDailyGrowth(totalSize);
+                } else {
+                    routine.setDailyGrowth(routine.getDailyGrowth() - 1);
+                }
+                break;
+            case "hobby":
+                if (routine.getDailyHobby() <= 1) {
+                    routine.setDailyHobby(totalSize);
+                } else {
+                    routine.setDailyHobby(routine.getDailyHobby() - 1);
+                }
+                break;
+            case "eat":
+                if (routine.getDailyEat() <= 1) {
+                    routine.setDailyEat(totalSize);
+                } else {
+                    routine.setDailyEat(routine.getDailyEat() - 1);
+                }
+                break;
+            default:
+                if (routine.getDailyRest() <= 1) {
+                    routine.setDailyRest(totalSize);
+                } else {
+                    routine.setDailyRest(routine.getDailyRest() - 1);
+                }
+                break;
+        }
+    }
 
     public List<Integer> randomRoutine() {
         List<String> categories = Arrays.asList("운동", "휴식", "성장", "취미", "과일", "간식", "식사");
