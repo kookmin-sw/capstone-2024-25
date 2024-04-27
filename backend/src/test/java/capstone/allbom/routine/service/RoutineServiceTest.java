@@ -77,4 +77,44 @@ public void 모든_루틴_필드를_매일_업데이트한다() throws Exception
     assertFalse(condition2);
 }
 
+    @Test
+    public void 루틴_번호_필드로_루틴을_조회한다() {
+        // given
+        Routine routine1 = Routine.builder()
+                .dailyExercise(3)
+                .dailyGrowth(1)
+                .dailyRest(2)
+                .dailyFruit(5)
+                .dailySnack(1)
+                .dailyHobby(3)
+                .dailyEat(4)
+                .build();
+        routineRepository.save(routine1);
+
+        Routine routine2 = Routine.builder()
+                .dailyExercise(2)
+                .dailyGrowth(4)
+                .dailyRest(2)
+                .dailyFruit(1)
+                .dailySnack(3)
+                .dailyHobby(2)
+                .dailyEat(3)
+                .build();
+        routineRepository.save(routine2);
+
+        // when
+        String exercise = routineService.getRoutine(routine1, "exercise");
+        String rest = routineService.getRoutine(routine1, "rest");
+        String growth = routineService.getRoutine(routine1, "growth");
+        String hobby = routineService.getRoutine(routine1, "hobby");
+        String eat = routineService.getRoutine(routine1, "eat");
+
+        // then
+        assertThat(exercise).isEqualTo("자전거 타기");
+        assertThat(growth).isEqualTo("외국어 공부하기");
+        assertThat(rest).isEqualTo("사우나 가기");
+        assertThat(hobby).isEqualTo("박물관 가기");
+        assertThat(eat).isEqualTo("키위 먹기");
+    }
+
 }
