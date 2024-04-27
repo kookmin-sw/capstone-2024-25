@@ -62,7 +62,15 @@ public class RoutineService {
         } else if (requestType.equals("취미")) {
             return routineRequester.getRoutine(requestType, routine.getDailyHobby().toString());
         } else if (requestType.equals("식사")) {
-            return routineRequester.getRoutine(requestType, routine.getDailyEat().toString());
+            String eat = routineRequester.getRoutine(requestType, routine.getDailyEat().toString());
+            if (eat.equals("간식 먹기")) {
+                String snack = routineRequester.getRoutine(requestType, routine.getDailySnack().toString());
+                eat = snack + "먹기";
+            } else if (eat.equals("과일 먹기")) {
+                String fruit = routineRequester.getRoutine(requestType, routine.getDailyFruit().toString());
+                eat = fruit + "먹기";
+            }
+            return eat;
         } else {
             return routineRequester.getRoutine(requestType, routine.getDailyRest().toString());
         }
