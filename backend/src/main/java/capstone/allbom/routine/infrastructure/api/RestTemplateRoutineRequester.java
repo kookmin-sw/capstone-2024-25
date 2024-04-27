@@ -68,8 +68,11 @@ public class RestTemplateRoutineRequester {
         String routine;
         JSONObject routineData = getRoutineData(routineType);
 
-        log.info("routineData={}", routineData);
-        log.info("routineNum={}", routineNum);
+//        System.out.println("routine = " + routineData);
+        System.out.println("routineNum = " + routineNum);
+
+//        log.info("routineData={}", routineData);
+//        log.info("routineNum={}", routineNum);
 
         if (routineData == null || !routineData.containsKey(routineNum)) {
             throw new BadRequestException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
