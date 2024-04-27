@@ -82,5 +82,53 @@ public class RoutineService {
         return requestType;
     }
 
+    public Integer getRoutineDataSize(String type) {
+        System.out.println("type = " + type);
+        String routineType = convertToRequestType(type);
+        return routineRequester.getRoutineData(routineType).size();
+    }
+
+    @Transactional
+    public void updateToNextRoutine(Routine routine, String type) {
+        /**
+         * TODO
+         * daily status가 false인 경우에민 query 호출 가능하도록 예외 처리
+         */
+        String requestType = convertToRequestType(type);
+        Integer totalSize = routineRequester.getRoutineData(requestType).size();
+
+        if (type.equals("exercise")) {
+            if (totalSize <= routine.getDailyExercise()) { // 현재의 문제가 마지막 루이거나 인덱스 범위를 초과했다면
+                routine.setDailyExercise(0);
+            } else {
+                routine.setDailyExercise(routine.getDailyExercise() + 1);
+            }
+        } else if (type.equals("growth")) {
+            if (totalSize <= routine.getDailyGrowth()) {
+                routine.setDailyGrowth(0);
+            } else {
+                routine.setDailyGrowth(routine.getDailyGrowth() + 1);
+            }
+        } else if (type.equals("hobby")) {
+            if (totalSize <= routine.getDailyHobby()) {
+                routine.setDailyHobby(0);
+            } else {
+                routine.setDailyHobby(routine.getDailyHobby() + 1);
+            }
+        } else if (type.equals("eat")) {
+            if (totalSize <= routine.getDailyEat()) {
+                routine.setDailyEat(0);
+            } else {
+                routine.setDailyEat(routine.getDailyEat() + 1);
+            }
+        } else {
+            if (totalSize <= routine.getDailyRest()) {
+                routine.setDailyRest(0);
+            } else {
+                routine.setDailyRest(routine.getDailyRest() + 1);
+            }
+        }
+    }
+
 
 }
