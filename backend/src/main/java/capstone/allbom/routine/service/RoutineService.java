@@ -64,11 +64,11 @@ public class RoutineService {
         } else if (requestType.equals("식사")) {
             String eat = routineRequester.getRoutine(requestType, routine.getDailyEat().toString());
             if (eat.equals("간식 먹기")) {
-                String snack = routineRequester.getRoutine(requestType, routine.getDailySnack().toString());
-                eat = snack + "먹기";
+                String snack = routineRequester.getRoutine("간식", routine.getDailySnack().toString());
+                eat = snack + " 먹기";
             } else if (eat.equals("과일 먹기")) {
-                String fruit = routineRequester.getRoutine(requestType, routine.getDailyFruit().toString());
-                eat = fruit + "먹기";
+                String fruit = routineRequester.getRoutine("과일", routine.getDailyFruit().toString());
+                eat = fruit + " 먹기";
             }
             return eat;
         } else {
