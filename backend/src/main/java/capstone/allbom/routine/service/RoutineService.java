@@ -105,31 +105,31 @@ public class RoutineService {
 
         if (type.equals("exercise")) {
             if (totalSize <= routine.getDailyExercise()) { // 현재의 문제가 마지막 루이거나 인덱스 범위를 초과했다면
-                routine.setDailyExercise(0);
+                routine.setDailyExercise(1);
             } else {
                 routine.setDailyExercise(routine.getDailyExercise() + 1);
             }
         } else if (type.equals("growth")) {
             if (totalSize <= routine.getDailyGrowth()) {
-                routine.setDailyGrowth(0);
+                routine.setDailyGrowth(1);
             } else {
                 routine.setDailyGrowth(routine.getDailyGrowth() + 1);
             }
         } else if (type.equals("hobby")) {
             if (totalSize <= routine.getDailyHobby()) {
-                routine.setDailyHobby(0);
+                routine.setDailyHobby(1);
             } else {
                 routine.setDailyHobby(routine.getDailyHobby() + 1);
             }
         } else if (type.equals("eat")) {
             if (totalSize <= routine.getDailyEat()) {
-                routine.setDailyEat(0);
+                routine.setDailyEat(1);
             } else {
                 routine.setDailyEat(routine.getDailyEat() + 1);
             }
         } else {
             if (totalSize <= routine.getDailyRest()) {
-                routine.setDailyRest(0);
+                routine.setDailyRest(1);
             } else {
                 routine.setDailyRest(routine.getDailyRest() + 1);
             }
