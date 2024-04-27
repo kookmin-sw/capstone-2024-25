@@ -117,4 +117,40 @@ public void 모든_루틴_필드를_매일_업데이트한다() throws Exception
         assertThat(eat).isEqualTo("키위 먹기");
     }
 
+    @Test
+    public void 다음_루틴_번호_필드로_업데이트한다() {
+        // given
+        Routine routine1 = Routine.builder()
+                .dailyExercise(3)
+                .dailyGrowth(8)
+                .dailyRest(2)
+                .dailyFruit(5)
+                .dailySnack(1)
+                .dailyHobby(3)
+                .dailyEat(4)
+                .build();
+        routineRepository.save(routine1);
+
+        // when
+        routineService.updateToNextRoutine(routine1, "exercise");
+        routineService.updateToNextRoutine(routine1, "exercise");
+        routineService.updateToNextRoutine(routine1, "growth");
+        routineService.updateToNextRoutine(routine1, "eat");
+        routineService.updateToNextRoutine(routine1, "eat");
+        routineService.updateToNextRoutine(routine1, "eat");
+
+        String exercise = routineService.getRoutine(routine1, "exercise");
+        String growth = routineService.getRoutine(routine1, "growth");
+        String eat = routineService.getRoutine(routine1, "eat");
+
+        // then
+        assertThat(exercise).isEqualTo("가볍게 달리기");
+        assertThat(growth).isEqualTo("외국어 공부하기");
+        assertThat(eat).isEqualTo("오트바 먹기");
+
+        assertThat(routine1.getDailyExercise()).isEqualTo(5);
+        assertThat(routine1.getDailyGrowth()).isEqualTo(1);
+        assertThat(routine1.getDailyEat()).isEqualTo(3);
+    }
+
 }
