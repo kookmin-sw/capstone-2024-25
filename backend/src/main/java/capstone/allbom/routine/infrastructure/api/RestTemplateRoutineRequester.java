@@ -1,5 +1,7 @@
 package capstone.allbom.routine.infrastructure.api;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.service.S3FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,50 +43,43 @@ public class RestTemplateRoutineRequester {
                 .exchange(requestEntity, String.class)
                 .getBody();
 
-        log.info("routineData={}", routineData);
+//        log.info("routineData={}", routineData);
         return routineData;
     }
 
-    public List<String> getRandomRoutineFields() {
-        List<String> routines = new ArrayList<>();
+    public JSONObject getRoutineData(String routineType) {
+        JSONObject routineData = null;
         try {
-            String routineData = requestRoutine();
+            String totalData = requestRoutine();
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(routineData);
-            log.info("jsonObject={}", jsonObject);
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(totalData);
 
-            List<String> categories = Arrays.asList("운동", "휴식", "성장", "취미", "과일", "간식", "식사");
-            routines = categories.stream()
-                    .map(category -> (JSONObject) jsonObject.get(category))
-                    .map(this::selectRandomRoutine)
-                    .collect(Collectors.toList());
+            routineData = (JSONObject) jsonObject.get(routineType);
 
-            if (routines.get(6).equals("간식 먹기")) {
-                String replaceMent = routines.get(5) + " 먹기";
-                routines.set(6, replaceMent);
-            } else if (routines.get(6).equals("과일 먹기")) {
-                String replaceMent = routines.get(4) + " 먹기";
-                routines.set(6, replaceMent);
-            }
-            log.info("newRoutines={}", routines);
-
+//            log.info("{} 전체 데이터={}", routineType, routineData);
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace();;
         }
-        return routines;
+        return routineData;
     }
 
-    public String selectRandomRoutine(JSONObject jsonObject) {
+    public String getRoutine(String routineType, String routineNum) {
+        String routine;
+        JSONObject routineData = getRoutineData(routineType);
 
-        ArrayList<String> keysList = new ArrayList<>(jsonObject.keySet());
+//        System.out.println("routine = " + routineData);
+        System.out.println("routineNum = " + routineNum);
 
-        Random random = new Random();
-        int randomIndex = random.nextInt(keysList.size());
+//        log.info("routineData={}", routineData);
+//        log.info("routineNum={}", routineNum);
 
-        String randomKey = keysList.get(randomIndex);
-        log.info("randomKey={}", randomKey);
+        if (routineData == null || !routineData.containsKey(routineNum)) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
+        }
 
-        return randomKey;
+        routine = (String) routineData.get(routineNum);
+
+        return routine;
     }
 }
