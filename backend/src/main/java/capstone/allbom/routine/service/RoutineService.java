@@ -83,8 +83,6 @@ public class RoutineService {
             case "hobby" -> "취미";
             case "eat" -> "식사";
             case "rest" -> "휴식";
-            case "snack" -> "간식";
-            case "fruit" -> "과일";
             default -> throw new IllegalArgumentException("Unexpected value: " + type);
         };
         return requestType;
