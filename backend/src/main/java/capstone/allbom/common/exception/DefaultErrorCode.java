@@ -16,6 +16,11 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_GAME_SUBJECT_TYPE(400, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(400, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
     COMPLETE_SUBJECT_ALL_PROBLEM(400, "해당 교과목의 모든 문제를 완료했습니다."),
+    COMPLETE_ROUTINE_EXERCISE(400, "오늘의 운동을 완료했습니다."),
+    COMPLETE_ROUTINE_GROWTH(400, "오늘의 성장을 완료했습니다."),
+    COMPLETE_ROUTINE_HOBBY(400, "오늘의 취미를 완료했습니다."),
+    COMPLETE_ROUTINE_REST(400, "오늘의 휴식을 완료했습니다."),
+    COMPLETE_ROUTINE_EAT(400, "오늘의 식사를 완료했습니다."),
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),
     INVALID_AUTH_TOKEN(401, "올바르지 않은 로그인 토큰입니다."),

@@ -1,5 +1,6 @@
 package capstone.allbom.routine.service;
 
+import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
@@ -47,6 +48,7 @@ public class RoutineService {
             routineToUpdate.setDailyStatus();
         }
     }
+
 
     public String getRoutine(Routine routine, String type) {
         /**
