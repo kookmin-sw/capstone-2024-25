@@ -68,5 +68,19 @@ public class RoutineService {
         }
     }
 
+    private String convertToRequestType(String type) {
+        String requestType = switch (type) {
+            case "exercise" -> "운동";
+            case "growth" -> "성장";
+            case "hobby" -> "취미";
+            case "eat" -> "식사";
+            case "rest" -> "휴식";
+            case "snack" -> "간식";
+            case "fruit" -> "과일";
+            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+        };
+        return requestType;
+    }
+
 
 }
