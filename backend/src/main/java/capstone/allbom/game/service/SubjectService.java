@@ -51,7 +51,7 @@ public class SubjectService {
     }
 
     @Transactional
-    private Game createGame(final Member member) {
+    public Game createGame(final Member member) {
         final Game game = gameRepository.save(new Game());
         game.setMember(member);
         return game;
