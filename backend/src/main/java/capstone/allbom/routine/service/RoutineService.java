@@ -60,7 +60,7 @@ public class RoutineService {
         return routine;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Routine findByMember(final Member member) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
