@@ -28,7 +28,6 @@ public class MemberController {
 
     @GetMapping("/duplicate")
     public ResponseEntity<String> checkDuplicate(
-            @Auth Member member,
             @RequestParam final String loginId
     ) {
         memberService.validateDuplicateLoginId(loginId);
