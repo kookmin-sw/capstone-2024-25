@@ -27,6 +27,7 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_AUTH_TOKEN(401, "올바르지 않은 로그인 토큰입니다."),
     NOT_BEARER_TOKEN_TYPE(401, "Bearer 타입의 토큰이 아닙니다."),
     NEED_AUTH_TOKEN(401,"로그인이 필요한 서비스입니다."),
+    NEED_ADDITIONAL_REGISTRATION(401,"서비스를 이용하려면 추가 회원 정보 등록이 필요합니다."),
     INCORRECT_PASSWORD_OR_ACCOUNT(401, "비밀번호가 틀렸거나, 해당 계정이 없습니다."),
     DUPLICATE_ACCOUNT_USERNAME(401,"해당 계정이 존재합니다."),
 
