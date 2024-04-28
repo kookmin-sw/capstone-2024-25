@@ -3,6 +3,7 @@ package capstone.allbom.member.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.common.exception.UnauthorizedException;
 import capstone.allbom.game.domain.GameRepository;
 import capstone.allbom.medicine.domain.MedicineRepository;
 import capstone.allbom.member.domain.Gender;
@@ -97,5 +98,14 @@ public class MemberService {
         GeocodingResponse geocodingResponse = geocodingRequester.convertAddress(memberUpdateRequest.address());
         savedMember.setLatitude(geocodingResponse.latitude());
         savedMember.setLongitude(geocodingResponse.longitude());
+    }
+
+    public void checkMemberRegistration(final Member member) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        if (savedMember.getName() == null || savedMember.getPhoneNumber() == null) {
+            throw new UnauthorizedException(DefaultErrorCode.NEED_ADDITIONAL_REGISTRATION);
+        }
     }
 }
