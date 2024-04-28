@@ -73,10 +73,10 @@ public class RoutineController {
         return ResponseEntity.ok(RoutineResponse.from(type, contents));
     }
 
-    @PatchMapping("/next")
+    @PatchMapping("/next/{type}")
     public ResponseEntity<RoutineResponse> updateToNextRoutine(
             @Auth final Member member,
-            @RequestParam final String type
+            @PathVariable final String type
     ) {
         Routine routine = routineService.findByMember(member);
         routineService.checkDailyStatus(routine, type);
