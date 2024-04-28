@@ -1,8 +1,11 @@
 package capstone.allbom.routine.controller;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.routine.domain.Routine;
+import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.dto.RoutineResponse;
 import capstone.allbom.routine.service.RoutineService;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +27,30 @@ public class RoutineController {
 
     private final RoutineService routineService;
 
+    @GetMapping
+    public ResponseEntity<List<RoutineResponse>> getAllRoutine(
+            @Auth final Member member
+    ) {
+        Routine routine = routineService.findByMember(member);
+        List<String> categories = Arrays.asList("exercise", "growth", "hobby", "rest", "eat");
+        List<String> notCompletedCategories = new ArrayList<>();
+        List<RoutineResponse> routineResponses = new ArrayList<>();
 
+        for (String category : categories) {
+            try {
+                routineService.checkDailyStatus(routine, category);
+                notCompletedCategories.add(category);
+            } catch (BadRequestException e) {
+
+            }
+        }
+        if (notCompletedCategories.isEmpty()) {
+            throw new BadRequestException(DefaultErrorCode.COMPLETE_ALL_ROUTINE);
+        }
+        for (String category : notCompletedCategories) {
+            String contents = routineService.getRoutine(routine, category);
+            routineResponses.add(RoutineResponse.from(category, contents));
+        }
+        return ResponseEntity.ok(routineResponses);
+    }
 }
