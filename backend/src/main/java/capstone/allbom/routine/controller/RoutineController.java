@@ -36,21 +36,21 @@ public class RoutineController {
         List<String> notCompletedCategories = new ArrayList<>();
         List<RoutineResponse> routineResponses = new ArrayList<>();
 
-        for (String category : categories) {
+        categories.forEach(category -> {
             try {
                 routineService.checkDailyStatus(routine, category);
                 notCompletedCategories.add(category);
             } catch (BadRequestException e) {
-
             }
-        }
+        });
+
         if (notCompletedCategories.isEmpty()) {
             throw new BadRequestException(DefaultErrorCode.COMPLETE_ALL_ROUTINE);
         }
-        for (String category : notCompletedCategories) {
+        notCompletedCategories.forEach(category -> {
             String contents = routineService.getRoutine(routine, category);
             routineResponses.add(RoutineResponse.from(category, contents));
-        }
+        });
         return ResponseEntity.ok(routineResponses);
     }
 }
