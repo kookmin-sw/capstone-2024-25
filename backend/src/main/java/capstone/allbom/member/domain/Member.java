@@ -72,7 +72,8 @@ public class Member {
     }
 
     public boolean hasEssentialInfo() {
-        return (this.gender != null && this.birthday != null);
+        return (this.name != null && this.phoneNumber != null &&
+                this.gender != null && this.birthday != null);
     }
 
 //    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)

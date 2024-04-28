@@ -68,6 +68,8 @@ public class AuthService {
 
     @Transactional
     public LoginTokenDto kakaoRegister(final String code) {
+
+        System.out.println("kakaoRegister = " + code);
         final String kakaoAccessToken = kakaoOAuthClient.getAccessToken(code);
         final KakaoMemberResponse response = kakaoOAuthClient.getMemberInfo(kakaoAccessToken);
 
