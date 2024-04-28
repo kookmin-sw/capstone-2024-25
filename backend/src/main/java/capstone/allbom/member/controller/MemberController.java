@@ -7,10 +7,7 @@ import capstone.allbom.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/member")
@@ -27,5 +24,14 @@ public class MemberController {
     ) {
         memberService.updateMember(member, memberUpdateRequest);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/duplicate")
+    public ResponseEntity<String> checkDuplicate(
+            @Auth Member member,
+            @RequestParam final String loginId
+    ) {
+        memberService.validateDuplicateLoginId(loginId);
+        return ResponseEntity.ok("사용 가능한 아이디입니다.");
     }
 }
