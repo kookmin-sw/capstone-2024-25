@@ -1,6 +1,7 @@
 package capstone.allbom.routine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
@@ -49,6 +50,29 @@ public class RoutineService {
         }
     }
 
+    public void checkDailyStatus(Routine routine, String type) {
+        if (type == "exercise") {
+            if (routine.getDailyExerciseStatus() == true) {
+                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_EXERCISE);
+            }
+        } else if (type == "growth") {
+                if (routine.getDailyGrowthStatus() == true) {
+                    throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_GROWTH);
+                }
+        } else if (type == "hobby") {
+            if (routine.getDailyHobbyStatus() == true) {
+                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_HOBBY);
+            }
+        } else if (type == "rest") {
+            if (routine.getDailyRestStatus() == true) {
+                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_REST);
+            }
+        } else {
+            if (routine.getDailyEatStatus() == true) {
+                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_EAT);
+            }
+        }
+    }
 
     public String getRoutine(Routine routine, String type) {
         /**
@@ -91,7 +115,6 @@ public class RoutineService {
     }
 
     public Integer getRoutineDataSize(String type) {
-        System.out.println("type = " + type);
         String routineType = convertToRequestType(type);
         return routineRequester.getRoutineData(routineType).size();
     }
@@ -203,7 +226,6 @@ public class RoutineService {
     public Integer selectRandomRoutine(JSONObject routineData) {
         Random random = new Random();
         int randomIndex = random.nextInt(routineData.size()) + 1;
-
         return randomIndex;
     }
 
