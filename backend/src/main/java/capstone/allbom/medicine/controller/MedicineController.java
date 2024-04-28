@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping
 @RestController
@@ -45,9 +47,14 @@ public class MedicineController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/medicine")
+    public ResponseEntity<List<MedicineDetailResponse>> findAllMedicine(@Auth Member member) {
+        List<MedicineDetailResponse> medicines = medicineService.findByMemberId(member);
+        return ResponseEntity.ok(medicines);
+    }
+
     @PostMapping("/medicine")
     public ResponseEntity<Void> saveMedicine(@Auth Member member, @RequestBody MedicineRequest medicineRequest) {
-        System.out.println("member = " + member);
         Long medicineId = medicineService.saveMedicine(member, medicineRequest);
         return ResponseEntity.ok()
                 .build();
