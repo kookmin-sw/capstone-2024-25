@@ -6,24 +6,20 @@ import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.MedicineService;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Member;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/api")
 @RestController
 @Slf4j
 public class MedicineController {
 
     private final MedicineService medicineService;
-
-    @GetMapping("/medicines")
-    public String example(){
-        return "hihi";
-    }
 
     @GetMapping("/medicine/{medicineId}")
     public ResponseEntity<MedicineDetailResponse> findMedicine(@PathVariable Long medicineId) {
@@ -50,9 +46,14 @@ public class MedicineController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/medicine")
+    public ResponseEntity<List<MedicineDetailResponse>> findAllMedicine(@Auth Member member) {
+        List<MedicineDetailResponse> medicines = medicineService.findByMemberId(member);
+        return ResponseEntity.ok(medicines);
+    }
+
     @PostMapping("/medicine")
     public ResponseEntity<Void> saveMedicine(@Auth Member member, @RequestBody MedicineRequest medicineRequest) {
-        System.out.println("member = " + member);
         Long medicineId = medicineService.saveMedicine(member, medicineRequest);
         return ResponseEntity.ok()
                 .build();

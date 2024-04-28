@@ -12,6 +12,7 @@ public enum DefaultErrorCode implements ErrorCode{
     DUPLICATED_REGISTER(400, "이미 모든 회원가입을 완료했습니다."),
     INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
     INVALID_UPDATE_MEDICINE(400, "자신의 약만 변경할 수 있습니다"),
+    INVALID_MEDICINE_TIME(400, "유효하지 않은 약 시간입니다."),
     INVALID_ROUTINE_TYPE(400, "요청한 루틴명이나 번호에 해당하는 내용이 존재하지 않습니다."),
     INVALID_FACILITY_TYPE_ID(400, "요청한 유형과 번호에 해당하는 시설이 존재하지 않습니다."),
     INVALID_GAME_SUBJECT_TYPE(400, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
