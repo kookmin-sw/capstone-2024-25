@@ -22,6 +22,17 @@ public class FacilityService {
 
     private final FacilityRepository facilityRepository;
 
+    @Transactional(readOnly = true)
+    public Facility findByTypeAndId(final Long facilityId, final String type) {
+        Facility facility = facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
+
+        if (facility.getType().toString() != type) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_FACILITY_TYPE_ID);
+        }
+
+        return facility;
+    }
 
     @Transactional
     public Facility saveFacility(final Facility facility) {
