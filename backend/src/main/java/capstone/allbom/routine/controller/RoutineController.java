@@ -49,4 +49,15 @@ public class RoutineController {
 
         return ResponseEntity.ok(routineResponses);
     }
+
+    @PostMapping
+    public ResponseEntity<Void> changeRoutineStatus(
+            @Auth final Member member,
+            @RequestParam final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        routineService.changeDailyStatus(routine, type);
+        return ResponseEntity.noContent().build();
+    }
 }
