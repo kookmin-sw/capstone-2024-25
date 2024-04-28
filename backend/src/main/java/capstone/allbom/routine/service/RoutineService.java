@@ -2,6 +2,9 @@ package capstone.allbom.routine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.domain.MemberRepository;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 public class RoutineService {
 
     private final RoutineRepository routineRepository;
+    private final MemberRepository memberRepository;
     private final RestTemplateRoutineRequester routineRequester;
 
     @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
@@ -37,17 +41,42 @@ public class RoutineService {
 
         for (int i = 0; i < all.size(); i++) {
             Routine routineToUpdate = all.get(i);
-
-            routineToUpdate.setDailyExercise(routines.get(0));
-            routineToUpdate.setDailyRest(routines.get(1));
-            routineToUpdate.setDailyGrowth(routines.get(2));
-            routineToUpdate.setDailyHobby(routines.get(3));
-            routineToUpdate.setDailyFruit(routines.get(4));
-            routineToUpdate.setDailySnack(routines.get(5));
-            routineToUpdate.setDailyEat(routines.get(6));
-
-            routineToUpdate.setDailyStatus();
+            updateRoutine(routineToUpdate, routines);
         }
+    }
+
+    @Transactional
+    public Routine updateRoutine(Routine routine, List<Integer> randomRoutines) {
+        routine.setDailyExercise(randomRoutines.get(0));
+        routine.setDailyRest(randomRoutines.get(1));
+        routine.setDailyGrowth(randomRoutines.get(2));
+        routine.setDailyHobby(randomRoutines.get(3));
+        routine.setDailyFruit(randomRoutines.get(4));
+        routine.setDailySnack(randomRoutines.get(5));
+        routine.setDailyEat(randomRoutines.get(6));
+
+        routine.setDailyStatus();
+
+        return routine;
+    }
+
+    @Transactional(readOnly = true)
+    public Routine findByMember(final Member member) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        return routineRepository.findByMemberId(savedMember.getId())
+                .orElseGet(() -> createRoutine(savedMember));
+    }
+
+    @Transactional
+    public Routine createRoutine(final Member member) {
+        final Routine routine = routineRepository.save(new Routine());
+        routine.setMember(member);
+
+        List<Integer> routines = randomRoutine();
+        Routine updatedRoutine = updateRoutine(routine, routines);
+        return updatedRoutine;
     }
 
     public void checkDailyStatus(Routine routine, String type) {
