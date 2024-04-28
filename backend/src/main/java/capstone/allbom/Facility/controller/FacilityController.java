@@ -88,11 +88,11 @@ public class FacilityController {
         return ResponseEntity.ok(mapResponses);
     }
 
-    @GetMapping("/{mapId}")
+    @GetMapping("/{type}/{mapId}")
     public ResponseEntity<MapDetailResponse> getFacility(
             @Auth Member member,
-            @PathVariable Long mapId,
-            @RequestParam final String type
+            @PathVariable final String type,
+            @PathVariable Long mapId
     ) {
         if (type.equals("job")) {
             Job job = jobService.findById(mapId);
