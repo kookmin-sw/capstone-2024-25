@@ -61,10 +61,10 @@ public class RoutineController {
         return ResponseEntity.ok(RoutineResponse.from(type, contents));
     }
 
-    @PostMapping
+    @PostMapping("/{type}")
     public ResponseEntity<Void> changeRoutineStatus(
             @Auth final Member member,
-            @RequestParam final String type
+            @PathVariable final String type
     ) {
         Routine routine = routineService.findByMember(member);
         routineService.checkDailyStatus(routine, type);
