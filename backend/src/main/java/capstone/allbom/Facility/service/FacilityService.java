@@ -1,5 +1,6 @@
 package capstone.allbom.facility.service;
 
+import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.facility.domain.Facility;
@@ -21,11 +22,6 @@ public class FacilityService {
 
     private final FacilityRepository facilityRepository;
 
-    @Transactional(readOnly = true)
-    public Facility findById(final Long facilityId) {
-        return facilityRepository.findById(facilityId)
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
-    }
 
     @Transactional
     public Facility saveFacility(final Facility facility) {

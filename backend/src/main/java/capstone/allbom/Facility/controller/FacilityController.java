@@ -99,7 +99,7 @@ public class FacilityController {
             return ResponseEntity.ok(JobMapDetailResponse.from(job));
         }
 
-        Facility facility = facilityService.findById(mapId);
+        Facility facility = facilityService.findByTypeAndId(mapId, type);
         return ResponseEntity.ok(FacilityDetailResponse.from(facility));
     }
 }
