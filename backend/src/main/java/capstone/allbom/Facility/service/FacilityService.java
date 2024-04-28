@@ -33,14 +33,19 @@ public class FacilityService {
         return savedFacility;
     }
 
-    public List<FacilityListResponse> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude, String type) {
-        List<Facility> facilities;
+    public List<FacilityListResponse> getFacilities(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude) {
+        List<Facility> facilities = facilityRepository
+                .findFacilitiesInRectangle(SWlatitude, SWlongitude, NElatitude, NElongitude);
 
-        if (type.length() == 0 || type == null) {
-            facilities = facilityRepository.findFacilitiesInRectangle(SWlatitude, SWlongitude, NElatitude, NElongitude);
-        } else {
-            facilities = facilityRepository.findFacilitiesInRectangleAndType(SWlatitude, SWlongitude, NElatitude, NElongitude, FacilityType.valueOf(type.toUpperCase()));
-        }
+        return facilities.stream()
+                .map(FacilityListResponse::from)
+                .toList();
+    }
+
+    public List<FacilityListResponse> getFacilitiesByType(Double SWlatitude, Double SWlongitude, Double NElatitude, Double NElongitude, String type) {
+        List<Facility> facilities = facilityRepository
+                .findFacilitiesInRectangleAndType(SWlatitude, SWlongitude, NElatitude, NElongitude, FacilityType.valueOf(type.toUpperCase()));
+
         return facilities.stream()
                 .map(FacilityListResponse::from)
                 .toList();

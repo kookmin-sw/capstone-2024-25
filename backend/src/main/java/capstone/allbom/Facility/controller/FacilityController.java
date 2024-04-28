@@ -37,9 +37,35 @@ public class FacilityController {
     @GetMapping
     public ResponseEntity<List<FacilityListResponse>> getFacilities(
             @Auth Member member,
-            @RequestParam(value = "type", required = false, defaultValue = "") final String type,
             @RequestBody final FacilityRequest facilityRequest
             ) {
+
+        final List<FacilityListResponse> mapResponses = new ArrayList<>();
+
+        List<FacilityListResponse> jobs = jobService.getJobs(
+                facilityRequest.swLatitude(),
+                facilityRequest.swLongitude(),
+                facilityRequest.neLatitude(),
+                facilityRequest.neLongitude()
+        );
+        mapResponses.addAll(jobs);
+
+        List<FacilityListResponse> facilities = facilityService.getFacilities(
+                facilityRequest.swLatitude(),
+                facilityRequest.swLongitude(),
+                facilityRequest.neLatitude(),
+                facilityRequest.neLongitude()
+        );
+        mapResponses.addAll(facilities);
+        return ResponseEntity.ok(mapResponses);
+    }
+
+    @GetMapping("/{type}")
+    public ResponseEntity<List<FacilityListResponse>> getFacilitiesByType(
+            @Auth Member member,
+            @PathVariable final String type,
+            @RequestBody final FacilityRequest facilityRequest
+    ) {
 
         final List<FacilityListResponse> mapResponses = new ArrayList<>();
 
