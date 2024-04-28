@@ -37,47 +37,69 @@ public class FacilityController {
     @GetMapping
     public ResponseEntity<List<FacilityListResponse>> getFacilities(
             @Auth Member member,
-            @RequestParam(value = "type", required = false, defaultValue = "") final String type,
             @RequestBody final FacilityRequest facilityRequest
             ) {
 
         final List<FacilityListResponse> mapResponses = new ArrayList<>();
 
-        System.out.println("type = " + type);
+        List<FacilityListResponse> jobs = jobService.getJobs(
+                facilityRequest.swLatitude(),
+                facilityRequest.swLongitude(),
+                facilityRequest.neLatitude(),
+                facilityRequest.neLongitude()
+        );
+        mapResponses.addAll(jobs);
 
-        if (type != null && type.equals("job")) {
-            List<FacilityListResponse> jobs = jobService.getJobs(
+        List<FacilityListResponse> facilities = facilityService.getFacilities(
+                facilityRequest.swLatitude(),
+                facilityRequest.swLongitude(),
+                facilityRequest.neLatitude(),
+                facilityRequest.neLongitude()
+        );
+        mapResponses.addAll(facilities);
+        return ResponseEntity.ok(mapResponses);
+    }
+
+    @GetMapping("/{type}")
+    public ResponseEntity<List<FacilityListResponse>> getFacilitiesByType(
+            @Auth Member member,
+            @PathVariable final String type,
+            @RequestBody final FacilityRequest facilityRequest
+    ) {
+
+        final List<FacilityListResponse> mapResponses;
+
+        if (type.equals("job")) {
+            mapResponses = jobService.getJobs(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
                     facilityRequest.neLatitude(),
                     facilityRequest.neLongitude()
             );
-            mapResponses.addAll(jobs);
         } else {
-            List<FacilityListResponse> facilities = facilityService.getFacilities(
+            mapResponses = facilityService.getFacilitiesByType(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
                     facilityRequest.neLatitude(),
                     facilityRequest.neLongitude(),
                     type
             );
-            mapResponses.addAll(facilities);
         }
         return ResponseEntity.ok(mapResponses);
     }
 
-    @GetMapping("/{mapId}")
+    @GetMapping("/{type}/{mapId}")
     public ResponseEntity<MapDetailResponse> getFacility(
             @Auth Member member,
-            @PathVariable Long mapId,
-            @RequestParam final String type
+            @PathVariable final String type,
+            @PathVariable Long mapId
     ) {
         if (type.equals("job")) {
             Job job = jobService.findById(mapId);
             return ResponseEntity.ok(JobMapDetailResponse.from(job));
         }
 
-        Facility facility = facilityService.findById(mapId);
+        Facility facility = facilityService.findByTypeAndId(mapId, type);
         return ResponseEntity.ok(FacilityDetailResponse.from(facility));
     }
 }
