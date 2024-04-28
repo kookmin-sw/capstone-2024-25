@@ -74,6 +74,25 @@ public class RoutineService {
         }
     }
 
+    @Transactional
+    public void changeDailyStatus(Routine routine, String type) {
+        switch (type) {
+            case "exercise":
+                routine.setDailyExerciseStatus(true);
+                break;
+            case "growth":
+                routine.setDailyGrowthStatus(true);
+                break;
+            case "hobby":
+                routine.setDailyHobbyStatus(true);
+                break;
+            case "rest":
+                routine.setDailyRestStatus(true);
+                break;
+            default:
+                routine.setDailyEatStatus(true);
+        }
+    }
     public String getRoutine(Routine routine, String type) {
         /**
          * TODO
