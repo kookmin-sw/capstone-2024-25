@@ -11,13 +11,12 @@ import capstone.allbom.routine.service.RoutineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,29 +27,26 @@ public class RoutineController {
     private final RoutineService routineService;
 
     @GetMapping
-    public ResponseEntity<List<RoutineResponse>> getAllRoutine(
-            @Auth final Member member
-    ) {
+    public ResponseEntity<List<RoutineResponse>> getAllRoutine(@Auth final Member member) {
         Routine routine = routineService.findByMember(member);
         List<String> categories = Arrays.asList("exercise", "growth", "hobby", "rest", "eat");
-        List<String> notCompletedCategories = new ArrayList<>();
-        List<RoutineResponse> routineResponses = new ArrayList<>();
 
-        categories.forEach(category -> {
-            try {
-                routineService.checkDailyStatus(routine, category);
-                notCompletedCategories.add(category);
-            } catch (BadRequestException e) {
-            }
-        });
+        List<RoutineResponse> routineResponses = categories.stream()
+                .filter(category -> {
+                    try {
+                        routineService.checkDailyStatus(routine, category);
+                        return true; // 예외 없이 통과
+                    } catch (BadRequestException e) {
+                        return false; // 예외 발생
+                    }
+                })
+                .map(category -> RoutineResponse.from(category, routineService.getRoutine(routine, category)))
+                .collect(Collectors.toList());
 
-        if (notCompletedCategories.isEmpty()) {
+        if (routineResponses.isEmpty()) {
             throw new BadRequestException(DefaultErrorCode.COMPLETE_ALL_ROUTINE);
         }
-        notCompletedCategories.forEach(category -> {
-            String contents = routineService.getRoutine(routine, category);
-            routineResponses.add(RoutineResponse.from(category, contents));
-        });
+
         return ResponseEntity.ok(routineResponses);
     }
 }
