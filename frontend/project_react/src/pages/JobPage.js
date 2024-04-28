@@ -42,7 +42,7 @@ const PaginationBox = styled.div`
     display: flex;
     justify-content: center;
     //margin-top: 15px;
-    border: 1px solid red;
+    //border: 1px solid red;
   }
   ul {
     list-style: none;
