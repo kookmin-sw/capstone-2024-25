@@ -61,6 +61,30 @@ public class RoutineController {
         return ResponseEntity.ok(RoutineResponse.from(type, contents));
     }
 
+    @PatchMapping("/previous/{type}")
+    public ResponseEntity<RoutineResponse> updateToPreviousRoutine(
+            @Auth final Member member,
+            @PathVariable final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        routineService.updateToPreviousRoutine(routine, type);
+        String contents = routineService.getRoutine(routine, type);
+        return ResponseEntity.ok(RoutineResponse.from(type, contents));
+    }
+
+    @PatchMapping("/next/{type}")
+    public ResponseEntity<RoutineResponse> updateToNextRoutine(
+            @Auth final Member member,
+            @PathVariable final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        routineService.updateToNextRoutine(routine, type);
+        String contents = routineService.getRoutine(routine, type);
+        return ResponseEntity.ok(RoutineResponse.from(type, contents));
+    }
+
     @PostMapping("/{type}")
     public ResponseEntity<Void> changeRoutineStatus(
             @Auth final Member member,
