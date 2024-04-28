@@ -36,7 +36,14 @@ public class GameService {
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
         return gameRepository.findByMemberId(savedMember.getId())
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
+                .orElseGet(() -> createGame(savedMember));
+    }
+
+    @Transactional
+    public Game createGame(final Member member) {
+        final Game game = gameRepository.save(new Game());
+        game.setMember(member);
+        return game;
     }
 
     public Map<String, Integer> computeProgress(Game game) {
