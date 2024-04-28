@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Getter @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Routine {
 
     @Id

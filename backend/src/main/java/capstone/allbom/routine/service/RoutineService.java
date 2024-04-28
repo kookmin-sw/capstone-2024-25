@@ -41,17 +41,23 @@ public class RoutineService {
 
         for (int i = 0; i < all.size(); i++) {
             Routine routineToUpdate = all.get(i);
-
-            routineToUpdate.setDailyExercise(routines.get(0));
-            routineToUpdate.setDailyRest(routines.get(1));
-            routineToUpdate.setDailyGrowth(routines.get(2));
-            routineToUpdate.setDailyHobby(routines.get(3));
-            routineToUpdate.setDailyFruit(routines.get(4));
-            routineToUpdate.setDailySnack(routines.get(5));
-            routineToUpdate.setDailyEat(routines.get(6));
-
-            routineToUpdate.setDailyStatus();
+            updateRoutine(routineToUpdate, routines);
         }
+    }
+
+    @Transactional
+    public Routine updateRoutine(Routine routine, List<Integer> randomRoutines) {
+        routine.setDailyExercise(randomRoutines.get(0));
+        routine.setDailyRest(randomRoutines.get(1));
+        routine.setDailyGrowth(randomRoutines.get(2));
+        routine.setDailyHobby(randomRoutines.get(3));
+        routine.setDailyFruit(randomRoutines.get(4));
+        routine.setDailySnack(randomRoutines.get(5));
+        routine.setDailyEat(randomRoutines.get(6));
+
+        routine.setDailyStatus();
+
+        return routine;
     }
 
 
