@@ -23,6 +23,7 @@ public record MedicineRequest(
         Validator.notNull(medicineTime, "medicineTime");
         Validator.minLength(medicineName, 1, "medicineName");
         Validator.maxLength(medicineName, 20, "medicineName");
+
     }
 
     public Medicine toDomain() {
