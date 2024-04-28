@@ -27,7 +27,7 @@ public class FacilityService {
         Facility facility = facilityRepository.findById(facilityId)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
 
-        if (facility.getType().toString() != type) {
+        if (!facility.getType().toString().equals(type.toUpperCase())) {
             throw new BadRequestException(DefaultErrorCode.INVALID_FACILITY_TYPE_ID);
         }
 
