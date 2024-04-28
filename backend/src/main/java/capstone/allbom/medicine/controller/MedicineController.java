@@ -6,7 +6,6 @@ import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.MedicineService;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Member;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
