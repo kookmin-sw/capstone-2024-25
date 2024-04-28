@@ -67,27 +67,23 @@ public class FacilityController {
             @RequestBody final FacilityRequest facilityRequest
     ) {
 
-        final List<FacilityListResponse> mapResponses = new ArrayList<>();
+        final List<FacilityListResponse> mapResponses;
 
-        System.out.println("type = " + type);
-
-        if (type != null && type.equals("job")) {
-            List<FacilityListResponse> jobs = jobService.getJobs(
+        if (type.equals("job")) {
+            mapResponses = jobService.getJobs(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
                     facilityRequest.neLatitude(),
                     facilityRequest.neLongitude()
             );
-            mapResponses.addAll(jobs);
         } else {
-            List<FacilityListResponse> facilities = facilityService.getFacilities(
+            mapResponses = facilityService.getFacilitiesByType(
                     facilityRequest.swLatitude(),
                     facilityRequest.swLongitude(),
                     facilityRequest.neLatitude(),
                     facilityRequest.neLongitude(),
                     type
             );
-            mapResponses.addAll(facilities);
         }
         return ResponseEntity.ok(mapResponses);
     }
