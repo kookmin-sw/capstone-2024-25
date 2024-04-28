@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/api")
 @RestController
 @Slf4j
 public class MedicineController {
