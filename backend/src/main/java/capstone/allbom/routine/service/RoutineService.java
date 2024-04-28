@@ -69,6 +69,15 @@ public class RoutineService {
                 .orElseGet(() -> createRoutine(savedMember));
     }
 
+    @Transactional
+    public Routine createRoutine(final Member member) {
+        final Routine routine = routineRepository.save(new Routine());
+        routine.setMember(member);
+
+        List<Integer> routines = randomRoutine();
+        Routine updatedRoutine = updateRoutine(routine, routines);
+        return updatedRoutine;
+    }
 
     public void checkDailyStatus(Routine routine, String type) {
         boolean isComplete = false;
