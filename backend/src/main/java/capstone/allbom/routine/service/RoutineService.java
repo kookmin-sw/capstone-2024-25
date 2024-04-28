@@ -51,26 +51,26 @@ public class RoutineService {
     }
 
     public void checkDailyStatus(Routine routine, String type) {
-        if (type == "exercise") {
-            if (routine.getDailyExerciseStatus() == true) {
-                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_EXERCISE);
-            }
-        } else if (type == "growth") {
-                if (routine.getDailyGrowthStatus() == true) {
-                    throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_GROWTH);
-                }
-        } else if (type == "hobby") {
-            if (routine.getDailyHobbyStatus() == true) {
-                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_HOBBY);
-            }
-        } else if (type == "rest") {
-            if (routine.getDailyRestStatus() == true) {
-                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_REST);
-            }
-        } else {
-            if (routine.getDailyEatStatus() == true) {
-                throw new BadRequestException(DefaultErrorCode.COMPLETE_ROUTINE_EAT);
-            }
+        boolean isComplete = false;
+        switch (type) {
+            case "exercise":
+                isComplete = routine.getDailyExerciseStatus();
+                break;
+            case "growth":
+                isComplete = routine.getDailyGrowthStatus();
+                break;
+            case "hobby":
+                isComplete = routine.getDailyHobbyStatus();
+                break;
+            case "rest":
+                isComplete = routine.getDailyRestStatus();
+                break;
+            default:
+                isComplete = routine.getDailyEatStatus();
+        }
+
+        if (isComplete) {
+            throw new BadRequestException(DefaultErrorCode.valueOf("COMPLETE_ROUTINE_" + type.toUpperCase()));
         }
     }
 
