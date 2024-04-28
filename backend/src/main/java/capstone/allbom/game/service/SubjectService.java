@@ -50,7 +50,12 @@ public class SubjectService {
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
     }
 
-
+    @Transactional
+    private Game createGame(final Member member) {
+        final Game game = gameRepository.save(new Game());
+        game.setMember(member);
+        return game;
+    }
 
     @Transactional(readOnly = true)
     public String getCurrSentence(SubjectType type, Integer problemNum) {
