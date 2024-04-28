@@ -3,9 +3,7 @@ package capstone.allbom.game.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
-import capstone.allbom.game.domain.Subject;
-import capstone.allbom.game.domain.SubjectRepository;
-import capstone.allbom.game.domain.SubjectType;
+import capstone.allbom.game.domain.*;
 import capstone.allbom.game.dto.SentenceRequest;
 import capstone.allbom.game.infrastructure.api.RestTemplateGameRequester;
 import capstone.allbom.member.domain.Member;
@@ -14,12 +12,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SubjectService {
 
     private final SubjectRepository subjectRepository;
+    private final GameRepository gameRepository;
     private final RestTemplateGameRequester gameRequester;
     private final MemberRepository memberRepository;
 
@@ -34,13 +35,26 @@ public class SubjectService {
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Subject findByMemberAndType(final Member member, SubjectType type) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
         return subjectRepository.findByMemberAndType(savedMember.getId(), type)
+                .orElseGet(() -> getSubject(savedMember, type));
+    }
+
+    public Subject getSubject(final Member member, SubjectType type) {
+        createGame(member);
+        return subjectRepository.findByMemberAndType(member.getId(), type)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_GAME_SUBJECT));
+    }
+
+    @Transactional
+    public Game createGame(final Member member) {
+        final Game game = gameRepository.save(new Game());
+        game.setMember(member);
+        return game;
     }
 
     @Transactional(readOnly = true)

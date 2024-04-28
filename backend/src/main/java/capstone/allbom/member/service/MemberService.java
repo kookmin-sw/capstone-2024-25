@@ -3,11 +3,8 @@ package capstone.allbom.member.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
-import capstone.allbom.game.domain.Game;
 import capstone.allbom.game.domain.GameRepository;
-import capstone.allbom.game.domain.SubjectType;
 import capstone.allbom.medicine.domain.MedicineRepository;
-import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Gender;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
@@ -100,8 +97,5 @@ public class MemberService {
         GeocodingResponse geocodingResponse = geocodingRequester.convertAddress(memberUpdateRequest.address());
         savedMember.setLatitude(geocodingResponse.latitude());
         savedMember.setLongitude(geocodingResponse.longitude());
-
-        Game game = gameRepository.save(new Game());
-        game.setMember(savedMember);
     }
 }
