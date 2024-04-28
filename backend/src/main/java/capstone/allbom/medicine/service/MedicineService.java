@@ -3,14 +3,18 @@ package capstone.allbom.medicine.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.facility.dto.FacilityListResponse;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
+import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,6 +28,14 @@ public class MedicineService {
     public Medicine findById(final Long medicineId) {
         return medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+    }
+
+    @Transactional(readOnly = true)
+    public List<MedicineDetailResponse> findByMemberId(final Member member) {
+        List<Medicine> medicines = member.getMedicines();
+        return medicines.stream()
+                .map(MedicineDetailResponse::from)
+                .toList();
     }
 
     @Transactional
