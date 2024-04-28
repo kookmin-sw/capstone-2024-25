@@ -60,6 +60,15 @@ public class RoutineService {
         return routine;
     }
 
+    @Transactional(readOnly = true)
+    public Routine findByMember(final Member member) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        return routineRepository.findByMemberId(savedMember.getId())
+                .orElseGet(() -> createRoutine(savedMember));
+    }
+
 
     public void checkDailyStatus(Routine routine, String type) {
         boolean isComplete = false;
