@@ -1,5 +1,7 @@
 package capstone.allbom.routine.service;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
@@ -48,6 +50,49 @@ public class RoutineService {
         }
     }
 
+    public void checkDailyStatus(Routine routine, String type) {
+        boolean isComplete = false;
+        switch (type) {
+            case "exercise":
+                isComplete = routine.getDailyExerciseStatus();
+                break;
+            case "growth":
+                isComplete = routine.getDailyGrowthStatus();
+                break;
+            case "hobby":
+                isComplete = routine.getDailyHobbyStatus();
+                break;
+            case "rest":
+                isComplete = routine.getDailyRestStatus();
+                break;
+            default:
+                isComplete = routine.getDailyEatStatus();
+        }
+
+        if (isComplete) {
+            throw new BadRequestException(DefaultErrorCode.valueOf("COMPLETE_ROUTINE_" + type.toUpperCase()));
+        }
+    }
+
+    @Transactional
+    public void changeDailyStatus(Routine routine, String type) {
+        switch (type) {
+            case "exercise":
+                routine.setDailyExerciseStatus(true);
+                break;
+            case "growth":
+                routine.setDailyGrowthStatus(true);
+                break;
+            case "hobby":
+                routine.setDailyHobbyStatus(true);
+                break;
+            case "rest":
+                routine.setDailyRestStatus(true);
+                break;
+            default:
+                routine.setDailyEatStatus(true);
+        }
+    }
     public String getRoutine(Routine routine, String type) {
         /**
          * TODO
@@ -89,7 +134,6 @@ public class RoutineService {
     }
 
     public Integer getRoutineDataSize(String type) {
-        System.out.println("type = " + type);
         String routineType = convertToRequestType(type);
         return routineRequester.getRoutineData(routineType).size();
     }
@@ -103,36 +147,90 @@ public class RoutineService {
         String requestType = convertToRequestType(type);
         Integer totalSize = routineRequester.getRoutineData(requestType).size();
 
-        if (type.equals("exercise")) {
-            if (totalSize <= routine.getDailyExercise()) { // 현재의 문제가 마지막 루이거나 인덱스 범위를 초과했다면
-                routine.setDailyExercise(1);
-            } else {
-                routine.setDailyExercise(routine.getDailyExercise() + 1);
-            }
-        } else if (type.equals("growth")) {
-            if (totalSize <= routine.getDailyGrowth()) {
-                routine.setDailyGrowth(1);
-            } else {
-                routine.setDailyGrowth(routine.getDailyGrowth() + 1);
-            }
-        } else if (type.equals("hobby")) {
-            if (totalSize <= routine.getDailyHobby()) {
-                routine.setDailyHobby(1);
-            } else {
-                routine.setDailyHobby(routine.getDailyHobby() + 1);
-            }
-        } else if (type.equals("eat")) {
-            if (totalSize <= routine.getDailyEat()) {
-                routine.setDailyEat(1);
-            } else {
-                routine.setDailyEat(routine.getDailyEat() + 1);
-            }
-        } else {
-            if (totalSize <= routine.getDailyRest()) {
-                routine.setDailyRest(1);
-            } else {
-                routine.setDailyRest(routine.getDailyRest() + 1);
-            }
+        switch (type) {
+            case "exercise":
+                if (totalSize <= routine.getDailyExercise()) {
+                    routine.setDailyExercise(1);
+                } else {
+                    routine.setDailyExercise(routine.getDailyExercise() + 1);
+                }
+                break;
+            case "growth":
+                if (totalSize <= routine.getDailyGrowth()) {
+                    routine.setDailyGrowth(1);
+                } else {
+                    routine.setDailyGrowth(routine.getDailyGrowth() + 1);
+                }
+                break;
+            case "hobby":
+                if (totalSize <= routine.getDailyHobby()) {
+                    routine.setDailyHobby(1);
+                } else {
+                    routine.setDailyHobby(routine.getDailyHobby() + 1);
+                }
+                break;
+            case "eat":
+                if (totalSize <= routine.getDailyEat()) {
+                    routine.setDailyEat(1);
+                } else {
+                    routine.setDailyEat(routine.getDailyEat() + 1);
+                }
+                break;
+            default:
+                if (totalSize <= routine.getDailyRest()) {
+                    routine.setDailyRest(1);
+                } else {
+                    routine.setDailyRest(routine.getDailyRest() + 1);
+                }
+                break;
+        }
+    }
+
+    @Transactional
+    public void updateToPreviousRoutine(Routine routine, String type) {
+        /**
+         * TODO
+         * daily status가 false인 경우에민 query 호출 가능하도록 예외 처리
+         */
+        String requestType = convertToRequestType(type);
+        Integer totalSize = routineRequester.getRoutineData(requestType).size();
+
+        switch (type) {
+            case "exercise":
+                if (routine.getDailyExercise() <= 1) {
+                    routine.setDailyExercise(totalSize);
+                } else {
+                    routine.setDailyExercise(routine.getDailyExercise() - 1);
+                }
+                break;
+            case "growth":
+                if (routine.getDailyGrowth() <= 1) {
+                    routine.setDailyGrowth(totalSize);
+                } else {
+                    routine.setDailyGrowth(routine.getDailyGrowth() - 1);
+                }
+                break;
+            case "hobby":
+                if (routine.getDailyHobby() <= 1) {
+                    routine.setDailyHobby(totalSize);
+                } else {
+                    routine.setDailyHobby(routine.getDailyHobby() - 1);
+                }
+                break;
+            case "eat":
+                if (routine.getDailyEat() <= 1) {
+                    routine.setDailyEat(totalSize);
+                } else {
+                    routine.setDailyEat(routine.getDailyEat() - 1);
+                }
+                break;
+            default:
+                if (routine.getDailyRest() <= 1) {
+                    routine.setDailyRest(totalSize);
+                } else {
+                    routine.setDailyRest(routine.getDailyRest() - 1);
+                }
+                break;
         }
     }
 
@@ -147,7 +245,6 @@ public class RoutineService {
     public Integer selectRandomRoutine(JSONObject routineData) {
         Random random = new Random();
         int randomIndex = random.nextInt(routineData.size()) + 1;
-
         return randomIndex;
     }
 
