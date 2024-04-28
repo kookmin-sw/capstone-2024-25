@@ -2,6 +2,9 @@ package capstone.allbom.routine.service;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.domain.MemberRepository;
 import capstone.allbom.routine.domain.Routine;
 import capstone.allbom.routine.domain.RoutineRepository;
 import capstone.allbom.routine.infrastructure.api.RestTemplateRoutineRequester;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 public class RoutineService {
 
     private final RoutineRepository routineRepository;
+    private final MemberRepository memberRepository;
     private final RestTemplateRoutineRequester routineRequester;
 
     @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
@@ -49,6 +53,7 @@ public class RoutineService {
             routineToUpdate.setDailyStatus();
         }
     }
+
 
     public void checkDailyStatus(Routine routine, String type) {
         boolean isComplete = false;
