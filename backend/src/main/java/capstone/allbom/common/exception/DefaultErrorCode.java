@@ -21,6 +21,7 @@ public enum DefaultErrorCode implements ErrorCode{
     COMPLETE_ROUTINE_HOBBY(400, "오늘의 취미를 완료했습니다."),
     COMPLETE_ROUTINE_REST(400, "오늘의 휴식을 완료했습니다."),
     COMPLETE_ROUTINE_EAT(400, "오늘의 식사를 완료했습니다."),
+    COMPLETE_ALL_ROUTINE(400, "오늘의 모든 루틴을 완료했습니다."),
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),
     INVALID_AUTH_TOKEN(401, "올바르지 않은 로그인 토큰입니다."),
