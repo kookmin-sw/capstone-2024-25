@@ -22,7 +22,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/*<Route path="/" element={<SignIn />} />*/}
-          <Route path="/" element={<Chatbot />} />
+          <Route path="/" element={<ComponentTest />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail" element={<JobDetailPage />} />

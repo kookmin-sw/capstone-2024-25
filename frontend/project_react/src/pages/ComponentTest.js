@@ -1,4 +1,5 @@
 // ComponentTest.js
+import axios from 'axios';
 
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -16,57 +17,62 @@ const TestWrapper = styled.div`
 `;
 
 const ComponentTest = () => {
-  function testFun() {
-    var data = {
+  const testFun = () => {
+    const data = {
       voice: {
+        // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
+        name: 'ko-KR-Neural2-C',
         languageCode: 'ko-KR',
+        // ssmlGender: 'MALE',
       },
       input: {
-        text: 'gml',
+        text:
+          '스무번 안에 제가 생각한 \n' +
+          '[네글자] 단어를 맞춰보세요.\n' +
+          '저는 예/아니오 로만 답변할 수 있어요.\n' +
+          '하지만 뭔가 설명이 필요한 부분에\n' +
+          '대해서는 부연설명을 할 수도 있어요.',
       },
       audioConfig: {
         audioEncoding: 'mp3',
       },
     };
-    $.ajax({
-      type: 'POST',
-      url: 'https://texttospeech.googleapis.com/v1/text:synthesize?key=여기에는키를넣으세요!',
-      data: JSON.stringify(data),
-      dataType: 'JSON',
-      contentType: 'application/json; charset=UTF-8',
-      success: function (res) {
-        $('#textVal').val(res.audioContent);
-        var audioFile = new Audio();
-        let audioBlob = base64ToBlob(res.audioContent, 'mp3');
-        audioFile.src = window.URL.createObjectURL(audioBlob);
-        audioFile.playbackRate = 1; //재생속도
-        audioFile.play();
-      },
-      error: function (request, status, error) {
-        alert('오류', '오류가 발생하였습니다. 관리자에게 문의해주세요.');
-      },
-    });
-  }
 
-  function base64ToBlob(base64, fileType) {
-    let typeHeader = 'data:application/' + fileType + ';base64,'; // base64 헤더 파일 유형 정의
-    let audioSrc = typeHeader + base64;
-    let arr = audioSrc.split(',');
-    let array = arr[0].match(/:(.*?);/);
-    let mime = (array && array.length > 1 ? array[1] : type) || type;
-    // url헤더 제거하고 btye로 변환
-    let bytes = window.atob(arr[1]);
-    // 예외를 처리하고 0보다 작은 ASCII 코드를 0보다 큰 값으로 변환
-    let ab = new ArrayBuffer(bytes.length);
-    // 뷰 생성(메모리에 직접): 8비트 부호 없는 정수, 길이 1바이트
-    let ia = new Uint8Array(ab);
-    for (let i = 0; i < bytes.length; i++) {
-      ia[i] = bytes.charCodeAt(i);
+    axios
+      .post(
+        `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.REACT_APP_GOOGLE_TTS_KEY}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        },
+      )
+      .then((response) => {
+        const res = response.data;
+        const audioBlob = base64ToBlob(res.audioContent, 'audio/mp3');
+        const audioFile = new Audio(window.URL.createObjectURL(audioBlob));
+        audioFile.playbackRate = 1;
+        audioFile.play();
+      })
+      .catch((error) => {
+        console.error('오류 발생: ', error.message);
+      });
+  };
+
+  const base64ToBlob = (base64, mimeType) => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
-    return new Blob([ab], {
-      type: mime,
-    });
-  }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  };
+
+  const gun = () => {
+    testFun();
+  };
 
   const text = '텍스트';
   const inputInfo = '정보';
@@ -119,7 +125,14 @@ const ComponentTest = () => {
       {/*  />*/}
       {/*</TestWrapper>*/}
       <TestWrapper>
-        <Toggle text="Large Selected" size="Large" selected={true} />
+        <Toggle
+          text="Large Selected"
+          size="Large"
+          selected={true}
+          onClick={() => {
+            testFun();
+          }}
+        />
         <Toggle text="Medium Selected" size="Medium" selected={true} />
         <Toggle text="Small Selected" size="Small" selected={true} />
         <Toggle text="Large Unselected" size="Large" selected={false} />
