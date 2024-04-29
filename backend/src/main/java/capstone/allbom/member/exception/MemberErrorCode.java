@@ -15,6 +15,11 @@ public enum MemberErrorCode implements ErrorCode {
     }
 
     @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
     public String getMessage() {
         return message;
     }
