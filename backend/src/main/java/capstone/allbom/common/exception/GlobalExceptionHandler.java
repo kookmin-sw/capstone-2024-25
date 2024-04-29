@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -88,6 +89,19 @@ public class GlobalExceptionHandler {
         log.warn("[" + e.getClass() + "] " + errorResponse);
         return ResponseEntity.badRequest()
                 .body(new ExceptionResponse(400, errorResponse.toString()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleHttpRequestMethodNotSupportedException(
+            final HttpRequestMethodNotSupportedException e
+    ) {
+        final ErrorResponse errorResponse = new ErrorResponse(
+                e.getMethod(),
+                "지원하지 않는 HTTP 메소드입니다."
+        );
+        log.warn("[" + e.getClass() + "] " + errorResponse);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ExceptionResponse(405, errorResponse.toString()));
     }
 
     @ExceptionHandler
