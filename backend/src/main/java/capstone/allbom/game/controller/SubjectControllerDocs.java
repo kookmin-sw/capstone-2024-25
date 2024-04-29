@@ -44,7 +44,7 @@ public interface SubjectControllerDocs {
 
     @Operation(summary = "과목별 문장 건너뛰기", description = "과목별로 회원이 현재 풀어야 할 문장을 건너뛴다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "과목별 문장 건너뛰기 성공"), //해당 교과목의 모든 문제를 완료했습니다.
+            @ApiResponse(responseCode = "200", description = "과목별 문장 건너뛰기 성공"),
             @ApiResponse(
                     responseCode = "400",
                     description = """
@@ -70,7 +70,7 @@ public interface SubjectControllerDocs {
 
     @Operation(summary = "과목별 문장 정답 제출하기", description = "과목별로 회원이 현재 풀어야 할 문장의 정답을 제출한다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "과목별 문장 건너뛰기 성공"), //해당 교과목의 모든 문제를 완료했습니다.
+            @ApiResponse(responseCode = "200", description = "과목별 문장 정답 제출 성공"),
             @ApiResponse(
                     responseCode = "400",
                     description = """
