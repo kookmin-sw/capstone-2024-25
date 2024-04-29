@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/member")
 @RestController
 @Slf4j
-@Tag(name = "Member", description = "Member API")
-public class MemberController {
+public class MemberController implements MemberControllerDocs{
 
     private final MemberService memberService;
 
