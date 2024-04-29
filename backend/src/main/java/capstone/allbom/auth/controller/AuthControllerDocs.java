@@ -99,7 +99,12 @@ public interface AuthControllerDocs {
 
     @Operation(summary = "로그아웃 하기", description = "로그아웃 한다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "로그아웃 성공")
+            @ApiResponse(responseCode = "200", description = "로그아웃 성공"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "올바르지 않은 갱신 토큰",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
     })
     ResponseEntity<Void> logout(
             final HttpServletRequest httpServletRequest,
