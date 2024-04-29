@@ -15,6 +15,5 @@ public record GeneralLoginRequest(
     public GeneralLoginRequest {
         Validator.notNull(loginId, "loginId");
         Validator.notNull(loginPassword, "loginPassword");
-
     }
 }
