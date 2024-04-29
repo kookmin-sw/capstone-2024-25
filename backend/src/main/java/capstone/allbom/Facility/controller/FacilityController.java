@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Transactional
-public class FacilityController {
+public class FacilityController implements FacilityControllerDocs{
 
     private final RestTemplateFacilityRequester restTemplateFacilityRequester;
     private final FacilityService facilityService;
