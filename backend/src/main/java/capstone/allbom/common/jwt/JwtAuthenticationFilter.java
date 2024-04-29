@@ -27,7 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/auth/register",
             "/auth/general/login",
             "/auth/token",
-            "/api/member/duplicate"
+            "/api/member/duplicate",
+            "/swagger-custom-ui.html"
     );
 
     private static final List<String> ALLOWED_START_URIS = List.of(
