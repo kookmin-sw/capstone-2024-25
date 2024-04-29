@@ -1,6 +1,8 @@
 package capstone.allbom.auth.controller;
 
 import capstone.allbom.auth.dto.request.GeneralLoginRequest;
+import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
+import capstone.allbom.auth.dto.response.GeneralSignUpResponse;
 import capstone.allbom.auth.dto.response.LoginResponse;
 import capstone.allbom.auth.dto.response.ReissuedAccessTokenResponse;
 import capstone.allbom.common.exception.ExceptionResponse;
@@ -16,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "인증", description = "인증 API")
 public interface AuthControllerDocs {
@@ -50,12 +51,26 @@ public interface AuthControllerDocs {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "존재햐지 않은 로그인 아이디",
+                    description = "존재햐지 않는 로그인 아이디",
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
     ResponseEntity<LoginResponse> loginByGeneral(
             @RequestBody GeneralLoginRequest generalLoginRequest,
+            final HttpServletResponse httpServletResponse
+    );
+
+    @Operation(summary = "일반 회원가입 하기", description = "아이디, 비밀번호로 회원가입 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "일반 회원가입 성공"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "이미 존재하는 계정 혹은 로그인 아이디",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<GeneralSignUpResponse> registerByGeneral(
+            @RequestBody GeneralSignUpRequest generalSignUpRequest,
             final HttpServletResponse httpServletResponse
     );
 
