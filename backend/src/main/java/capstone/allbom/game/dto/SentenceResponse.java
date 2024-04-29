@@ -3,7 +3,7 @@ package capstone.allbom.game.dto;
 import capstone.allbom.game.domain.Subject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "과목별 현재 문장 응답")
+@Schema(description = "과목별 문장 조회 응답")
 public record SentenceResponse(
         @Schema(description = "현재 문장 번호", example = "3")
         Integer currProblem,
