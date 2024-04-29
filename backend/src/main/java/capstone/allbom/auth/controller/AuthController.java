@@ -30,7 +30,7 @@ import static org.springframework.boot.web.server.Cookie.*;
 @RequestMapping("/auth")
 @RestController
 @Slf4j
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
 
     private final AuthService authService;
 
