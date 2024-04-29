@@ -78,6 +78,19 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(
+            final HttpMessageNotReadableException e
+    ) {
+        final ErrorResponse errorResponse = new ErrorResponse(
+                "요청한 인자가 유효하지 않습니다.",
+                e.getMessage()
+        );
+        log.warn("[" + e.getClass() + "] " + errorResponse);
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponse(400, errorResponse.toString()));
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleBadRequestException(final BadRequestException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.badRequest()
