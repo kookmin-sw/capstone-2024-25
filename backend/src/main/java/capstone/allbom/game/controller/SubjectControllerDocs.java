@@ -22,7 +22,7 @@ public interface SubjectControllerDocs {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "과목별로 회원이 풀어야 할 문장 조회 성공"),
             @ApiResponse(
-                    responseCode = "400",
+                    responseCode = "404",
                     description = """
                             1. 요청한 과목명과 번호에 해당하는 문장이 존재하지 않는 경우
                                                         
@@ -47,12 +47,15 @@ public interface SubjectControllerDocs {
             @ApiResponse(responseCode = "200", description = "과목별 문장 건너뛰기 성공"),
             @ApiResponse(
                     responseCode = "400",
-                    description = """
-                            1. 해당 교과목의 모든 문제를 완료했을 경우
+                    description = "해당 교과목의 모든 문제를 완료했을 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = """                      
+                            1. 요청한 과목명과 번호에 해당하는 문장이 존재하지 않는 경우
                                                         
-                            2. 요청한 과목명과 번호에 해당하는 문장이 존재하지 않는 경우
-                                                        
-                            3. 요청한 번호에 해당하는 문장이 존재하지 않는 경우
+                            2. 요청한 번호에 해당하는 문장이 존재하지 않는 경우
                             """,
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             ),
@@ -73,12 +76,15 @@ public interface SubjectControllerDocs {
             @ApiResponse(responseCode = "200", description = "과목별 문장 정답 제출 성공"),
             @ApiResponse(
                     responseCode = "400",
-                    description = """
-                            1. 해당 교과목의 모든 문제를 완료했을 경우
+                    description = "해당 교과목의 모든 문제를 완료했을 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = """                      
+                            1. 요청한 과목명과 번호에 해당하는 문장이 존재하지 않는 경우
                                                         
-                            2. 요청한 과목명과 번호에 해당하는 문장이 존재하지 않는 경우
-                                                        
-                            3. 요청한 번호에 해당하는 문장이 존재하지 않는 경우
+                            2. 요청한 번호에 해당하는 문장이 존재하지 않는 경우
                             """,
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             ),
