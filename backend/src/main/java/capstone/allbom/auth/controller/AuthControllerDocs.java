@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -91,6 +93,15 @@ public interface AuthControllerDocs {
     })
     ResponseEntity<ReissuedAccessTokenResponse> reissueAccessToken(
             @RequestHeader("Authorization") final String authorizationHeader,
+            final HttpServletRequest httpServletRequest,
+            final HttpServletResponse httpServletResponse
+    );
+
+    @Operation(summary = "로그아웃 하기", description = "로그아웃 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "로그아웃 성공")
+    })
+    ResponseEntity<Void> logout(
             final HttpServletRequest httpServletRequest,
             final HttpServletResponse httpServletResponse
     );
