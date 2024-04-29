@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Tag(name = "문장 순서 맞추기 게임", description = "문장 순서 맞추기 게임 진행 화면 API")
+@Tag(name = "문장 순서 맞추기 게임", description = "문장 순서 맞추기 게임 API")
 public interface SubjectControllerDocs {
     @Operation(summary = "과목별 현재 문장 조회하기", description = "과목별로 회원이 현재 풀어야 할 문장을 조회한다.")
     @ApiResponses({
