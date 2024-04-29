@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/game")
 @Slf4j
-public class GameController {
+public class GameController implements GameControllerDocs{
 
     private final GameService gameService;
 
