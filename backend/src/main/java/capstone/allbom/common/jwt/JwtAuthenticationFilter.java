@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> ALLOWED_START_URIS = List.of(
 //            "/"
-            "/swagger-ui"
+            "/swagger-custom-ui.html"
             /**
              * TODO
              * 시작 URI 설정

@@ -58,6 +58,11 @@ public enum DefaultErrorCode implements ErrorCode{
         this.message = message;
     }
 
+    @Override
+    public int getCode() {
+        return code;
+    }
+
     public String getMessage() {
         return message;
     }
