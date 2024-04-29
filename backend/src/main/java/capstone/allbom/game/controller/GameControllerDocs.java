@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "문장 순서 맞추기 게임", description = "문장 순서 맞추기 메인 화면 API") // 과목별 상세 화면 API
+@Tag(name = "문장 순서 맞추기 게임", description = "문장 순서 맞추기 메인 화면 API")
 public interface GameControllerDocs {
     @Operation(summary = "과목별 진행률 조회하기", description = "과목별 문제 푼 진행률을 조회한다.")
     @ApiResponses({
