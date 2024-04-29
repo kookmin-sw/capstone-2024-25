@@ -19,7 +19,7 @@ import java.util.Locale;
 @RequiredArgsConstructor
 @RequestMapping("/api/game")
 @Slf4j
-public class SubjectController {
+public class SubjectController implements SubjectControllerDocs{
 
     private final SubjectService subjectService;
 

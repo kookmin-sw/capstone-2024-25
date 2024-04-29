@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleException(final Exception e) {
         log.error("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.internalServerError()
-                .body(new ExceptionResponse(100, "알 수 없는 서버 에러가 발생했습니다."));
+                .body(new ExceptionResponse(500, "알 수 없는 서버 에러가 발생했습니다."));
     }
 
     @ExceptionHandler
