@@ -98,13 +98,6 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleNotFoundException(final BadRequestException e) {
-        log.warn("[" + e.getClass() + "] : " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ExceptionResponse.from(e));
-    }
-
-    @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleNotFoundException(final UnexpectedException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
