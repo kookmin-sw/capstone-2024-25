@@ -53,7 +53,7 @@ public interface AuthControllerDocs {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "존재햐지 않는 로그인 아이디",
+                    description = "존재하지 않는 로그인 아이디",
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
