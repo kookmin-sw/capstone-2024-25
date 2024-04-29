@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -91,30 +92,31 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleNotFoundException(final UnauthorizedException e) {
+    public ResponseEntity<ExceptionResponse> handleUnauthorizedException(final UnauthorizedException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ExceptionResponse.from(e));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleNotFoundException(final UnexpectedException e) {
+    public ResponseEntity<ExceptionResponse> handleUnexpectedException(final UnexpectedException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.from(e));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleNotFoundException(final AuthException e) {
+    public ResponseEntity<ExceptionResponse> handleAuthException(final AuthException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ExceptionResponse.from(e));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleNotFoundException(final ExpiredPeriodJwtException e) {
+    public ResponseEntity<ExceptionResponse> handleExpiredPeriodJwtException(final ExpiredPeriodJwtException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ExceptionResponse.from(e));
     }
+
 }
