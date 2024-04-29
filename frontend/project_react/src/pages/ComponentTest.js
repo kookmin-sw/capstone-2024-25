@@ -16,60 +16,57 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
-const ComponentTest = () => {
-  const testFun = () => {
-    const data = {
-      voice: {
-        // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
-        name: 'ko-KR-Neural2-C',
-        languageCode: 'ko-KR',
-        // ssmlGender: 'MALE',
-      },
-      input: {
-        text:
-          '스무번 안에 제가 생각한 \n' +
-          '[네글자] 단어를 맞춰보세요.\n' +
-          '저는 예/아니오 로만 답변할 수 있어요.\n' +
-          '하지만 뭔가 설명이 필요한 부분에\n' +
-          '대해서는 부연설명을 할 수도 있어요.',
-      },
-      audioConfig: {
-        audioEncoding: 'mp3',
-      },
-    };
+export const testFun = (text) => {
+  // console.log('testFun');
+  // console.log('text : ', text);
+  const data = {
+    voice: {
+      // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
+      name: 'ko-KR-Neural2-C',
+      languageCode: 'ko-KR',
+      // ssmlGender: 'MALE',
+    },
+    input: {
+      text: text.toString(),
+    },
+    audioConfig: {
+      audioEncoding: 'mp3',
+    },
+  };
 
-    axios
-      .post(
-        `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.REACT_APP_GOOGLE_TTS_KEY}`,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
+  axios
+    .post(
+      `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.REACT_APP_GOOGLE_TTS_KEY}`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
         },
-      )
-      .then((response) => {
-        const res = response.data;
-        const audioBlob = base64ToBlob(res.audioContent, 'audio/mp3');
-        const audioFile = new Audio(window.URL.createObjectURL(audioBlob));
-        audioFile.playbackRate = 1;
-        audioFile.play();
-      })
-      .catch((error) => {
-        console.error('오류 발생: ', error.message);
-      });
-  };
+      },
+    )
+    .then((response) => {
+      const res = response.data;
+      const audioBlob = base64ToBlob(res.audioContent, 'audio/mp3');
+      const audioFile = new Audio(window.URL.createObjectURL(audioBlob));
+      audioFile.playbackRate = 1;
+      audioFile.play();
+    })
+    .catch((error) => {
+      console.error('오류 발생: ', error.message);
+    });
+};
 
-  const base64ToBlob = (base64, mimeType) => {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
-  };
+export const base64ToBlob = (base64, mimeType) => {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
+};
 
+const ComponentTest = () => {
   const gun = () => {
     testFun();
   };
