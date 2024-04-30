@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 @Slf4j
-public class MedicineController {
+public class MedicineController implements MedicineControllerDocs{
 
     private final MedicineService medicineService;
 

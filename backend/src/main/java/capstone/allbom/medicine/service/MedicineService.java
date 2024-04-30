@@ -26,7 +26,7 @@ public class MedicineService {
     @Transactional(readOnly = true)
     public Medicine findById(final Long medicineId) {
         return medicineRepository.findById(medicineId)
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
     }
 
     @Transactional(readOnly = true)
