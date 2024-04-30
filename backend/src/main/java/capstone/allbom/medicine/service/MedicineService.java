@@ -24,9 +24,12 @@ public class MedicineService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public Medicine findById(final Long medicineId) {
-        return medicineRepository.findById(medicineId)
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+    public Medicine findById(final Long memberId, final Long medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+        validateMemberIsSame(memberId, medicine.getMember().getId());
+
+        return medicine;
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +72,7 @@ public class MedicineService {
 
     private void validateMemberIsSame(Long requestMemberId, Long medicineMemberId) {
         if (requestMemberId != medicineMemberId) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_UPDATE_MEDICINE);
+            throw new BadRequestException(DefaultErrorCode.INVALID_GET_OR_UPDATE_MEDICINE);
         }
     }
 

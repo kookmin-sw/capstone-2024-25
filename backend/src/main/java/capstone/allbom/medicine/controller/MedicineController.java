@@ -17,13 +17,16 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 @Slf4j
-public class MedicineController {
+public class MedicineController implements MedicineControllerDocs{
 
     private final MedicineService medicineService;
 
     @GetMapping("/medicine/{medicineId}")
-    public ResponseEntity<MedicineDetailResponse> findMedicine(@PathVariable Long medicineId) {
-        Medicine medicine = medicineService.findById(medicineId);
+    public ResponseEntity<MedicineDetailResponse> findMedicine(
+            @Auth Member member,
+            @PathVariable Long medicineId
+    ) {
+        Medicine medicine = medicineService.findById(member.getId(), medicineId);
         return ResponseEntity.ok(MedicineDetailResponse.from(medicine));
     }
 
