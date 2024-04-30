@@ -5,12 +5,15 @@ import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.medicine.domain.Medicine;
 import capstone.allbom.medicine.domain.MedicineRepository;
+import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.medicine.service.dto.MedicineRequest;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,9 +24,20 @@ public class MedicineService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public Medicine findById(final Long medicineId) {
-        return medicineRepository.findById(medicineId)
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+    public Medicine findById(final Long memberId, final Long medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEDICINE_ID));
+        validateMemberIsSame(memberId, medicine.getMember().getId());
+
+        return medicine;
+    }
+
+    @Transactional(readOnly = true)
+    public List<MedicineDetailResponse> findByMemberId(final Member member) {
+        List<Medicine> medicines = member.getMedicines();
+        return medicines.stream()
+                .map(MedicineDetailResponse::from)
+                .toList();
     }
 
     @Transactional
@@ -58,7 +72,7 @@ public class MedicineService {
 
     private void validateMemberIsSame(Long requestMemberId, Long medicineMemberId) {
         if (requestMemberId != medicineMemberId) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_UPDATE_MEDICINE);
+            throw new BadRequestException(DefaultErrorCode.INVALID_GET_OR_UPDATE_MEDICINE);
         }
     }
 

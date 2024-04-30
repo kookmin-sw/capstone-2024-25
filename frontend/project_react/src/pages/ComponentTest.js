@@ -1,4 +1,5 @@
 // ComponentTest.js
+import axios from 'axios';
 
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -15,7 +16,61 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
+export const testFun = (text) => {
+  // console.log('testFun');
+  // console.log('text : ', text);
+  const data = {
+    voice: {
+      // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
+      name: 'ko-KR-Neural2-C',
+      languageCode: 'ko-KR',
+      // ssmlGender: 'MALE',
+    },
+    input: {
+      text: text.toString(),
+    },
+    audioConfig: {
+      audioEncoding: 'mp3',
+    },
+  };
+
+  axios
+    .post(
+      `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.REACT_APP_GOOGLE_TTS_KEY}`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+    .then((response) => {
+      const res = response.data;
+      const audioBlob = base64ToBlob(res.audioContent, 'audio/mp3');
+      const audioFile = new Audio(window.URL.createObjectURL(audioBlob));
+      audioFile.playbackRate = 1;
+      audioFile.play();
+    })
+    .catch((error) => {
+      console.error('오류 발생: ', error.message);
+    });
+};
+
+export const base64ToBlob = (base64, mimeType) => {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
+};
+
 const ComponentTest = () => {
+  const gun = () => {
+    testFun();
+  };
+
   const text = '텍스트';
   const inputInfo = '정보';
   const infoState = 'error';
@@ -67,7 +122,14 @@ const ComponentTest = () => {
       {/*  />*/}
       {/*</TestWrapper>*/}
       <TestWrapper>
-        <Toggle text="Large Selected" size="Large" selected={true} />
+        <Toggle
+          text="Large Selected"
+          size="Large"
+          selected={true}
+          onClick={() => {
+            testFun();
+          }}
+        />
         <Toggle text="Medium Selected" size="Medium" selected={true} />
         <Toggle text="Small Selected" size="Small" selected={true} />
         <Toggle text="Large Unselected" size="Large" selected={false} />

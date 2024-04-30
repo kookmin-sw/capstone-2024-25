@@ -26,11 +26,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/auth/login",
             "/auth/register",
             "/auth/general/login",
-            "auth/token"
+            "/auth/token",
+            "/api/member/duplicate",
+            "/swagger-custom-ui.html",
+            "/swagger-ui/index.html",
+            "/swagger-ui/swagger-initializer.js",
+            "/api-docs/swagger-config",
+            "/swagger-ui",
+            "/api-docs"
     );
 
     private static final List<String> ALLOWED_START_URIS = List.of(
-            "/"
+//            "/"
+            "/swagger-custom-ui.html"
             /**
              * TODO
              * 시작 URI 설정
@@ -79,6 +87,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          * TODO
          * ALLOWED_START_URIS 설정 후에 return 값에 startsWithAllowedStartUris(request) 추가
          */
+
+        System.out.println("request = " + request.getRequestURI());
 
         log.info("shouldnotFilter1 = {}", containsAllowedUris(request));
         log.info("shouldnotFilter2 = {}", matchesUriPattern(request));

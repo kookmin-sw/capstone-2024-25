@@ -3,11 +3,10 @@ package capstone.allbom.game.service;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.game.domain.*;
-import capstone.allbom.game.dto.GameSentenceRequest;
+import capstone.allbom.game.dto.SentenceRequest;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,25 +33,81 @@ class SubjectServiceTest {
     @Nested
     class updateSubject {
         Subject science;
-        GameSentenceRequest request = new GameSentenceRequest(
+        SentenceRequest request = new SentenceRequest(
                 "DNA는 생명체의 유전 정보를 담고 있는 분자이다."
         );
         Member member = memberRepository.save(new Member());
         Game game = gameRepository.save(new Game());
 
+//        @BeforeEach
+//        void setUp() {
+//            science = new Subject(
+//                    null,
+//                    null,
+//                    SubjectType.SCIENCE,
+//                    2,
+//                    false,
+//                    new ArrayList<>()
+//            );
+//            game.setMember(member);
+//            science.setGame(game);
+//            subjectRepository.save(science);
+//        }
+
         @BeforeEach
         void setUp() {
-            science = new Subject(
-                    null,
-                    null,
-                    SubjectType.SCIENCE,
-                    2,
-                    false,
-                    new ArrayList<>()
-            );
             game.setMember(member);
-            science.setGame(game);
-            subjectRepository.save(science);
+            science = game.getSubjects().get(1);
+            science.setCurrProblem(2);
+        }
+
+        @Test
+        void 문제를_건너뛰면_리스트에_현재_번호가_추가된다() {
+            // given
+            var science = game.getSubjects().get(1);
+            science.setCurrProblem(77);
+
+            // when
+            subjectService.plusToPassedProblems(science);
+            List<Integer> passedProblems = science.getPassedProblems();
+
+            // then
+            assertThat(passedProblems.size()).isEqualTo(1);
+            assertThat(passedProblems).contains(77);
+        }
+
+        @Test
+        void 사용자의_문장_입력과_정답이_같은지_비교한다() {
+            // given
+            String answer = "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다.";
+            SentenceRequest request = new SentenceRequest(
+              "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다."
+            );
+            var science = game.getSubjects().get(1);
+            science.setCurrProblem(77);
+
+            // when
+            boolean isTrue = subjectService.compareWithAnswer(science.getType(), answer, request);
+
+//            // then
+            assertThat(isTrue).isTrue();
+        }
+
+        @Test
+        void 사용자의_문장_입력과_정답이_다른지_비교한다() {
+            // given
+            String answer = "정치적 분열이 사회의 안정을 위협하고 있다.";
+            SentenceRequest request = new SentenceRequest(
+                    "정치적 분열이 사회의 안정을 위협하고 있다다."
+            );
+            var science = game.getSubjects().get(2);
+            science.setCurrProblem(84);
+
+            // when
+            boolean isFalse = subjectService.compareWithAnswer(science.getType(), answer, request);
+
+//            // then
+            assertThat(isFalse).isFalse();
         }
 
         @Test
@@ -125,6 +180,28 @@ class SubjectServiceTest {
             assertThat(updatedSociety.getCurrProblem()).isEqualTo(100);
             assertThat(e1.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
             assertThat(e2.getErrorCode()).isEqualTo(DefaultErrorCode.COMPLETE_SUBJECT_ALL_PROBLEM);
+        }
+
+        @Test
+        void 게임_객체를_생성하면_5개의_과목_객체가_생성된다() {
+            // given
+            Game game = new Game();
+
+            // when
+            gameRepository.save(game);
+            List<Subject> subjects = game.getSubjects();
+
+            // then
+            assertThat(subjects.size()).isEqualTo(5);
+            for (Subject subject : subjects) {
+                assertThat(subject.getType()).isIn(
+                        SubjectType.LITERATURE,
+                        SubjectType.SCIENCE,
+                        SubjectType.SOCIETY,
+                        SubjectType.HISTORY,
+                        SubjectType.LEGISLATION
+                );
+            }
         }
     }
 }

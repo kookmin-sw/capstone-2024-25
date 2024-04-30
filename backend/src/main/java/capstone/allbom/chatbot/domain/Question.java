@@ -23,4 +23,8 @@ public class Question {
     private String details;
 
     private LocalDateTime createdAt;
+
+    private Boolean isChatbotFirst;
+
+    private Boolean isGame;
 }
