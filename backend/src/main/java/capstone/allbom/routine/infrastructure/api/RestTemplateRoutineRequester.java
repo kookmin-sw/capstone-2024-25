@@ -2,6 +2,7 @@ package capstone.allbom.routine.infrastructure.api;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.common.service.S3FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +76,7 @@ public class RestTemplateRoutineRequester {
 //        log.info("routineNum={}", routineNum);
 
         if (routineData == null || !routineData.containsKey(routineNum)) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
+            throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_NUMBER);
         }
 
         routine = (String) routineData.get(routineNum);

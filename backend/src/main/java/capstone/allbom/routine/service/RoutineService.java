@@ -94,8 +94,11 @@ public class RoutineService {
             case "rest":
                 isComplete = routine.getDailyRestStatus();
                 break;
-            default:
+            case "eat":
                 isComplete = routine.getDailyEatStatus();
+                break;
+            default:
+                throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         }
 
         if (isComplete) {
@@ -118,8 +121,11 @@ public class RoutineService {
             case "rest":
                 routine.setDailyRestStatus(true);
                 break;
-            default:
+            case "eat":
                 routine.setDailyEatStatus(true);
+                break;
+            default:
+                throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         }
     }
     public String getRoutine(Routine routine, String type) {
@@ -152,7 +158,7 @@ public class RoutineService {
             case "hobby" -> "취미";
             case "eat" -> "식사";
             case "rest" -> "휴식";
-            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+            default -> throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         };
         return requestType;
     }

@@ -13,7 +13,8 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_SECRET_KEY(400, "약한 키 예외가 발생했습니다."),
     INVALID_GET_OR_UPDATE_MEDICINE(400, "자신의 약만 조회 및 변경할 수 있습니다"),
     INVALID_MEDICINE_TIME(400, "유효하지 않은 약 시간입니다."),
-    INVALID_ROUTINE_TYPE(400, "요청한 루틴명이나 번호에 해당하는 내용이 존재하지 않습니다."),
+    INVALID_ROUTINE_TYPE(404, "요청한 투두 카테고리에 해당하는 내용이 존재하지 않습니다."),
+    INVALID_ROUTINE_NUMBER(404, "요청한 투두 카테고리의 번호에 해당하는 내용이 존재하지 않습니다."),
     INVALID_FACILITY_TYPE_ID(400, "요청한 유형과 번호에 해당하는 시설이 존재하지 않습니다."),
     INVALID_GAME_SUBJECT_TYPE(404, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(404, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
@@ -23,7 +24,7 @@ public enum DefaultErrorCode implements ErrorCode{
     COMPLETE_ROUTINE_HOBBY(400, "오늘의 취미를 완료했습니다."),
     COMPLETE_ROUTINE_REST(400, "오늘의 휴식을 완료했습니다."),
     COMPLETE_ROUTINE_EAT(400, "오늘의 식사를 완료했습니다."),
-    COMPLETE_ALL_ROUTINE(400, "오늘의 모든 루틴을 완료했습니다."),
+    COMPLETE_ALL_ROUTINE(400, "오늘의 모든 투두를 완료했습니다."),
     // 401
     EXPIRED_AUTH_TOKEN(401, "만료된 로그인 토큰입니다."),
     INVALID_AUTH_TOKEN(401, "올바르지 않은 로그인 토큰입니다."),
