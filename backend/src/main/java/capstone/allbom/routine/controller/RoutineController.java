@@ -22,9 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/api/todo")
 @Slf4j
-public class RoutineController {
+public class RoutineController implements RoutineControllerDocs{
 
     private final RoutineService routineService;
+
 
     @GetMapping
     public ResponseEntity<List<RoutineResponse>> getAllRoutine(@Auth final Member member) {
