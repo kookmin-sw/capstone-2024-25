@@ -13,7 +13,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import re
 import time
 import pandas as pd
 import json
@@ -32,34 +31,43 @@ def calculate_dday(dday_element):
         return deadline_date.strftime('%Y-%m-%d')
 
 # 채용 정보 내용 추출 함수
-def get_content(soup):
-    province_element = province
-    title_element = soup.find('p', class_='tit').text.strip()
-    dday_element = soup.find('span', class_='d-day').text.strip()
-    deadline_element = calculate_dday(dday_element)
-    career_element = ' '.join(soup.find('strong', string='경력').find_next_sibling('span').text.strip().split())
-    scholarship_element = soup.find('strong', string='학력').find_next_sibling('span').text.strip()
-    address_element = ' '.join(soup.find('strong', string='지역').find_next_sibling('span').text.split())
-    latitude_element = ''
-    longitude_element = ''
-    pay_element = ' '.join(soup.find('strong', string='임금').find_next_sibling('span').text.strip().split())
-    companyImageUrl_element = 'https://www.work.go.kr/' + soup.find('img', id='logoImg')['src']
-    companyName_element = soup.find('strong', string='기업명').find_next_sibling('div').text.strip()
-    employmentType_element = soup.find('strong', string='고용형태').find_next_sibling('span').text.strip()
-    workType_element = ' '.join(soup.find('strong', string='근무형태').find_next_sibling('span').text.strip().split())
-    content_element = '\n'.join(
-        [str(item).strip() for item in soup.find('caption', string='직무내용 표').find_next('td').contents if
-         isinstance(item, str)])
-    occupation_element = soup.find('caption', string='모집요강 표2. 모집직종, 직종키워드, 관련직종 항목으로 구성').find_next('td').text.strip()
-    worknetUrl_element = driver.current_url
-    worknetId_element = next((param.split('=')[1] for param in driver.current_url.split('?')[1].split('&') if
-                              param.startswith('wantedAuthNo=')), None)
+def get_content(driver, soup):
+    try:
+        driver.find_element(By.CSS_SELECTOR, 'p.tit')
 
-    return (province_element, title_element, dday_element, deadline_element, career_element,
-            scholarship_element, address_element, latitude_element, longitude_element, pay_element,
-            companyImageUrl_element, companyName_element, employmentType_element, workType_element,
-            occupation_element, content_element, worknetUrl_element, worknetId_element)
+        time.sleep(3)
 
+        province_element = province
+        title_element = soup.find('p', class_='tit').text.strip()
+        dday_element = soup.find('span', class_='d-day').text.strip()
+        deadline_element = calculate_dday(dday_element)
+        career_element = ' '.join(soup.find('strong', string='경력').find_next_sibling('span').text.strip().split())
+        scholarship_element = soup.find('strong', string='학력').find_next_sibling('span').text.strip()
+        address_element = ' '.join(soup.find('strong', string='지역').find_next_sibling('span').text.split())
+        latitude_element = ''
+        longitude_element = ''
+        pay_element = ' '.join(soup.find('strong', string='임금').find_next_sibling('span').text.strip().split())
+        companyImageUrl_element = 'https://www.work.go.kr/' + soup.find('img', id='logoImg')['src']
+        companyName_element = soup.find('strong', string='기업명').find_next_sibling('div').text.strip()
+        employmentType_element = soup.find('strong', string='고용형태').find_next_sibling('span').text.strip()
+        workType_element = ' '.join(soup.find('strong', string='근무형태').find_next_sibling('span').text.strip().split())
+        content_element = '\n'.join(
+            [str(item).strip() for item in soup.find('caption', string='직무내용 표').find_next('td').contents if
+             isinstance(item, str)])
+        occupation_element = soup.find('caption', string='모집요강 표2. 모집직종, 직종키워드, 관련직종 항목으로 구성').find_next('td').text.strip()
+        worknetUrl_element = driver.current_url
+        worknetId_element = next((param.split('=')[1] for param in driver.current_url.split('?')[1].split('&') if
+                                  param.startswith('wantedAuthNo=')), None)
+
+        return (province_element, title_element, dday_element, deadline_element, career_element,
+                scholarship_element, address_element, latitude_element, longitude_element, pay_element,
+                companyImageUrl_element, companyName_element, employmentType_element, workType_element,
+                occupation_element, content_element, worknetUrl_element, worknetId_element)
+
+    except NoSuchElementException:
+        # 요소를 찾지 못한 경우, None 리턴
+        print('No such element')
+        return None
 
 # 추출 정보 리스트 저장 함수
 def save_content(province_element, title_element, dday_element, deadline_element, career_element,
@@ -188,8 +196,8 @@ for idx, (province, region_code) in enumerate(region_codes.items()):
         # 현재 창 핸들 저장
         main_window_handle = driver.current_window_handle
 
-        # 1~10번째 줄 정보 가져오기
-        for i in range(1, 2):
+        # 1~3번째 줄 정보 가져오기
+        for i in range(1, 4):
             try:
                 # 세부 채용 공고 페이지를 열기 위한 클릭 실행
                 driver.find_element(By.CSS_SELECTOR, f'#list{i} > td:nth-child(3) > div > div > a').click()
@@ -212,7 +220,7 @@ for idx, (province, region_code) in enumerate(region_codes.items()):
                 soup = BeautifulSoup(html, 'html.parser')
 
                 # get_content 함수 호출
-                content = get_content(soup)
+                content = get_content(driver, soup)
 
                 # save_content 함수 호출
                 save_content(*content, provinces, titles, ddays, deadlines, careers, scholarships, addresses,
