@@ -23,5 +23,5 @@ ENTRYPOINT ["java", \
             "-Xmx1400m", \
             "-jar", \
 #            "-Dspring.profiles.active=prod", \
-            "--ENCRYPT_KEY=$ENCRYPT_KEY", \
+            "--ENCRYPT_KEY=toma", \
             "/app.jar"]
