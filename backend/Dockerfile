@@ -17,11 +17,10 @@ COPY --from=builder $JAR_FILE app.jar
 
 ARG ENCRYPT_KEY
 
-
 ENTRYPOINT ["java", \
             "-Xms1400m", \
             "-Xmx1400m", \
             "-jar", \
 #            "-Dspring.profiles.active=prod", \
-            "--ENCRYPT_KEY=toma", \
+            "--ENCRYPT_KEY=$ENCRYPT_KEY", \
             "/app.jar"]
