@@ -34,3 +34,5 @@ jobs:
           context: ./backend
           tags: eunsun2080/allbom:latest
           platforms: linux/amd64
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
