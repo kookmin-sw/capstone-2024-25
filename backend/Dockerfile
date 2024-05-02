@@ -15,9 +15,13 @@ FROM bellsoft/liberica-openjdk-debian:17
 ARG JAR_FILE=workspace/build/libs/*.jar
 COPY --from=builder $JAR_FILE app.jar
 
+ARG ENCRYPT_KEY
+
+
 ENTRYPOINT ["java", \
             "-Xms1400m", \
             "-Xmx1400m", \
             "-jar", \
 #            "-Dspring.profiles.active=prod", \
+            "--ENCRYPT_KEY=$ENCRYPT_KEY", \
             "/app.jar"]
