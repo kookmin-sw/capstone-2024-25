@@ -18,6 +18,11 @@ public class MemberController implements MemberControllerDocs{
 
     private final MemberService memberService;
 
+    @GetMapping("/ping")
+    public String pong() {
+        return "pong";
+    }
+
     @PatchMapping("/register")
     public ResponseEntity<Void> updateMember(
             @Auth Member member,
