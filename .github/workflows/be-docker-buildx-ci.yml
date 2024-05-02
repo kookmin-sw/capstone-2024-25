@@ -3,7 +3,7 @@ name: be-docker-buildx-ci
 on:
   push:
     branches:
-      - 'main'
+      - 'develop'
     paths:
       - 'backend/**'
 
