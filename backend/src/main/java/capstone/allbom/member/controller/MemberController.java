@@ -20,7 +20,7 @@ public class MemberController implements MemberControllerDocs{
 
     @GetMapping("/ping")
     public String pong() {
-        return "pong";
+        return "ping";
     }
 
     @PatchMapping("/register")
