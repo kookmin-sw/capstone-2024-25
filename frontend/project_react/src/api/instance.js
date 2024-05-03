@@ -1,14 +1,11 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  // baseURL: 'url을 여기에...'
-  // 추후 토큰 인증을 위한 코드
-  // headers: {
-  //   access_token: cookies.get('access_token'),
-  // },
-  // params: {
-  //   api_key: process.env.REACT_APP_MOVIE_DB_API_KEY,
-  // },
+  baseURL: 'http://43.202.145.172:8080',
+  headers: {
+    Authorization:
+      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6NywiaWF0IjoxNzE0NzE4Mjk3LCJleHAiOjE3MTU5Mjc4OTd9.ZvGwAMWGuRaUZfpT8yVIwFpLxI2--p022FUyAfySKYg',
+  },
   timeout: 1000,
 });
 
