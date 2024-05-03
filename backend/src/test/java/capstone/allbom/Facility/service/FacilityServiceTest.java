@@ -32,7 +32,7 @@ class FacilityServiceTest {
         String type = "HOSPITAL";
 
         //when
-        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
+        facilityService.getFacilitiesByType(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
     }
 
     @Test
@@ -45,7 +45,7 @@ class FacilityServiceTest {
         String type = FacilityType.WELFARECENTER.toString();
 
         //when
-        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude, type);
+        facilityService.getFacilities(SWlatitude, SWlongitude, NElatitude, NElongitude);
     }
 
 }

@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import Test from './pages/Test';
 import Nav1 from './pages/Nav1';
 import Nav4 from './pages/Nav4';
+import Nav5 from './pages/Nav5';
 import WordOrderSelection from './pages/games/wordOrder/1st_WordOrderSelection';
 import CrossWordIntro from './pages/games/crossWord/1st_CrossWordIntro';
 import WordOrderIntro from './pages/games/wordOrder/2nd_WordOrderIntro';
@@ -17,6 +18,7 @@ import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
 import MyPage from './pages/MyPage';
+
 function App() {
   return (
     <div id="App">
@@ -34,6 +36,8 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/auth/*" element={<SignUp />} />
           <Route path="/ttt" element={<Test />} />
+
+          <Route path="/map" element={<Nav5 />} />
 
           {/* 게임 페이지 */}
           <Route path="/game" element={<Nav1 />} />
