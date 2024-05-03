@@ -89,12 +89,11 @@ const Frame = styled.div`
 
 const CardsFrame = styled.div`
   width: 100dvw;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
   gap: 12px;
-  padding-top: 12px;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Spacer = styled.div`
