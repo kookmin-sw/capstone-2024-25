@@ -173,6 +173,15 @@ const Chatbot = () => {
 
     return () => clearTimeout(timerId);
   }, [listening, transcript, voiceInputStartTime]);
+  // useEffect(() => {
+  //   console.log(
+  //     'Speech Recognition Support:',
+  //     browserSupportsSpeechRecognition,
+  //   );
+  //   if (!browserSupportsSpeechRecognition) {
+  //     alert('This browser does not support speech recognition.');
+  //   }
+  // }, []);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -256,41 +265,48 @@ const Chatbot = () => {
   const [chatListDummy, setChatListDummy] = useState([
     {
       id: 1,
-      text: 'nope',
+      text: '안녕하세요 [희건]님 ! \n' + '무엇을 도와드릴까요 ?',
       type: 'System',
     },
     {
       id: 2,
-      text: 'nope',
+      text: '오늘 날씨 알려줘',
       type: 'User',
     },
     {
       id: 3,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text:
+        '금일 날씨는 구름이 낀 흐린 \n' +
+        '날씨이며, \n' +
+        '금일 기온은 최고 영상 11도, \n' +
+        '최저 영하 2도로 강수 확률은 \n' +
+        '20%입니다.\n' +
+        '미세 먼지 농도는 보통이며,\n' +
+        '또 뭐 알려줘 ?',
       type: 'System',
     },
     {
       id: 4,
-      text: 'nope',
+      text: '오늘따라 무기력해.',
       type: 'User',
     },
     {
       id: 5,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text:
+        '우울할 땐 바깥 산책이라도 \n' +
+        '다녀오는건 어떠신가요?\n' +
+        '근처 정릉 실버극장에서 영화도 \n' +
+        '무료 관람 가능합니다.\n' +
+        '자세한 정보 제공을 원하시나요?',
       type: 'System',
     },
     {
       id: 6,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text: '오늘 뉴스 알려줘',
       type: 'User',
     },
     {
       id: 7,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'System',
-    },
-    {
-      id: 8,
       text:
         '오늘 2024년 3월 4일 주요 뉴스입니다.\n' +
         '\n' +
