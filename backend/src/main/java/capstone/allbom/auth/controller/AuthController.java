@@ -11,6 +11,7 @@ import capstone.allbom.auth.service.AuthService;
 import capstone.allbom.auth.service.dto.LoginTokenDto;
 import capstone.allbom.auth.service.dto.ReissuedTokenDto;
 import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ import static org.springframework.boot.web.server.Cookie.*;
 @RequestMapping("/auth")
 @RestController
 @Slf4j
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
 
     private final AuthService authService;
 

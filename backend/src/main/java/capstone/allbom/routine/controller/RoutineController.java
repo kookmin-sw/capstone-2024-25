@@ -22,9 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/api/todo")
 @Slf4j
-public class RoutineController {
+public class RoutineController implements RoutineControllerDocs{
 
     private final RoutineService routineService;
+
 
     @GetMapping
     public ResponseEntity<List<RoutineResponse>> getAllRoutine(@Auth final Member member) {
@@ -50,10 +51,45 @@ public class RoutineController {
         return ResponseEntity.ok(routineResponses);
     }
 
-    @PostMapping
+    @GetMapping("/{type}")
+    public ResponseEntity<RoutineResponse> getRoutine(
+            @Auth final Member member,
+            @PathVariable final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        String contents = routineService.getRoutine(routine, type);
+        return ResponseEntity.ok(RoutineResponse.from(type, contents));
+    }
+
+    @PatchMapping("/previous/{type}")
+    public ResponseEntity<RoutineResponse> updateToPreviousRoutine(
+            @Auth final Member member,
+            @PathVariable final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        routineService.updateToPreviousRoutine(routine, type);
+        String contents = routineService.getRoutine(routine, type);
+        return ResponseEntity.ok(RoutineResponse.from(type, contents));
+    }
+
+    @PatchMapping("/next/{type}")
+    public ResponseEntity<RoutineResponse> updateToNextRoutine(
+            @Auth final Member member,
+            @PathVariable final String type
+    ) {
+        Routine routine = routineService.findByMember(member);
+        routineService.checkDailyStatus(routine, type);
+        routineService.updateToNextRoutine(routine, type);
+        String contents = routineService.getRoutine(routine, type);
+        return ResponseEntity.ok(RoutineResponse.from(type, contents));
+    }
+
+    @PostMapping("/{type}")
     public ResponseEntity<Void> changeRoutineStatus(
             @Auth final Member member,
-            @RequestParam final String type
+            @PathVariable final String type
     ) {
         Routine routine = routineService.findByMember(member);
         routineService.checkDailyStatus(routine, type);

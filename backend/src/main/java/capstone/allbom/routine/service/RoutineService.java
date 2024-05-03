@@ -94,8 +94,11 @@ public class RoutineService {
             case "rest":
                 isComplete = routine.getDailyRestStatus();
                 break;
-            default:
+            case "eat":
                 isComplete = routine.getDailyEatStatus();
+                break;
+            default:
+                throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         }
 
         if (isComplete) {
@@ -118,16 +121,14 @@ public class RoutineService {
             case "rest":
                 routine.setDailyRestStatus(true);
                 break;
-            default:
+            case "eat":
                 routine.setDailyEatStatus(true);
+                break;
+            default:
+                throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         }
     }
     public String getRoutine(Routine routine, String type) {
-        /**
-         * TODO
-         * 반환값 dto로 변경
-         * eat 예외처리
-         */
         String requestType = convertToRequestType(type);
         if (requestType.equals("운동")) {
             return routineRequester.getRoutine(requestType, routine.getDailyExercise().toString());
@@ -157,7 +158,7 @@ public class RoutineService {
             case "hobby" -> "취미";
             case "eat" -> "식사";
             case "rest" -> "휴식";
-            default -> throw new IllegalArgumentException("Unexpected value: " + type);
+            default -> throw new NotFoundException(DefaultErrorCode.INVALID_ROUTINE_TYPE);
         };
         return requestType;
     }
@@ -169,10 +170,6 @@ public class RoutineService {
 
     @Transactional
     public void updateToNextRoutine(Routine routine, String type) {
-        /**
-         * TODO
-         * daily status가 false인 경우에민 query 호출 가능하도록 예외 처리
-         */
         String requestType = convertToRequestType(type);
         Integer totalSize = routineRequester.getRoutineData(requestType).size();
 
@@ -217,10 +214,6 @@ public class RoutineService {
 
     @Transactional
     public void updateToPreviousRoutine(Routine routine, String type) {
-        /**
-         * TODO
-         * daily status가 false인 경우에민 query 호출 가능하도록 예외 처리
-         */
         String requestType = convertToRequestType(type);
         Integer totalSize = routineRequester.getRoutineData(requestType).size();
 

@@ -11,6 +11,8 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 
+import { testFun } from './ComponentTest';
+
 import { useEffect, useRef, useState } from 'react';
 
 const ChatbotContainer = styled.div`
@@ -251,7 +253,7 @@ const Chatbot = () => {
     setShowSubCategory(false);
   };
 
-  const chatListDummy = [
+  const [chatListDummy, setChatListDummy] = useState([
     {
       id: 1,
       text: 'nope',
@@ -287,11 +289,21 @@ const Chatbot = () => {
       text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
       type: 'System',
     },
-    // {
-    //   id: 8,
-    //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-    //   type: 'User',
-    // },
+    {
+      id: 8,
+      text:
+        '오늘 2024년 3월 4일 주요 뉴스입니다.\n' +
+        '\n' +
+        '정치:\n' +
+        '민생토론회: 윤석렬 대통령은 대구에서 민생토론회를 개최했습니다. 주요 내용은 부동산, 일자리, 탈원전 정책 등이었습니다.\n' +
+        '\n' +
+        '사회:\n' +
+        '농축산업에 AI 적용: 정부는 농축산업에 AI 기술을 적용하여 스마트 온실과 축사를 확대할 계획입니다.\n' +
+        '\n' +
+        '경제:\n' +
+        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      type: 'System',
+    },
     // {
     //   id: 9,
     //   text: 'nope',
@@ -302,7 +314,29 @@ const Chatbot = () => {
     //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
     //   type: 'User',
     // },
-  ];
+  ]);
+
+  const addChat = (text, type) => {
+    // 유저 텍스트 추가
+    // console.log('gmlgml');
+    // const newChat = {
+    //   id: chatListDummy.length + 1,
+    //   text: userText,
+    //   type: 'User',
+    // };
+    // setChatListDummy([...chatListDummy, newChat]);
+    testFun(chatListDummy[chatListDummy.length - 1].text);
+  };
+
+  const addSystemChat = () => {
+    const newChat = {
+      id: chatListDummy.length + 1,
+      text: chatListDummy[chatListDummy.length - 1].text,
+      type: 'User',
+    };
+    setChatListDummy([...chatListDummy, newChat]);
+    // testFun(userText);
+  };
 
   /* 모바일 가상 키보드 start */
   const handleScroll = (e) => {
@@ -545,6 +579,7 @@ const Chatbot = () => {
                 />
               ) : (
                 <SendButton
+                  onClick={() => addChat()}
                   src={
                     process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
                   }
