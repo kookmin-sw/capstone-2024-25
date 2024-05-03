@@ -1,4 +1,4 @@
-import { api_get } from '../apiWithTryCatch';
+import { api_get, } from "../crud";
 
 export const mapApi = {
   // 지도 관련 api
