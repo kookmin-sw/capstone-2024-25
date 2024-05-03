@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
+import { click } from '@testing-library/user-event/dist/click';
 
 const mapCategoryList = [
   [
@@ -38,8 +39,10 @@ export default function Nav5() {
     sw: 0,
     ne: 0,
   });
-  const [mapTags, setMapTags] = useState();
+  const [mapTags, setMapTags] = useState([]);
+  const [markerInfo, setMarkerInfo] = useState();
 
+  // 지도 초기화
   useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 받아옴
@@ -82,8 +85,13 @@ export default function Nav5() {
   async function fetchMapData() {
     try {
       const response = await mapApi.getMapMarkers(currentBounds);
-      console.log(response.data[selectedCategory]);
-      setMapTags(response.data);
+      console.log(response.data);
+      console.log(Object.values(response.data).flat());
+      if (selectedCategory === '전체') {
+        setMapTags(Object.values(response.data).flat());
+      } else {
+        setMapTags(response.data[selectedCategory]);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -125,25 +133,41 @@ export default function Nav5() {
           }}
         >
           {!state.isLoading &&
-            mapTags[selectedCategory].map((tag, index) => (
-              <>
+            mapTags.map((tag, index) => (
+              <div key={index}>
                 <MapMarker
                   position={{ lat: tag['lat'], lng: tag['lng'] }}
                   image={{
-                    src: `/images/map/marker_${selectedCategory}.svg`,
-                    size: { width: 40, height: 40 },
+                    // src: `/images/map/marker_${selectedCategory}.svg`,
+                    src: `/images/map/marker_병원·약국.svg`,
+                    size:
+                      markerInfo && index === markerInfo.markerIndex
+                        ? { width: 60, height: 60 }
+                        : { width: 40, height: 40 },
                   }}
                 />
                 <CustomOverlayMap
-                  position={{ lat: tag['lat'], lng: tag['lng']}}
+                  position={{ lat: tag['lat'], lng: tag['lng'] }}
                 >
-                 <MapTagOverlay onClick={() => console.log(`${tag['name']} has clicked.`)}>{tag['name']}</MapTagOverlay>
+                  <MapTagContainer>
+                    <MapTagOverlay
+                      $color="#EF6C20"
+                      onClick={() =>
+                        setMarkerInfo({
+                          markerIndex: index,
+                          markerName: tag['name'],
+                        })
+                      }
+                    >
+                      {markerInfo && index === markerInfo.markerIndex ? "" : tag['name']}
+                    </MapTagOverlay>
+                  </MapTagContainer>
                 </CustomOverlayMap>
-              </>
+              </div>
             ))}
         </Map>
       </MapFrame>
-      <InnerFrame>
+      <CategoryFrame>
         <CategoryButtonDiv>
           {mapCategoryList[0].map((category, index) => (
             <CategoryButton
@@ -169,7 +193,8 @@ export default function Nav5() {
             </CategoryButton>
           ))}
         </CategoryButtonDiv>
-      </InnerFrame>
+      </CategoryFrame>
+      {markerInfo && <MarkerInfo>{markerInfo.markerName}</MarkerInfo>}
     </Frame>
   );
 }
@@ -186,7 +211,7 @@ const MapFrame = styled.div`
   position: absolute;
 `;
 
-const InnerFrame = styled.div`
+const CategoryFrame = styled.div`
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -232,16 +257,32 @@ const CategoryButton = styled.button`
   }};
 `;
 
+const MapTagContainer = styled.div`
+  width: 60px;
+  height: 128px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+`;
+
 const MapTagOverlay = styled.div`
+  height: 80px;
+  pointer-events: all;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  z-index: 2;
+`;
+
+const MarkerInfo = styled.div`
+  width: 100%;
+  height: 92px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 40px;
   background-color: white;
-  border: 1px solid black;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  color: black;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  box-shadow: rgb(68, 68, 68) 0px 0px 5px; --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
 `;
