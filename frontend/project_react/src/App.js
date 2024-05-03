@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Test from './pages/Test';
 import Nav1 from './pages/Nav1';
+import Nav4 from './pages/Nav4';
 import Nav5 from './pages/Nav5';
 import WordOrderSelection from './pages/games/wordOrder/1st_WordOrderSelection';
 import CrossWordIntro from './pages/games/crossWord/1st_CrossWordIntro';
@@ -54,6 +55,9 @@ function App() {
           />
           <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
+
+          {/* To do */}
+          <Route path="/toDo" element={<Nav4/>} />
         </Routes>
       </BrowserRouter>
     </div>
