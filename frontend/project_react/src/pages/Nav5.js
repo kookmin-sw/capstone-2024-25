@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
-import { click } from '@testing-library/user-event/dist/click';
 
 const mapCategoryList = [
   [
