@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { Map, MapMarker} from 'react-kakao-maps-sdk';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
+import { mapApi } from '../../src/api/apis/mapApis';
 
-const mapKeywordList = [
-  ['전체', '병원·약국', '복지주택'],
-  ['복지관', '케어센터', '일자리'],
+const mapCategoryList = [
+  [
+    ['전체', '#379237'],
+    ['병원·약국', '#EF6C20'],
+    ['복지주택', '#FBC02D'],
+  ],
+  [
+    ['복지관', '#0091EA'],
+    ['케어센터', '#8BC34A'],
+    ['일자리', '#D57AFF'],
+  ],
 ];
 
 export default function Nav5() {
@@ -24,7 +33,12 @@ export default function Nav5() {
   });
 
   // 지도 외의 동작
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [currentBounds, setCurrentBounds] = useState({
+    sw: 0,
+    ne: 0,
+  });
+  const [mapTags, setMapTags] = useState();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -58,10 +72,22 @@ export default function Nav5() {
     }
   }, []);
 
+  useEffect(() => {}, [selectedCategory]);
+
   useEffect(() => {
     if (selectedCategory) {
     }
   }, [selectedCategory]);
+
+  async function fetchMapData() {
+    try {
+      const response = await mapApi.getMapMarkers(currentBounds);
+      console.log(response.data[selectedCategory]);
+      setMapTags(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <Frame>
@@ -82,40 +108,64 @@ export default function Nav5() {
             const level = map.getLevel();
             console.log(`현재 지도 레벨은 ${level} 입니다`);
           }}
+          onTileLoaded={(map) => {
+            console.log('지도 타일이 로드됐어요', currentBounds);
+            console.log(
+              '현재 마커 src:',
+              `/images/map/marker_${selectedCategory}.svg`,
+            );
+            fetchMapData();
+          }}
+          onBoundsChanged={(map) => {
+            const bounds = map.getBounds();
+            setCurrentBounds({
+              sw: bounds.getSouthWest().toString(),
+              ne: bounds.getNorthEast().toString(),
+            });
+          }}
         >
-          {' '}
-          {!state.isLoading && (
-            <MapMarker position={state.center}>
-              <div style={{ padding: '5px', color: '#000' }}>
-                {state.errMsg ? state.errMsg : '여기에 계신가요?!'}
-              </div>
-            </MapMarker>
-          )}
+          {!state.isLoading &&
+            mapTags[selectedCategory].map((tag, index) => (
+              <>
+                <MapMarker
+                  position={{ lat: tag['lat'], lng: tag['lng'] }}
+                  image={{
+                    src: `/images/map/marker_${selectedCategory}.svg`,
+                    size: { width: 40, height: 40 },
+                  }}
+                />
+                <CustomOverlayMap
+                  position={{ lat: tag['lat'], lng: tag['lng']}}
+                >
+                 <MapTagOverlay onClick={() => console.log(`${tag['name']} has clicked.`)}>{tag['name']}</MapTagOverlay>
+                </CustomOverlayMap>
+              </>
+            ))}
         </Map>
       </MapFrame>
       <InnerFrame>
         <CategoryButtonDiv>
-          {mapKeywordList[0].map((keyword, index) => (
+          {mapCategoryList[0].map((category, index) => (
             <CategoryButton
               key={index}
-              $keyword={keyword}
-              $isSelected={selectedCategory === keyword}
-              onClick={() => setSelectedCategory(keyword)}
+              $color={category[1]}
+              $isSelected={selectedCategory === category[0]}
+              onClick={() => setSelectedCategory(category[0])}
             >
-              {keyword}
+              {category[0]}
             </CategoryButton>
           ))}
         </CategoryButtonDiv>
         <Spacer direction="column" size="12px" />
         <CategoryButtonDiv>
-          {mapKeywordList[1].map((keyword, index) => (
+          {mapCategoryList[1].map((category, index) => (
             <CategoryButton
               key={index}
-              $keyword={keyword}
-              $isSelected={selectedCategory === keyword}
-              onClick={() => setSelectedCategory(keyword)}
+              $color={category[1]}
+              $isSelected={selectedCategory === category[0]}
+              onClick={() => setSelectedCategory(category[0])}
             >
-              {keyword}
+              {category[0]}
             </CategoryButton>
           ))}
         </CategoryButtonDiv>
@@ -160,7 +210,14 @@ const CategoryButtonDiv = styled.div`
 
 const CategoryButton = styled.button`
   flex-grow: 1; // 가능한 한 많은 공간 차지
-  border: 2px solid #808080;
+  border: 2px solid
+    ${(props) => {
+      if (props.$isSelected) {
+        return props.$color;
+      } else {
+        return '#808080';
+      }
+    }};
   padding: 4px 0;
   border-radius: 100px;
   font-size: 20px;
@@ -168,24 +225,23 @@ const CategoryButton = styled.button`
   color: ${(props) => (props.$isSelected ? 'white' : '#808080')};
   background-color: ${(props) => {
     if (props.$isSelected) {
-      switch (props.$keyword) {
-        case '전체':
-          return '#379237';
-        case '병원·약국':
-          return '#EF6C20';
-        case '복지주택':
-          return '#FBC02D';
-        case '복지관':
-          return '#0091EA';
-        case '케어센터':
-          return '#8BC34A';
-        case '일자리':
-          return '#00ffff';
-        default:
-          return '#808080';
-      }
+      return props.$color;
     } else {
       return 'white';
     }
   }};
+`;
+
+const MapTagOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
 `;
