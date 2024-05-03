@@ -93,6 +93,7 @@ const Container = styled.div`
     width: 100dvw;
     max-width: 480px;
     height: 200px;
+    margin: 20px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,7 +107,7 @@ const MotionCard = styled(motion.div)`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #D79797;
+    background-color: #00A619;
     border-radius: 20px;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2); */
 `;
