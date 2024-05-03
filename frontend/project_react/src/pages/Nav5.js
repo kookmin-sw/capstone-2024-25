@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
+import { wordOrderApis } from '../api/apis/gameApis';
 
 const mapCategoryList = [
   [
@@ -34,10 +35,7 @@ export default function Nav5() {
 
   // 지도 외의 동작
   const [selectedCategory, setSelectedCategory] = useState('전체');
-  const [currentBounds, setCurrentBounds] = useState({
-    sw: 0,
-    ne: 0,
-  });
+  const [currentBounds, setCurrentBounds] = useState();
   const [mapTags, setMapTags] = useState([]);
   const [markerInfo, setMarkerInfo] = useState();
 
@@ -74,27 +72,38 @@ export default function Nav5() {
     }
   }, []);
 
-  useEffect(() => {}, [selectedCategory]);
+  useEffect(() => {
+    const getWordOrderData = async () => {
+      try {
+        const response = await wordOrderApis.getSentenceData("science");
+        console.log('응답', response.data);
+      } catch (error) {
+        console.error('에러요', error.message);
+      }
+    }
+    getWordOrderData();
+    const fetchMapData = async () => {
+      try {
+        // const response =/ await mapApi.getMapMarkers(currentBounds);
+        // console.log('응답', response.data);
+        // console.log(Object.values(response.data).flat());
+        // if (selectedCategory === '전체') {
+        //   setMapTags(Object.values(response.data).flat());
+        // } else {
+        //   setMapTags(response.data[selectedCategory]);
+        // }
+      } catch (error) {
+        console.error('에러요', error.message);
+      }
+    };
+    if (currentBounds) fetchMapData();
+    // if (currentBounds) fetchMapData();
+  }, [currentBounds]);
 
   useEffect(() => {
     if (selectedCategory) {
     }
   }, [selectedCategory]);
-
-  async function fetchMapData() {
-    try {
-      const response = await mapApi.getMapMarkers(currentBounds);
-      console.log(response.data);
-      console.log(Object.values(response.data).flat());
-      if (selectedCategory === '전체') {
-        setMapTags(Object.values(response.data).flat());
-      } else {
-        setMapTags(response.data[selectedCategory]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <Frame>
@@ -121,10 +130,11 @@ export default function Nav5() {
               '현재 마커 src:',
               `/images/map/marker_${selectedCategory}.svg`,
             );
-            fetchMapData();
           }}
           onBoundsChanged={(map) => {
             const bounds = map.getBounds();
+            console.log('현재 위치', bounds);
+            // fetchMapData();
             setCurrentBounds({
               sw: bounds.getSouthWest().toString(),
               ne: bounds.getNorthEast().toString(),
@@ -158,7 +168,9 @@ export default function Nav5() {
                         })
                       }
                     >
-                      {markerInfo && index === markerInfo.markerIndex ? "" : tag['name']}
+                      {markerInfo && index === markerInfo.markerIndex
+                        ? ''
+                        : tag['name']}
                     </MapTagOverlay>
                   </MapTagContainer>
                 </CustomOverlayMap>
@@ -283,5 +295,6 @@ const MarkerInfo = styled.div`
   position: absolute;
   bottom: 0;
   z-index: 1;
-  box-shadow: rgb(68, 68, 68) 0px 0px 5px; --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
+  box-shadow: rgb(68, 68, 68) 0px 0px 5px;
+  --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
 `;
