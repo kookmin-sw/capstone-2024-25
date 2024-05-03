@@ -79,6 +79,7 @@ class SubjectServiceTest {
         @Test
         void 사용자의_문장_입력과_정답이_같은지_비교한다() {
             // given
+            String answer = "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다.";
             SentenceRequest request = new SentenceRequest(
               "태풍은 열대 지방에서 발생하여 강한 바람과 강우를 동반한다."
             );
@@ -86,7 +87,7 @@ class SubjectServiceTest {
             science.setCurrProblem(77);
 
             // when
-            boolean isTrue = subjectService.compareWithAnswer(science.getType(), science.getCurrProblem(), request);
+            boolean isTrue = subjectService.compareWithAnswer(science.getType(), answer, request);
 
 //            // then
             assertThat(isTrue).isTrue();
@@ -95,6 +96,7 @@ class SubjectServiceTest {
         @Test
         void 사용자의_문장_입력과_정답이_다른지_비교한다() {
             // given
+            String answer = "정치적 분열이 사회의 안정을 위협하고 있다.";
             SentenceRequest request = new SentenceRequest(
                     "정치적 분열이 사회의 안정을 위협하고 있다다."
             );
@@ -102,7 +104,7 @@ class SubjectServiceTest {
             science.setCurrProblem(84);
 
             // when
-            boolean isFalse = subjectService.compareWithAnswer(science.getType(), science.getCurrProblem(), request);
+            boolean isFalse = subjectService.compareWithAnswer(science.getType(), answer, request);
 
 //            // then
             assertThat(isFalse).isFalse();

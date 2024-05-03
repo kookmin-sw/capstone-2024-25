@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-import BirthModal from '../Modal/birth2';
+import BirthModal from '../Modal/Birth2';
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -13,6 +13,7 @@ const InputWrapper = styled.div`
   gap: 12px;
   box-sizing: border-box;
   position: relative;
+  border: 1px solid red;
 `;
 
 const InputStyled = styled.input`

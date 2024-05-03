@@ -4,9 +4,37 @@ const JobDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  height: 100%;
   width: 100%;
   box-sizing: border-box;
   padding: 50px 20px 0 20px;
+  position: relative;
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 20px;
+`;
+
+const JobDetailButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  gap: 12px;
+  color: #ffffff;
+  border-radius: 32px;
+`;
+const MapButton = styled(JobDetailButton)`
+  background-color: #8bc34a;
+`;
+const ShowDetailButton = styled(JobDetailButton)`
+  background-color: #000000;
 `;
 
 const JobDetailHeader = styled.div`
@@ -21,8 +49,10 @@ const HeaderTitle = styled.span`
 
 const JobDetailContent = styled.div`
   display: flex;
+  height: 100%;
   flex-direction: column;
   gap: 20px;
+  overflow-y: scroll;
 `;
 
 const CompanyLogo = styled.img`
@@ -100,6 +130,18 @@ const JobDetailPage = () => {
     ' * 인원 : 내부 미화원 1명 - 근무 시간 : 평일 09:00 ~ 15:30 (휴게 1시간) 토요일 09:00 ~ 10:30 - 급여 : 1,478,120 월';
   return (
     <JobDetailContainer>
+      <ButtonWrapper>
+        <MapButton>
+          <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
+          지도 보기
+        </MapButton>
+        <ShowDetailButton>
+          <img
+            src={process.env.PUBLIC_URL + '/images/JobPage/show-detail.svg'}
+          />
+          상세 보기
+        </ShowDetailButton>
+      </ButtonWrapper>
       <JobDetailHeader>
         <img src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'} />
         <HeaderTitle>엘림에스(유)</HeaderTitle>

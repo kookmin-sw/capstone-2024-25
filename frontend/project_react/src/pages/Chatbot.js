@@ -6,6 +6,13 @@ import ChatbotModalFirst from '../components/Modal/ChatbotFirst';
 import ChatbotModalSecond from '../components/Modal/ChatbotSecond';
 import Chat from '../components/Chatbot/Chat';
 import Category from '../components/Toggle/Category';
+import SelectInputMode from '../components/Chatbot/SelectInputMode';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition';
+
+import { testFun } from './ComponentTest';
+
 import { useEffect, useRef, useState } from 'react';
 
 const ChatbotContainer = styled.div`
@@ -15,6 +22,7 @@ const ChatbotContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 `;
 
 const ChattingWrapper = styled.div`
@@ -26,7 +34,6 @@ const ChattingWrapper = styled.div`
   padding: 12px 24px 100px 24px;
   box-sizing: border-box;
   width: 100%;
-  position: relative;
   height: 100%;
 `;
 
@@ -37,12 +44,43 @@ const CategoryWrapper = styled.div`
   background-color: #ffffff;
 `;
 
-const TempInput = styled.div`
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 158px;
   position: fixed;
   bottom: 0;
   left: 0;
+`;
+
+const InputVoiceWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+  width: 88%;
+  height: 84px;
+  box-sizing: border-box;
+  border: 1px solid var(--unselected-color);
+  border-radius: 4px;
+  background-color: #ffffff;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+const MicImg = styled.img`
+  width: 42px;
+`;
+const InputVoiceText = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  white-space: pre-wrap;
+`;
+
+const XImg = styled.img`
+  position: absolute;
+  width: 20px;
+  top: 12px;
+  right: 12px;
 `;
 
 const ChatInputWrapper = styled.div`
@@ -81,12 +119,6 @@ const SendButton = styled.img`
   height: 32px;
 `;
 
-const Footer = styled.div`
-  width: 100%;
-  height: 78px;
-  background-color: bisque;
-`;
-
 const Chatbot = () => {
   const [isOpenFirst, setIsOpenFirst] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
@@ -104,6 +136,43 @@ const Chatbot = () => {
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
 
   const [showSubCategory, setShowSubCategory] = useState(false);
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+  // const [timer, setTimer] = useState(null);
+  // const [startTimer, setStartTimer] = useState(null);
+  const clickVoice = () => {
+    SpeechRecognition.startListening({ continuous: true });
+    console.log('gugu 실행');
+  };
+  const voiceXClick = () => {
+    resetTranscript();
+    SpeechRecognition.stopListening();
+    setSelectMode('select');
+  };
+  const [voiceInputStartTime, setVoiceInputStartTime] = useState(null);
+
+  useEffect(() => {
+    if (listening) {
+      setVoiceInputStartTime(Date.now());
+    }
+
+    const checkEndTimer = () => {
+      if (voiceInputStartTime && Date.now() - voiceInputStartTime >= 2000) {
+        setVoiceInputStartTime(null);
+        resetTranscript();
+        SpeechRecognition.stopListening();
+      }
+    };
+
+    const timerId = setTimeout(checkEndTimer, 2000);
+
+    return () => clearTimeout(timerId);
+  }, [listening, transcript, voiceInputStartTime]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -142,6 +211,9 @@ const Chatbot = () => {
     },
   ]);
 
+  const [selectMode, setSelectMode] = useState('select');
+  const inputVoiceInfo =
+    '질문을 말씀해주세요 ! \n5초 동안 말씀이 없으시면 종료됩니다.';
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
@@ -181,7 +253,7 @@ const Chatbot = () => {
     setShowSubCategory(false);
   };
 
-  const chatListDummy = [
+  const [chatListDummy, setChatListDummy] = useState([
     {
       id: 1,
       text: 'nope',
@@ -217,11 +289,21 @@ const Chatbot = () => {
       text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
       type: 'System',
     },
-    // {
-    //   id: 8,
-    //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-    //   type: 'User',
-    // },
+    {
+      id: 8,
+      text:
+        '오늘 2024년 3월 4일 주요 뉴스입니다.\n' +
+        '\n' +
+        '정치:\n' +
+        '민생토론회: 윤석렬 대통령은 대구에서 민생토론회를 개최했습니다. 주요 내용은 부동산, 일자리, 탈원전 정책 등이었습니다.\n' +
+        '\n' +
+        '사회:\n' +
+        '농축산업에 AI 적용: 정부는 농축산업에 AI 기술을 적용하여 스마트 온실과 축사를 확대할 계획입니다.\n' +
+        '\n' +
+        '경제:\n' +
+        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      type: 'System',
+    },
     // {
     //   id: 9,
     //   text: 'nope',
@@ -232,7 +314,29 @@ const Chatbot = () => {
     //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
     //   type: 'User',
     // },
-  ];
+  ]);
+
+  const addChat = (text, type) => {
+    // 유저 텍스트 추가
+    // console.log('gmlgml');
+    // const newChat = {
+    //   id: chatListDummy.length + 1,
+    //   text: userText,
+    //   type: 'User',
+    // };
+    // setChatListDummy([...chatListDummy, newChat]);
+    testFun(chatListDummy[chatListDummy.length - 1].text);
+  };
+
+  const addSystemChat = () => {
+    const newChat = {
+      id: chatListDummy.length + 1,
+      text: chatListDummy[chatListDummy.length - 1].text,
+      type: 'User',
+    };
+    setChatListDummy([...chatListDummy, newChat]);
+    // testFun(userText);
+  };
 
   /* 모바일 가상 키보드 start */
   const handleScroll = (e) => {
@@ -308,12 +412,12 @@ const Chatbot = () => {
         chattingWrapper.style.height = `${
           window.visualViewport.height - inputHeight
         }px`;
-        chatInput.style.top = `${window.visualViewport.height - inputHeight}px`;
-        chatInput.style.bottom = '';
+        // chatInput.style.top = `${window.visualViewport.height - inputHeight}px`;
+        // chatInput.style.bottom = '';
       } else {
         chattingWrapper.style.height = `${window.visualViewport.height}px`;
-        chatInput.style.top = '';
-        chatInput.style.bottom = '78px';
+        // chatInput.style.top = '';
+        // chatInput.style.bottom = '78px';
       }
     } else {
       if (chattingWrapper) {
@@ -327,7 +431,7 @@ const Chatbot = () => {
   };
   const handleKeyboardVisibility = () => {
     const chattingWrapper = wrapperRef.current;
-    const footer = footerRef.current;
+    // const footer = footerRef.current;
     const chatInput = inputRef.current;
     const currentHeight = window.visualViewport.height;
     // 키보드가 열렸다고 판단되면 스크롤을 막음
@@ -335,14 +439,14 @@ const Chatbot = () => {
       setKeyboardOpened(true);
       window.scroll(0, 0);
 
-      footer.style.display = 'none';
-      chatInput.style.height = '80px';
+      // footer.style.display = 'none';
+      // chatInput.style.height = '80px';
       chattingWrapper.scrollTop = chattingWrapper.scrollHeight;
       setupEventListeners(); // 스크롤 방지 이벤트 리스너 설정
     } else {
       setKeyboardOpened(false);
-      footer.style.display = 'block';
-      chatInput.style.height = '158px';
+      // footer.style.display = 'block';
+      // chatInput.style.height = '158px';
       removeEventListeners(); // 스크롤 방지 이벤트 리스너 제거
     }
   };
@@ -392,7 +496,7 @@ const Chatbot = () => {
   /* 모바일 가상 키보드 end */
 
   return (
-    <ChatbotContainer id="gun" ref={containerRef}>
+    <ChatbotContainer ref={containerRef}>
       <ChatbotHeader
         onClick={() => {
           console.log('categoryList : ', categoryList);
@@ -414,49 +518,77 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
-      <ChattingWrapper id="chatting-wrapper" ref={wrapperRef}>
+      <ChattingWrapper ref={wrapperRef}>
         {chatListDummy.map((chat) => (
           <Chat text={chat.text} type={chat.type} key={chat.id} />
         ))}
-        <TempInput ref={inputRef}>
-          <CategoryWrapper>
-            {categoryList.map((category) => (
-              <Category
-                parentCategoryId={category.id}
-                key={category.id}
-                text={category.title}
-                selected={category.selected}
-                color={'var(--primary-color)'}
-                values={category.values}
-                categoryClick={() => categoryClick(category.id)}
-                subCategoryClick={subCategoryClick}
-                showSubCategory={showSubCategory}
-                setShowSubCategory={setShowSubCategory}
-                unselectedColor={'var(--primary-color)'}
+        <BottomWrapper ref={inputRef}>
+          {selectMode === 'voice' && (
+            <InputVoiceWrapper>
+              <MicImg
+                src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
               />
-            ))}
-          </CategoryWrapper>
-          <ChatInputWrapper>
-            <XImage src={process.env.PUBLIC_URL + 'images/x-img.svg'} />
-            <InputText
-              type="text"
-              onClick={handleViewportResize}
-              onChange={(e) => setUserText(e.target.value)}
+              <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
+              <XImg
+                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                onClick={() => setSelectMode('select')}
+              />
+            </InputVoiceWrapper>
+          )}
+          {selectMode !== 'voice' && (
+            <CategoryWrapper>
+              {categoryList.map((category) => (
+                <Category
+                  parentCategoryId={category.id}
+                  key={category.id}
+                  text={category.title}
+                  selected={category.selected}
+                  color={'var(--primary-color)'}
+                  values={category.values}
+                  categoryClick={() => categoryClick(category.id)}
+                  subCategoryClick={subCategoryClick}
+                  showSubCategory={showSubCategory}
+                  setShowSubCategory={setShowSubCategory}
+                  unselectedColor={'var(--primary-color)'}
+                />
+              ))}
+            </CategoryWrapper>
+          )}
+          {selectMode === 'select' && (
+            <SelectInputMode
+              setSelectMode={setSelectMode}
+              clickVoice={clickVoice}
             />
-            {userText === '' ? (
-              <SendButton
-                src={
-                  process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
-                }
+          )}
+          {selectMode === 'keyboard' && (
+            <ChatInputWrapper>
+              <XImage
+                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                onClick={() => voiceXClick()}
               />
-            ) : (
-              <SendButton
-                src={process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'}
+              <InputText
+                type="text"
+                onClick={handleViewportResize}
+                onChange={(e) => setUserText(e.target.value)}
               />
-            )}
-          </ChatInputWrapper>
-          <Footer ref={footerRef}>하단바 영역</Footer>
-        </TempInput>
+              {userText === '' ? (
+                <SendButton
+                  src={
+                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
+                  }
+                />
+              ) : (
+                <SendButton
+                  onClick={() => addChat()}
+                  src={
+                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
+                  }
+                />
+              )}
+            </ChatInputWrapper>
+          )}
+          {/*<Footer ref={footerRef}>하단바 영역</Footer>*/}
+        </BottomWrapper>
       </ChattingWrapper>
 
       {/*<Footer>하단바 영역</Footer>*/}

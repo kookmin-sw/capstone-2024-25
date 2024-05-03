@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Getter @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Routine {
 
     @Id
@@ -20,19 +20,19 @@ public class Routine {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String dailyExercise;
+    private Integer dailyExercise;
 
-    private String dailyGrowth;
+    private Integer dailyGrowth;
 
-    private String dailyHobby;
+    private Integer dailyHobby;
 
-    private String dailySnack;
+    private Integer dailySnack;
 
-    private String dailyFruit;
+    private Integer dailyFruit;
 
-    private String dailyEat;
+    private Integer dailyEat;
 
-    private String dailyRest;
+    private Integer dailyRest;
 
     private Boolean dailyExerciseStatus;
 

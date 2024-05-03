@@ -2,6 +2,7 @@ package capstone.allbom.game.infrastructure.api;
 
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.common.service.S3FileService;
 import capstone.allbom.game.domain.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,12 +71,12 @@ public class RestTemplateGameRequester {
         JSONObject subjectData = getSubjectData(subjectType);
 
         if (subjectData == null || !subjectData.containsKey(problemNum)) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SUBJECT_TYPE);
+            throw new NotFoundException(DefaultErrorCode.INVALID_GAME_SUBJECT_TYPE);
         }
 
         sentence = (String) subjectData.get(problemNum);
         if (sentence == null ) {
-            throw new BadRequestException(DefaultErrorCode.INVALID_GAME_SENTENCE_NUMBER);
+            throw new NotFoundException(DefaultErrorCode.INVALID_GAME_SENTENCE_NUMBER);
         }
 
 //        log.info("sentence={}", sentence);

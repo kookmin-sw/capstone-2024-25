@@ -14,8 +14,10 @@ import java.util.List;
 @Transactional
 class RestTemplateFacilityRequesterTest {
 
-    @Autowired EntityManager entityManager;
-    @Autowired FacilityRepository facilityRepository;
+    @Autowired
+    EntityManager entityManager;
+    @Autowired
+    FacilityRepository facilityRepository;
 
     @Autowired
     private RestTemplateFacilityRequester restTemplateFacilityRequester;
@@ -25,5 +27,4 @@ class RestTemplateFacilityRequesterTest {
         List<Facility> facilities = restTemplateFacilityRequester.requestFacility();
         System.out.println("facilities = " + facilities);
     }
-
 }

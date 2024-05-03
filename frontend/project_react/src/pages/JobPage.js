@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import JobDropdown from '../components/JobPage/dropdown';
+import JobDropdown from '../components/JobPage/Dropdown';
 import JobPageHeader from '../components/Header/JobPageHeader';
-import JobEmploymentItem from '../components/JobPage/employmentItem';
+import JobEmploymentItem from '../components/JobPage/EmploymentItem';
 
 const JobContainer = styled.div`
   display: flex;

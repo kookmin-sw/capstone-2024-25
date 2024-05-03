@@ -1,4 +1,4 @@
-import { api_get, api_post, } from "../apiWithTryCatch";
+import { api_get, } from "../crud";
 
 export const wordOrderApis = {
     getSentenceCategory: () => api_get(process.env.PUBLIC_URL + '/tmpApiData/wordOrderDummy.json'),
