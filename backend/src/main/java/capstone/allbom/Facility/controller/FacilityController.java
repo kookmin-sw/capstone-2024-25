@@ -37,24 +37,31 @@ public class FacilityController implements FacilityControllerDocs{
     @GetMapping
     public ResponseEntity<List<FacilityListResponse>> getFacilities(
             @Auth Member member,
-            @RequestBody final FacilityRequest facilityRequest
+            @RequestParam final Double swLatitude,
+            @RequestParam final Double swLongitude,
+            @RequestParam final Double neLatitude,
+            @RequestParam final Double neLongitude
             ) {
+
+        System.out.println("swLatitude = " + swLatitude);
+        System.out.println("swLongitude = " + swLongitude);
+
 
         final List<FacilityListResponse> mapResponses = new ArrayList<>();
 
         List<FacilityListResponse> jobs = jobService.getJobs(
-                facilityRequest.swLatitude(),
-                facilityRequest.swLongitude(),
-                facilityRequest.neLatitude(),
-                facilityRequest.neLongitude()
+                swLatitude,
+                swLongitude,
+                neLatitude,
+                neLongitude
         );
         mapResponses.addAll(jobs);
 
         List<FacilityListResponse> facilities = facilityService.getFacilities(
-                facilityRequest.swLatitude(),
-                facilityRequest.swLongitude(),
-                facilityRequest.neLatitude(),
-                facilityRequest.neLongitude()
+                swLatitude,
+                swLongitude,
+                neLatitude,
+                neLongitude
         );
         mapResponses.addAll(facilities);
         return ResponseEntity.ok(mapResponses);
@@ -64,24 +71,27 @@ public class FacilityController implements FacilityControllerDocs{
     public ResponseEntity<List<FacilityListResponse>> getFacilitiesByType(
             @Auth Member member,
             @PathVariable final String type,
-            @RequestBody final FacilityRequest facilityRequest
+            @RequestParam final Double swLatitude,
+            @RequestParam final Double swLongitude,
+            @RequestParam final Double neLatitude,
+            @RequestParam final Double neLongitude
     ) {
 
         final List<FacilityListResponse> mapResponses;
 
         if (type.equals("job")) {
             mapResponses = jobService.getJobs(
-                    facilityRequest.swLatitude(),
-                    facilityRequest.swLongitude(),
-                    facilityRequest.neLatitude(),
-                    facilityRequest.neLongitude()
+                    swLatitude,
+                    swLongitude,
+                    neLatitude,
+                    neLongitude
             );
         } else {
             mapResponses = facilityService.getFacilitiesByType(
-                    facilityRequest.swLatitude(),
-                    facilityRequest.swLongitude(),
-                    facilityRequest.neLatitude(),
-                    facilityRequest.neLongitude(),
+                    swLatitude,
+                    swLongitude,
+                    neLatitude,
+                    neLongitude,
                     type
             );
         }

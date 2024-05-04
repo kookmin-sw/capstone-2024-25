@@ -17,6 +17,7 @@ import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,7 +29,14 @@ public interface FacilityControllerDocs {
     })
     ResponseEntity<List<FacilityListResponse>> getFacilities(
             final Member member,
-            @RequestBody final FacilityRequest facilityRequest
+            @Parameter(description = "남서쪽 위도", example = "37.54937578781175")
+            @RequestParam final Double swLatitude,
+            @Parameter(description = "남서쪽 경도", example = "126.06966952193312")
+            @RequestParam final Double swLongitude,
+            @Parameter(description = "북동쪽 위도", example = "37.55140084746174")
+            @RequestParam final Double neLatitude,
+            @Parameter(description = "북동쪽 위도", example = "127.07328144110905")
+            @RequestParam final Double neLongitude
     );
 
     @Operation(summary = "특정 유형의 지도 데이터 리스트 조회하기", description = "특정 유형의 지도 데이터를 리스트로 조회한다.")
@@ -39,7 +47,14 @@ public interface FacilityControllerDocs {
             final Member member,
             @Parameter(description = "지도 데이터 유형", example = "hospital, pharmacy, welfarehouse, welfarecenter, carecenter, job")
             final String type,
-            @RequestBody final FacilityRequest facilityRequest
+            @Parameter(description = "남서쪽 위도", example = "37.54937578781175")
+            @RequestParam final Double swLatitude,
+            @Parameter(description = "남서쪽 경도", example = "126.06966952193312")
+            @RequestParam final Double swLongitude,
+            @Parameter(description = "북동쪽 위도", example = "37.55140084746174")
+            @RequestParam final Double neLatitude,
+            @Parameter(description = "북동쪽 위도", example = "127.07328144110905")
+            @RequestParam final Double neLongitude
     );
 
     @Operation(summary = "유형과 ID로 지도 데이터 상세 조회하기", description = "지도 유형과 ID로 지도 데이터를 상세 조회한다.")
