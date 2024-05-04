@@ -50,6 +50,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findJobsOrderByDeadline(@Param("province") Province province);
 
     @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
-    Page<Job> findJobsOrderByDeadline(@Param("province") Province province,
+    List<Job> findJobsOrderByDeadlinePagination(@Param("province") Province province,
                                           Pageable pageable);
 }
