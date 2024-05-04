@@ -43,7 +43,7 @@ public class JobController {
             jobResponses = jobService.findJobsOrderByAddressPagination(
                     member.getProvince(), member.getLatitude(), member.getLongitude(), pageable);
         } else if (sorted == 1) {
-            jobService.findJobsOrderByDeadlinePagination(
+            jobResponses = jobService.findJobsOrderByDeadlinePagination(
                     member.getProvince(), pageable);
         } else {
             throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
