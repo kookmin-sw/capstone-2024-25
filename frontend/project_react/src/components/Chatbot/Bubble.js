@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const BubbleContainer = styled.div`
   display: flex;
   height: fit-content;
-  padding: 6px 8px;
+  padding: 8px 12px;
   background-color: ${(props) =>
     props.type === 'System' ? 'var(--primary-color)' : '#FFFFFF'};
   border: ${(props) =>

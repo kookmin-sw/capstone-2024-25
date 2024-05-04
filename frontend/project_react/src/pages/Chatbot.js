@@ -14,6 +14,7 @@ import SpeechRecognition, {
 import { testFun } from './ComponentTest';
 
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ChatbotContainer = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ const InputVoiceWrapper = styled.div`
   align-items: center;
   align-self: center;
   width: 88%;
-  height: 84px;
+  padding: 12px 24px;
   box-sizing: border-box;
   border: 1px solid var(--unselected-color);
   border-radius: 4px;
@@ -68,9 +69,11 @@ const InputVoiceWrapper = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 const MicImg = styled.img`
-  width: 42px;
+  min-width: 10%;
+  max-width: 10%;
 `;
 const InputVoiceText = styled.span`
+  max-width: 80%;
   font-size: 16px;
   font-weight: bold;
   white-space: pre-wrap;
@@ -90,7 +93,6 @@ const ChatInputWrapper = styled.div`
   align-self: center;
   gap: 8px;
   padding: 6px 14px;
-  //height: 64px;
   box-sizing: border-box;
   width: 100%;
   background-color: #ffffff;
@@ -120,6 +122,7 @@ const SendButton = styled.img`
 `;
 
 const Chatbot = () => {
+  const navigate = useNavigate();
   const [isOpenFirst, setIsOpenFirst] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [userText, setUserText] = useState('');
@@ -143,36 +146,69 @@ const Chatbot = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  // const [timer, setTimer] = useState(null);
-  // const [startTimer, setStartTimer] = useState(null);
-  const clickVoice = () => {
-    SpeechRecognition.startListening({ continuous: true });
-    console.log('gugu 실행');
+  const [timer, setTimer] = useState(null);
+  const [initialTimer, setInitialTimer] = useState(null);
+  const [isTimerFirst, setIsTimerFirst] = useState(true);
+  useEffect(() => {
+    if (!browserSupportsSpeechRecognition) {
+      alert('Speech recognition not supported');
+    }
+  }, []);
+
+  // 타이머를 리셋하고 새로 설정하는 함수
+  const resetTimer = () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(() => {
+        if (!isTimerFirst) {
+          console.log('입력이 3초 동안 없어 음성 인식 중지');
+          SpeechRecognition.stopListening();
+          resetTranscript();
+          setSelectMode('select');
+        }
+      }, 3000),
+    );
   };
-  const voiceXClick = () => {
-    resetTranscript();
-    SpeechRecognition.stopListening();
-    setSelectMode('select');
+
+  // 음성 인식 시작 시 5초 타이머 설정
+  const startInitialTimer = () => {
+    clearTimeout(initialTimer);
+    const newInitialTimer = setTimeout(() => {
+      console.log('최초 5초 동안 입력 없음, 인식 중지');
+      if (!transcript) {
+        SpeechRecognition.stopListening();
+        setSelectMode('select');
+      }
+    }, 5000);
+    setInitialTimer(newInitialTimer);
   };
-  const [voiceInputStartTime, setVoiceInputStartTime] = useState(null);
 
   useEffect(() => {
+    // 음성 인식이 활성화되어 있고, transcript가 변화할 때마다 타이머를 리셋
     if (listening) {
-      setVoiceInputStartTime(Date.now());
+      setIsTimerFirst(false);
+      resetTimer();
     }
 
-    const checkEndTimer = () => {
-      if (voiceInputStartTime && Date.now() - voiceInputStartTime >= 2000) {
-        setVoiceInputStartTime(null);
-        resetTranscript();
-        SpeechRecognition.stopListening();
-      }
+    return () => {
+      clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+      clearTimeout(initialTimer);
     };
+  }, [transcript, listening]);
 
-    const timerId = setTimeout(checkEndTimer, 2000);
+  const clickVoice = () => {
+    setIsTimerFirst(true);
+    SpeechRecognition.startListening({ continuous: true });
+    startInitialTimer(); // 음성 인식 시작과 동시에 최초 타이머 설정
+  };
 
-    return () => clearTimeout(timerId);
-  }, [listening, transcript, voiceInputStartTime]);
+  const voiceXClick = () => {
+    SpeechRecognition.stopListening();
+    clearTimeout(timer);
+    clearTimeout(initialTimer); // 모든 타이머 종료
+    resetTranscript();
+    setSelectMode('select');
+  };
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -256,41 +292,48 @@ const Chatbot = () => {
   const [chatListDummy, setChatListDummy] = useState([
     {
       id: 1,
-      text: 'nope',
+      text: '안녕하세요 [희건]님 ! \n' + '무엇을 도와드릴까요 ?',
       type: 'System',
     },
     {
       id: 2,
-      text: 'nope',
+      text: '오늘 날씨 알려줘',
       type: 'User',
     },
     {
       id: 3,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text:
+        '금일 날씨는 구름이 낀 흐린 \n' +
+        '날씨이며, \n' +
+        '금일 기온은 최고 영상 11도, \n' +
+        '최저 영하 2도로 강수 확률은 \n' +
+        '20%입니다.\n' +
+        '미세 먼지 농도는 보통이며,\n' +
+        '또 뭐 알려줘 ?',
       type: 'System',
     },
     {
       id: 4,
-      text: 'nope',
+      text: '오늘따라 무기력해.',
       type: 'User',
     },
     {
       id: 5,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text:
+        '우울할 땐 바깥 산책이라도 \n' +
+        '다녀오는건 어떠신가요?\n' +
+        '근처 정릉 실버극장에서 영화도 \n' +
+        '무료 관람 가능합니다.\n' +
+        '자세한 정보 제공을 원하시나요?',
       type: 'System',
     },
     {
       id: 6,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
+      text: '오늘 뉴스 알려줘',
       type: 'User',
     },
     {
       id: 7,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'System',
-    },
-    {
-      id: 8,
       text:
         '오늘 2024년 3월 4일 주요 뉴스입니다.\n' +
         '\n' +
@@ -304,16 +347,6 @@ const Chatbot = () => {
         '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
       type: 'System',
     },
-    // {
-    //   id: 9,
-    //   text: 'nope',
-    //   type: 'System',
-    // },
-    // {
-    //   id: 10,
-    //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-    //   type: 'User',
-    // },
   ]);
 
   const addChat = (text, type) => {
@@ -531,7 +564,7 @@ const Chatbot = () => {
               <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
               <XImg
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => setSelectMode('select')}
+                onClick={() => voiceXClick()}
               />
             </InputVoiceWrapper>
           )}
@@ -564,7 +597,7 @@ const Chatbot = () => {
             <ChatInputWrapper>
               <XImage
                 src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => voiceXClick()}
+                onClick={() => setSelectMode('select')}
               />
               <InputText
                 type="text"
