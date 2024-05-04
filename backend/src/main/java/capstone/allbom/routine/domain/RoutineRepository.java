@@ -1,6 +1,5 @@
 package capstone.allbom.routine.domain;
 
-import capstone.allbom.chatbot.domain.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

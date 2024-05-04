@@ -7,24 +7,35 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Question {
+public class Qna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "question_id")
+    @Column(name = "qna_id")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chatbot_id")
+    private Chatbot chatbot;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "twentyQuestions_id")
     private TwentyQuestions twentyQuestions;
 
-    private String details;
+    private String question;
+
+    private String answer;
 
     private LocalDateTime createdAt;
 
+    // question
     private Boolean isChatbotFirst;
 
     private Boolean isGame;
+
+    // answer
+    private String type;
 }
