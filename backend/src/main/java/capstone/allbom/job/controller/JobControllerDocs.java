@@ -39,4 +39,18 @@ public interface JobControllerDocs {
             @Parameter(description = "페이지네이션", example = "page=0&size=10")
             Pageable pageable
     );
+
+    @Operation(summary = "일자리 데이터 상세 조회하기", description = "일자리 데이터를 상세 조회한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "일자리 데이터 상세 조회 성공"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "요청한 ID에 해당하는 읿자리 데이터가 존재하지 않는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<JobDetailResponse> getDetailJob(
+            final Member member,
+            @Positive(message = "일자리 ID는 양의 정수만 가능합니다.") final Long jobId
+    );
 }
