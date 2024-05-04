@@ -32,6 +32,7 @@ export default function Nav5() {
     errMsg: null,
     isLoading: true,
   });
+  const [mapSizeLevel, setMapSizeLevel] = useState(3);
 
   // 지도 외의 동작
   const [selectedCategory, setSelectedCategory] = useState('전체');
@@ -72,33 +73,17 @@ export default function Nav5() {
     }
   }, []);
 
-  useEffect(() => {
-    const getWordOrderData = async () => {
+  async function fetchData() {
+    if (currentBounds) {
       try {
-        const response = await wordOrderApis.getSentenceData("science");
+        const response = await mapApi.getMapMarkers(currentBounds);
         console.log('응답', response.data);
+        setMapTags(response.data);
       } catch (error) {
         console.error('에러요', error.message);
       }
     }
-    getWordOrderData();
-    const fetchMapData = async () => {
-      try {
-        // const response =/ await mapApi.getMapMarkers(currentBounds);
-        // console.log('응답', response.data);
-        // console.log(Object.values(response.data).flat());
-        // if (selectedCategory === '전체') {
-        //   setMapTags(Object.values(response.data).flat());
-        // } else {
-        //   setMapTags(response.data[selectedCategory]);
-        // }
-      } catch (error) {
-        console.error('에러요', error.message);
-      }
-    };
-    if (currentBounds) fetchMapData();
-    // if (currentBounds) fetchMapData();
-  }, [currentBounds]);
+  }
 
   useEffect(() => {
     if (selectedCategory) {
@@ -119,33 +104,29 @@ export default function Nav5() {
             width: '100%',
             height: '100%',
           }}
-          level={3} // 지도의 확대 레벨
+          level={mapSizeLevel} // 지도의 확대 레벨
           onZoomChanged={(map) => {
             const level = map.getLevel();
+            setMapSizeLevel(level);
             console.log(`현재 지도 레벨은 ${level} 입니다`);
           }}
           onTileLoaded={(map) => {
             console.log('지도 타일이 로드됐어요', currentBounds);
-            console.log(
-              '현재 마커 src:',
-              `/images/map/marker_${selectedCategory}.svg`,
-            );
+            fetchData();
           }}
           onBoundsChanged={(map) => {
             const bounds = map.getBounds();
-            console.log('현재 위치', bounds);
-            // fetchMapData();
             setCurrentBounds({
               sw: bounds.getSouthWest().toString(),
               ne: bounds.getNorthEast().toString(),
             });
           }}
         >
-          {!state.isLoading &&
+          {!state.isLoading && mapSizeLevel < 5 &&
             mapTags.map((tag, index) => (
               <div key={index}>
                 <MapMarker
-                  position={{ lat: tag['lat'], lng: tag['lng'] }}
+                  position={{ lat: tag['latitude'], lng: tag['longitude'] }}
                   image={{
                     // src: `/images/map/marker_${selectedCategory}.svg`,
                     src: `/images/map/marker_병원·약국.svg`,
@@ -156,21 +137,22 @@ export default function Nav5() {
                   }}
                 />
                 <CustomOverlayMap
-                  position={{ lat: tag['lat'], lng: tag['lng'] }}
+                  position={{ lat: tag['latitude'], lng: tag['longitude'] }}
                 >
                   <MapTagContainer>
                     <MapTagOverlay
                       $color="#EF6C20"
-                      onClick={() =>
+                      onClick={() => {
+                        console.log(tag);
                         setMarkerInfo({
                           markerIndex: index,
-                          markerName: tag['name'],
-                        })
-                      }
+                          markerName: tag['type'],
+                        });
+                      }}
                     >
                       {markerInfo && index === markerInfo.markerIndex
                         ? ''
-                        : tag['name']}
+                        : tag['type']}
                     </MapTagOverlay>
                   </MapTagContainer>
                 </CustomOverlayMap>
