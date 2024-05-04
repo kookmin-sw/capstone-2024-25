@@ -45,4 +45,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                                           @Param("longitude") Double longitude,
                                           Pageable pageable);
 
+    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
+    List<Job> findJobsOrderByDeadline(@Param("province") Province province);
+
+
 }
