@@ -34,9 +34,9 @@ public interface JobControllerDocs {
     })
     ResponseEntity<List<JobListResponse>> getJobs(
             final Member member,
-            @Parameter(description = "정렬 유형(0: 가까운 순, 1: 마감일자 순)", example = "0, 1")
+            @Parameter(description = "정렬 유형 (0: 가까운 순, 1: 마감일자 순)", example = "0, 1")
             @Positive(message = "정렬 유형은 0과 1만 가능합니다.") final Integer sorted,
-            @Parameter(description = "페이지네이션 (page: 현재 페이지 수 - 1, size: 10으로 고정", example = "page=0&size=10")
+            @Parameter(description = "페이지네이션 (page: 현재 페이지 수 - 1, size: 10으로 고정)", example = "page=0&size=10")
             Pageable pageable
     );
 
@@ -45,7 +45,7 @@ public interface JobControllerDocs {
             @ApiResponse(responseCode = "200", description = "일자리 데이터 상세 조회 성공"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "요청한 ID에 해당하는 읿자리 데이터가 존재하지 않는 경우",
+                    description = "요청한 ID에 해당하는 일자리 데이터가 존재하지 않는 경우",
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
