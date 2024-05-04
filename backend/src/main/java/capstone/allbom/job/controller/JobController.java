@@ -1,5 +1,7 @@
 package capstone.allbom.job.controller;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.job.dto.JobListResponse;
@@ -40,7 +42,13 @@ public class JobController {
         if (sorted == 0) {
             jobResponses = jobService.findJobsOrderByAddressPagination(
                     member.getProvince(), member.getLatitude(), member.getLongitude(), pageable);
+        } else if (sorted == 1) {
+            jobService.findJobsOrderByDeadlinePagination(
+                    member.getProvince(), pageable);
+        } else {
+            throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
         }
+
         return ResponseEntity.ok(jobResponses);
     }
 }
