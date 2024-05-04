@@ -53,7 +53,7 @@ public class Member {
 
     private String profileImageUrl;
 
-//    private Province province;
+    private Province province;
 
     @Builder.Default
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)
