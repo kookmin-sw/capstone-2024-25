@@ -3,7 +3,11 @@ package capstone.allbom.job.controller;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.jwt.Auth;
+import capstone.allbom.facility.domain.Facility;
+import capstone.allbom.facility.dto.FacilityDetailResponse;
+import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
+import capstone.allbom.job.dto.JobDetailResponse;
 import capstone.allbom.job.dto.JobListResponse;
 import capstone.allbom.job.service.JobService;
 import capstone.allbom.member.domain.Member;
@@ -13,10 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,14 @@ public class JobController {
         }
 
         return ResponseEntity.ok(jobResponses);
+    }
+
+    @GetMapping("/{jobId}")
+    public ResponseEntity<JobDetailResponse> getDetailJob(
+            @Auth Member member,
+            @PathVariable final Long jobId
+    ) {
+        Job job = jobService.findById(jobId);
+        return ResponseEntity.ok(JobDetailResponse.from(job));
     }
 }
