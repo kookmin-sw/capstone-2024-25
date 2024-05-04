@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MemberControllerDocs {
     @Operation(summary = "첫 로그인 시 추가 회원 정보로 업데이트 하기", description = "회원가입 이후 첫 로그인 시 추가 회원 정보로 업데이트를 수행한다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "추가 회원 정보 업데이트 성공"),
+            @ApiResponse(responseCode = "204", description = "추가 회원 정보 업데이트 성공"),
             @ApiResponse(
                     responseCode = "400",
                     description = "이미 추가 회원 정보 업데이트를 수행한 경우",

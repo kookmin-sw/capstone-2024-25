@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Transactional
-public class JobController {
+public class JobController implements JobControllerDocs{
     private final JobService jobService;
 
     @GetMapping

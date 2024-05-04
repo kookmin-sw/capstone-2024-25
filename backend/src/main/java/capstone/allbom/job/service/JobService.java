@@ -28,7 +28,7 @@ public class JobService {
     @Transactional(readOnly = true)
     public Job findById(final Long jobId) {
         return jobRepository.findById(jobId)
-                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_MAP_ID));
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_JOB_ID));
     }
 
     @Transactional
