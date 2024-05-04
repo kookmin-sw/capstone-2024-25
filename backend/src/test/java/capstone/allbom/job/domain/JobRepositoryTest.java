@@ -84,7 +84,7 @@ class JobRepositoryTest {
 
             // when
             List<Job> jobs = jobRepository
-                    .findJobsNearbyMemberAddress(Province.SEOUL, member.getLatitude(), member.getLongitude());
+                    .findJobsOrderByAddress(Province.SEOUL, member.getLatitude(), member.getLongitude());
 
             for (Job job : jobs) {
                 System.out.println("job.getCompanyName() = " + job.getCompanyName());
