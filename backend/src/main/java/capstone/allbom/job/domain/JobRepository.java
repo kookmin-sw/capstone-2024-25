@@ -35,20 +35,21 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     @Query("SELECT j FROM Job j WHERE j.province = :province " +
             "ORDER BY (6371 * ACOS(SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude)) " +
             "+ COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude))))")
-    List<Job> findJobsNearbyMemberAddress(@Param("province") Province province,
+    List<Job> findJobsOrderByAddress(@Param("province") Province province,
                                           @Param("latitude") Double latitude,
                                           @Param("longitude") Double longitude);
 
     @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
-    Page<Job> findJobsNearbyMemberAddres(@Param("province") Province province,
+    List<Job> findJobsOrderByAddressPagination(@Param("province") Province province,
                                           @Param("latitude") Double latitude,
                                           @Param("longitude") Double longitude,
                                           Pageable pageable);
+
 
     @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
     List<Job> findJobsOrderByDeadline(@Param("province") Province province);
 
     @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
-    Page<Job> findJobsOrderByDeadline(@Param("province") Province province,
+    List<Job> findJobsOrderByDeadlinePagination(@Param("province") Province province,
                                           Pageable pageable);
 }

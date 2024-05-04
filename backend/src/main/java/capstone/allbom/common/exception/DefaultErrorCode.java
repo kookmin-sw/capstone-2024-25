@@ -16,6 +16,7 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_ROUTINE_TYPE(404, "요청한 투두 카테고리에 해당하는 내용이 존재하지 않습니다."),
     INVALID_ROUTINE_NUMBER(404, "요청한 투두 카테고리의 번호에 해당하는 내용이 존재하지 않습니다."),
     INVALID_FACILITY_TYPE_ID(400, "요청한 유형과 번호에 해당하는 시설이 존재하지 않습니다."),
+    INVALID_QUERY_PARAMETER_SORTED(400, "일자리 리스트 조회하기 위한 쿼리 파라미터 값으로 0과 1만 가능합니다."),
     INVALID_GAME_SUBJECT_TYPE(404, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(404, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_MEMBER_ADDRESS_PROVINCE(500, "요청한 주소를 시도로 변환하는 과정에서 문제가 발생했습니다."),
