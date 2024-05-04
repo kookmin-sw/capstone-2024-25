@@ -20,7 +20,7 @@ public record MyPageResponse(
 ) {
     private static int calculateAge(LocalDate birthday) {
         LocalDate currentDate = LocalDate.now();
-        return Period.between(birthday, currentDate).getYears();
+        return Period.between(birthday, currentDate).getYears() + 1;
     }
 
     public static MyPageResponse from(Member member) {
