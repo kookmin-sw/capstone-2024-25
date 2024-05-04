@@ -1,8 +1,8 @@
 package capstone.allbom.job.domain;
 
-import capstone.allbom.facility.domain.Facility;
-import capstone.allbom.facility.domain.FacilityType;
 import io.lettuce.core.dynamic.annotation.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,4 +26,17 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                                              @Param("southWestLongitude") Double southWestLongitude,
                                              @Param("northEastLatitude") Double northEastLatitude,
                                              @Param("northEastLongitude") Double northEastLongitude);
+
+//    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
+//    List<Job> findJobsNearbyMemberAddress(@Param("province") Province province,
+//                                          @Param("latitude") Double latitude,
+//                                          @Param("longitude") Double longitude);
+
+    @Query("SELECT j FROM Job j WHERE j.province = :province " +
+            "ORDER BY (6371 * ACOS(SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude)) " +
+            "+ COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude))))")
+    List<Job> findJobsNearbyMemberAddress(@Param("province") Province province,
+                                          @Param("latitude") Double latitude,
+                                          @Param("longitude") Double longitude);
+
 }
