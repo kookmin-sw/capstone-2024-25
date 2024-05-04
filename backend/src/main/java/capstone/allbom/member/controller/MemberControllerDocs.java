@@ -21,6 +21,11 @@ public interface MemberControllerDocs {
                     responseCode = "400",
                     description = "이미 추가 회원 정보 업데이트를 수행한 경우",
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "요청한 주소에서 시도를 추출 후 변환하여 저장하는 과정에서 문제가 발생하는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
     ResponseEntity<Void> updateMember(
