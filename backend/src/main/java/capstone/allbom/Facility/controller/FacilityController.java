@@ -43,10 +43,6 @@ public class FacilityController implements FacilityControllerDocs{
             @RequestParam final Double neLongitude
             ) {
 
-        System.out.println("swLatitude = " + swLatitude);
-        System.out.println("swLongitude = " + swLongitude);
-
-
         final List<FacilityListResponse> mapResponses = new ArrayList<>();
 
         List<FacilityListResponse> jobs = jobService.getJobs(
