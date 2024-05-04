@@ -34,9 +34,9 @@ public interface JobControllerDocs {
     })
     ResponseEntity<List<JobListResponse>> getJobs(
             final Member member,
-            @Parameter(description = "정렬 유형", example = "0, 1")
+            @Parameter(description = "정렬 유형(0: 가까운 순, 1: 마감일자 순)", example = "0, 1")
             @Positive(message = "정렬 유형은 0과 1만 가능합니다.") final Integer sorted,
-            @Parameter(description = "페이지네이션", example = "page=0&size=10")
+            @Parameter(description = "페이지네이션 (page: 현재 페이지 수 - 1, size: 10으로 고정", example = "page=0&size=10")
             Pageable pageable
     );
 
