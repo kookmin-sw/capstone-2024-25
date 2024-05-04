@@ -56,6 +56,12 @@ public class JobService {
         return jobs.stream()
                 .map(JobListResponse::from)
                 .toList();
+    }
 
+    public List<JobListResponse> findJobsOrderByDeadlinePagination(Province province, Pageable pageable) {
+        List<Job> jobs = jobRepository.findJobsOrderByDeadlinePagination(province, pageable);
+        return jobs.stream()
+                .map(JobListResponse::from)
+                .toList();
     }
 }
