@@ -39,4 +39,10 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                                           @Param("latitude") Double latitude,
                                           @Param("longitude") Double longitude);
 
+    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
+    Page<Job> findJobsNearbyMemberAddres(@Param("province") Province province,
+                                          @Param("latitude") Double latitude,
+                                          @Param("longitude") Double longitude,
+                                          Pageable pageable);
+
 }
