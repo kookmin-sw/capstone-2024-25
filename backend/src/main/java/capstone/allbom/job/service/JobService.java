@@ -5,12 +5,17 @@ import capstone.allbom.common.exception.NotFoundException;
 import capstone.allbom.facility.dto.FacilityListResponse;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.JobRepository;
+import capstone.allbom.job.domain.Province;
+import capstone.allbom.job.dto.JobListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,5 +42,20 @@ public class JobService {
         return jobs.stream()
                 .map(FacilityListResponse::from)
                 .toList();
+    }
+
+    public List<JobListResponse> findJobsOrderByAddressPagination(Province province, Double latitude, Double longitude, Pageable pageable) {
+        List<Job> jobs = jobRepository.findJobsOrderByAddressPagination(province, latitude, longitude, pageable);
+        return jobs.stream()
+                .map(JobListResponse::from)
+                .toList();
+    }
+
+    public List<JobListResponse> findJobsOrderByAddress(Province province, Double latitude, Double longitude) {
+        List<Job> jobs = jobRepository.findJobsOrderByAddress(province, latitude, longitude);
+        return jobs.stream()
+                .map(JobListResponse::from)
+                .toList();
+
     }
 }
