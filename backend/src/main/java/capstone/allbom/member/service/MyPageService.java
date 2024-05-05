@@ -26,4 +26,10 @@ public class MyPageService {
         member.setBirthday(birthdayRequest.birthday());
     }
 
+    @Transactional
+    public void updatePhoneNumber(final Member member, PhoneNumberUpdateRequest phoneNumberRequest) {
+        member.setPhoneNumber(phoneNumberRequest.phoneNumber());
+
+    }
+
 }
