@@ -31,4 +31,19 @@ public interface MyPageControllerDocs {
             final Member member
     );
 
+    @Operation(summary = "마이페이지 생년월일 업데이트 하기", description = "마이페이지에서 생년월일을 업데이트 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "생년월일 업데이트 성공"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청한 ID에 해당하는 멤버가 존재하지 않는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<Void> updateBirthday(
+            final Member member,
+            @RequestBody final BirthdayUpdateRequest birthdayRequest
+    );
+
+
 }
