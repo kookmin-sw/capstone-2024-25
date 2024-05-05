@@ -45,5 +45,19 @@ public interface MyPageControllerDocs {
             @RequestBody final BirthdayUpdateRequest birthdayRequest
     );
 
+    @Operation(summary = "마이페이지 전화번호 업데이트 하기", description = "마이페이지에서 전화번호를 업데이트 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "전화번호 업데이트 성공"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청한 ID에 해당하는 멤버가 존재하지 않는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<Void> updatePhoneNumber(
+            final Member member,
+            @RequestBody final PhoneNumberUpdateRequest phoneNumberRequest
+    );
+
 
 }
