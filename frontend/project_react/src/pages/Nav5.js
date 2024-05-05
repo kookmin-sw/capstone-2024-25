@@ -80,15 +80,10 @@ export default function Nav5() {
         console.log('응답', response.data);
         setMapTags(response.data);
       } catch (error) {
-        console.error('에러요', error.message);
+        console.error('에러요', error.response.data.code);
       }
     }
   }
-
-  useEffect(() => {
-    if (selectedCategory) {
-    }
-  }, [selectedCategory]);
 
   return (
     <Frame>

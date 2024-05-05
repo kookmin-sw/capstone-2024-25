@@ -1,5 +1,4 @@
-import { api_get } from '../crud';
-import axios from 'axios';
+import instance from "../instance";
 
 export const mapApi = {
   // 지도 관련 api
@@ -8,7 +7,7 @@ export const mapApi = {
     const sw = bounds.sw.match(/-?\d+(\.\d+)?/g).map(Number);
     const ne = bounds.ne.match(/-?\d+(\.\d+)?/g).map(Number);
     console.log('남서', sw[0], '북동', ne[0]);
-    return api_get('api/map', {
+    return instance.get('api/map', {
       params: {
         swLatitude: sw[0],
         swLongitude: sw[1],
