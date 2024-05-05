@@ -4,6 +4,10 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { authApi } from '../api/apis/authApis';
+import { useCookies } from 'react-cookie';
+import Swal from 'sweetalert2';
 
 const SignInWrapper = styled.div`
   display: flex;
@@ -65,12 +69,72 @@ const KakaoImage = styled.img`
 `;
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "accessTokenimport { api_get } from '../crud';\n" +
+      "import instance from '../instance';\n" +
+      '\n' +
+      'export const memberApis = {\n' +
+      '  duplicate: (id) => instance.get(`/api/member/duplicate?loginId=${id}`),\n' +
+      '  register: (data, accessToken) =>\n' +
+      "    instance.post('/api/member/register', data, {\n" +
+      '      headers: {\n' +
+      "        'Content-Type': 'application/json',\n" +
+      '        Authorization: `Bearer ${accessToken}`,\n' +
+      '      },\n' +
+      '    }),\n' +
+      '};\n',
+  ]);
 
   // 환경 변수에서 카카오 API 키와 리다이렉트 URI를 가져옵니다.
   const Rest_api_key = process.env.REACT_APP_REST_API_KEY; // REST API KEY
   const redirect_uri = 'http://localhost:3000/auth/kakao/callback'; //Redirect URI
+
+  const signIn = async () => {
+    await authApi
+      .login({
+        loginId: userId,
+        loginPassword: password,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setCookie('accessToken', response.data.accessToken);
+          Swal.fire({
+            icon: 'success',
+            title: '로그인 성공',
+            text: '환영합니다!',
+          });
+          if (!response.data.hasEssentialInfo) {
+            navigate('/sign-up', {
+              state: {
+                userId: userId,
+                password: password,
+              },
+            });
+          } else {
+            navigate('/chatbot');
+          }
+        }
+      })
+      .catch((error) => {
+        if (error.response['status'] === 401) {
+          Swal.fire({
+            icon: 'error',
+            title: '로그인 실패',
+            text: '비밀번호를 확인해주세요.',
+          });
+        } else if (error.response['status'] === 404) {
+          Swal.fire({
+            icon: 'error',
+            title: '로그인 실패',
+            text: '아이디를 확인해주세요.',
+          });
+        }
+      });
+  };
 
   // 카카오 로그인 페이지로 이동할 URL을 구성합니다.
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
@@ -102,10 +166,18 @@ const SignIn = () => {
           height="Tall"
           type="Primary"
           text="로그인"
+          onClick={signIn}
           // onClick={/* 로그인 처리 함수를 여기에 추가합니다. */}
         />
         <FooterText>
-          아직 회원이 아니신가요? <SignInButton>회원가입</SignInButton>
+          아직 회원이 아니신가요?{' '}
+          <SignInButton
+            onClick={() => {
+              navigate('sign-up');
+            }}
+          >
+            회원가입
+          </SignInButton>
         </FooterText>
         <HorizontalLine />
         <FooterText>다른 방법으로 로그인하기</FooterText>

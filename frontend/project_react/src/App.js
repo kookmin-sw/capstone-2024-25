@@ -24,8 +24,8 @@ function App() {
     <div id="App">
       <BrowserRouter>
         <Routes>
-          {/*<Route path="/" element={<SignIn />} />*/}
-          <Route path="/" element={<ComponentTest />} />
+          <Route path="/" element={<SignIn />} />
+          {/*<Route path="/" element={<ComponentTest />} />*/}
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail" element={<JobDetailPage />} />
@@ -57,7 +57,7 @@ function App() {
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
 
           {/* To do */}
-          <Route path="/toDo" element={<Nav4/>} />
+          <Route path="/toDo" element={<Nav4 />} />
         </Routes>
       </BrowserRouter>
     </div>

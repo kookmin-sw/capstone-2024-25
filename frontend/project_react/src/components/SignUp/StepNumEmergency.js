@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Input from '../Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -22,13 +22,31 @@ const StepNumEmergency = ({ value, setValue }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
-  const stateList = ['', 'error', 'success'];
+  const stateList = ['', 'error', 'success', 'error'];
+
+  useEffect(() => {
+    if (value.length !== 0 && !/^\d+$/.test(value)) {
+      // 숫자가 아닌 문자가 포함되어 있을 때
+      setErrorState(3);
+    } else if (value.length !== 0 && (value.length < 10 || value.length > 11)) {
+      // 전화번호 길이 에러
+      setErrorState(1);
+    } else if (value.length === 0) {
+      // 빈 칸
+      setErrorState(0);
+    } else {
+      // 올바른 입력
+      setErrorState(2);
+    }
+  }, [value]);
 
   const checkNumList = [
     '예시) 01012345678',
     '전화번호를 올바르게 입력해주세요.',
     '예시) 01012345678',
+    '숫자만 입력해주세요.',
   ];
+
   return (
     <StepWrapper>
       <StepTitle>비상 시 연락처 (선택)</StepTitle>
