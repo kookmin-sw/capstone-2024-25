@@ -6,6 +6,7 @@ import capstone.allbom.member.domain.Member;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.Year;
 import java.util.List;
 
 public record MyPageResponse(
@@ -20,8 +21,10 @@ public record MyPageResponse(
         List<MedicineDetailResponse> medicineResponses
 ) {
     private static int calculateAge(LocalDate birthday) {
-        LocalDate currentDate = LocalDate.now();
-        return Period.between(birthday, currentDate).getYears() + 1;
+//        LocalDate currentDate = LocalDate.now();
+//        return Period.between(birthday, currentDate).getYears() + 1;
+        int currentYear = Year.now().getValue();
+        return currentYear - birthday.getYear() + 1;
     }
 
     public static MyPageResponse from(Member member) {
