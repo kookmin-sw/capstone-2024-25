@@ -59,5 +59,22 @@ public interface MyPageControllerDocs {
             @RequestBody final PhoneNumberUpdateRequest phoneNumberRequest
     );
 
-
+    @Operation(summary = "마이페이지 주소 업데이트 하기", description = "마이페이지에서 주소를 업데이트 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "주소 업데이트 성공"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "요청한 ID에 해당하는 멤버가 존재하지 않는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "요청한 주소에서 시도를 추출 후 변환하여 저장하는 과정에서 문제가 발생하는 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<Void> updateAddress(
+            final Member member,
+            @RequestBody final AddressUpdateRequest addressRequest
+    );
 }
