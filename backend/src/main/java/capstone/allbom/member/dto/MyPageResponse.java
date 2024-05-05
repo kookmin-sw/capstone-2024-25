@@ -5,7 +5,6 @@ import capstone.allbom.medicine.dto.MedicineDetailResponse;
 import capstone.allbom.member.domain.Member;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.Year;
 import java.util.List;
 
