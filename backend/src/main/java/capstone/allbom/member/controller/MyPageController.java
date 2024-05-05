@@ -39,4 +39,12 @@ public class MyPageController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/phonenumber")
+    public ResponseEntity<Void> updatePhoneNumber(
+            @Auth Member member,
+            @RequestBody final PhoneNumberUpdateRequest phoneNumberRequest
+    ) {
+        myPageService.updatePhoneNumber(member, phoneNumberRequest);
+        return ResponseEntity.noContent().build();
+    }
 }
