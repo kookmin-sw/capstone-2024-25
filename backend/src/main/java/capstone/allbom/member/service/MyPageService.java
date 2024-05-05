@@ -32,4 +32,17 @@ public class MyPageService {
 
     }
 
+    @Transactional
+    public void updateAddress(final Member member, AddressUpdateRequest addressRequest) {
+        member.setAddress(addressRequest.address());
+        member.setDetailAddress(addressRequest.detailAddress());
+
+        GeocodingResponse geocodingResponse = geocodingRequester.convertAddress(addressRequest.address());
+        member.setLatitude(geocodingResponse.latitude());
+        member.setLongitude(geocodingResponse.longitude());
+
+        String address = addressRequest.address();
+        Province province = memberService.updateProvince(address.split(" ")[0]);
+        member.setProvince(province);
+    }
 }
