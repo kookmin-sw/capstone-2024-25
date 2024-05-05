@@ -112,7 +112,9 @@ export default function Nav5() {
           }}
           onTileLoaded={(map) => {
             console.log('지도 타일이 로드됐어요', currentBounds);
-            fetchData();
+            if (mapSizeLevel < 4) {
+              fetchData();
+            }
           }}
           onBoundsChanged={(map) => {
             const bounds = map.getBounds();
@@ -122,7 +124,8 @@ export default function Nav5() {
             });
           }}
         >
-          {!state.isLoading && mapSizeLevel < 5 &&
+          {!state.isLoading &&
+            mapSizeLevel < 4 &&
             mapTags.map((tag, index) => (
               <div key={index}>
                 <MapMarker
