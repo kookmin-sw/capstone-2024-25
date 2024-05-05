@@ -11,6 +11,7 @@ import java.util.List;
 public record MyPageResponse(
         String profileImageUrl,
         String name,
+        String gender,
         Integer age,
         LocalDate birthday,
         String phoneNumber,
@@ -24,7 +25,8 @@ public record MyPageResponse(
     }
 
     public static MyPageResponse from(Member member) {
-        return new MyPageResponse(member.getProfileImageUrl(), member.getName(), calculateAge(member.getBirthday()),
+        return new MyPageResponse(member.getProfileImageUrl(), member.getName(),
+                member.getGender().toString(), calculateAge(member.getBirthday()),
                 member.getBirthday(), member.getPhoneNumber(), member.getAddress(),
                 member.getDetailAddress(), medicineFrom(member.getMedicines()));
     }
