@@ -1,8 +1,14 @@
 package capstone.allbom.member.service;
 
+import capstone.allbom.common.exception.BadRequestException;
+import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.game.domain.GameRepository;
+import capstone.allbom.job.domain.Province;
 import capstone.allbom.medicine.domain.MedicineRepository;
+import capstone.allbom.member.domain.Gender;
+import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
+import capstone.allbom.member.dto.*;
 import capstone.allbom.member.infrastructure.api.GeocodingRequester;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,9 +18,31 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class MyPageService {
-    private final MemberRepository memberRepository;
-    private final MedicineRepository medicineRepository;
+    private final MemberService memberService;
     private final GeocodingRequester geocodingRequester;
 
+    @Transactional
+    public void updateBirthday(final Member member, BirthdayUpdateRequest birthdayRequest) {
+        member.setBirthday(birthdayRequest.birthday());
+    }
 
+    @Transactional
+    public void updatePhoneNumber(final Member member, PhoneNumberUpdateRequest phoneNumberRequest) {
+        member.setPhoneNumber(phoneNumberRequest.phoneNumber());
+
+    }
+
+    @Transactional
+    public void updateAddress(final Member member, AddressUpdateRequest addressRequest) {
+        member.setAddress(addressRequest.address());
+        member.setDetailAddress(addressRequest.detailAddress());
+
+        GeocodingResponse geocodingResponse = geocodingRequester.convertAddress(addressRequest.address());
+        member.setLatitude(geocodingResponse.latitude());
+        member.setLongitude(geocodingResponse.longitude());
+
+        String address = addressRequest.address();
+        Province province = memberService.updateProvince(address.split(" ")[0]);
+        member.setProvince(province);
+    }
 }
