@@ -2,10 +2,7 @@ package capstone.allbom.member.controller;
 
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.member.domain.Member;
-import capstone.allbom.member.dto.BirthdayUpdateRequest;
-import capstone.allbom.member.dto.MemberUpdateRequest;
-import capstone.allbom.member.dto.MyPageResponse;
-import capstone.allbom.member.dto.PhoneNumberUpdateRequest;
+import capstone.allbom.member.dto.*;
 import capstone.allbom.member.service.MemberService;
 import capstone.allbom.member.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +42,15 @@ public class MyPageController {
             @RequestBody final PhoneNumberUpdateRequest phoneNumberRequest
     ) {
         myPageService.updatePhoneNumber(member, phoneNumberRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/address")
+    public ResponseEntity<Void> updateAddress(
+            @Auth Member member,
+            @RequestBody final AddressUpdateRequest addressRequest
+    ) {
+        myPageService.updateAddress(member, addressRequest);
         return ResponseEntity.noContent().build();
     }
 }
