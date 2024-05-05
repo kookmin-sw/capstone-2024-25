@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/mypage")
 @RestController
 @Slf4j
-public class MyPageController {
+public class MyPageController implements MyPageControllerDocs{
 
     private final MemberService memberService;
     private final MyPageService myPageService;
@@ -23,7 +23,7 @@ public class MyPageController {
     public ResponseEntity<MyPageResponse> getMyPage(
             @Auth Member member
     ) {
-        memberService.findById(member.getId());
+        myPageService.findById(member.getId());
         return ResponseEntity.ok(MyPageResponse.from(member));
     }
 
