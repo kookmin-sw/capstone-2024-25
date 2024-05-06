@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import TitleHeader from '../components/Header/TitleHeader';
-import { Example } from './todoTest';
+import { Card } from './todo/card';
 
 const mapCategoryList = [
   [
@@ -59,21 +59,15 @@ export default function Nav4() {
         <Test />
         <Test />
         <Test /> */}
-        <Example />
-        <Example />
-        <Example />
-        <Example />
-        <Example />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
       </CardsFrame>
     </Frame>
   );
 }
-
-const Test = styled.div`
-  width: 100%;
-  height: 400px;
-  background-color: #f0f0f0;
-`;
 
 const Frame = styled.div`
   box-sizing: border-box;
@@ -89,7 +83,7 @@ const Frame = styled.div`
 
 const CardsFrame = styled.div`
   width: 100dvw;
-  gap: 12px;
+  padding-top: 10px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;

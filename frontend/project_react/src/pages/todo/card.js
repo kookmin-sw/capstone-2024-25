@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { motion, AnimatePresence, color } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styled from 'styled-components';
 
 const variants = {
@@ -39,7 +39,7 @@ const todos = [
     "잠자기",
 ];
 
-export const Example = () => {
+export const Card = () => {
     const [[page, direction], setPage] = useState([0, 0]);
 
     const todoIndex = page % todos.length;
@@ -93,7 +93,7 @@ const Container = styled.div`
     width: 100dvw;
     max-width: 480px;
     height: 200px;
-    margin: 20px 0px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
