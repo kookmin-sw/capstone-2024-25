@@ -82,7 +82,7 @@ public class MemberService {
         if (gender == Gender.FEMALE) {
             savedMember.setProfileImageUrl(FEMALE_IMAGE_URL);
         } else {
-            savedMember.setPhoneNumber(MALE_IMAGE_URL);
+            savedMember.setProfileImageUrl(MALE_IMAGE_URL);
         }
 
         savedMember.setName(memberUpdateRequest.name());
