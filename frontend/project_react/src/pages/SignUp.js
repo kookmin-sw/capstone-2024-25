@@ -163,21 +163,19 @@ const SignUp = () => {
         }
       });
   };
-  // Todo : 회원가입 API 호출 잘 되는지
   const registerMember = async () => {
+    console.log('registerMember 실행');
     const authToken = cookies.accessToken;
     await memberApis
       .register(
         {
-          memberUpdateRequest: {
-            name: name,
-            birthday: formatDate(birth),
-            gender: gender === 1 ? 'MALE' : 'FEMALE',
-            address: address,
-            detailAddress: detailAddress,
-            phoneNumber: phoneNum,
-            guardianNumber: emergencyNum,
-          },
+          name: name,
+          birthday: formatDate(birth),
+          gender: gender === 1 ? 'MALE' : 'FEMALE',
+          address: address,
+          detailAddress: detailAddress,
+          phoneNumber: phoneNum,
+          guardianNumber: emergencyNum,
         },
         authToken,
       )
@@ -223,7 +221,7 @@ const SignUp = () => {
   const handleNext = async () => {
     if (currentSlide === 1) {
       await firstSignUp();
-    } else if (currentSlide === 8) {
+    } else if (currentSlide === 7) {
       await registerMember();
     } else {
       sliderRef.current.slickNext();
@@ -441,7 +439,7 @@ const SignUp = () => {
         </Slider>
       </StepWrapper>
       <SignUpFooter>
-        {currentSlide === 8 ? (
+        {currentSlide === 7 ? (
           medicineList.length > 0 && medicine.length === 0 ? (
             <Button
               text="추가한 약품"
@@ -471,7 +469,7 @@ const SignUp = () => {
             onClick={handlePrev}
           />
           <Button
-            text={currentSlide === 8 || currentSlide === 1 ? '완료' : '다음'}
+            text={currentSlide === 7 || currentSlide === 1 ? '완료' : '다음'}
             size="Large"
             height="Tall"
             type="Primary"
