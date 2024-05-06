@@ -1,7 +1,9 @@
 package capstone.allbom.chatbot.service;
 
+import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
+import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
 import capstone.allbom.chatbot.dto.QnaPair;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
@@ -37,18 +39,21 @@ class QnaServiceTest {
         Qna qna1 = Qna.builder()
                 .question("hi")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
                 .createdAt(LocalDateTime.now())
                 .build();
 
         Qna qna2 = Qna.builder()
                 .question("hello")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
                 .createdAt(LocalDateTime.now())
                 .build();
 
         Qna qna3 = Qna.builder()
                 .question("hiiiii")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -66,7 +71,7 @@ class QnaServiceTest {
             qna3.setMember(member);
 
             // when
-            List<QnaPair> qnaPairs = qnaService.getTopFiveQnas(member);
+            List<QnaAndTypeResponse> qnaPairs = qnaService.getTopFiveQnas(member);
 
             // then
             assertEquals(3, qnaPairs.size());
