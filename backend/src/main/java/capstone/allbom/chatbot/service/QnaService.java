@@ -45,19 +45,20 @@ public class QnaService {
                 .toList();
 
         return QnaResponse.from(member, qnaPairs);
-
     }
 
     @Transactional
-    public List<Qna> getTopFiveQnas(final Member member) {
+    public List<QnaPair> getTopFiveQnas(final Member member) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
-        return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId())
+        List<Qna> qnas = qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId())
                 .stream()
                 .limit(5)
-                .collect(Collectors.toList());
+                .toList();
+
+        return qnas.stream()
+                .map(QnaPair::from)
+                .toList();
     }
-
-
 }
