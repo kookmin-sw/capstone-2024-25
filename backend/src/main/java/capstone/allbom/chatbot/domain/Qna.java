@@ -57,6 +57,7 @@ public class Qna {
                 .question(questionRequest.question())
                 .type(AnswerType.valueOf(answerResponse.type().toUpperCase()))
                 .answer(answerResponse.answer())
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 }
