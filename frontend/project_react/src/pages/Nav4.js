@@ -1,23 +1,44 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleHeader from '../components/Header/TitleHeader';
 import { Card } from './todo/card';
+import { todoApis } from '../api/apis/todoApis';
 
-const mapCategoryList = [
+const categoryKeywordList = {
+  "exercise": ['운동', 'Barbell', '#EF6C20'],
+  "growth": ['성장', 'book', '#FBC02D'],
+  "hobby": ['취미', 'MusicNotes', '#0091EA'],
+  "rest": ['휴식', 'ArmChair', '#D57AFF'],
+  "eat": ['식사', 'ForkKnife', '#8BC34A'],
+}
+
+const categoryList = [
   [
     ['전체', 'overall', '#379237'],
-    ['운동', 'Barbell', '#EF6C20'],
-    ['성장', 'book', '#FBC02D'],
+    categoryKeywordList["exercise"],
+    categoryKeywordList["growth"],
   ],
   [
-    ['취미', 'MusicNotes', '#0091EA'],
-    ['휴식', 'ArmChair', '#D57AFF'],
-    ['식사', 'ForkKnife', '#8BC34A'],
+    categoryKeywordList["hobby"],
+    categoryKeywordList["rest"],
+    categoryKeywordList["eat"],
   ],
 ];
 
 export default function Nav4() {
   const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [todoList, setTodoList] = useState([]);
+
+  useEffect(() => {
+    async function getAllTodo() {
+      const response = await todoApis.getAllTodo();
+      console.log(response.data);
+      setTodoList(response.data);
+    }
+
+    getAllTodo();
+  }, []);
+
   return (
     <Frame>
       <TitleHeader
@@ -26,7 +47,7 @@ export default function Nav4() {
       ></TitleHeader>
       <CategoryFrame>
         <CategoryButtonDiv>
-          {mapCategoryList[0].map((category, index) => (
+          {categoryList[0].map((category, index) => (
             <CategoryButton
               key={index}
               $color={category[2]}
@@ -39,7 +60,7 @@ export default function Nav4() {
         </CategoryButtonDiv>
         <Spacer direction="column" size="12px" />
         <CategoryButtonDiv>
-          {mapCategoryList[1].map((category, index) => (
+          {categoryList[1].map((category, index) => (
             <CategoryButton
               key={index}
               $color={category[2]}
@@ -52,41 +73,22 @@ export default function Nav4() {
         </CategoryButtonDiv>
       </CategoryFrame>
       <CardsFrame>
-        <Card
-          title={mapCategoryList[0][0][0]}
-          imgSrc={mapCategoryList[0][0][1]}
-          color={mapCategoryList[0][0][2]}
-        />
-        <Card
-          title={mapCategoryList[0][1][0]}
-          imgSrc={mapCategoryList[0][1][1]}
-          color={mapCategoryList[0][1][2]}
-        />
-        <Card
-          title={mapCategoryList[0][2][0]}
-          imgSrc={mapCategoryList[0][2][1]}
-          color={mapCategoryList[0][2][2]}
-        />
-        <Card
-          title={mapCategoryList[1][0][0]}
-          imgSrc={mapCategoryList[1][0][1]}
-          color={mapCategoryList[1][0][2]}
-        />
-        <Card
-          title={mapCategoryList[1][1][0]}
-          imgSrc={mapCategoryList[1][1][1]}
-          color={mapCategoryList[1][1][2]}
-        />
-        <Card
-          title={mapCategoryList[1][0][0]}
-          imgSrc={mapCategoryList[1][0][1]}
-          color={mapCategoryList[1][0][2]}
-        />
-        <Card
-          title={mapCategoryList[1][0][0]}
-          imgSrc={mapCategoryList[1][0][1]}
-          color={mapCategoryList[1][0][2]}
-        />
+        {todoList.length > 0 &&
+          todoList.map((todo, index) => {
+            const category = categoryKeywordList[todo.type];
+            if (selectedCategory !== '전체' && selectedCategory !== category[0]) {
+              return null;
+            }
+            return (
+              <Card
+                key={index}
+                title={category[0]}
+                imgSrc={category[1]}
+                color={category[2]}
+                mission={todo.routine}
+              />
+            );
+          })}
       </CardsFrame>
     </Frame>
   );

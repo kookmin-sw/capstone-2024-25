@@ -35,12 +35,8 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-const todos = ['잠자기'];
-
-export const Card = ({ title, color, imgSrc }) => {
+export const Card = ({ title, color, imgSrc, mission }) => {
   const [[page, direction], setPage] = useState([0, 0]);
-
-  const todoIndex = page % todos.length;
 
   const paginate = (newDirection) => {
     console.log(page + newDirection, newDirection);
@@ -80,18 +76,34 @@ export const Card = ({ title, color, imgSrc }) => {
               width="44px"
               height="44px"
               alt="null"
-              style={{ paddingLeft: '12px' }}
+              style={{ paddingLeft: '14px' }}
             />
             <CardTitle>{title}</CardTitle>
           </CardTitleRow>
+          <MissionRow>
+            <img
+              src={`/images/todo/arrow.svg`}
+              width="44px"
+              height="44px"
+              alt="null"
+              style={{marginLeft: '24px'}}
+              onClick={() => paginate(-1)}
+            />
+            <h2 style={{color: "white"}}>{mission}</h2>
+            <img
+              src={`/images/todo/arrow.svg`}
+              width="44px"
+              height="44px"
+              alt="null"
+              style={{marginRight: '24px', transform: 'rotate(180deg)' }}
+              onClick={() => paginate(1)}
+            />
+          </MissionRow>
+          <ClearButton $color={color} onClick={() => console.log('완료')}>
+            완료하기
+          </ClearButton>
         </MotionCard>
       </AnimatePresence>
-      <div className="next" onClick={() => paginate(1)}>
-        {'‣'}
-      </div>
-      <div className="prev" onClick={() => paginate(-1)}>
-        {'‣'}
-      </div>
     </Container>
   );
 };
@@ -100,7 +112,7 @@ const Container = styled.div`
   position: relative;
   width: 100dvw;
   max-width: 480px;
-  height: 200px;
+  height: 240px;
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -115,7 +127,7 @@ const MotionCard = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   background-color: ${(props) => props.$color};
   border-radius: 20px;
 `;
@@ -128,7 +140,28 @@ const CardTitleRow = styled.div`
 
 const CardTitle = styled.h1`
   margin-left: 10px;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: white;
+`;
+
+const MissionRow = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ClearButton = styled.button`
+  background-color: white;
+  padding: 6px 12px;
+  margin: 12px;
+  color: ${(props) => props.$color};
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 100px;
+  border: none;
+  z-index: 3;
 `;
