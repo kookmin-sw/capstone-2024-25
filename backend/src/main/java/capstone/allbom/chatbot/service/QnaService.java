@@ -53,5 +53,16 @@ public class QnaService {
         return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId());
     }
 
+    public List<Qna> getChatbot(final Member member) {
+        createChatbot(member);
+        return qnaRepository.findAllOrderByCreatedAtDesc(member.getId());
+    }
 
+    @Transactional
+    public Chatbot createChatbot(final Member member) {
+        final Chatbot chatbot = chatbotRepository.save(new Chatbot());
+        chatbot.setMember(member);
+        chatbot.setProfileImageUrl(CHAT_MALE_IMAGE_URL);
+        return chatbot;
+    }
 }
