@@ -46,11 +46,20 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
     { name: '점심', selected: false },
     { name: '저녁', selected: false },
   ]);
+  const [hideAll, setHideAll] = useState(false);
 
   const handleInputChange = (e) => {
     setMedicineName(e.target.value);
   };
-
+  useEffect(() => {
+    setHideAll(false);
+  }, []);
+  useEffect(() => {
+    console.log('hideAll', hideAll);
+    document.getElementById('medicine-wrapper').style.display = hideAll
+      ? 'none'
+      : 'flex';
+  }, [hideAll]);
   const toggleCycle = (index) => {
     setCycles(
       cycles.map((cycle, i) => {
@@ -112,6 +121,8 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
           icon: 'success',
           confirmButtonText: '확인',
         }).then(async (result) => {
+          setHideAll(true);
+
           if (result.isConfirmed) {
             await resetInfo();
           }
@@ -128,7 +139,7 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
   };
 
   return (
-    <StepWrapper>
+    <StepWrapper hideAll={hideAll} id="medicine-wrapper">
       <StepItem>
         <StepTitle>복용중인 약품 (선택)</StepTitle>
         <Input
