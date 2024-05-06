@@ -48,76 +48,87 @@ export const Card = ({ title, color, imgSrc }) => {
   };
 
   return (
-    <Container>
-      <AnimatePresence initial={false} custom={direction}>
-        <MotionCard
-          key={page}
-          custom={direction}
-          variants={variants}
-          $color={color}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: 'spring', stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
-          }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={1}
-          onDragEnd={(e, { offset, velocity }) => {
-            const swipe = swipePower(offset.x, velocity.x);
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1);
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1);
-            }
-          }}
-        >
-          <CardTitleRow>
-            <img
-              src={`/images/todo/${imgSrc}.svg`}
-              width="44px"
-              height="44px"
-              alt="null"
-              style={{ paddingLeft: '12px' }}
-            />
-            <CardTitle>{title}</CardTitle>
-          </CardTitleRow>
-        </MotionCard>
-      </AnimatePresence>
-      <div className="next" onClick={() => paginate(1)}>
-        {'‣'}
-      </div>
-      <div className="prev" onClick={() => paginate(-1)}>
-        {'‣'}
-      </div>
+    <Container $color={color}>
+      <CardTitleRow>
+        <img
+          src={`/images/todo/${imgSrc}.svg`}
+          width="44px"
+          height="44px"
+          alt="null"
+          style={{ paddingLeft: '12px' }}
+        />
+        <CardTitle>{title}</CardTitle>
+      </CardTitleRow>
+      <AnimateContainer>
+        <div className="next" onClick={() => paginate(1)}>
+          {'‣'}
+        </div>
+          <AnimatePresence initial={false} custom={direction}>
+            <MotionCard
+              key={page}
+              custom={direction}
+              variants={variants}
+              $color={color}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+            ></MotionCard>
+          </AnimatePresence>
+        <div className="next" onClick={() => paginate(1)}>
+          {'‣'}
+        </div>
+      </AnimateContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
   position: relative;
-  width: 100dvw;
-  max-width: 480px;
+  width: 100%;
   height: 200px;
   margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
-
-const MotionCard = styled(motion.div)`
-  position: absolute;
-  width: calc(100% - 60px);
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.$color};
+  overflow: hidden;
   border-radius: 20px;
+`;
+
+const AnimateContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const MotionCard = styled(motion.div)`
+  position: absolute;
+  width: calc(100% - 120px);
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: white;
 `;
 
 const CardTitleRow = styled.div`

@@ -52,11 +52,17 @@ export default function Nav4() {
         </CategoryButtonDiv>
       </CategoryFrame>
       <CardsFrame>
+        {/* <div style={{width: "100%", height: "200px", backgroundColor: "black", marginBottom: "20px"}}></div>
+        <div style={{width: "100%", height: "200px", backgroundColor: "black", marginBottom: "20px"}}></div>
+        <div style={{width: "100%", height: "200px", backgroundColor: "black", marginBottom: "20px"}}></div>
+        <div style={{width: "100%", height: "200px", backgroundColor: "black", marginBottom: "20px"}}></div>
+        <div style={{width: "100%", height: "200px", backgroundColor: "black", marginBottom: "20px"}}></div> */}
         <Card
           title={mapCategoryList[0][0][0]}
           imgSrc={mapCategoryList[0][0][1]}
           color={mapCategoryList[0][0][2]}
         />
+        
         <Card
           title={mapCategoryList[0][1][0]}
           imgSrc={mapCategoryList[0][1][1]}
@@ -86,7 +92,7 @@ export default function Nav4() {
           title={mapCategoryList[1][0][0]}
           imgSrc={mapCategoryList[1][0][1]}
           color={mapCategoryList[1][0][2]}
-        />
+        /> 
       </CardsFrame>
     </Frame>
   );
@@ -105,7 +111,7 @@ const Frame = styled.div`
 `;
 
 const CardsFrame = styled.div`
-  width: 100dvw;
+  width: 100%;
   padding-top: 10px;
   overflow-y: auto;
   &::-webkit-scrollbar {
