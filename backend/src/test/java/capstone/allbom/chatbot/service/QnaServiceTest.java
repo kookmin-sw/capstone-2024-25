@@ -1,7 +1,10 @@
 package capstone.allbom.chatbot.service;
 
+import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
+import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
+import capstone.allbom.chatbot.dto.QnaPair;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.member.domain.Member;
@@ -13,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,16 +39,22 @@ class QnaServiceTest {
         Qna qna1 = Qna.builder()
                 .question("hi")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         Qna qna2 = Qna.builder()
                 .question("hello")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         Qna qna3 = Qna.builder()
                 .question("hiiiii")
                 .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
                 .build();
 
 
@@ -56,13 +66,18 @@ class QnaServiceTest {
             qnaRepository.save(qna2);
             qnaRepository.save(qna3);
 
-            // when
-            List<Qna> qnas = qnaService.getTopFiveQnas(member);
-            System.out.println("qnas = " + qnas);
+            qna1.setMember(member);
+            qna2.setMember(member);
+            qna3.setMember(member);
 
-            for (Qna qna : qnas) {
-                System.out.println("qna.getQuestion() = " + qna.getQuestion());
-            }
+            // when
+            List<QnaAndTypeResponse> qnaPairs = qnaService.getTopFiveQnas(member);
+
+            // then
+            assertEquals(3, qnaPairs.size());
+            assertEquals("hiiiii", qnaPairs.get(0).question());
+            assertEquals("hello", qnaPairs.get(1).question());
+            assertEquals("hi", qnaPairs.get(2).question());
         }
     }
 
