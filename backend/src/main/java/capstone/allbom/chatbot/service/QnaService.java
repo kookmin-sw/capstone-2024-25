@@ -9,6 +9,7 @@ import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,7 @@ public class QnaService {
     private String CHAT_MALE_IMAGE_URL;
 
     @Transactional
-    public List<Qna> getFifteenQnasByPagination(final Member member) {
+    public List<Qna> getFifteenQnasByPagination(final Member member, Pageable pageable) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -36,10 +37,7 @@ public class QnaService {
             throw new BadRequestException(DefaultErrorCode.NEED_CHATBOT_PROFILE_UPDATE);
         }
 
-        return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId())
-                .stream()
-                .limit(5)
-                .collect(Collectors.toList());
+        return qnaRepository.findAllOrderByCreatedAtPagination(savedMember.getId(), pageable);
     }
 
     @Transactional
@@ -47,7 +45,10 @@ public class QnaService {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
-        return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId());
+        return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId())
+                .stream()
+                .limit(5)
+                .collect(Collectors.toList());
     }
 
 
