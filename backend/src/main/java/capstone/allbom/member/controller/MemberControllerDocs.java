@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MemberControllerDocs {
     @Operation(summary = "첫 로그인 시 추가 회원 정보로 업데이트 하기", description = "회원가입 이후 첫 로그인 시 추가 회원 정보로 업데이트를 수행한다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "추가 회원 정보 업데이트 성공"),
+            @ApiResponse(responseCode = "204", description = "추가 회원 정보 업데이트 성공"),
             @ApiResponse(
                     responseCode = "400",
                     description = "이미 추가 회원 정보 업데이트를 수행한 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "요청한 주소에서 시도를 추출 후 변환하여 저장하는 과정에서 문제가 발생하는 경우",
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
