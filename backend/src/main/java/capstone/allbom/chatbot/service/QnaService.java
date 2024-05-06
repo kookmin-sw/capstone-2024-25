@@ -45,5 +45,13 @@ public class QnaService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public List<Qna> getTopFiveQnas(final Member member) {
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId());
+    }
+
 
 }
