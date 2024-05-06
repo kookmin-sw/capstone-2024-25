@@ -53,6 +53,8 @@ public class Member {
 
     private String profileImageUrl;
 
+    private String chatProfileImageUrl;
+
     private Province province;
 
     @Builder.Default

@@ -1,5 +1,6 @@
 package capstone.allbom.chatbot.domain;
 
+import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,9 +20,13 @@ public class Qna {
     @Column(name = "qna_id")
     private Long id;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "chatbot_id")
+//    private Chatbot chatbot;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chatbot_id")
-    private Chatbot chatbot;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "twentyQuestions_id")
