@@ -5,7 +5,7 @@ import capstone.allbom.member.domain.Member;
 
 // 응답 조회하기 위해 호출 - 2 (서버 -> AI)
 public record AnswerRequest(
-        String isGame,
+        Boolean isGame,
         String question,
         String gender
 ) {
