@@ -24,11 +24,17 @@ const types = {
     background-color: var(--primary-color);
     border: none;
     color: white;
+    &:active {
+      opacity: 0.8;
+    }
   `,
   Back: css`
     background-color: #ffffff;
     border: 3px solid #000000;
     color: black;
+    &:active {
+      opacity: 0.8;
+    }
   `,
 };
 

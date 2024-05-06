@@ -70,8 +70,6 @@ const AddressModal = ({
   setAddress,
   saveAddress,
 }) => {
-  const [inputAddressValue, setInputAddressValue] = useState('');
-  const [inputZipCodeValue, setInputZipCodeValue] = useState('');
   const [modalState, setModalState] = useState(false);
   const xClick = () => {
     closeModal();
@@ -84,9 +82,7 @@ const AddressModal = ({
   }; // 스타일 정의 code
   const onCompletePost = (data) => {
     setModalState(false);
-    setInputAddressValue(data.address);
-    setInputZipCodeValue(data.zonecode);
-    setAddress(`(${data.zonecode}) ${data.address}`);
+    setAddress(data.address);
     if (saveAddress) {
       saveAddress();
     }

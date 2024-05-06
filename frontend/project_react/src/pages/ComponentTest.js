@@ -16,21 +16,23 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
-export const testFun = (text) => {
+export const testFun = () => {
   // console.log('testFun');
   // console.log('text : ', text);
   const data = {
     voice: {
       // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
-      name: 'ko-KR-Neural2-C',
+      name: 'ko-KR-Neural2-A',
       languageCode: 'ko-KR',
       // ssmlGender: 'MALE',
     },
     input: {
-      text: text.toString(),
+      text: '아,할아버지, 그럼요. 당연히 손주들을 보고 싶으실 거예요. 요즘 젊은이들은 정말 바쁘죠, 그런데 그들도 할아버지가 그리워하고 있음을 알게 되면 분명히 시간을 내려고 노력할 거예요. 혹시 손주들과 비디오 통화 같은 걸 해보신 적 있으신가요?',
     },
     audioConfig: {
       audioEncoding: 'mp3',
+      speakingRate: 1.3,
+      pitch: -4,
     },
   };
 
