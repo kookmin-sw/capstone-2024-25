@@ -1,6 +1,7 @@
 package capstone.allbom.chatbot.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Qna {
 
