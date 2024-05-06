@@ -5,14 +5,14 @@ import { Card } from './todo/card';
 
 const mapCategoryList = [
   [
-    ['전체', '#379237'],
-    ['운동', '#EF6C20'],
-    ['성장', '#FBC02D'],
+    ['전체', 'overall', '#379237'],
+    ['운동', 'Barbell', '#EF6C20'],
+    ['성장', 'book', '#FBC02D'],
   ],
   [
-    ['취미', '#0091EA'],
-    ['휴식', '#D57AFF'],
-    ['식사', '#8BC34A'],
+    ['취미', 'MusicNotes', '#0091EA'],
+    ['휴식', 'ArmChair', '#D57AFF'],
+    ['식사', 'ForkKnife', '#8BC34A'],
   ],
 ];
 
@@ -29,7 +29,7 @@ export default function Nav4() {
           {mapCategoryList[0].map((category, index) => (
             <CategoryButton
               key={index}
-              $color={category[1]}
+              $color={category[2]}
               $isSelected={selectedCategory === category[0]}
               onClick={() => setSelectedCategory(category[0])}
             >
@@ -42,7 +42,7 @@ export default function Nav4() {
           {mapCategoryList[1].map((category, index) => (
             <CategoryButton
               key={index}
-              $color={category[1]}
+              $color={category[2]}
               $isSelected={selectedCategory === category[0]}
               onClick={() => setSelectedCategory(category[0])}
             >
@@ -52,18 +52,41 @@ export default function Nav4() {
         </CategoryButtonDiv>
       </CategoryFrame>
       <CardsFrame>
-        {/* <Test />
-        <Test />
-        <Test />
-        <Test />
-        <Test />
-        <Test />
-        <Test /> */}
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card
+          title={mapCategoryList[0][0][0]}
+          imgSrc={mapCategoryList[0][0][1]}
+          color={mapCategoryList[0][0][2]}
+        />
+        <Card
+          title={mapCategoryList[0][1][0]}
+          imgSrc={mapCategoryList[0][1][1]}
+          color={mapCategoryList[0][1][2]}
+        />
+        <Card
+          title={mapCategoryList[0][2][0]}
+          imgSrc={mapCategoryList[0][2][1]}
+          color={mapCategoryList[0][2][2]}
+        />
+        <Card
+          title={mapCategoryList[1][0][0]}
+          imgSrc={mapCategoryList[1][0][1]}
+          color={mapCategoryList[1][0][2]}
+        />
+        <Card
+          title={mapCategoryList[1][1][0]}
+          imgSrc={mapCategoryList[1][1][1]}
+          color={mapCategoryList[1][1][2]}
+        />
+        <Card
+          title={mapCategoryList[1][0][0]}
+          imgSrc={mapCategoryList[1][0][1]}
+          color={mapCategoryList[1][0][2]}
+        />
+        <Card
+          title={mapCategoryList[1][0][0]}
+          imgSrc={mapCategoryList[1][0][1]}
+          color={mapCategoryList[1][0][2]}
+        />
       </CardsFrame>
     </Frame>
   );
