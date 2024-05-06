@@ -2,6 +2,7 @@ package capstone.allbom.chatbot.service;
 
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
+import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
 import capstone.allbom.chatbot.dto.QnaPair;
 import capstone.allbom.chatbot.dto.QnaResponse;
 import capstone.allbom.common.exception.BadRequestException;
@@ -48,7 +49,7 @@ public class QnaService {
     }
 
     @Transactional
-    public List<QnaPair> getTopFiveQnas(final Member member) {
+    public List<QnaAndTypeResponse> getTopFiveQnas(final Member member) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -58,7 +59,7 @@ public class QnaService {
                 .toList();
 
         return qnas.stream()
-                .map(QnaPair::from)
+                .map(QnaAndTypeResponse::from)
                 .toList();
     }
 }
