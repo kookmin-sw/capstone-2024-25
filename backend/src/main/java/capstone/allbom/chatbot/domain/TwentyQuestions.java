@@ -17,4 +17,6 @@ public class TwentyQuestions {
     private String solution;
 
     private Integer questionCount;
+
+//    private Boolean isComplete;
 }
