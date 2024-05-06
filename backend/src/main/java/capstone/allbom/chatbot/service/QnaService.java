@@ -1,15 +1,9 @@
 package capstone.allbom.chatbot.service;
 
-import capstone.allbom.chatbot.domain.Chatbot;
-import capstone.allbom.chatbot.domain.ChatbotRepository;
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
-import capstone.allbom.common.exception.NotFoundException;
-import capstone.allbom.game.domain.Game;
-import capstone.allbom.game.domain.Subject;
-import capstone.allbom.game.domain.SubjectType;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +22,6 @@ import java.util.stream.Collectors;
 public class QnaService {
 
     private final QnaRepository qnaRepository;
-    private final ChatbotRepository chatbotRepository;
     private final MemberRepository memberRepository;
     
     @Value("https://allbom.s3.ap-northeast-2.amazonaws.com/chat_male.jpg")
@@ -53,16 +46,5 @@ public class QnaService {
         return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId());
     }
 
-    public List<Qna> getChatbot(final Member member) {
-        createChatbot(member);
-        return qnaRepository.findAllOrderByCreatedAtDesc(member.getId());
-    }
 
-    @Transactional
-    public Chatbot createChatbot(final Member member) {
-        final Chatbot chatbot = chatbotRepository.save(new Chatbot());
-        chatbot.setMember(member);
-        chatbot.setProfileImageUrl(CHAT_MALE_IMAGE_URL);
-        return chatbot;
-    }
 }

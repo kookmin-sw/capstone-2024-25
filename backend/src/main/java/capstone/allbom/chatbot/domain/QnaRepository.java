@@ -12,15 +12,15 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     Optional<Qna> findById(Long qnaId);
 
-    List<Qna> findByChatbotId(Long chatbotId);
+    List<Qna> findByMemberId(Long memberId);
 
     List<Qna> findByTwentyQuestionsId(Long twentyQuestionsId);
 
     List<Qna> findAll();
 
-    @Query("SELECT q FROM Qna q WHERE q.chatbot.member.id = :memberId ORDER BY q.createdAt DESC")
+    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId ORDER BY q.createdAt DESC")
     List<Qna> findAllOrderByCreatedAtDesc(Long memberId);
 
-    @Query("SELECT q FROM Qna q WHERE q.chatbot.member.id = :memberId ORDER BY q.createdAt DESC")
+    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId ORDER BY q.createdAt DESC")
     List<Qna> findAllOrderByCreatedAtPagination(Long memberId, Pageable pageable);
 }
