@@ -80,11 +80,11 @@ const AddressModal = ({
     height: '500px',
     display: isOpen ? 'block' : 'none',
   }; // 스타일 정의 code
-  const onCompletePost = (data) => {
+  const onCompletePost = async (data) => {
     setModalState(false);
     setAddress(data.address);
     if (saveAddress) {
-      saveAddress();
+      await saveAddress(data.address);
     }
     closeModal();
   };
