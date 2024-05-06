@@ -32,6 +32,10 @@ public class QnaService {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
+        if (savedMember.getChatProfileImageUrl() == null) {
+            throw new BadRequestException(DefaultErrorCode.NEED_CHATBOT_PROFILE_UPDATE);
+        }
+
         return qnaRepository.findAllOrderByCreatedAtDesc(savedMember.getId())
                 .stream()
                 .limit(5)
