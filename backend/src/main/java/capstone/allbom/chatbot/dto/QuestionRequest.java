@@ -1,4 +1,8 @@
 package capstone.allbom.chatbot.dto;
 
-public record QuestionRequest() {
+// 질문 요청 - 1 (클라이언트 -> 서버)
+public record QuestionRequest(
+        String isGame,
+        String question
+) {
 }
