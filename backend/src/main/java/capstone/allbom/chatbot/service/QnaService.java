@@ -2,6 +2,7 @@ package capstone.allbom.chatbot.service;
 
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
+import capstone.allbom.chatbot.dto.QnaPair;
 import capstone.allbom.chatbot.dto.QnaResponse;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
@@ -30,7 +31,7 @@ public class QnaService {
     private String CHAT_MALE_IMAGE_URL;
 
     @Transactional
-    public List<QnaResponse> getFifteenQnasByPagination(final Member member, Pageable pageable) {
+    public QnaResponse getFifteenQnasByPagination(final Member member, Pageable pageable) {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -39,9 +40,12 @@ public class QnaService {
         }
 
         List<Qna> qnas = qnaRepository.findAllOrderByCreatedAtPagination(savedMember.getId(), pageable);
-        return qnas.stream()
-                .map(qna -> QnaResponse.from(savedMember, qna))
-                .collect(Collectors.toList());
+        List<QnaPair> qnaPairs = qnas.stream()
+                .map(QnaPair::from)
+                .toList();
+
+        return QnaResponse.from(member, qnaPairs);
+
     }
 
     @Transactional
