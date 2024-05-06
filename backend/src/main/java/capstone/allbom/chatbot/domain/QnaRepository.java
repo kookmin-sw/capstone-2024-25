@@ -1,5 +1,7 @@
 package capstone.allbom.chatbot.domain;
 
+import capstone.allbom.game.domain.Subject;
+import capstone.allbom.game.domain.SubjectType;
 import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -21,8 +23,9 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     List<Qna> findAll();
 
-    List<Qna> findAllByOrderByCreatedAtDesc();
+    @Query("SELECT q FROM Qna q WHERE q.chatbot.member.id = :memberId ORDER BY q.createdAt DESC")
+    List<Qna> findAllOrderByCreatedAtDesc(Long memberId);
 
-    @Query("SELECT q FROM Qna q ORDER BY q.createdAt DESC")
-    List<Qna> findAllByOrderByCreatedAtPagination(Pageable pageable);
+    @Query("SELECT q FROM Qna q WHERE q.chatbot.member.id = :memberId ORDER BY q.createdAt DESC")
+    List<Qna> findAllOrderByCreatedAtPagination(Long memberId, Pageable pageable);
 }
