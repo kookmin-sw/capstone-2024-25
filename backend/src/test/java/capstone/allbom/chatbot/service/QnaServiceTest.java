@@ -57,6 +57,27 @@ class QnaServiceTest {
                 .createdAt(LocalDateTime.now())
                 .build();
 
+        Qna qna4 = Qna.builder()
+                .question("qna4")
+                .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        Qna qna5 = Qna.builder()
+                .question("qna5")
+                .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        Qna qna6 = Qna.builder()
+                .question("qna6")
+                .answer("aaaa")
+                .type(AnswerType.GENERAL)
+                .createdAt(LocalDateTime.now())
+                .build();
+
 
         @Test
         public void 시간_역순으로_상위_5개의_채팅_내역을_조회한다() {
@@ -65,20 +86,28 @@ class QnaServiceTest {
             qnaRepository.save(qna1);
             qnaRepository.save(qna2);
             qnaRepository.save(qna3);
+            qnaRepository.save(qna4);
+            qnaRepository.save(qna5);
+            qnaRepository.save(qna6);
 
             qna1.setMember(member);
             qna2.setMember(member);
             qna3.setMember(member);
+            qna4.setMember(member);
+            qna5.setMember(member);
+            qna6.setMember(member);
 
             // when
             List<QnaAndTypeResponse> qnaPairs = qnaService.getTopFiveQnas(member);
 
             // then
-            assertEquals(3, qnaPairs.size());
-            assertEquals("hiiiii", qnaPairs.get(0).question());
-            assertEquals("hello", qnaPairs.get(1).question());
-            assertEquals("hi", qnaPairs.get(2).question());
+            assertEquals(5, qnaPairs.size());
+            assertEquals("qna6", qnaPairs.get(0).question());
+            assertEquals("qna5", qnaPairs.get(1).question());
+            assertEquals("qna4", qnaPairs.get(2).question());
+            assertEquals("hiiiii", qnaPairs.get(3).question());
+            assertEquals("hello", qnaPairs.get(4).question());
+//            assertEquals("hi", qnaPairs.get(2).question());
         }
     }
-
 }
