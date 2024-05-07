@@ -1,0 +1,19 @@
+.slick-slider{
+    width: 100% !important;
+    box-sizing: border-box;
+}
+.slick-list{
+    width: 100% !important;
+    box-sizing: border-box;
+    min-height: 440px;
+    overflow-y: auto;
+}
+.slick-track{
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.slick-slide{
+    box-sizing: border-box;
+}
+

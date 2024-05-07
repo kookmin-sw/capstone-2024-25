@@ -130,6 +130,7 @@ const BirthModal = ({
   birth,
   formatDate,
   saveBirth,
+  defaultDate,
 }) => {
   const [selectedDay, setSelectedDay] = useState(birth);
 
@@ -146,16 +147,23 @@ const BirthModal = ({
   };
 
   const handleDayClick = (day) => {
+    console.log('day : ', day);
     setSelectedDay(day);
   };
   const xClick = () => {
-    setBirth(null);
+    if (defaultDate) {
+      setBirth(defaultDate);
+    } else {
+      setBirth(null);
+    }
     closeModal();
   };
   const btnClick = () => {
+    console.log('btnClick selectedDay : ', selectedDay);
     setBirth(selectedDay);
     if (saveBirth) {
-      saveBirth();
+      console.log('saveBirth 실행');
+      saveBirth(selectedDay);
     }
     closeModal();
   };
@@ -219,7 +227,7 @@ const BirthModal = ({
         {/*나중에 커스텀 할 떄 필요할 수도*/}
         {/*<DayPicker {...dayPickerProps} />*/}
         <ContentFooter>
-          <DateInfo>{formatDate(selectedDay?.toString())}</DateInfo>
+          <DateInfo>{formatDate(selectedDay?.toString(), 'format')}</DateInfo>
           <Button
             text="선택 완료"
             size="Large"
