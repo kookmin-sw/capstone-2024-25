@@ -24,17 +24,16 @@ const types = {
     background-color: var(--primary-color);
     border: none;
     color: white;
-    &:active {
-      opacity: 0.8;
-    }
   `,
   Back: css`
     background-color: #ffffff;
     border: 3px solid #000000;
     color: black;
-    &:active {
-      opacity: 0.8;
-    }
+  `,
+  Secondary: css`
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: 3px solid var(--primary-color);
   `,
 };
 
@@ -43,6 +42,9 @@ const ButtonStyled = styled.button`
   font-size: 16px;
   text-align: center;
   border-radius: 10px;
+  &:active {
+    opacity: 0.8;
+  }
   ${({ fontSize }) =>
     fontSize &&
     css`

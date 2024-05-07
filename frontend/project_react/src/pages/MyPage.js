@@ -13,6 +13,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import './my-page.css';
 import AddMedicine from '../components/MyPage/AddMedicine';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -20,7 +22,8 @@ const MyPageContainer = styled.div`
   align-items: center;
   height: 100vh;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 48px 30px;
   gap: 32px;
 `;
@@ -215,10 +218,11 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
-const Gugu = styled.div`
+const ButtonWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MyPage = () => {
@@ -264,31 +268,23 @@ const MyPage = () => {
   // 슬라이더
   const sliderRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
-  const handlePrev = () => {
-    console.log('handlePrev 실행');
+  const [hideAll, setHideAll] = useState(false); // 그 뭐야 그 그 그거 약품 추가 탭 없애기
 
+  const navigate = useNavigate();
+
+  const handlePrev = () => {
     if (sliderRef.current) {
-      console.log('handlePrev go to 0');
-      // sliderRef.current.slickGoTo(0);
       sliderRef.current.slickPrev();
-    } else {
-      console.log('Slider ref is not available.');
     }
   };
-  useEffect(() => {
-    console.log('currentSlide : ', currentSlide);
-  }, [currentSlide]);
   const handleNext = () => {
-    // sliderRef.current.slickGoTo(1);
     sliderRef.current.slickNext();
   };
   const handleSlide = () => {
-    console.log('sliderRef : ', sliderRef);
     if (currentSlide === 0) {
-      console.log('currentSlide 0');
-      sliderRef.current.slickNext();
+      handleNext();
+      setHideAll(false);
     } else if (currentSlide === 1) {
-      console.log('currentSlide 0');
       sliderRef.current.slickPrev();
     }
   };
@@ -310,14 +306,13 @@ const MyPage = () => {
 
   useEffect(() => {
     if (userInfo) {
-      // console.log('userInfo : ', userInfo);
       applyInfo(userInfo);
     }
   }, [userInfo]);
 
   useEffect(() => {
     if (editingIndex !== null) {
-      setEditingName(newValue[editingIndex].medicine);
+      setEditingName(newValue[editingIndex].medicineName);
     }
   }, [editingIndex, medicineList]);
 
@@ -327,25 +322,14 @@ const MyPage = () => {
     }
   }, [medicineList]);
 
-  useEffect(() => {
-    // setDateValue('Sun Apr 21 2024 17:21:08 GMT+0900 (한국 표준시)');
-    // setNumValue('01012345678');
-    // setDisplayNumValue(phoneAutoHyphen('01012345678'));
-    // setAddressValue('경기도 파주시 적성면 어삼로2');
-    // setDetailAddress('402호');
-    // setMedicineList(dummyMedicineList);
-  }, []);
-
   const getUserInfo = async () => {
     await myPagaApis.getInfo(accessToken).then((res) => {
       if (res.status === 200) {
-        // console.log('getUserInfo res.data : ', res.data);
         setUserInfo(res.data);
       }
     });
   };
   const applyInfo = (userInfo) => {
-    // console.log('userInfo  : ', userInfo);
     setUserName(userInfo.name);
     setAddressValue(userInfo.address);
     setDetailAddress(userInfo.detailAddress);
@@ -370,7 +354,6 @@ const MyPage = () => {
   };
   const updateMedicine = async (id, data) => {
     await medicineApis.update(id, data, accessToken).then((res) => {
-      console.log('update res : ', res);
       if (res.status === 204) {
         // getMedicineList();
         Swal.fire({
@@ -387,9 +370,7 @@ const MyPage = () => {
     await myPagaApis
       .updateBirthday({ birthday: date }, accessToken)
       .then(async (res) => {
-        // console.log('updateBirthday res : ', res);
         if (res.status === 204) {
-          // console.log('등록 완 !');
           await getUserInfo();
           setDateModalState(false);
         } else {
@@ -431,9 +412,6 @@ const MyPage = () => {
   };
 
   const saveBirth = async (date) => {
-    // API 연결 후 "생년월일 수정 요청 버튼"
-    // console.log('date : ', date);
-    // console.log('dateValue : ', dateValue);
     await updateBirthday(formatDate(date, 'update'));
   };
 
@@ -441,7 +419,6 @@ const MyPage = () => {
     await myPagaApis
       .updateNumber({ phoneNumber: numValue }, accessToken)
       .then((res) => {
-        // console.log('res : ', res);
         if (res.status === 204) {
           setEditNum(false);
         } else {
@@ -521,16 +498,12 @@ const MyPage = () => {
   };
 
   const saveDetailAddress = async () => {
-    // API 연결 후 "상세 주소 수정 요청 버튼"
     await updateAddress(addressValue, detailAddress);
     setEditDetailAddress(false);
-    // console.log('saveDetailAddress 실행');
   };
 
   const saveAddress = async (address) => {
-    // API 연결 후 "주소 수정 요청 버튼"
     await updateAddress(address, detailAddress);
-    // console.log('saveAddress 실행');
   };
 
   // 약 수정
@@ -586,12 +559,10 @@ const MyPage = () => {
           updateValue.splice(index, 1);
           setNewValue(updateValue);
           await getUserInfo();
-          // getMedicineList();
         }
       })
       .catch((error) => {
         if (error.response.data.code === 400) {
-          // console.log(error);
           Swal.fire({
             title: '약품 삭제',
             text: '약품 삭제에 실패했습니다.',
@@ -671,6 +642,32 @@ const MyPage = () => {
       setNewValue(updatedValue);
     }
   };
+
+  const logOut = () => {
+    Swal.fire({
+      title: '로그아웃',
+      text: '로그아웃 하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        removeCookie('accessToken');
+        Swal.fire({
+          title: '로그아웃',
+          icon: 'success',
+          text: '로그아웃 되었습니다.',
+          confirmButtonText: '확인',
+        }).then((res) => {
+          navigate('/');
+        });
+      } else {
+        return;
+      }
+    });
+  };
+
   return (
     <MyPageContainer>
       <TitleHeader title={'내 정보'} showBackButton={true} showDivider={true} />
@@ -787,15 +784,6 @@ const MyPage = () => {
           </MedicineTitle>
           <Slider id="slider" ref={sliderRef} {...settings}>
             <MedicineWrapper>
-              <div
-                style={{
-                  border: '1px solid red',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                {currentSlide}
-              </div>
               {newValue.map((item, index) => (
                 <MedicineItem
                   key={item.id}
@@ -862,37 +850,23 @@ const MyPage = () => {
                 </MedicineItem>
               ))}
             </MedicineWrapper>
-            <div>
-              <div
-                style={{
-                  border: '1px solid red',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                {currentSlide}
-              </div>
-              <AddMedicine
-                getUserInfo={getUserInfo}
-                handlePrev={handlePrev}
-                sliderRef={sliderRef}
-                handleSlide={handleSlide}
-                // value={addMedicineName}
-                // setValue={setAddMedicineName}
-                // cycleMorning={cycleMorning}
-                // setCycleMorning={setCycleMorning}
-                // cycleLunch={cycleLunch}
-                // setCycleLunch={setCycleLunch}
-                // cycleDinner={cycleDinner}
-                // setCycleDinner={setCycleDinner}
-                // medicineList={medicineList}
-                // setMedicineList={setMedicineList}
-                // openMedicineModal={openMedicineModal}
-                // setOpenMedicineModal={setOpenMedicineModal}
-              />
-            </div>
+            <AddMedicine
+              getUserInfo={getUserInfo}
+              handleSlide={handleSlide}
+              hideAll={hideAll}
+              setHideAll={setHideAll}
+            />
           </Slider>
         </EditItem>
+        <ButtonWrapper>
+          <Button
+            text="로그아웃"
+            size="Large"
+            height="Short"
+            type="Secondary"
+            onClick={logOut}
+          />
+        </ButtonWrapper>
       </MyPageContent>
     </MyPageContainer>
   );

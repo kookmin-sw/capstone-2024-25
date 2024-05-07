@@ -37,7 +37,7 @@ const CycleWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
+const AddMedicine = ({ getUserInfo, handleSlide, hideAll, setHideAll }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
 
   const [medicineName, setMedicineName] = useState('');
@@ -46,7 +46,6 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
     { name: '점심', selected: false },
     { name: '저녁', selected: false },
   ]);
-  const [hideAll, setHideAll] = useState(false);
 
   const handleInputChange = (e) => {
     setMedicineName(e.target.value);
@@ -55,7 +54,6 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
     setHideAll(false);
   }, []);
   useEffect(() => {
-    console.log('hideAll', hideAll);
     document.getElementById('medicine-wrapper').style.display = hideAll
       ? 'none'
       : 'flex';
@@ -71,20 +69,15 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
     );
   };
   const resetInfo = async () => {
-    // console.log('resetInfo 실행');
     setMedicineName('');
     setCycles([
       { name: '아침', selected: false },
       { name: '점심', selected: false },
       { name: '저녁', selected: false },
     ]);
-    // if (sliderRef.current) {
-    //   sliderRef.current.slickGoTo(0); // correctSlideIndex는 올바른 슬라이더 인덱스
-    // }
     handleSlide();
   };
   const addMedicine = async () => {
-    // console.log('addMedicine 실행');
     if (medicineName.length < 3 || medicineName.length > 20) {
       Swal.fire({
         title: '약품 이름',
@@ -105,8 +98,6 @@ const AddMedicine = ({ getUserInfo, handlePrev, sliderRef, handleSlide }) => {
   };
 
   const registerMedicine = async (newMedicineInfo) => {
-    // console.log('registerMedicine 실행');
-
     try {
       const res = await medicineApis.register(
         newMedicineInfo,
