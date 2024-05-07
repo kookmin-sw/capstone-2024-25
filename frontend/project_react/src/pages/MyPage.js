@@ -218,6 +218,15 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
+const NoMedicine = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 40px;
+  color: var(--unselected-color);
+`;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -801,71 +810,79 @@ const MyPage = () => {
           </MedicineTitle>
           <Slider id="slider" ref={sliderRef} {...settings}>
             <MedicineWrapper>
-              {newValue.map((item, index) => (
-                <MedicineItem
-                  key={item.id}
-                  isLastItem={index === newValue.length - 1}
-                >
-                  <MedicineInfo id="medicine-info">
-                    <MedicineHeader>
-                      {editingIndex === index ? (
-                        <MedicineInputWrapper>
-                          <EditName
-                            id="edit-name"
-                            type="text"
-                            value={editingName}
-                            onChange={handleNameChange}
-                          />
-                        </MedicineInputWrapper>
-                      ) : (
-                        <MedicineName id="medicine-name">
-                          {item.medicineName}
-                        </MedicineName>
-                      )}
-                      <ModifyWrapper id="modify-wrapper">
-                        {editingIndex === index ? (
-                          <CompleteBtn
-                            onClick={() => {
-                              saveBtn();
-                            }}
-                          >
-                            완료
-                          </CompleteBtn>
-                        ) : (
-                          <EditBtn
-                            onClick={() => {
-                              setEditingIndex(index);
-                            }}
-                          >
-                            수정
-                          </EditBtn>
-                        )}
-                        <DeleteBtn
-                          onClick={() => {
-                            deleteBtn(index, item.id);
-                          }}
-                        >
-                          삭제
-                        </DeleteBtn>
-                      </ModifyWrapper>
-                    </MedicineHeader>
-                    <CycleWrapper id="cycle-wrapper">
-                      {['아침', '점심', '저녁'].map((part, cycleIndex) => (
-                        <Toggle
-                          key={`${index}-${cycleIndex}`}
-                          text={part}
-                          size="RectSmall"
-                          selected={newValue[index].medicineTime.includes(part)}
-                          onClick={() => {
-                            setEditingIndex(index);
-                            handleToggle(index, cycleIndex, part);
-                          }}
-                        />
-                      ))}
-                    </CycleWrapper>
-                  </MedicineInfo>
-                </MedicineItem>
-              ))}
+              {medicineList?.length !== 0 ? (
+                <div>
+                  {newValue.map((item, index) => (
+                    <MedicineItem
+                      key={item.id}
+                      isLastItem={index === newValue.length - 1}
+                    >
+                      <MedicineInfo id="medicine-info">
+                        <MedicineHeader>
+                          {editingIndex === index ? (
+                            <MedicineInputWrapper>
+                              <EditName
+                                id="edit-name"
+                                type="text"
+                                value={editingName}
+                                onChange={handleNameChange}
+                              />
+                            </MedicineInputWrapper>
+                          ) : (
+                            <MedicineName id="medicine-name">
+                              {item.medicineName}
+                            </MedicineName>
+                          )}
+                          <ModifyWrapper id="modify-wrapper">
+                            {editingIndex === index ? (
+                              <CompleteBtn
+                                onClick={() => {
+                                  saveBtn();
+                                }}
+                              >
+                                완료
+                              </CompleteBtn>
+                            ) : (
+                              <EditBtn
+                                onClick={() => {
+                                  setEditingIndex(index);
+                                }}
+                              >
+                                수정
+                              </EditBtn>
+                            )}
+                            <DeleteBtn
+                              onClick={() => {
+                                deleteBtn(index, item.id);
+                              }}
+                            >
+                              삭제
+                            </DeleteBtn>
+                          </ModifyWrapper>
+                        </MedicineHeader>
+                        <CycleWrapper id="cycle-wrapper">
+                          {['아침', '점심', '저녁'].map((part, cycleIndex) => (
+                            <Toggle
+                              key={`${index}-${cycleIndex}`}
+                              text={part}
+                              size="RectSmall"
+                              selected={newValue[index].medicineTime.includes(
+                                part,
+                              )}
+                              onClick={() => {
+                                setEditingIndex(index);
+                                handleToggle(index, cycleIndex, part);
+                              }}
+                            />
+                          ))}
+                        </CycleWrapper>
+                      </MedicineInfo>
+                    </MedicineItem>
+                  ))}
+                </div>
+              ) : (
+                <NoMedicine>추가하신 약품이 없습니다.</NoMedicine>
+              )}
             </MedicineWrapper>
             <AddMedicine
               getUserInfo={getUserInfo}
