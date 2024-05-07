@@ -85,6 +85,10 @@ const EditItem = styled.div`
   //overflow-y: scroll;
 `;
 
+const EditMedicine = styled(EditItem)`
+  gap: 12px;
+`;
+
 const EditHeader = styled.div`
   display: flex;
   align-items: center;
@@ -799,7 +803,7 @@ const MyPage = () => {
             </InputWrapper>
           )}
         </EditItem>
-        <EditItem>
+        <EditMedicine>
           <MedicineTitle>
             <EditTitle>복용중인 약</EditTitle>
             <AddButton
@@ -891,7 +895,7 @@ const MyPage = () => {
               setHideAll={setHideAll}
             />
           </Slider>
-        </EditItem>
+        </EditMedicine>
         <ButtonWrapper>
           <Button
             text="로그아웃"
