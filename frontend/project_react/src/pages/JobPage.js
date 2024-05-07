@@ -1,9 +1,12 @@
+// JobPage.js
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import JobDropdown from '../components/JobPage/Dropdown';
 import JobPageHeader from '../components/Header/JobPageHeader';
 import JobEmploymentItem from '../components/JobPage/EmploymentItem';
 import Pagination from 'react-js-pagination';
+import { jobApis } from '../api/apis/jobApis';
+import { useCookies } from 'react-cookie';
 
 const JobContainer = styled.div`
   display: flex;
@@ -99,8 +102,27 @@ const PaginationBox = styled.div`
 `;
 
 const JobPage = () => {
+  const [jobList, setJobList] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
   const [page, setPage] = useState(1);
+  const [sorted, setSorted] = useState(0);
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const accessToken = cookies.accessToken;
+
+  const getJobList = async () => {
+    await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
+      console.log(res);
+      setJobList(res.data); // id, companyName, title, occupation
+    });
+  };
+
+  useEffect(() => {
+    getJobList();
+  }, []);
+
+  useEffect(() => {
+    getJobList();
+  }, [page, sorted]);
 
   useEffect(() => {
     const pagination = document.querySelector('.pagination');
@@ -130,89 +152,20 @@ const JobPage = () => {
   };
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
   };
-  const [data, setData] = useState([]);
-  const [items, setItems] = useState(5);
-
-  const dummyData = [
-    {
-      id: 1,
-      company: '엘림에스(유)',
-      title: '단체 급식 보조원',
-      content:
-        '인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 장애인복지카드 장애인복지카드 장애인복지카드 장애인복지카드 장애인복지카드 장애인복지카드 장애인복지카드 장애인복지카드',
-    },
-    {
-      id: 2,
-      company: '엘림에스(유)',
-      title: '단체 급식 보조원',
-      content:
-        '인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 ',
-    },
-    {
-      id: 3,
-      company: '희건히',
-      title: '개밥 주기',
-      content: '애완견 산책 도우미 채용합니다. (애완견 등록증 필수)',
-    },
-    {
-      id: 4,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 5,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 6,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 7,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 8,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 9,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 10,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-    {
-      id: 11,
-      company: '희건희건희',
-      title: '산책',
-      content: '개 키우는 사람 ~',
-    },
-  ];
-
   return (
     <JobContainer>
       <JobPageHeader />
       <JobPageContent>
-        <JobDropdown toggleFilter={toggleFilter} openFilter={openFilter} />
+        <JobDropdown
+          toggleFilter={toggleFilter}
+          openFilter={openFilter}
+          sorted={sorted}
+          setSorted={setSorted}
+          setOpenFilter={setOpenFilter}
+        />
         <EmploymentWrapper>
-          <JobEmploymentItem dummyData={dummyData} />
+          <JobEmploymentItem jobList={jobList} />
           <PaginationBox>
             <Pagination
               activePage={page}
