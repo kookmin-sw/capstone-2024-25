@@ -4,18 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
-import { wordOrderApis } from '../api/apis/gameApis';
 
 const mapCategoryList = [
   [
-    ['전체', '#379237'],
-    ['병원·약국', '#EF6C20'],
-    ['복지주택', '#FBC02D'],
+    ['전체', 'ALL', '#379237'],
+    ['병원·약국', 'HOSPITAL', '#EF6C20'],
+    ['복지주택', 'WELFAREHOUSE', '#FBC02D'],
   ],
   [
-    ['복지관', '#0091EA'],
-    ['케어센터', '#8BC34A'],
-    ['일자리', '#D57AFF'],
+    ['복지관', 'WELFARECENTER', '#0091EA'],
+    ['케어센터', 'CARECENTER', '#8BC34A'],
+    ['일자리', 'job', '#D57AFF'],
   ],
 ];
 
@@ -24,7 +23,7 @@ export default function Nav5() {
   useKakaoLoader();
 
   // 지도 관련 동작
-  const [state, setState] = useState({
+  const [centerState, setCenterState] = useState({
     center: {
       lat: 33.450701,
       lng: 126.570667,
@@ -35,7 +34,7 @@ export default function Nav5() {
   const [mapSizeLevel, setMapSizeLevel] = useState(3);
 
   // 지도 외의 동작
-  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [currentBounds, setCurrentBounds] = useState();
   const [mapTags, setMapTags] = useState([]);
   const [markerInfo, setMarkerInfo] = useState();
@@ -46,7 +45,7 @@ export default function Nav5() {
       // GeoLocation을 이용해서 접속 위치를 받아옴
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setState((prev) => ({
+          setCenterState((prev) => ({
             ...prev,
             center: {
               lat: position.coords.latitude,
@@ -56,7 +55,7 @@ export default function Nav5() {
           }));
         },
         (err) => {
-          setState((prev) => ({
+          setCenterState((prev) => ({
             ...prev,
             errMsg: err.message,
             isLoading: false,
@@ -65,7 +64,7 @@ export default function Nav5() {
       );
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정
-      setState((prev) => ({
+      setCenterState((prev) => ({
         ...prev,
         errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
@@ -73,15 +72,40 @@ export default function Nav5() {
     }
   }, []);
 
-  async function fetchData() {
+  async function fetchMarkers() {
     if (currentBounds) {
       try {
         const response = await mapApi.getMapMarkers(currentBounds);
-        console.log('응답', response.data);
+        // console.log('응답', response.data);
         setMapTags(response.data);
       } catch (error) {
         console.error('에러요', error.response.data.code);
       }
+    }
+  }
+
+  async function fetchMarkerInfo(type, id) {
+    try {
+      const response = await mapApi.getMarkerInfo(type, id);
+      console.log('응답', response.data);
+      if (response.data.type === 'JOB') {
+        setMarkerInfo({
+          id: response.data.id,
+          type: response.data.type,
+          occupation: response.data.occupation,
+          address: response.data.address,
+        });
+      } else {
+        setMarkerInfo({
+          id: response.data.id,
+          type: response.data.type,
+          name: response.data.name,
+          address: response.data.address,
+          phone: response.data.phoneNumber,
+        });
+      }
+    } catch (error) {
+      console.error('에러요', error.response.data.code);
     }
   }
 
@@ -90,11 +114,8 @@ export default function Nav5() {
       <MapFrame>
         <Map // 지도를 표시할 Container
           id="map"
-          center={{
-            // 지도의 중심좌표
-            lat: 33.450701,
-            lng: 126.570667,
-          }}
+          center={centerState.center} // 지도의 중심좌표
+          isPanto={true}
           style={{
             width: '100%',
             height: '100%',
@@ -108,7 +129,7 @@ export default function Nav5() {
           onTileLoaded={(map) => {
             console.log('지도 타일이 로드됐어요', currentBounds);
             if (mapSizeLevel < 4) {
-              fetchData();
+              fetchMarkers();
             }
           }}
           onBoundsChanged={(map) => {
@@ -119,43 +140,41 @@ export default function Nav5() {
             });
           }}
         >
-          {!state.isLoading &&
+          {!centerState.isLoading &&
             mapSizeLevel < 4 &&
-            mapTags.map((tag, index) => (
-              <div key={index}>
-                <MapMarker
-                  position={{ lat: tag['latitude'], lng: tag['longitude'] }}
-                  image={{
-                    // src: `/images/map/marker_${selectedCategory}.svg`,
-                    src: `/images/map/marker_병원·약국.svg`,
-                    size:
-                      markerInfo && index === markerInfo.markerIndex
-                        ? { width: 60, height: 60 }
-                        : { width: 40, height: 40 },
-                  }}
-                />
-                <CustomOverlayMap
-                  position={{ lat: tag['latitude'], lng: tag['longitude'] }}
-                >
-                  <MapTagContainer>
-                    <MapTagOverlay
-                      $color="#EF6C20"
+            mapTags.map(
+              (tag, index) =>
+                (selectedCategory === 'ALL' ||
+                  ('PHARMACY' === tag['type'] &&
+                    selectedCategory === 'HOSPITAL') ||
+                  selectedCategory === tag['type']) && (
+                  <div key={index}>
+                    <MapMarker
+                      position={{ lat: tag['latitude'], lng: tag['longitude'] }}
+                      image={{
+                        src: `/images/map/marker_${
+                          tag['type'] === 'PHARMACY' ? 'HOSPITAL' : tag['type']
+                        }.svg`,
+                        size:
+                          markerInfo && tag['id'] === markerInfo.id
+                            ? { width: 60, height: 60 }
+                            : { width: 40, height: 40 },
+                      }}
                       onClick={() => {
                         console.log(tag);
-                        setMarkerInfo({
-                          markerIndex: index,
-                          markerName: tag['type'],
-                        });
+                        fetchMarkerInfo(tag['type'], tag['id']);
+                        setCenterState((prev) => ({
+                          ...prev,
+                          center: {
+                            lat: tag['latitude'],
+                            lng: tag['longitude'],
+                          },
+                        }));
                       }}
-                    >
-                      {markerInfo && index === markerInfo.markerIndex
-                        ? ''
-                        : tag['type']}
-                    </MapTagOverlay>
-                  </MapTagContainer>
-                </CustomOverlayMap>
-              </div>
-            ))}
+                    />
+                  </div>
+                ),
+            )}
         </Map>
       </MapFrame>
       <CategoryFrame>
@@ -163,9 +182,9 @@ export default function Nav5() {
           {mapCategoryList[0].map((category, index) => (
             <CategoryButton
               key={index}
-              $color={category[1]}
-              $isSelected={selectedCategory === category[0]}
-              onClick={() => setSelectedCategory(category[0])}
+              $color={category[2]}
+              $isSelected={selectedCategory === category[1]}
+              onClick={() => setSelectedCategory(category[1])}
             >
               {category[0]}
             </CategoryButton>
@@ -176,16 +195,54 @@ export default function Nav5() {
           {mapCategoryList[1].map((category, index) => (
             <CategoryButton
               key={index}
-              $color={category[1]}
-              $isSelected={selectedCategory === category[0]}
-              onClick={() => setSelectedCategory(category[0])}
+              $color={category[2]}
+              $isSelected={selectedCategory === category[1]}
+              onClick={() => setSelectedCategory(category[1])}
             >
               {category[0]}
             </CategoryButton>
           ))}
         </CategoryButtonDiv>
       </CategoryFrame>
-      {markerInfo && <MarkerInfo>{markerInfo.markerName}</MarkerInfo>}
+      {markerInfo && (
+        <MarkerInfo>
+          <MarkerInfoLeft>
+            <div
+              style={{
+                width: '100%',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              {markerInfo.type === 'JOB'
+                ? markerInfo.occupation
+                : markerInfo.name}
+            </div>
+            <div
+              style={{
+                width: '100%',
+                overflow: 'hidden',
+                wordBreak: 'break-all',
+              }}
+            >
+              {markerInfo.address}
+            </div>
+          </MarkerInfoLeft>
+          <MarkerInfoRight>
+            <img
+              src={
+                markerInfo.type === 'JOB'
+                  ? '/images/map/jobDetail.svg'
+                  : '/images/map/phone.svg'
+              }
+              style={{ width: '44px', height: '44px' }}
+            />
+          </MarkerInfoRight>
+        </MarkerInfo>
+      )}
     </Frame>
   );
 }
@@ -248,33 +305,41 @@ const CategoryButton = styled.button`
   }};
 `;
 
-const MapTagContainer = styled.div`
-  width: 60px;
-  height: 128px;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-`;
-
-const MapTagOverlay = styled.div`
-  height: 80px;
-  pointer-events: all;
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
-  z-index: 2;
-`;
-
 const MarkerInfo = styled.div`
+  box-sizing: border-box;
   width: 100%;
   height: 92px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: white;
+  padding: 16px;
   position: absolute;
+  gap: 16px;
   bottom: 0;
   z-index: 1;
   box-shadow: rgb(68, 68, 68) 0px 0px 5px;
   --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
+`;
+
+const MarkerInfoLeft = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  gap: 4px;
+`;
+
+const MarkerInfoRight = styled.div`
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 2px solid #379237;
+  border-radius: 50%;
+  flex-shrink: 0;
 `;

@@ -15,6 +15,7 @@ export const mapApi = {
         neLongitude: ne[1],
       },
     });
-
   },
+
+  getMarkerInfo: (type, id) => instance.get(`api/map/${type}/${id}`),
 };
