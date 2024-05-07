@@ -247,6 +247,7 @@ const MyPage = () => {
   const [newValue, setNewValue] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const [userInfo, setUserInfo] = useState({});
+  const [gender, setGender] = useState('');
 
   // 약 추가
 
@@ -295,8 +296,6 @@ const MyPage = () => {
     slidesToScroll: 1,
     beforeChange: (current, next) => setCurrentSlide(next), // 다음 슬라이드 인덱스 업데이트
     arrows: false,
-    // draggable: false,
-    // swipe: false, // 모바일 스와이프 비활성화
     speed: 200, // 넘어가는 시간
   };
 
@@ -322,10 +321,30 @@ const MyPage = () => {
     }
   }, [medicineList]);
 
+  useEffect(() => {
+    if (gender) {
+      if (gender === 'MALE') {
+        setProfileImgSrc(
+          process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.svg',
+        );
+        setGenderImgSrc(process.env.PUBLIC_URL + 'images/MyPage/gender-male');
+      } else {
+        setProfileImgSrc(
+          process.env.PUBLIC_URL + 'images/MyPage/profile-user-female.svg',
+        );
+        setGenderImgSrc(
+          process.env.PUBLIC_URL + 'images/MyPage/gender-female.svg',
+        );
+      }
+    }
+  }, [gender]);
+
   const getUserInfo = async () => {
     await myPagaApis.getInfo(accessToken).then((res) => {
       if (res.status === 200) {
+        console.log('res.data : ', res.data);
         setUserInfo(res.data);
+        setGender(res.data.gender);
       }
     });
   };
@@ -673,18 +692,12 @@ const MyPage = () => {
       <TitleHeader title={'내 정보'} showBackButton={true} showDivider={true} />
       <MyPageContent>
         <ProfileWrapper>
-          <ProfileImg
-            imgSrc={
-              process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.svg'
-            }
-          />
+          <ProfileImg imgSrc={profileImgSrc} />
           <ProfileInfoWrapper>
             <UserName>{userName}</UserName>
             <AgeWrapper>
               <AgeInfo>{userAge}세</AgeInfo>
-              <img
-                src={process.env.PUBLIC_URL + 'images/MyPage/gender-male.svg'}
-              />
+              <img src={genderImgSrc} />
             </AgeWrapper>
           </ProfileInfoWrapper>
         </ProfileWrapper>
@@ -770,7 +783,11 @@ const MyPage = () => {
               onChange={handleDetailAddressChange}
             />
           ) : (
-            <InputWrapper>{detailAddress}</InputWrapper>
+            <InputWrapper>
+              {detailAddress?.length === 0
+                ? '상세 주소를 입력해주세요.'
+                : detailAddress}
+            </InputWrapper>
           )}
         </EditItem>
         <EditItem>
