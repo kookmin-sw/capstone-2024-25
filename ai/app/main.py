@@ -1,6 +1,6 @@
 from config import API_KEY, DB_URI, NEWS_API_KEY
 from ai.modules.daily_conversation import handle_daily_conversation
-from ai.modules.dataBased import hadle_data_based
+from ai.modules.data_based import handle_data_based
 from ai.modules.api_based import handle_api_based
 
 
@@ -15,7 +15,7 @@ def main():
 
     # 사용자의 입력을 분석하여 적절한 모듈 호출
     if "교육" in query:
-        response = hadle_data_based(api_key, query, db_uri, address)
+        response = handle_data_based(api_key, query, db_uri, address)
     if "뉴스" in query:
         response = handle_api_based(api_key, news_api_key, query)
     else:

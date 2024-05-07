@@ -10,10 +10,12 @@ from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
 
+
 # 답변 json 자료구조 정의
 class DataBased(BaseModel):
     type: str = Field(description="Type of conversation")
     answer: str = Field(description="Answer of the conversation")
+
 
 # 질문-답변 타입 설정 함수
 def filter_type(table_name):
@@ -26,6 +28,7 @@ def filter_type(table_name):
         "visit_recuperation": ("RECUPERATION", "방문요양서비스 기관을")
     }
     return category_map.get(table_name, ("UNCLASSIFIED", "분류되지 않은 카테고리"))
+
 
 # 쿼리문 내부 테이블명 추출 함수
 def extract_table_name(result):
@@ -41,8 +44,9 @@ def extract_table_name(result):
         print("참고한 테이블이 없습니다.")
         return None, result
 
+
 # 데이터 기반 챗봇 답변 함수
-def hadle_data_based(api_key, query, db_uri, address):
+def handle_data_based(api_key, query, db_uri, address):
     # 데이터베이스 엔진 생성
     engine = create_engine(db_uri)
 
