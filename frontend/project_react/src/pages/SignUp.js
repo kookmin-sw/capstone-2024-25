@@ -139,7 +139,7 @@ const SignUp = () => {
           Swal.fire({
             title: '회원가입 성공',
             text: '로그인 페이지로 이동합니다.',
-            type: 'success',
+            icon: 'success',
             confirmButtonText: '확인',
           }).then((res) => {
             if (res.isConfirmed) {
@@ -221,7 +221,7 @@ const SignUp = () => {
   const handleNext = async () => {
     if (currentSlide === 1) {
       await firstSignUp();
-    } else if (currentSlide === 7) {
+    } else if (currentSlide === 8) {
       await registerMember();
     } else {
       sliderRef.current.slickNext();
@@ -296,6 +296,9 @@ const SignUp = () => {
       sliderRef.current.slickGoTo(2);
     }
   }, []);
+  useEffect(() => {
+    console.log('currentSlide : ', currentSlide);
+  }, [currentSlide]);
 
   const resetMedicine = () => {
     setMedicine('');
@@ -439,7 +442,7 @@ const SignUp = () => {
         </Slider>
       </StepWrapper>
       <SignUpFooter>
-        {currentSlide === 7 ? (
+        {currentSlide === 8 ? (
           medicineList.length > 0 && medicine.length === 0 ? (
             <Button
               text="추가한 약품"
@@ -469,7 +472,7 @@ const SignUp = () => {
             onClick={handlePrev}
           />
           <Button
-            text={currentSlide === 7 || currentSlide === 1 ? '완료' : '다음'}
+            text={currentSlide === 8 || currentSlide === 1 ? '완료' : '다음'}
             size="Large"
             height="Tall"
             type="Primary"

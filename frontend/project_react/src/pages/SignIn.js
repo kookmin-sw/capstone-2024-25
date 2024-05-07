@@ -94,7 +94,7 @@ const SignIn = () => {
 
   const signIn = async () => {
     await authApi
-      .login({
+      .logIn({
         loginId: userId,
         loginPassword: password,
       })

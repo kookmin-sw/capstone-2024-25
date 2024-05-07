@@ -1,4 +1,9 @@
+// JobDetail.js
 import styled from 'styled-components';
+import { jobApis } from '../api/apis/jobApis';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useParams } from 'react-router-dom';
 
 const JobDetailContainer = styled.div`
   display: flex;
@@ -30,9 +35,11 @@ const JobDetailButton = styled.div`
   color: #ffffff;
   border-radius: 32px;
 `;
+
 const MapButton = styled(JobDetailButton)`
   background-color: #8bc34a;
 `;
+
 const ShowDetailButton = styled(JobDetailButton)`
   background-color: #000000;
 `;
@@ -43,6 +50,7 @@ const JobDetailHeader = styled.div`
   align-items: center;
   width: 100%;
 `;
+
 const HeaderTitle = styled.span`
   font-size: 24px;
 `;
@@ -52,7 +60,7 @@ const JobDetailContent = styled.div`
   height: 100%;
   flex-direction: column;
   gap: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const CompanyLogo = styled.img`
@@ -90,6 +98,7 @@ const InfoItemContent = styled.div`
 const InfoItemContentHorizontal = styled(InfoItemContent)`
   gap: 20px;
   flex-direction: row;
+  align-items: center;
 `;
 
 const InfoItemTitle = styled.div`
@@ -103,19 +112,25 @@ const InfoItemTitle = styled.div`
 `;
 
 const DateWrapper = styled(InfoItemTitle)`
-  color: var(--error-color);
-  border: 2px solid var(--error-color);
+  //color: var(--error-color);
+  color: ${(props) => props.dateColor};
+  //border: 2px solid var(--error-color);
+  border: 2px solid ${(props) => props.dateColor};
 `;
 
 const ContentText = styled.span`
   font-size: 20px;
+  white-space: normal;
+  word-break: break-all;
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 8px;
+  max-width: 100%;
 `;
+
 const ContentItem = styled.div`
   display: flex;
   gap: 6px;
@@ -126,39 +141,79 @@ const ContentTitle = styled.span`
   font-weight: bold;
 `;
 
-const JobDetailPage = () => {
-  const gun =
-    ' * 인원 : 내부 미화원 1명 - 근무 시간 : 평일 09:00 ~ 15:30 (휴게 1시간) 토요일 09:00 ~ 10:30 - 급여 : 1,478,120 월';
+const FloatingButton = styled.a`
+  text-decoration-line: none;
+`;
 
-  const dummyData = {
-    company: '엘림에스(유)',
-    title: '단체 급식 보조원',
-    content:
-      '인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 장애인복지카드 소지자 우대)',
-    date: 'D - 4',
-    job: '단체 급식 보조원',
-    qualification: {
-      career: '관계 없음',
-      education: '관계 없음',
-    },
-    condition: {
-      location: '인천광역시 남동구 담방로21번, 단지 내부 (만수동, 한국 아파트)',
-      salary: '월급 147만원 ~ 147만원',
-    },
-    employment: {
-      employmentType: '기간의 정합이 있는 근로계약',
-      workType: '주 6일 근무',
-    },
-    jobContent: '여기는 데이터 넘어오는거 봐야 알 수 있을 것 같음요.',
+const JobDetailPage = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [jobInfo, setJobInfo] = useState({});
+  const [dueState, setDueState] = useState(0);
+  const [dateColor, setDateColor] = useState('#000000');
+  const { jobId } = useParams();
+  const accessToken = cookies.accessToken;
+
+  useEffect(() => {
+    if (dueState === 0) {
+      setDateColor('#000000');
+    } else if (dueState === 1) {
+      setDateColor('var(--error-color)');
+    } else {
+      setDateColor('var(--primary-color)');
+    }
+  }, [dueState]);
+
+  useEffect(() => {
+    getJobDetail();
+  }, []);
+
+  const getJobDetail = async () => {
+    await jobApis.getJobDetail(jobId, accessToken).then((res) => {
+      setJobInfo(res.data);
+      if (res.data.dday.startsWith('D')) {
+        classifyDate(extractDay(res.data.dday));
+      }
+    });
+  };
+
+  const extractDay = (str) => {
+    // 숫자 부분 추출
+    const number = str.match(/\d+/);
+    return number ? number[0] : null;
+  };
+
+  const classifyDate = (date) => {
+    // 남은 날짜에 따라 색상 변경
+    const dateValue = Number(date);
+    if (dateValue < 7) {
+      setDueState(1);
+    } else {
+      setDueState(2);
+    }
+  };
+
+  const extractSuffix = (date) => {
+    // 띄어쓰기 조정
+    if (date) {
+      if (date.startsWith('D')) {
+        return date
+          .replace(/(D-)\s*(\d+)/g, ' $1 $2')
+          .replace(/-\s*(\d+)/g, ' - $1');
+      } else {
+        return date;
+      }
+    }
   };
 
   return (
     <JobDetailContainer>
       <ButtonWrapper>
-        <MapButton>
-          <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
-          지도 보기
-        </MapButton>
+        <FloatingButton href={jobInfo.worknetUrl}>
+          <MapButton>
+            <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
+            지도 보기
+          </MapButton>
+        </FloatingButton>
         <ShowDetailButton>
           <img
             src={process.env.PUBLIC_URL + '/images/JobPage/show-detail.svg'}
@@ -168,22 +223,19 @@ const JobDetailPage = () => {
       </ButtonWrapper>
       <JobDetailHeader>
         <img src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'} />
-        <HeaderTitle>{dummyData.company}</HeaderTitle>
+        <HeaderTitle>{jobInfo.companyName}</HeaderTitle>
       </JobDetailHeader>
       <JobDetailContent>
-        <CompanyLogo
-          src={process.env.PUBLIC_URL + '/images/JobPage/company-logo.svg'}
-        />
-        <EmploymentTitle>
-          인천 만수한국아파트 미화원 채용합니다. (장애인등록증 또는
-          장애인복지카드 소지자 우대)
-        </EmploymentTitle>
+        <CompanyLogo src={jobInfo.companyImageUrl} />
+        <EmploymentTitle>{jobInfo.title}</EmploymentTitle>
         <EmploymentInfo>
           <InfoItem>
-            <DateWrapper>D - 4</DateWrapper>
+            <DateWrapper dateColor={dateColor}>
+              {extractSuffix(jobInfo.dday)}
+            </DateWrapper>
             <InfoItemContentHorizontal>
               <InfoItemTitle>모집 직종</InfoItemTitle>
-              <ContentText>{dummyData.title}</ContentText>
+              <ContentText>{jobInfo.occupation}</ContentText>
             </InfoItemContentHorizontal>
           </InfoItem>
           <InfoItem>
@@ -192,11 +244,11 @@ const JobDetailPage = () => {
               <ContentWrapper>
                 <ContentItem>
                   <ContentTitle>경력:</ContentTitle>
-                  <ContentText>관계 없음</ContentText>
+                  <ContentText>{jobInfo.career}</ContentText>
                 </ContentItem>
                 <ContentItem>
                   <ContentTitle>학력:</ContentTitle>
-                  <ContentText>관계 없음</ContentText>
+                  <ContentText>{jobInfo.scholarship}</ContentText>
                 </ContentItem>
               </ContentWrapper>
             </InfoItemContent>
@@ -207,14 +259,11 @@ const JobDetailPage = () => {
               <ContentWrapper>
                 <ContentItem>
                   <ContentTitle>지역:</ContentTitle>
-                  <ContentText>
-                    인천광역시 남동구 담방로21번, 단지 내부 (만수동, 한국
-                    아파트)
-                  </ContentText>
+                  <ContentText>{jobInfo.address}</ContentText>
                 </ContentItem>
                 <ContentItem>
                   <ContentTitle>임금:</ContentTitle>
-                  <ContentText>월급 147만원 ~ 147만원</ContentText>
+                  <ContentText>{jobInfo.pay}</ContentText>
                 </ContentItem>
               </ContentWrapper>
             </InfoItemContent>
@@ -225,11 +274,11 @@ const JobDetailPage = () => {
               <ContentWrapper>
                 <ContentItem>
                   <ContentTitle>고용형태:</ContentTitle>
-                  <ContentText>기간의 정합이 있는 근로계약</ContentText>
+                  <ContentText>{jobInfo.employmentType}</ContentText>
                 </ContentItem>
                 <ContentItem>
                   <ContentTitle>근무형태:</ContentTitle>
-                  <ContentText>주 6일 근무</ContentText>
+                  <ContentText>{jobInfo.workType}</ContentText>
                 </ContentItem>
               </ContentWrapper>
             </InfoItemContent>
@@ -238,10 +287,7 @@ const JobDetailPage = () => {
             <InfoItemContent>
               <InfoItemTitle>직무 내용</InfoItemTitle>
               <ContentWrapper>
-                <ContentText>
-                  여기는 데이터 넘어오는거 봐야 알 수 있을 것 같음요.
-                </ContentText>
-                <ContentText>{gun}</ContentText>
+                <ContentText>{jobInfo.contents}</ContentText>
                 <ContentItem></ContentItem>
               </ContentWrapper>
             </InfoItemContent>
