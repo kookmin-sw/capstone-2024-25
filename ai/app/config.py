@@ -9,3 +9,6 @@ API_KEY = os.getenv("API_KEY")
 
 # RDS DB 연결
 DB_URI = os.getenv("DB_URI")
+
+# News api_key 정의
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
