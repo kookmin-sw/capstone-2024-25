@@ -4,9 +4,6 @@ import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
 import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
-import capstone.allbom.chatbot.dto.QnaPair;
-import capstone.allbom.job.domain.Job;
-import capstone.allbom.job.domain.Province;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import org.junit.jupiter.api.Nested;
@@ -14,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
