@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
 
@@ -19,7 +18,6 @@ const mapCategoryList = [
 ];
 
 export default function Nav5() {
-  const navigate = useNavigate();
   useKakaoLoader();
 
   // 지도 관련 동작
