@@ -28,8 +28,6 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final MedicineRepository medicineRepository;
-    private final GameRepository gameRepository;
     private final GeocodingRequester geocodingRequester;
 
     @Value("${member.profile-image.female}")
@@ -37,10 +35,10 @@ public class MemberService {
     @Value("${member.profile-image.male}")
     private String MALE_IMAGE_URL;
 
-    @Value("https://allbom.s3.ap-northeast-2.amazonaws.com/chat_female.jpg")
+    @Value("${chatbot.profile-image.female}")
     private String FEMALE_CHAT_IMAGE_URL;
 
-    @Value("https://allbom.s3.ap-northeast-2.amazonaws.com/chat_male.jpg")
+    @Value("${chatbot.profile-image.male}")
     private String MALE_CHAT_IMAGE_URL;
 
     @Transactional(readOnly = true)
@@ -175,6 +173,5 @@ public class MemberService {
         } else {
             savedMember.setChatProfileImageUrl(MALE_CHAT_IMAGE_URL);
         }
-        savedMember.setChatProfileImageUrl(chatImgUpdateRequest.chatGender());
     }
 }
