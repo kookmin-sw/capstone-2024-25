@@ -2,6 +2,7 @@ package capstone.allbom.member.controller;
 
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.dto.ChatProfileImgUpdateRequest;
 import capstone.allbom.member.dto.MemberUpdateRequest;
 import capstone.allbom.member.service.MemberService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,5 +34,14 @@ public class MemberController implements MemberControllerDocs{
     ) {
         memberService.validateDuplicateLoginId(loginId);
         return ResponseEntity.ok("사용 가능한 아이디입니다.");
+    }
+
+    @PatchMapping("/chatbot")
+    public ResponseEntity<Void> updateChatbotImg(
+            @Auth Member member,
+            @RequestBody final ChatProfileImgUpdateRequest chatImgUpdateRequest
+    ) {
+        memberService.updateChatbotImg(member, chatImgUpdateRequest);
+        return ResponseEntity.noContent().build();
     }
 }
