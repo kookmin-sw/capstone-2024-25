@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Bubble from './Bubble';
 import Profile from './Profile';
+import { useEffect } from 'react';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -13,11 +14,14 @@ const ChatContainer = styled.div`
     props.type === 'System' ? 'flex-start' : 'flex-end'};
 `;
 
-const Chat = ({ text, type }) => {
+const Chat = ({ text, type, isLast }) => {
+  useEffect(() => {
+    console.log('isLast : ', isLast);
+  }, []);
   return (
     <ChatContainer type={type}>
       <Profile type={type} />
-      <Bubble text={text} type={type} />
+      <Bubble text={text} type={type} isLast={isLast} />
     </ChatContainer>
   );
 };

@@ -1,6 +1,7 @@
 // Bubble.js
 
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const BubbleContainer = styled.div`
   display: flex;
@@ -22,10 +23,37 @@ const BubbleValue = styled.span`
   word-break: break-all;
 `;
 
-const Bubble = ({ text, type }) => {
+const Bubble = ({ text, type, isLast }) => {
+  const [blogTitle, setBlogTitle] = useState('');
+  const [count, setCount] = useState(0);
+  const completionWord = text;
+
+  // useEffect(() => {
+  //   const typingInterval = setInterval(() => {
+  //     setBlogTitle((prevTitleValue) => {
+  //       let result = prevTitleValue
+  //         ? prevTitleValue + completionWord[count]
+  //         : completionWord[0];
+  //       setCount(count + 1);
+  //
+  //       if (count >= completionWord.length) {
+  //         setCount(0);
+  //         setBlogTitle('');
+  //         return;
+  //       }
+  //
+  //       return result;
+  //     });
+  //   }, 100);
+  //
+  //   return () => {
+  //     clearInterval(typingInterval);
+  //   };
+  // });
+
   return (
     <BubbleContainer type={type}>
-      <BubbleValue type={type}>{text}</BubbleValue>
+      <BubbleValue type={type}>{isLast ? blogTitle : text}</BubbleValue>
     </BubbleContainer>
   );
 };

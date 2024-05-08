@@ -10,11 +10,13 @@ import SelectInputMode from '../components/Chatbot/SelectInputMode';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
+import { getUserInfo } from '../utils/handleUser';
 
 import { testFun } from './ComponentTest';
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const ChatbotContainer = styled.div`
   display: flex;
@@ -36,6 +38,7 @@ const ChattingWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  border: 1px solid red;
 `;
 
 const CategoryWrapper = styled.div`
@@ -123,6 +126,7 @@ const SendButton = styled.img`
 
 const Chatbot = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const [isOpenFirst, setIsOpenFirst] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [userText, setUserText] = useState('');
@@ -140,6 +144,11 @@ const Chatbot = () => {
 
   const [showSubCategory, setShowSubCategory] = useState(false);
 
+  const accessToken = cookies.accessToken;
+  const [userInfo, setUserInfo] = useState({});
+  const [userName, setUserName] = useState('');
+  const [userGender, setUserGender] = useState('MALE');
+
   const {
     transcript,
     listening,
@@ -152,6 +161,36 @@ const Chatbot = () => {
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) {
       alert('Speech recognition not supported');
+    }
+    getUserInfo(accessToken, setUserInfo, setUserName, setUserGender);
+  }, []);
+
+  const sliceName = (name) => {
+    return name.slice(name.length - 2, name.length);
+  };
+
+  useEffect(() => {
+    if (userName) {
+      const newChatListDummy = chatListDummy.map((chat) => {
+        if (chat.type === 'System' && chat.id === 1) {
+          return {
+            ...chat,
+            text: `안녕하세요 [${sliceName(
+              userName,
+            )}]님 ! \n무엇을 도와드릴까요 ?`,
+          };
+        }
+        return chat;
+      });
+      setChatListDummy(newChatListDummy);
+    }
+  }, [userName]);
+
+  // 처음 렌더링 시 채팅창 가장 아래로 스크롤
+  useEffect(() => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper) {
+      chatWrapper.scrollTop = chatWrapper.scrollHeight;
     }
   }, []);
 
@@ -292,7 +331,7 @@ const Chatbot = () => {
   const [chatListDummy, setChatListDummy] = useState([
     {
       id: 1,
-      text: '안녕하세요 [희건]님 ! \n' + '무엇을 도와드릴까요 ?',
+      text: `초기 인사`,
       type: 'System',
     },
     {
@@ -380,25 +419,17 @@ const Chatbot = () => {
     },
     {
       id: 13,
-      text:
-        '오늘 2024년 3월 4일 사회 뉴스입니다.\n' +
-        '\n' +
-        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      // text:
+      //   '오늘 2024년 3월 4일 사회 뉴스입니다.\n' +
+      //   '\n' +
+      //   '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      text: '오늘 뉴스 알려줘',
+
       type: 'System',
     },
   ]);
 
   // chatListDummy 역순으로 정렬하는 함수
-  const reverseChatList = (chatList) => {
-    return chatList.reverse();
-  };
-  useEffect(() => {
-    if (chatListDummy) {
-      // const reversedChatList = reverseChatList(chatListDummy);
-      setChatListDummy(reverseChatList(chatListDummy));
-      // addSystemChat();
-    }
-  }, [chatListDummy]);
 
   const addChat = (text, type) => {
     // 유저 텍스트 추가
@@ -577,6 +608,42 @@ const Chatbot = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (wrapperRef) {
+      // console.log('wrapperRef : ', wrapperRef.current);
+      // console.log(
+      //   'wrapperRef.current.clientHeight : ',
+      //   wrapperRef.current.clientHeight,
+      // );
+      // console.log(
+      //   'wrapperRef.current.scrollHeight : ',
+      //   wrapperRef.current.scrollHeight,
+      // );
+    }
+  }, [wrapperRef]);
+
+  useEffect(() => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    const gun = () => {
+      if (chatWrapper) {
+        if (chatWrapper.scrollTop === 0) {
+          // 채팅 리스트 페이지네이션에 사용. 중복 요청을 방지하기 위해 변수 하나 선언해서 useState 로 관리 필요해보임.
+          // console.log('chatWrapper.scrollTop : ', chatWrapper.scrollTop);
+          // console.log('chatWrapper.clientHeight : ', chatWrapper.clientHeight);
+        }
+      }
+    };
+    if (chatWrapper) {
+      // console.log('chatWrapper : ', chatWrapper);
+      chatWrapper.addEventListener('scroll', gun);
+    } else {
+      // console.log('g,;g,;');
+    }
+    return () => {
+      chatWrapper.removeEventListener('scroll', gun);
+    };
+  }, []);
+
   /* 모바일 가상 키보드 end */
 
   return (
@@ -602,9 +669,14 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
-      <ChattingWrapper ref={wrapperRef}>
+      <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
         {chatListDummy.map((chat) => (
-          <Chat text={chat.text} type={chat.type} key={chat.id} />
+          <Chat
+            text={chat.text}
+            type={chat.type}
+            key={chat.id}
+            isLast={chat.id === chatListDummy.length}
+          />
         ))}
         <BottomWrapper ref={inputRef}>
           {selectMode === 'voice' && (

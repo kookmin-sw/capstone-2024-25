@@ -16,6 +16,7 @@ import AddMedicine from '../components/MyPage/AddMedicine';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { handleToggle, useAdjustInputWidth } from '../utils/handlemedicine';
+import { getUserInfo } from '../utils/handleUser';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -302,7 +303,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(accessToken, setUserInfo);
   }, []);
 
   useEffect(() => {
@@ -323,13 +324,6 @@ const MyPage = () => {
     }
   }, [medicineList]);
 
-  const getUserInfo = async () => {
-    await myPagaApis.getInfo(accessToken).then((res) => {
-      if (res.status === 200) {
-        setUserInfo(res.data);
-      }
-    });
-  };
   const applyInfo = (userInfo) => {
     setUserName(userInfo.name);
     setAddressValue(userInfo.address);
@@ -372,7 +366,7 @@ const MyPage = () => {
       .updateBirthday({ birthday: date }, accessToken)
       .then(async (res) => {
         if (res.status === 204) {
-          await getUserInfo();
+          await getUserInfo(accessToken, setUserInfo);
           setDateModalState(false);
         } else {
           Swal.fire({
@@ -486,7 +480,7 @@ const MyPage = () => {
       )
       .then(async (res) => {
         if (res.status === 204) {
-          await getUserInfo();
+          await getUserInfo(accessToken, setUserInfo);
         } else {
           Swal.fire({
             title: '주소 수정',
@@ -546,7 +540,7 @@ const MyPage = () => {
           setNewValue(updateValue);
           setEditingIndex(null);
 
-          await getUserInfo();
+          await getUserInfo(accessToken, setUserInfo);
         }
       })
       .catch((error) => {
@@ -827,6 +821,7 @@ const MyPage = () => {
             </MedicineWrapper>
             <AddMedicine
               getUserInfo={getUserInfo}
+              setUserInfo={setUserInfo}
               handleSlide={handleSlide}
               hideAll={hideAll}
               setHideAll={setHideAll}
