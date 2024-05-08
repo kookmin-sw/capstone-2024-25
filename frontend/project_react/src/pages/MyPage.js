@@ -15,6 +15,7 @@ import './my-page.css';
 import AddMedicine from '../components/MyPage/AddMedicine';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { handleToggle, useAdjustInputWidth } from '../utils/handlemedicine';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -507,21 +508,6 @@ const MyPage = () => {
   };
 
   // 약 수정
-  const handleToggle = (index, cycleIndex, part) => {
-    const updatedValue = newValue.map((item, idx) => {
-      if (idx === index) {
-        const updatedCycle = [...item.medicineTime];
-        if (updatedCycle.includes(part)) {
-          updatedCycle.splice(updatedCycle.indexOf(part), 1); //
-        } else {
-          updatedCycle.push(part);
-        }
-        return { ...item, medicineTime: updatedCycle };
-      }
-      return item;
-    });
-    setNewValue(updatedValue);
-  };
 
   const handleNameChange = (event) => {
     setEditingName(event.target.value);
@@ -558,6 +544,8 @@ const MyPage = () => {
           const updateValue = [...newValue];
           updateValue.splice(index, 1);
           setNewValue(updateValue);
+          setEditingIndex(null);
+
           await getUserInfo();
         }
       })
@@ -614,26 +602,7 @@ const MyPage = () => {
     }
   };
 
-  useEffect(() => {
-    const inputWidth = editingName.trim().length * 20;
-    const medicineInfo = document.getElementById('medicine-info');
-    const modifyWrapper = document.getElementById('modify-wrapper');
-
-    if (document.getElementById('edit-name')) {
-      if (editingName && medicineInfo && modifyWrapper) {
-        if (
-          inputWidth <=
-          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-        ) {
-          document.getElementById('edit-name').style.width = `${inputWidth}px`;
-        } else {
-          document.getElementById('edit-name').style.width = `${
-            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-          }px`;
-        }
-      }
-    }
-  }, [editingName, editingIndex]);
+  useAdjustInputWidth(editingName, editingIndex); // 이름 수정 시 input 너비 조절
 
   const applyName = () => {
     if (editingName) {
@@ -841,7 +810,13 @@ const MyPage = () => {
                           selected={newValue[index].medicineTime.includes(part)}
                           onClick={() => {
                             setEditingIndex(index);
-                            handleToggle(index, cycleIndex, part);
+                            handleToggle(
+                              index,
+                              cycleIndex,
+                              part,
+                              newValue,
+                              setNewValue,
+                            );
                           }}
                         />
                       ))}

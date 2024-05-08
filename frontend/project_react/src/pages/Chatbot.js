@@ -347,17 +347,68 @@ const Chatbot = () => {
         '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
       type: 'System',
     },
+    {
+      id: 8,
+      text: '오늘 뉴스 중 정치 뉴스 알려줘',
+      type: 'User',
+    },
+    {
+      id: 9,
+      text:
+        '오늘 2024년 3월 4일 정치 뉴스입니다.\n' +
+        '\n' +
+        '민생토론회: 윤석렬 대통령은 대구에서 민생토론회를 개최했습니다. 주요 내용은 부동산, 일자리, 탈원전 정책 등이었습니다.',
+      type: 'System',
+    },
+    {
+      id: 10,
+      text: '오늘 뉴스 중 경제 뉴스 알려줘',
+      type: 'User',
+    },
+    {
+      id: 11,
+      text:
+        '오늘 2024년 3월 4일 경제 뉴스입니다.\n' +
+        '\n' +
+        '농축산업에 AI 적용: 정부는 농축산업에 AI 기술을 적용하여 스마트 온실과 축사를 확대할 계획입니다.',
+      type: 'System',
+    },
+    {
+      id: 12,
+      text: '오늘 뉴스 중 사회 뉴스 알려줘',
+      type: 'User',
+    },
+    {
+      id: 13,
+      text:
+        '오늘 2024년 3월 4일 사회 뉴스입니다.\n' +
+        '\n' +
+        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      type: 'System',
+    },
   ]);
+
+  // chatListDummy 역순으로 정렬하는 함수
+  const reverseChatList = (chatList) => {
+    return chatList.reverse();
+  };
+  useEffect(() => {
+    if (chatListDummy) {
+      // const reversedChatList = reverseChatList(chatListDummy);
+      setChatListDummy(reverseChatList(chatListDummy));
+      // addSystemChat();
+    }
+  }, [chatListDummy]);
 
   const addChat = (text, type) => {
     // 유저 텍스트 추가
     // console.log('gmlgml');
-    // const newChat = {
-    //   id: chatListDummy.length + 1,
-    //   text: userText,
-    //   type: 'User',
-    // };
-    // setChatListDummy([...chatListDummy, newChat]);
+    const newChat = {
+      id: chatListDummy.length + 1,
+      text: userText,
+      type: 'User',
+    };
+    setChatListDummy([...chatListDummy, newChat]);
     testFun(chatListDummy[chatListDummy.length - 1].text);
   };
 

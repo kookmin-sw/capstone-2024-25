@@ -16,7 +16,7 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
-export const testFun = () => {
+export const testFun = (text) => {
   // console.log('testFun');
   // console.log('text : ', text);
   const data = {
@@ -27,7 +27,8 @@ export const testFun = () => {
       // ssmlGender: 'MALE',
     },
     input: {
-      text: '아,할아버지, 그럼요. 당연히 손주들을 보고 싶으실 거예요. 요즘 젊은이들은 정말 바쁘죠, 그런데 그들도 할아버지가 그리워하고 있음을 알게 되면 분명히 시간을 내려고 노력할 거예요. 혹시 손주들과 비디오 통화 같은 걸 해보신 적 있으신가요?',
+      // text: '아,할아버지, 그럼요. 당연히 손주들을 보고 싶으실 거예요. 요즘 젊은이들은 정말 바쁘죠, 그런데 그들도 할아버지가 그리워하고 있음을 알게 되면 분명히 시간을 내려고 노력할 거예요. 혹시 손주들과 비디오 통화 같은 걸 해보신 적 있으신가요?',
+      text: text,
     },
     audioConfig: {
       audioEncoding: 'mp3',
