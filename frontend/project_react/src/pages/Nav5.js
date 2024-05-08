@@ -236,7 +236,12 @@ export default function Nav5() {
                   ? '/images/map/jobDetail.svg'
                   : '/images/map/phone.svg'
               }
-              style={{ width: '44px', height: '44px' }}
+              style={
+                markerInfo.type === 'JOB'
+                  ? { width: '36px', height: '36px' }
+                  : { width: '44px', height: '44px' }
+              }
+              alt="상세정보 보기"
             />
           </MarkerInfoRight>
         </MarkerInfo>

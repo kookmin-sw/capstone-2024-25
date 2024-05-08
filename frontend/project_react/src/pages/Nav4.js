@@ -69,12 +69,6 @@ export default function Nav4() {
   );
 }
 
-const Test = styled.div`
-  width: 100%;
-  height: 400px;
-  background-color: #f0f0f0;
-`;
-
 const Frame = styled.div`
   box-sizing: border-box;
   width: 100%;
