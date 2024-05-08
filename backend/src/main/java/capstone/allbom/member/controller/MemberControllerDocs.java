@@ -1,7 +1,9 @@
 package capstone.allbom.member.controller;
 
 import capstone.allbom.common.exception.ExceptionResponse;
+import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.member.domain.Member;
+import capstone.allbom.member.dto.ChatProfileImgUpdateRequest;
 import capstone.allbom.member.dto.MemberUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -44,5 +46,14 @@ public interface MemberControllerDocs {
     })
     ResponseEntity<String> checkDuplicate(
             final String loginId
+    );
+
+    @Operation(summary = "챗봇 이미지 업데이트 하기", description = "회원의 챗봇 이미지를 업데이트 한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "챗봇 이미지 업데이트 성공")
+    })
+    ResponseEntity<Void> updateChatbotImg(
+            final Member member,
+            @RequestBody final ChatProfileImgUpdateRequest chatImgUpdateRequest
     );
 }
