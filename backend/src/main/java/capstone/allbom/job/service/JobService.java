@@ -79,6 +79,7 @@ public class JobService {
             } else {
                 dday = "D-" + daysLeft;
             }
+
             job.setDday(dday);
         }
     }

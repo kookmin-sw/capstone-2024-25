@@ -59,6 +59,7 @@ public class JobController implements JobControllerDocs{
             @PathVariable final Long jobId
     ) {
         Job job = jobService.findById(jobId);
+        jobService.updateDday(job);
         return ResponseEntity.ok(JobDetailResponse.from(job));
     }
 }
