@@ -7,17 +7,15 @@ import capstone.allbom.facility.domain.FacilityType;
 import capstone.allbom.member.domain.LoginType;
 import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 @Builder
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Qna {
 
     @Id
