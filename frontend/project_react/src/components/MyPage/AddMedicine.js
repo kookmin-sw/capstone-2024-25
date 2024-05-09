@@ -37,9 +37,15 @@ const CycleWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const AddMedicine = ({ getUserInfo, handleSlide, hideAll, setHideAll }) => {
+const AddMedicine = ({
+  getUserInfo,
+  handleSlide,
+  hideAll,
+  setHideAll,
+  setUserInfo,
+}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
-
+  const accessToken = cookies.accessToken;
   const [medicineName, setMedicineName] = useState('');
   const [cycles, setCycles] = useState([
     { name: '아침', selected: false },
@@ -104,7 +110,7 @@ const AddMedicine = ({ getUserInfo, handleSlide, hideAll, setHideAll }) => {
         cookies.accessToken,
       );
       if (res.status === 200) {
-        await getUserInfo();
+        await getUserInfo(accessToken, setUserInfo);
 
         Swal.fire({
           title: '약품 추가 성공',

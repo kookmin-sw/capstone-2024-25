@@ -15,6 +15,9 @@ import './my-page.css';
 import AddMedicine from '../components/MyPage/AddMedicine';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { handleToggle, useAdjustInputWidth } from '../utils/handlemedicine';
+import { getUserInfo } from '../utils/handleUser';
+import useStore from '../stores/store';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -239,8 +242,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const MyPage = () => {
-  const [profileImgSrc, setProfileImgSrc] = useState(''); // 사용자 성별에 맞게
-  const [genderImgSrc, setGenderImgSrc] = useState(''); // 사용자 성별에 맞게
+  const [profileImg, setProfileImg] = useState(''); // [0] : 남성, [1] : 여성, [2] : 기타
+  const [genderImg, setGenderImg] = useState(''); // [0] : 남성, [1] : 여성
+  const gender = useStore((state) => state.gender);
+  const setGender = useStore((state) => state.setGender);
   const [dateModalState, setDateModalState] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState(''); // 나이 계산 필요
@@ -313,7 +318,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(accessToken, setUserInfo, setUserName, setGender);
   }, []);
 
   useEffect(() => {
@@ -335,32 +340,19 @@ const MyPage = () => {
   }, [medicineList]);
 
   useEffect(() => {
-    if (gender) {
-      if (gender === 'MALE') {
-        setProfileImgSrc(
-          process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.svg',
-        );
-        setGenderImgSrc(process.env.PUBLIC_URL + 'images/MyPage/gender-male');
-      } else {
-        setProfileImgSrc(
-          process.env.PUBLIC_URL + 'images/MyPage/profile-user-female.svg',
-        );
-        setGenderImgSrc(
-          process.env.PUBLIC_URL + 'images/MyPage/gender-female.svg',
-        );
-      }
+    if (!gender) {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.svg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-male.svg');
+    } else {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-female.svg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-female.svg');
     }
   }, [gender]);
 
-  const getUserInfo = async () => {
-    await myPagaApis.getInfo(accessToken).then((res) => {
-      if (res.status === 200) {
-        console.log('res.data : ', res.data);
-        setUserInfo(res.data);
-        setGender(res.data.gender);
-      }
-    });
-  };
   const applyInfo = (userInfo) => {
     setUserName(userInfo.name);
     setAddressValue(userInfo.address);
@@ -403,7 +395,7 @@ const MyPage = () => {
       .updateBirthday({ birthday: date }, accessToken)
       .then(async (res) => {
         if (res.status === 204) {
-          await getUserInfo();
+          await getUserInfo(accessToken, setUserInfo);
           setDateModalState(false);
         } else {
           Swal.fire({
@@ -517,7 +509,7 @@ const MyPage = () => {
       )
       .then(async (res) => {
         if (res.status === 204) {
-          await getUserInfo();
+          await getUserInfo(accessToken, setUserInfo);
         } else {
           Swal.fire({
             title: '주소 수정',
@@ -539,21 +531,6 @@ const MyPage = () => {
   };
 
   // 약 수정
-  const handleToggle = (index, cycleIndex, part) => {
-    const updatedValue = newValue.map((item, idx) => {
-      if (idx === index) {
-        const updatedCycle = [...item.medicineTime];
-        if (updatedCycle.includes(part)) {
-          updatedCycle.splice(updatedCycle.indexOf(part), 1); //
-        } else {
-          updatedCycle.push(part);
-        }
-        return { ...item, medicineTime: updatedCycle };
-      }
-      return item;
-    });
-    setNewValue(updatedValue);
-  };
 
   const handleNameChange = (event) => {
     setEditingName(event.target.value);
@@ -590,7 +567,9 @@ const MyPage = () => {
           const updateValue = [...newValue];
           updateValue.splice(index, 1);
           setNewValue(updateValue);
-          await getUserInfo();
+          setEditingIndex(null);
+
+          await getUserInfo(accessToken, setUserInfo);
         }
       })
       .catch((error) => {
@@ -646,26 +625,7 @@ const MyPage = () => {
     }
   };
 
-  useEffect(() => {
-    const inputWidth = editingName.trim().length * 20;
-    const medicineInfo = document.getElementById('medicine-info');
-    const modifyWrapper = document.getElementById('modify-wrapper');
-
-    if (document.getElementById('edit-name')) {
-      if (editingName && medicineInfo && modifyWrapper) {
-        if (
-          inputWidth <=
-          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-        ) {
-          document.getElementById('edit-name').style.width = `${inputWidth}px`;
-        } else {
-          document.getElementById('edit-name').style.width = `${
-            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-          }px`;
-        }
-      }
-    }
-  }, [editingName, editingIndex]);
+  useAdjustInputWidth(editingName, editingIndex); // 이름 수정 시 input 너비 조절
 
   const applyName = () => {
     if (editingName) {
@@ -705,12 +665,12 @@ const MyPage = () => {
       <TitleHeader title={'내 정보'} showBackButton={true} showDivider={true} />
       <MyPageContent>
         <ProfileWrapper>
-          <ProfileImg imgSrc={profileImgSrc} />
+          <ProfileImg imgSrc={profileImg} />
           <ProfileInfoWrapper>
             <UserName>{userName}</UserName>
             <AgeWrapper>
               <AgeInfo>{userAge}세</AgeInfo>
-              <img src={genderImgSrc} />
+              <img src={genderImg} />
             </AgeWrapper>
           </ProfileInfoWrapper>
         </ProfileWrapper>
@@ -875,7 +835,13 @@ const MyPage = () => {
                               )}
                               onClick={() => {
                                 setEditingIndex(index);
-                                handleToggle(index, cycleIndex, part);
+                                handleToggle(
+                                  index,
+                                  cycleIndex,
+                                  part,
+                                  newValue,
+                                  setNewValue,
+                                );
                               }}
                             />
                           ))}
@@ -890,6 +856,7 @@ const MyPage = () => {
             </MedicineWrapper>
             <AddMedicine
               getUserInfo={getUserInfo}
+              setUserInfo={setUserInfo}
               handleSlide={handleSlide}
               hideAll={hideAll}
               setHideAll={setHideAll}
