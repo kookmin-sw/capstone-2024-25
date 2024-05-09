@@ -1,5 +1,4 @@
 import { myPagaApis } from '../api/apis/myPagaApis';
-import useStore from '../stores/store';
 
 export const getUserInfo = async (
   accessToken,
@@ -9,6 +8,7 @@ export const getUserInfo = async (
 ) => {
   await myPagaApis.getInfo(accessToken).then((res) => {
     if (res.status === 200) {
+      console.log('res.data : ', res.data);
       setUserInfo(res.data);
       if (setUserName) {
         setUserName(res.data.name);

@@ -17,6 +17,7 @@ import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { handleToggle, useAdjustInputWidth } from '../utils/handlemedicine';
 import { getUserInfo } from '../utils/handleUser';
+import useStore from '../stores/store';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -220,6 +221,15 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
+const NoMedicine = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 40px;
+  color: var(--unselected-color);
+`;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -228,8 +238,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const MyPage = () => {
-  const [profileImgSrc, setProfileImgSrc] = useState(''); // 사용자 성별에 맞게
-  const [genderImgSrc, setGenderImgSrc] = useState(''); // 사용자 성별에 맞게
+  const [profileImg, setProfileImg] = useState(''); // [0] : 남성, [1] : 여성, [2] : 기타
+  const [genderImg, setGenderImg] = useState(''); // [0] : 남성, [1] : 여성
+  const gender = useStore((state) => state.gender);
+  const setGender = useStore((state) => state.setGender);
   const [dateModalState, setDateModalState] = useState(false);
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState(''); // 나이 계산 필요
@@ -303,7 +315,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    getUserInfo(accessToken, setUserInfo);
+    getUserInfo(accessToken, setUserInfo, setUserName, setGender);
   }, []);
 
   useEffect(() => {
@@ -323,6 +335,20 @@ const MyPage = () => {
       setNewValue([...medicineList]);
     }
   }, [medicineList]);
+
+  useEffect(() => {
+    if (!gender) {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.svg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-male.svg');
+    } else {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-female.svg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-female.svg');
+    }
+  }, [gender]);
 
   const applyInfo = (userInfo) => {
     setUserName(userInfo.name);
@@ -636,18 +662,12 @@ const MyPage = () => {
       <TitleHeader title={'내 정보'} showBackButton={true} showDivider={true} />
       <MyPageContent>
         <ProfileWrapper>
-          <ProfileImg
-            imgSrc={
-              process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.svg'
-            }
-          />
+          <ProfileImg imgSrc={profileImg} />
           <ProfileInfoWrapper>
             <UserName>{userName}</UserName>
             <AgeWrapper>
               <AgeInfo>{userAge}세</AgeInfo>
-              <img
-                src={process.env.PUBLIC_URL + 'images/MyPage/gender-male.svg'}
-              />
+              <img src={genderImg} />
             </AgeWrapper>
           </ProfileInfoWrapper>
         </ProfileWrapper>
@@ -747,77 +767,85 @@ const MyPage = () => {
           </MedicineTitle>
           <Slider id="slider" ref={sliderRef} {...settings}>
             <MedicineWrapper>
-              {newValue.map((item, index) => (
-                <MedicineItem
-                  key={item.id}
-                  isLastItem={index === newValue.length - 1}
-                >
-                  <MedicineInfo id="medicine-info">
-                    <MedicineHeader>
-                      {editingIndex === index ? (
-                        <MedicineInputWrapper>
-                          <EditName
-                            id="edit-name"
-                            type="text"
-                            value={editingName}
-                            onChange={handleNameChange}
-                          />
-                        </MedicineInputWrapper>
-                      ) : (
-                        <MedicineName id="medicine-name">
-                          {item.medicineName}
-                        </MedicineName>
-                      )}
-                      <ModifyWrapper id="modify-wrapper">
-                        {editingIndex === index ? (
-                          <CompleteBtn
-                            onClick={() => {
-                              saveBtn();
-                            }}
-                          >
-                            완료
-                          </CompleteBtn>
-                        ) : (
-                          <EditBtn
-                            onClick={() => {
-                              setEditingIndex(index);
-                            }}
-                          >
-                            수정
-                          </EditBtn>
-                        )}
-                        <DeleteBtn
-                          onClick={() => {
-                            deleteBtn(index, item.id);
-                          }}
-                        >
-                          삭제
-                        </DeleteBtn>
-                      </ModifyWrapper>
-                    </MedicineHeader>
-                    <CycleWrapper id="cycle-wrapper">
-                      {['아침', '점심', '저녁'].map((part, cycleIndex) => (
-                        <Toggle
-                          key={`${index}-${cycleIndex}`}
-                          text={part}
-                          size="RectSmall"
-                          selected={newValue[index].medicineTime.includes(part)}
-                          onClick={() => {
-                            setEditingIndex(index);
-                            handleToggle(
-                              index,
-                              cycleIndex,
-                              part,
-                              newValue,
-                              setNewValue,
-                            );
-                          }}
-                        />
-                      ))}
-                    </CycleWrapper>
-                  </MedicineInfo>
-                </MedicineItem>
-              ))}
+              {medicineList?.length !== 0 ? (
+                <div>
+                  {newValue.map((item, index) => (
+                    <MedicineItem
+                      key={item.id}
+                      isLastItem={index === newValue.length - 1}
+                    >
+                      <MedicineInfo id="medicine-info">
+                        <MedicineHeader>
+                          {editingIndex === index ? (
+                            <MedicineInputWrapper>
+                              <EditName
+                                id="edit-name"
+                                type="text"
+                                value={editingName}
+                                onChange={handleNameChange}
+                              />
+                            </MedicineInputWrapper>
+                          ) : (
+                            <MedicineName id="medicine-name">
+                              {item.medicineName}
+                            </MedicineName>
+                          )}
+                          <ModifyWrapper id="modify-wrapper">
+                            {editingIndex === index ? (
+                              <CompleteBtn
+                                onClick={() => {
+                                  saveBtn();
+                                }}
+                              >
+                                완료
+                              </CompleteBtn>
+                            ) : (
+                              <EditBtn
+                                onClick={() => {
+                                  setEditingIndex(index);
+                                }}
+                              >
+                                수정
+                              </EditBtn>
+                            )}
+                            <DeleteBtn
+                              onClick={() => {
+                                deleteBtn(index, item.id);
+                              }}
+                            >
+                              삭제
+                            </DeleteBtn>
+                          </ModifyWrapper>
+                        </MedicineHeader>
+                        <CycleWrapper id="cycle-wrapper">
+                          {['아침', '점심', '저녁'].map((part, cycleIndex) => (
+                            <Toggle
+                              key={`${index}-${cycleIndex}`}
+                              text={part}
+                              size="RectSmall"
+                              selected={newValue[index].medicineTime.includes(
+                                part,
+                              )}
+                              onClick={() => {
+                                setEditingIndex(index);
+                                handleToggle(
+                                  index,
+                                  cycleIndex,
+                                  part,
+                                  newValue,
+                                  setNewValue,
+                                );
+                              }}
+                            />
+                          ))}
+                        </CycleWrapper>
+                      </MedicineInfo>
+                    </MedicineItem>
+                  ))}
+                </div>
+              ) : (
+                <NoMedicine>추가하신 약품이 없습니다.</NoMedicine>
+              )}
             </MedicineWrapper>
             <AddMedicine
               getUserInfo={getUserInfo}
