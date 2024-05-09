@@ -41,11 +41,11 @@ public class QnaService {
         }
 
         List<Qna> qnas = qnaRepository.findAllOrderByCreatedAtPagination(savedMember.getId(), pageable);
-        List<QnaPair> qnaPairs = qnas.stream()
-                .map(QnaPair::from)
+        List<QnaAndTypeResponse> qnaResponses = qnas.stream()
+                .map(QnaAndTypeResponse::from)
                 .toList();
 
-        return QnaResponse.from(member, qnaPairs);
+        return QnaResponse.from(member, qnaResponses);
     }
 
     @Transactional

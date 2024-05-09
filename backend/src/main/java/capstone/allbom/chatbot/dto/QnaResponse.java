@@ -9,11 +9,11 @@ import java.util.List;
 // 질문-응답 쌍 조회 시 호출 (클라이언트 -> 서버)
 public record QnaResponse(
         String chatProfileImageUrl,
-        List<QnaPair> qnaPairs
+        List<QnaAndTypeResponse> qnaResponses
 ) {
-    public static QnaResponse from(Member member, List<QnaPair> qnaPairs) {
+    public static QnaResponse from(Member member, List<QnaAndTypeResponse> qnaResponses) {
         return new QnaResponse(
-                member.getChatProfileImageUrl(), qnaPairs
+                member.getChatProfileImageUrl(), qnaResponses
         );
     }
 }
