@@ -99,7 +99,6 @@ const SignIn = () => {
         loginPassword: password,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setCookie('accessToken', response.data.accessToken);
           Swal.fire({

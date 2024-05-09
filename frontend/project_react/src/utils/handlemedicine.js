@@ -1,5 +1,7 @@
 // utils/handleMedicine.js
 import { useEffect } from 'react';
+import { medicineApis } from '../api/apis/medicineApis';
+import Swal from 'sweetalert2';
 
 export const handleToggle = (
   index,
@@ -9,8 +11,6 @@ export const handleToggle = (
   setNewValue,
 ) => {
   const updatedValue = newValue.map((item, idx) => {
-    console.log('newValue : ', newValue);
-    console.log('setNewValue : ', setNewValue);
     if (idx === index) {
       const updatedCycle = [...item.medicineTime];
       if (updatedCycle.includes(part)) {
@@ -45,4 +45,18 @@ export const useAdjustInputWidth = (editingName, editingIndex) => {
       }
     }
   }, [editingName, editingIndex]); // 의존성 배열에 editingName과 editingIndex 추가
+};
+
+export const updateMedicine = async (id, data, accessToken) => {
+  await medicineApis.update(id, data, accessToken).then((res) => {
+    if (res.status === 204) {
+      // getMedicineList();
+      Swal.fire({
+        title: '약품 수정',
+        text: '약품이 수정되었습니다.',
+        confirmButtonText: '확인',
+        icon: 'success',
+      });
+    }
+  });
 };

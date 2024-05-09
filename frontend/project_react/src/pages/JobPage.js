@@ -111,7 +111,6 @@ const JobPage = () => {
 
   const getJobList = async () => {
     await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
-      console.log(res);
       setJobList(res.data); // id, companyName, title, occupation
     });
   };

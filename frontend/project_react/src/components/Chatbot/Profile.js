@@ -15,10 +15,6 @@ const Profile = ({ type }) => {
   const gender = useStore((state) => state.gender);
 
   useEffect(() => {
-    console.log('setSelectedAvatar : ', selectedAvatar);
-  }, []);
-
-  useEffect(() => {
     if (type === 'System') {
       if (!selectedAvatar) {
         setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg');
@@ -26,7 +22,7 @@ const Profile = ({ type }) => {
         setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.svg');
       }
     } else {
-      if (!gender) {
+      if (gender === 'MALE') {
         setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-male.jpg');
       } else {
         setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-female.jpg');

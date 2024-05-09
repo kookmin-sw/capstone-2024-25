@@ -147,13 +147,11 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   const getMedicineList = async () => {
     const authToken = cookies.accessToken;
     await medicineApis.getList(authToken).then((res) => {
-      console.log('getList res : ', res);
       setValue(res.data);
     });
   };
   const updateMedicine = async (id, data) => {
     await medicineApis.update(id, data, accessToken).then((res) => {
-      console.log('update res : ', res);
       if (res.status === 204) {
         getMedicineList();
         Swal.fire({
