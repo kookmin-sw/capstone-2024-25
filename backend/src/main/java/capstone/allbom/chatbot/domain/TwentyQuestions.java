@@ -14,6 +14,8 @@ public class TwentyQuestions {
     @Column(name = "twentyQuestions_id")
     private Long id;
 
+    // private Member memberId;
+
     private String solution;
 
     private Integer questionCount;
