@@ -26,4 +26,8 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId AND q.isGame = false ORDER BY q.createdAt DESC")
     List<Qna> findAllOrderByCreatedAtPagination(Long memberId, Pageable pageable);
+
+    // 스무고개
+    @Query("SELECT q FROM Qna q JOIN q.twentyQuestions tq WHERE q.member.id = :memberId AND tq.isComplete = false ORDER BY q.createdAt DESC")
+    List<Qna> findAllTwentyQuestionsOrderByCreatedAtDesc(Long memberId);
 }

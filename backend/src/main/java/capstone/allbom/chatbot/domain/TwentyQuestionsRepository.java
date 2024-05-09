@@ -13,4 +13,6 @@ public interface TwentyQuestionsRepository extends JpaRepository<TwentyQuestions
     boolean existsById(Long id);
 
     List<TwentyQuestions> findAll();
+
+//    List<TwentyQuestions> findByMemberId(Long memberId);
 }

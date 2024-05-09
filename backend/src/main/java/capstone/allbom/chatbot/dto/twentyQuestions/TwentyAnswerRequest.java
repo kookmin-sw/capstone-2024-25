@@ -1,6 +1,8 @@
-package capstone.allbom.chatbot.dto;
+package capstone.allbom.chatbot.dto.twentyQuestions;
 
 import capstone.allbom.chatbot.domain.TwentyQuestions;
+import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
+import capstone.allbom.chatbot.dto.QuestionRequest;
 
 import java.util.List;
 
