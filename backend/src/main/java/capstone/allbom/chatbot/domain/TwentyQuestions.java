@@ -1,5 +1,6 @@
 package capstone.allbom.chatbot.domain;
 
+import capstone.allbom.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,13 @@ public class TwentyQuestions {
     @Column(name = "twentyQuestions_id")
     private Long id;
 
-    // private Member memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private String solution;
 
     private Integer questionCount;
 
-//    private Boolean isComplete;
+    private Boolean isComplete;
 }
