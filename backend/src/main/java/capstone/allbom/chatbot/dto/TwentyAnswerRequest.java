@@ -1,21 +1,19 @@
 package capstone.allbom.chatbot.dto;
 
-import capstone.allbom.member.domain.Member;
+import capstone.allbom.chatbot.domain.TwentyQuestions;
 
 import java.util.List;
 
 public record TwentyAnswerRequest(
         Boolean isGame,
         String question,
-        String gender,
-        String address,
+        String solution,
         List<QnaAndTypeResponse> qnas
 ) {
-    public static AnswerRequest from(Member member, QuestionRequest questionRequest, List<QnaAndTypeResponse> qnas) {
-        return new AnswerRequest(
+    public static TwentyAnswerRequest from(QuestionRequest questionRequest, TwentyQuestions twentyQuestions, List<QnaAndTypeResponse> qnas) {
+        return new TwentyAnswerRequest(
                 questionRequest.isGame(), questionRequest.question(),
-                member.getGender().toString(), member.getAddress(),
-                qnas
+                twentyQuestions.getSolution(), qnas
         );
     }
 }
