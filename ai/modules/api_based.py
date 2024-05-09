@@ -22,7 +22,7 @@ def sort_shorten_news(news_data):
     articles = news_data["results"]
 
     # 각 뉴스의 'description'을 기준으로 내림차순 정렬
-    sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] is not None else "", reverse=True)
+    sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] != None else "", reverse=True)
 
     # 상위 6개 뉴스의 'title', 'category', 'description', 'link' 추출
     top_articles = []
