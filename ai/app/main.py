@@ -17,9 +17,9 @@ def main():
     # 사용자의 입력을 분석하여 적절한 모듈 호출
     if "교육" in query:
         response = handle_data_based(api_key, query, db_uri, address)
-    if "뉴스" in query:
+    elif "뉴스" in query:
         response = handle_news_api_based(api_key, news_api_key, query)
-    if "날씨" in query:
+    elif "날씨" in query:
         response = handle_weather_api_based(api_key, weather_api_key, gender, address)
     else:
         response = handle_daily_conversation(api_key, query, gender)
