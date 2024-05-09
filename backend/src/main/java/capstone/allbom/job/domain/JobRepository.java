@@ -21,7 +21,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
     List<Job> findAll();
 
-    @Query("SELECT j FROM Job j WHERE j.latitude BETWEEN :southWestLatitude AND :northEastLatitude AND j.longitude BETWEEN :southWestLongitude AND :northEastLongitude")
+    @Query("SELECT j FROM Job j WHERE j.deadline >= current_date() AND j.latitude BETWEEN :southWestLatitude AND :northEastLatitude AND j.longitude BETWEEN :southWestLongitude AND :northEastLongitude")
     List<Job> findJobsInRectangle(@Param("southWestLatitude") Double southWestLatitude,
                                              @Param("southWestLongitude") Double southWestLongitude,
                                              @Param("northEastLatitude") Double northEastLatitude,
@@ -32,24 +32,24 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 //                                          @Param("latitude") Double latitude,
 //                                          @Param("longitude") Double longitude);
 
-    @Query("SELECT j FROM Job j WHERE j.province = :province " +
+    @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date()" +
             "ORDER BY (6371 * ACOS(SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude)) " +
             "+ COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude))))")
     List<Job> findJobsOrderByAddress(@Param("province") Province province,
                                           @Param("latitude") Double latitude,
                                           @Param("longitude") Double longitude);
 
-    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
+    @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date() ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
     List<Job> findJobsOrderByAddressPagination(@Param("province") Province province,
                                           @Param("latitude") Double latitude,
                                           @Param("longitude") Double longitude,
                                           Pageable pageable);
 
 
-    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
+    @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date() ORDER BY j.deadline ASC")
     List<Job> findJobsOrderByDeadline(@Param("province") Province province);
 
-    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY j.deadline ASC")
+    @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date() ORDER BY j.deadline ASC")
     List<Job> findJobsOrderByDeadlinePagination(@Param("province") Province province,
                                           Pageable pageable);
 }

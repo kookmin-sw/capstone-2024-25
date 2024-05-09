@@ -88,6 +88,10 @@ const EditItem = styled.div`
   //overflow-y: scroll;
 `;
 
+const EditMedicine = styled(EditItem)`
+  gap: 12px;
+`;
+
 const EditHeader = styled.div`
   display: flex;
   align-items: center;
@@ -261,6 +265,7 @@ const MyPage = () => {
   const [newValue, setNewValue] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const [userInfo, setUserInfo] = useState({});
+  const [gender, setGender] = useState('');
 
   // 약 추가
 
@@ -309,8 +314,6 @@ const MyPage = () => {
     slidesToScroll: 1,
     beforeChange: (current, next) => setCurrentSlide(next), // 다음 슬라이드 인덱스 업데이트
     arrows: false,
-    // draggable: false,
-    // swipe: false, // 모바일 스와이프 비활성화
     speed: 200, // 넘어가는 시간
   };
 
@@ -753,10 +756,14 @@ const MyPage = () => {
               onChange={handleDetailAddressChange}
             />
           ) : (
-            <InputWrapper>{detailAddress}</InputWrapper>
+            <InputWrapper>
+              {detailAddress?.length === 0
+                ? '상세 주소를 입력해주세요.'
+                : detailAddress}
+            </InputWrapper>
           )}
         </EditItem>
-        <EditItem>
+        <EditMedicine>
           <MedicineTitle>
             <EditTitle>복용중인 약</EditTitle>
             <AddButton
@@ -855,7 +862,7 @@ const MyPage = () => {
               setHideAll={setHideAll}
             />
           </Slider>
-        </EditItem>
+        </EditMedicine>
         <ButtonWrapper>
           <Button
             text="로그아웃"

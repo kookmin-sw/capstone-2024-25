@@ -7,11 +7,13 @@ import capstone.allbom.member.domain.Member;
 public record AnswerRequest(
         Boolean isGame,
         String question,
-        String gender
+        String gender,
+        String address
 ) {
     public static AnswerRequest from(Member member, QuestionRequest questionRequest) {
         return new AnswerRequest(
-                questionRequest.isGame(), questionRequest.question(), member.getGender().toString()
+                questionRequest.isGame(), questionRequest.question(),
+                member.getGender().toString(), member.getAddress()
         );
     }
 }

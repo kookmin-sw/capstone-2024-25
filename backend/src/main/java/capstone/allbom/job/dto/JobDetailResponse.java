@@ -2,6 +2,11 @@ package capstone.allbom.job.dto;
 
 import capstone.allbom.job.domain.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.temporal.ChronoUnit;
 
 @Schema(description = "일자리 리스트 응답")
 public record JobDetailResponse(
@@ -59,8 +64,11 @@ public record JobDetailResponse(
         String worknetUrl
 ) {
         public static JobDetailResponse from(Job job) {
-                return new JobDetailResponse(job.getId(), job.getCompanyName(), job.getCompanyImageUrl(), job.getTitle(), job.getDday(), job.getOccupation(), job.getCareer(), job.getScholarship(), job.getAddress(), job.getPay(), job.getEmploymentType(), job.getWorkType(), job.getContents(), job.getWorknetUrl());
+                return new JobDetailResponse(job.getId(), job.getCompanyName(), job.getCompanyImageUrl(), job.getTitle(),
+                        job.getDday(), job.getOccupation(), job.getCareer(), job.getScholarship(), job.getAddress(),
+                        job.getPay(), job.getEmploymentType(), job.getWorkType(), job.getContents(), job.getWorknetUrl());
         }
+
 }
 
 

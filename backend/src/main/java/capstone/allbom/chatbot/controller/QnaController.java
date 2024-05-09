@@ -1,6 +1,9 @@
 package capstone.allbom.chatbot.controller;
 
 import capstone.allbom.chatbot.domain.Qna;
+import capstone.allbom.chatbot.dto.AnswerResponse;
+import capstone.allbom.chatbot.dto.QnaResponse;
+import capstone.allbom.chatbot.dto.QuestionRequest;
 import capstone.allbom.chatbot.service.QnaService;
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.game.domain.Subject;
@@ -9,27 +12,35 @@ import capstone.allbom.game.dto.SentenceResponse;
 import capstone.allbom.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/chatbot/qna")
+@RequestMapping("/api/chatbot")
 @Slf4j
 public class QnaController {
 
     private final QnaService qnaService;
-//
-//    @GetMapping
-//    public ResponseEntity<List<Qna>> getQnas(
+
+    @GetMapping
+    public ResponseEntity<QnaResponse> getQnas(
+            @Auth final Member member,
+            Pageable pageable
+    ) {
+        QnaResponse qnaResponse = qnaService.getFifteenQnasByPagination(member, pageable);
+        return ResponseEntity.ok(qnaResponse);
+    }
+
+//    @PostMapping
+//    public ResponseEntity<AnswerResponse> requestQuestion(
 //            @Auth final Member member,
-//            @RequestParam final String type
+//            @RequestBody final QuestionRequest questionRequest
 //    ) {
-//        SubjectType subjectType = SubjectType.valueOf(type.toUpperCase());
-//        Subject subject = subjectService.findByMemberAndType(member, subjectType);
-//        String sentence = subjectService.getCurrSentence(subjectType, subject.getCurrProblem());
-//        re
+//
+//    }
+
 }
