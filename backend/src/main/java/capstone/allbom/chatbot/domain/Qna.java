@@ -36,6 +36,7 @@ public class Qna {
     // question
     private Boolean isGame;
 
+
     private String question;
 
     private Boolean isChatbotFirst;
