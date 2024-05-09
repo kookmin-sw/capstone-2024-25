@@ -1,10 +1,11 @@
 import { myPagaApis } from '../api/apis/myPagaApis';
+import useStore from '../stores/store';
 
 export const getUserInfo = async (
   accessToken,
   setUserInfo,
   setUserName,
-  setUserGender,
+  setGender,
 ) => {
   await myPagaApis.getInfo(accessToken).then((res) => {
     if (res.status === 200) {
@@ -12,8 +13,8 @@ export const getUserInfo = async (
       if (setUserName) {
         setUserName(res.data.name);
       }
-      if (setUserGender) {
-        setUserGender(res.data.gender);
+      if (setGender) {
+        setGender(res.data.gender === 'MALE' ? 0 : 1);
       }
     }
   });

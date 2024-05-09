@@ -14,14 +14,11 @@ const ChatContainer = styled.div`
     props.type === 'System' ? 'flex-start' : 'flex-end'};
 `;
 
-const Chat = ({ text, type, isLast }) => {
-  useEffect(() => {
-    console.log('isLast : ', isLast);
-  }, []);
+const Chat = ({ text, type }) => {
   return (
     <ChatContainer type={type}>
       <Profile type={type} />
-      <Bubble text={text} type={type} isLast={isLast} />
+      <Bubble text={text} type={type} />
     </ChatContainer>
   );
 };

@@ -17,6 +17,7 @@ import { testFun } from './ComponentTest';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import useStore from '../stores/store';
 
 const ChatbotContainer = styled.div`
   display: flex;
@@ -127,7 +128,7 @@ const SendButton = styled.img`
 const Chatbot = () => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
-  const [isOpenFirst, setIsOpenFirst] = useState(false);
+  const [isOpenFirst, setIsOpenFirst] = useState(true);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [userText, setUserText] = useState('');
   const [originHeight, setOriginHeight] = useState(
@@ -147,8 +148,7 @@ const Chatbot = () => {
   const accessToken = cookies.accessToken;
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState('');
-  const [userGender, setUserGender] = useState('MALE');
-
+  const setGender = useStore((state) => state.setGender);
   const {
     transcript,
     listening,
@@ -162,36 +162,7 @@ const Chatbot = () => {
     if (!browserSupportsSpeechRecognition) {
       alert('Speech recognition not supported');
     }
-    getUserInfo(accessToken, setUserInfo, setUserName, setUserGender);
-  }, []);
-
-  const sliceName = (name) => {
-    return name.slice(name.length - 2, name.length);
-  };
-
-  useEffect(() => {
-    if (userName) {
-      const newChatListDummy = chatListDummy.map((chat) => {
-        if (chat.type === 'System' && chat.id === 1) {
-          return {
-            ...chat,
-            text: `안녕하세요 [${sliceName(
-              userName,
-            )}]님 ! \n무엇을 도와드릴까요 ?`,
-          };
-        }
-        return chat;
-      });
-      setChatListDummy(newChatListDummy);
-    }
-  }, [userName]);
-
-  // 처음 렌더링 시 채팅창 가장 아래로 스크롤
-  useEffect(() => {
-    const chatWrapper = document.getElementById('chat-wrapper');
-    if (chatWrapper) {
-      chatWrapper.scrollTop = chatWrapper.scrollHeight;
-    }
+    getUserInfo(accessToken, setUserInfo, setUserName, setGender);
   }, []);
 
   // 타이머를 리셋하고 새로 설정하는 함수
@@ -248,6 +219,36 @@ const Chatbot = () => {
     resetTranscript();
     setSelectMode('select');
   };
+
+  const sliceName = (name) => {
+    return name.slice(name.length - 2, name.length);
+  };
+
+  useEffect(() => {
+    if (userName) {
+      const newChatListDummy = chatListDummy.map((chat) => {
+        if (chat.type === 'System' && chat.id === 1) {
+          return {
+            ...chat,
+            text: `안녕하세요 [${sliceName(
+              userName,
+            )}]님 ! \n무엇을 도와드릴까요 ?`,
+          };
+        }
+        return chat;
+      });
+      setChatListDummy(newChatListDummy);
+    }
+  }, [userName]);
+
+  // 처음 렌더링 시 채팅창 가장 아래로 스크롤
+  useEffect(() => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper) {
+      console.log('아래로 이동');
+      chatWrapper.scrollTop = chatWrapper.scrollHeight;
+    }
+  }, []);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -419,12 +420,12 @@ const Chatbot = () => {
     },
     {
       id: 13,
-      // text:
-      //   '오늘 2024년 3월 4일 사회 뉴스입니다.\n' +
-      //   '\n' +
-      //   '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
-      text: '오늘 뉴스 알려줘',
-
+      text:
+        '오늘 2024년 3월 4일 사회 뉴스입니다.\n' +
+        '\n' +
+        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
+      // text: '타이핑 효과 테스트 중입니다.',
+      // text: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla',
       type: 'System',
     },
   ]);
@@ -675,7 +676,7 @@ const Chatbot = () => {
             text={chat.text}
             type={chat.type}
             key={chat.id}
-            isLast={chat.id === chatListDummy.length}
+            // isLast={chat.id === chatListDummy.length}
           />
         ))}
         <BottomWrapper ref={inputRef}>
