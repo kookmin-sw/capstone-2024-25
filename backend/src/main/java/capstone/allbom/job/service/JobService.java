@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,5 +65,22 @@ public class JobService {
         return jobs.stream()
                 .map(JobListResponse::from)
                 .toList();
+    }
+
+    @Transactional
+    public void updateDday(Job job) {
+        LocalDate currentDate = LocalDate.now();
+        String dday = job.getDday();
+        if (!dday.equals("채용시까지")) {
+            long daysLeft = ChronoUnit.DAYS.between(currentDate, job.getDeadline());
+
+            if (daysLeft < 0) {
+                dday = "D+" + -daysLeft;
+            } else {
+                dday = "D-" + daysLeft;
+            }
+
+            job.setDday(dday);
+        }
     }
 }

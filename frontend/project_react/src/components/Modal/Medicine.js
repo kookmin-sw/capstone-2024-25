@@ -5,6 +5,9 @@ import Button from '../Button';
 import Toggle from '../Toggle';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { useCookies } from 'react-cookie';
+import { medicineApis } from '../../api/apis/medicineApis';
+import { handleToggle, useAdjustInputWidth } from '../../utils/handlemedicine';
 
 const customModalStyles = {
   overlay: {
@@ -125,10 +128,43 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
+const NoValueWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+`;
+
 const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [newValue, setNewValue] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const accessToken = cookies.accessToken;
+
+  const getMedicineList = async () => {
+    const authToken = cookies.accessToken;
+    await medicineApis.getList(authToken).then((res) => {
+      console.log('getList res : ', res);
+      setValue(res.data);
+    });
+  };
+  const updateMedicine = async (id, data) => {
+    await medicineApis.update(id, data, accessToken).then((res) => {
+      console.log('update res : ', res);
+      if (res.status === 204) {
+        getMedicineList();
+        Swal.fire({
+          title: '약품 수정',
+          text: '약품이 수정되었습니다.',
+          confirmButtonText: '확인',
+          icon: 'success',
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     if (showModal) {
@@ -138,46 +174,61 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
 
   useEffect(() => {
     if (editingIndex !== null) {
-      setEditingName(newValue[editingIndex].medicine);
+      setEditingName(newValue[editingIndex].medicineName);
     }
   }, [editingIndex, value]);
-
-  const handleToggle = (index, cycleIndex) => {
-    const updatedValue = newValue.map((item, idx) => {
-      if (idx === index) {
-        const updatedCycle = [...item.cycle];
-        updatedCycle[cycleIndex] = !updatedCycle[cycleIndex];
-        return { ...item, cycle: updatedCycle };
-      }
-      return item;
-    });
-    setNewValue(updatedValue);
-  };
 
   const handleNameChange = (event) => {
     setEditingName(event.target.value);
   };
-  const deleteBtn = (index) => {
+  const deleteBtn = (index, itemId) => {
     Swal.fire({
       title: '약품 삭제',
-      text: `[${newValue[index].medicine}]를 삭제하시겠습니까 ?`,
+      text: `[${newValue[index].medicineName}] 을/를 삭제하시겠습니까 ?`,
       showCancelButton: true,
       confirmButtonText: '확인',
       cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
-        deleteItem(index);
+        deleteItem(itemId);
       } else {
         return;
       }
     });
   };
 
-  const deleteItem = (index) => {
-    const updateValue = [...newValue];
-    updateValue.splice(index, 1);
-    setNewValue(updateValue);
-    setValue([...updateValue]);
+  const deleteItem = async (index) => {
+    await medicineApis
+      .delete(index, accessToken)
+      .then((res) => {
+        if (res.status === 204) {
+          Swal.fire({
+            title: '약품 삭제',
+            icon: 'success',
+            text: '약품이 삭제되었습니다.',
+            confirmButtonText: '확인',
+          });
+
+          const updateValue = [...newValue];
+          updateValue.splice(index, 1);
+          setNewValue(updateValue);
+          getMedicineList();
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.code === 400) {
+          console.log(error);
+          Swal.fire({
+            title: '약품 삭제',
+            text: '약품 삭제에 실패했습니다.',
+            confirmButtonText: '확인',
+          }).then((res) => {
+            if (res.isConfirmed) {
+              return;
+            }
+          });
+        }
+      });
   };
 
   const saveBtn = () => {
@@ -196,14 +247,21 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     }
   };
 
-  const saveEdit = () => {
+  const saveEdit = async () => {
     // API 연결 시 -> 수정 사항 없는데 수정하려고 하면 400 에러 주의
     if (
-      newValue[editingIndex].medicine !== editingName ||
-      !Object.is(newValue[editingIndex].cycle, value[editingIndex].cycle)
+      newValue[editingIndex].medicineName !== editingName ||
+      !Object.is(
+        newValue[editingIndex].medicineTime,
+        value[editingIndex].medicineTime,
+      )
     ) {
       applyName();
-      setValue([...newValue]);
+      const data = {
+        medicineName: editingName,
+        medicineTime: newValue[editingIndex].medicineTime,
+      };
+      await updateMedicine(newValue[editingIndex].id, data);
       setEditingIndex(null);
     } else {
       // 수정사항 없음
@@ -211,31 +269,12 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
     }
   };
 
-  useEffect(() => {
-    const inputWidth = editingName.trim().length * 20;
-    const medicineInfo = document.getElementById('medicine-info');
-    const modifyWrapper = document.getElementById('modify-wrapper');
-
-    if (document.getElementById('edit-name')) {
-      if (editingName && medicineInfo && modifyWrapper) {
-        if (
-          inputWidth <=
-          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-        ) {
-          document.getElementById('edit-name').style.width = `${inputWidth}px`;
-        } else {
-          document.getElementById('edit-name').style.width = `${
-            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-          }px`;
-        }
-      }
-    }
-  }, [editingName, editingIndex]);
+  useAdjustInputWidth(editingName, editingIndex); // 이름 수정 시 input 너비 조절
 
   const applyName = () => {
     if (editingName) {
       const updatedValue = [...newValue];
-      updatedValue[editingIndex].medicine = editingName;
+      updatedValue[editingIndex].medicineName = editingName;
       setNewValue(updatedValue);
     }
   };
@@ -250,68 +289,81 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
         />
       </ModalHeader>
       <ModalContent id="modal-content">
-        {newValue.map((item, index) => (
-          <MedicineItem key={index} isLastItem={index === newValue.length - 1}>
-            <MedicineInfo id="medicine-info">
-              <MedicineHeader>
-                {editingIndex === index ? (
-                  <InputWrapper>
-                    <EditName
-                      id="edit-name"
-                      type="text"
-                      value={editingName}
-                      onChange={handleNameChange}
-                    />
-                  </InputWrapper>
-                ) : (
-                  <MedicineName id="medicine-name">
-                    {item.medicine}
-                  </MedicineName>
-                )}
-                <ModifyWrapper id="modify-wrapper">
+        {newValue.length !== 0 ? (
+          newValue.map((item, index) => (
+            <MedicineItem
+              key={item.id}
+              isLastItem={index === newValue.length - 1}
+            >
+              <MedicineInfo id="medicine-info">
+                <MedicineHeader>
                   {editingIndex === index ? (
-                    <CompleteBtn
+                    <InputWrapper>
+                      <EditName
+                        id="edit-name"
+                        type="text"
+                        value={editingName}
+                        onChange={handleNameChange}
+                      />
+                    </InputWrapper>
+                  ) : (
+                    <MedicineName id="medicine-name">
+                      {item.medicineName}
+                    </MedicineName>
+                  )}
+                  <ModifyWrapper id="modify-wrapper">
+                    {editingIndex === index ? (
+                      <CompleteBtn
+                        onClick={() => {
+                          saveBtn();
+                        }}
+                      >
+                        완료
+                      </CompleteBtn>
+                    ) : (
+                      <EditBtn
+                        onClick={() => {
+                          setEditingIndex(index);
+                        }}
+                      >
+                        수정
+                      </EditBtn>
+                    )}
+                    <DeleteBtn
                       onClick={() => {
-                        saveBtn();
+                        deleteBtn(index, item.id);
                       }}
                     >
-                      완료
-                    </CompleteBtn>
-                  ) : (
-                    <EditBtn
+                      삭제
+                    </DeleteBtn>
+                  </ModifyWrapper>
+                </MedicineHeader>
+                <CycleWrapper id="cycle-wrapper">
+                  {['아침', '점심', '저녁'].map((part, cycleIndex) => (
+                    <Toggle
+                      key={`${index}-${cycleIndex}`}
+                      text={part}
+                      size="RectSmall"
+                      selected={newValue[index].medicineTime.includes(part)}
                       onClick={() => {
                         setEditingIndex(index);
+                        handleToggle(
+                          index,
+                          cycleIndex,
+                          part,
+                          newValue,
+                          setNewValue,
+                        );
                       }}
-                    >
-                      수정
-                    </EditBtn>
-                  )}
-                  <DeleteBtn
-                    onClick={() => {
-                      deleteBtn(index);
-                    }}
-                  >
-                    삭제
-                  </DeleteBtn>
-                </ModifyWrapper>
-              </MedicineHeader>
-              <CycleWrapper id="cycle-wrapper">
-                {['아침', '점심', '저녁'].map((part, cycleIndex) => (
-                  <Toggle
-                    key={`${index}-${cycleIndex}`}
-                    text={part}
-                    size="RectSmall"
-                    selected={newValue[index].cycle[cycleIndex]}
-                    onClick={() => {
-                      setEditingIndex(index);
-                      handleToggle(index, cycleIndex);
-                    }}
-                  />
-                ))}
-              </CycleWrapper>
-            </MedicineInfo>
-          </MedicineItem>
-        ))}
+                    />
+                  ))}
+                </CycleWrapper>
+              </MedicineInfo>
+            </MedicineItem>
+          ))
+        ) : (
+          <NoValueWrapper>추가한 약품이 없습니다!</NoValueWrapper>
+        )}
       </ModalContent>
       <Button
         id="close-btn"

@@ -1,7 +1,7 @@
-import instance from '../instance'
+import instance from "../instance";
 
 export const wordOrderApis = {
-    getSentenceCategory: () => instance.get(process.env.PUBLIC_URL + '/tmpApiData/wordOrderDummy.json'),
+    getSentenceCategory: () => instance.get("???"),
     getSentenceData: (category) => instance.get('api/game', {
         params: {
             type: category,

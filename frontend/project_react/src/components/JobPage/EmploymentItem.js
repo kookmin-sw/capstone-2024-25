@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const EmploymentItem = styled.div`
   width: 100%;
@@ -42,18 +43,24 @@ const EmploymentContent = styled.div`
   -webkit-box-orient: vertical;
 `;
 
-const JobEmploymentItem = ({ dummyData }) => {
+const JobEmploymentItem = ({ jobList }) => {
+  const navigate = useNavigate();
+
+  const itemClick = (id) => {
+    navigate(`/job-detail/${id}`);
+  };
+
   return (
     <>
-      {dummyData.map((data) => (
-        <EmploymentItem id={data.id}>
+      {jobList.map((data) => (
+        <EmploymentItem id={data.id} onClick={() => itemClick(data.id)}>
           <EmploymentHeader>
             <img src={process.env.PUBLIC_URL + 'images/JobPage/tie.svg'} />
-            {data.company}
+            {data.companyName}
           </EmploymentHeader>
           <EmploymentTitle>{data.title}</EmploymentTitle>
           <HorizontalLine />
-          <EmploymentContent>{data.content}</EmploymentContent>
+          <EmploymentContent>{data.occupation}</EmploymentContent>
         </EmploymentItem>
       ))}
     </>

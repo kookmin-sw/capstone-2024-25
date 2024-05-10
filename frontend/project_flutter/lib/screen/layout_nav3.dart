@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class LayoutNav3 extends StatefulWidget {
   const LayoutNav3({super.key});
@@ -11,37 +12,39 @@ class LayoutNav3 extends StatefulWidget {
 }
 
 class _LayoutNav3State extends State<LayoutNav3> {
-  late final WebViewController _controller;
+  final GlobalKey webViewKey = GlobalKey();
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('http://192.168.45.175:3000/ttt'));
-  }
+  InAppWebViewController? webViewController;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: WebViewWidget(controller: _controller)),
+    return PopScope(
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text("InAppWebView test"),
+          ),
+          body: Column(children: <Widget>[
+            Expanded(
+              child: InAppWebView(
+                key: webViewKey,
+                initialUrlRequest:
+                    URLRequest(url: WebUri("http://192.168.45.175:3000")),
+                onPermissionRequest: (controller, request) async {
+                  return PermissionResponse(
+                      resources: request.resources,
+                      action: PermissionResponseAction.GRANT);
+                },
+                initialSettings: InAppWebViewSettings(
+                    javaScriptCanOpenWindowsAutomatically: true,
+                    useShouldOverrideUrlLoading: true,
+                    useOnLoadResource: true,
+                    allowsBackForwardNavigationGestures: true),
+                onWebViewCreated: (controller) {
+                  webViewController = controller;
+                },
+              ),
+            ),
+          ])),
     );
   }
 }

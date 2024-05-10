@@ -1,10 +1,9 @@
-import instance from '../instance.js';
+import instance from "../instance";
 
 export const mapApi = {
   // 지도 관련 api
   getMapMarkers: (bounds) => {
-    // console.log('위경도 input', bounds);
-    // let str = "(33.44248826384709, 126.5657976532336)";
+    // 남서, 북동 좌표를 받아서 백엔드 데이터 형식에 맞게 정규표현식 적용
     const sw = bounds.sw.match(/-?\d+(\.\d+)?/g).map(Number);
     const ne = bounds.ne.match(/-?\d+(\.\d+)?/g).map(Number);
     console.log('남서', sw[0], '북동', ne[0]);
@@ -16,6 +15,7 @@ export const mapApi = {
         neLongitude: ne[1],
       },
     });
-
   },
+
+  getMarkerInfo: (type, id) => instance.get(`api/map/${type}/${id}`),
 };
