@@ -3,41 +3,56 @@ import styled from 'styled-components';
 import TitleHeader from '../components/Header/TitleHeader';
 import { Card } from './todo/card';
 import { todoApis } from '../api/apis/todoApis';
+import ClearFrame from './todo/clear';
 
 const categoryKeywordList = {
-  "exercise": ['운동', 'Barbell', '#EF6C20'],
-  "growth": ['성장', 'book', '#FBC02D'],
-  "hobby": ['취미', 'MusicNotes', '#0091EA'],
-  "rest": ['휴식', 'ArmChair', '#D57AFF'],
-  "eat": ['식사', 'ForkKnife', '#8BC34A'],
-}
+  exercise: ['운동', 'Barbell', '#EF6C20'],
+  growth: ['성장', 'book', '#FBC02D'],
+  hobby: ['취미', 'MusicNotes', '#0091EA'],
+  rest: ['휴식', 'ArmChair', '#D57AFF'],
+  eat: ['식사', 'ForkKnife', '#8BC34A'],
+};
 
 const categoryList = [
   [
     ['전체', 'overall', '#379237'],
-    categoryKeywordList["exercise"],
-    categoryKeywordList["growth"],
+    categoryKeywordList['exercise'],
+    categoryKeywordList['growth'],
   ],
   [
-    categoryKeywordList["hobby"],
-    categoryKeywordList["rest"],
-    categoryKeywordList["eat"],
+    categoryKeywordList['hobby'],
+    categoryKeywordList['rest'],
+    categoryKeywordList['eat'],
   ],
 ];
 
 export default function Nav4() {
   const [selectedCategory, setSelectedCategory] = useState('전체');
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = useState();
 
   useEffect(() => {
-    async function getAllTodo() {
+    getAllTodo();
+  }, []);
+
+  async function getAllTodo() {
+    try {
       const response = await todoApis.getAllTodo();
       console.log(response.data);
       setTodoList(response.data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    getAllTodo();
-  }, []);
+  async function clearTodo(type) {
+    try {
+      const response = await todoApis.postTodoClear(type);
+      console.log(response);
+      getAllTodo();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Frame>
@@ -72,24 +87,47 @@ export default function Nav4() {
           ))}
         </CategoryButtonDiv>
       </CategoryFrame>
-      <CardsFrame>
-        {todoList.length > 0 &&
-          todoList.map((todo, index) => {
-            const category = categoryKeywordList[todo.type];
-            if (selectedCategory !== '전체' && selectedCategory !== category[0]) {
-              return null;
-            }
+      {(() => {
+        if (!todoList) {
+          return null; // todoList가 아직 로드되지 않았으면 아무 것도 렌더링하지 않음
+        }
+
+        const filteredTodos = todoList.filter((todo) => {
+          const category = categoryKeywordList[todo.type];
+          return (
+            selectedCategory === '전체' || selectedCategory === category[0]
+          );
+        });
+
+        if (filteredTodos.length === 0) {
+          if (selectedCategory === '전체') {
+            return <ClearFrame>모든 활동을 완료했어요!</ClearFrame>;
+          } else {
             return (
-              <Card
-                key={index}
-                title={category[0]}
-                imgSrc={category[1]}
-                color={category[2]}
-                mission={todo.routine}
-              />
+              <ClearFrame>{`오늘의 ${selectedCategory} 완료!`}</ClearFrame>
             );
-          })}
-      </CardsFrame>
+          }
+        }
+
+        return (
+          <CardsFrame>
+            {filteredTodos.map((todo, index) => {
+              const category = categoryKeywordList[todo.type];
+              return (
+                <Card
+                  key={index}
+                  title={category[0]}
+                  imgSrc={category[1]}
+                  type={todo.type}
+                  color={category[2]}
+                  mission={todo.routine}
+                  clearTodo={() => clearTodo(todo.type)}
+                />
+              );
+            })}
+          </CardsFrame>
+        );
+      })()}
     </Frame>
   );
 }

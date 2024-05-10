@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
+import { todoApis } from '../../api/apis/todoApis';
 
 const variants = {
   enter: (direction) => {
@@ -35,13 +36,40 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-export const Card = ({ title, color, imgSrc, mission }) => {
+export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
   const [[page, direction], setPage] = useState([0, 0]);
+  const [currentTodo, setCurrentTodo] = useState(mission);
 
   const paginate = (newDirection) => {
     console.log(page + newDirection, newDirection);
     setPage([page + newDirection, newDirection]);
+
+    if (newDirection === 1) {
+      getNextTodo();
+    } else {
+      getPreviousTodo();
+    }
   };
+
+  async function getNextTodo() {
+    try {
+      const response = await todoApis.getNextTodo(type);
+      console.log(response);
+      setCurrentTodo(response.data.routine);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getPreviousTodo() {
+    try {
+      const response = await todoApis.getPreviousTodo(type);
+      console.log(response);
+      setCurrentTodo(response.data.routine);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container>
@@ -86,20 +114,20 @@ export const Card = ({ title, color, imgSrc, mission }) => {
               width="44px"
               height="44px"
               alt="null"
-              style={{marginLeft: '24px'}}
+              style={{ marginLeft: '24px' }}
               onClick={() => paginate(-1)}
             />
-            <h2 style={{color: "white"}}>{mission}</h2>
+            <h2 style={{ color: 'white' }}>{currentTodo}</h2>
             <img
               src={`/images/todo/arrow.svg`}
               width="44px"
               height="44px"
               alt="null"
-              style={{marginRight: '24px', transform: 'rotate(180deg)' }}
+              style={{ marginRight: '24px', transform: 'rotate(180deg)' }}
               onClick={() => paginate(1)}
             />
           </MissionRow>
-          <ClearButton $color={color} onClick={() => console.log('완료')}>
+          <ClearButton $color={color} onClick={() => clearTodo(type)}>
             완료하기
           </ClearButton>
         </MotionCard>
