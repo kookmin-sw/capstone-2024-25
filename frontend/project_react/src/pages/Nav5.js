@@ -211,7 +211,7 @@ export default function Nav5() {
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
-                fontSize: '20px',
+                fontSize: '24px',
                 fontWeight: 'bold',
               }}
             >
@@ -224,6 +224,7 @@ export default function Nav5() {
                 width: '100%',
                 overflow: 'hidden',
                 wordBreak: 'break-all',
+                fontSize: '18px',
               }}
             >
               {markerInfo.address}
@@ -311,7 +312,7 @@ const CategoryButton = styled.button`
 const MarkerInfo = styled.div`
   box-sizing: border-box;
   width: 100%;
-  height: 92px;
+  /* height: 120px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -332,7 +333,7 @@ const MarkerInfoLeft = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  gap: 4px;
+  gap: 8px;
 `;
 
 const MarkerInfoRight = styled.div`
