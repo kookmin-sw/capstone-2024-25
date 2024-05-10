@@ -40,7 +40,8 @@ export default function Nav4() {
       console.log(response.data);
       setTodoList(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
+      setTodoList([]);
     }
   }
 
@@ -48,7 +49,13 @@ export default function Nav4() {
     try {
       const response = await todoApis.postTodoClear(type);
       console.log(response);
-      getAllTodo();
+      // todoList에서 해당 type의 todo를 찾아서 isDone을 true로 변경
+      setTodoList((prev) =>
+        prev.map((todo) => todo.type === type ? { ...todo, isDone: true } : todo),
+      );
+      setTimeout(() => {
+        getAllTodo();
+      }, 1200);
     } catch (error) {
       console.log(error);
     }
@@ -113,6 +120,14 @@ export default function Nav4() {
           <CardsFrame>
             {filteredTodos.map((todo, index) => {
               const category = categoryKeywordList[todo.type];
+
+              if (todo.isDone && todo.isDone === true) {
+                return (
+                  <ClearFrame
+                    key={index}
+                  >{`오늘의 ${category[0]} 완료!`}</ClearFrame>
+                );
+              }
               return (
                 <Card
                   key={index}

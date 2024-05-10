@@ -37,6 +37,7 @@ const ClearFrame = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
   gap: 24px;
   font-size: 24px;
   font-weight: 500;
