@@ -46,7 +46,6 @@ const StepId = ({ value, setValue, setIdPossible }) => {
     memberApis
       .duplicate(value)
       .then((res) => {
-        // console.log('res : ', res);
         if (res.status === 200) {
           setErrorState(3);
           setIdPossible(true);

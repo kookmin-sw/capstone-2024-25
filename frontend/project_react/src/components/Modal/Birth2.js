@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 import { useEffect, useRef, useState } from 'react';
 import { ko } from 'date-fns/locale';
+import { formatDate } from '../../utils/handleUser';
 
 const customModalStyles = {
   overlay: {
@@ -128,13 +129,10 @@ const BirthModal = ({
   closeModal,
   setBirth,
   birth,
-  formatDate,
   saveBirth,
   defaultDate,
 }) => {
   const [selectedDay, setSelectedDay] = useState(birth);
-
-  const [booked, setBooked] = useState(false);
 
   const [showYear, setShowYear] = useState(false);
   const [showMonth, setShowMonth] = useState(false);
@@ -147,7 +145,6 @@ const BirthModal = ({
   };
 
   const handleDayClick = (day) => {
-    console.log('day : ', day);
     setSelectedDay(day);
   };
   const xClick = () => {
@@ -159,10 +156,8 @@ const BirthModal = ({
     closeModal();
   };
   const btnClick = () => {
-    console.log('btnClick selectedDay : ', selectedDay);
     setBirth(selectedDay);
     if (saveBirth) {
-      console.log('saveBirth 실행');
       saveBirth(selectedDay);
     }
     closeModal();
@@ -186,17 +181,6 @@ const BirthModal = ({
       },
     },
   };
-  function formatMaxDate(date) {
-    const year = date.getFullYear(); // 년도를 가져옵니다.
-    const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-    const day = date.getDate(); // 일을 가져옵니다.
-
-    // 월과 일이 10보다 작으면 앞에 '0'을 붙여 두 자리로 만듭니다.
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const formattedDay = day < 10 ? `0${day}` : day;
-
-    return `${year}-${formattedMonth}-${formattedDay}`; // 포맷에 맞게 문자열을 반환합니다.
-  }
 
   return (
     <Modal
@@ -215,7 +199,7 @@ const BirthModal = ({
         <style>{css}</style>
         <DayPicker
           captionLayout="dropdown-buttons"
-          defaultMonth={new Date()}
+          defaultMonth={defaultDate}
           fromYear={1940}
           toYear={2025}
           onDayClick={handleDayClick}

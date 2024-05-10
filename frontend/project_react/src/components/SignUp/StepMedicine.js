@@ -46,9 +46,6 @@ const StepMedicine = ({
   openMedicineModal,
   setOpenMedicineModal,
 }) => {
-  useEffect(() => {
-    console.log('medicineList : ', medicineList);
-  }, []);
   const [showModal, setShowModal] = useState(false);
   const handleInputChange = (e) => {
     // 약품 이름

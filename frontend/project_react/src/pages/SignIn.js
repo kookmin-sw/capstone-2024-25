@@ -72,21 +72,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "accessTokenimport { api_get } from '../crud';\n" +
-      "import instance from '../instance';\n" +
-      '\n' +
-      'export const memberApis = {\n' +
-      '  duplicate: (id) => instance.get(`/api/member/duplicate?loginId=${id}`),\n' +
-      '  register: (data, accessToken) =>\n' +
-      "    instance.post('/api/member/register', data, {\n" +
-      '      headers: {\n' +
-      "        'Content-Type': 'application/json',\n" +
-      '        Authorization: `Bearer ${accessToken}`,\n' +
-      '      },\n' +
-      '    }),\n' +
-      '};\n',
-  ]);
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
 
   // 환경 변수에서 카카오 API 키와 리다이렉트 URI를 가져옵니다.
   const Rest_api_key = process.env.REACT_APP_REST_API_KEY; // REST API KEY
@@ -99,7 +85,6 @@ const SignIn = () => {
         loginPassword: password,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setCookie('accessToken', response.data.accessToken);
           Swal.fire({

@@ -82,7 +82,6 @@ const AddressModal = ({
   }; // 스타일 정의 code
   const onCompletePost = async (data) => {
     setModalState(false);
-    console.log('data : ', data);
     setAddress(data.address);
     if (saveAddress) {
       await saveAddress(data.address);

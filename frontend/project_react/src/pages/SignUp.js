@@ -78,12 +78,10 @@ const SignUp = () => {
   const location = useLocation();
   useEffect(() => {
     if (location.state) {
-      // console.log('location.state : ', location.state);
       setUserId(location.state.userId);
       setPassword(location.state.password);
       setIsFirstLogin(true);
       medicineApis.getList(cookies.accessToken).then((res) => {
-        console.log('res : ', res);
         setMedicineList(res.data);
       });
       setTimeout(() => {
@@ -134,7 +132,6 @@ const SignUp = () => {
         loginPassword: password,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           Swal.fire({
             title: '회원가입 성공',
@@ -164,7 +161,6 @@ const SignUp = () => {
       });
   };
   const registerMember = async () => {
-    console.log('registerMember 실행');
     const authToken = cookies.accessToken;
     await memberApis
       .register(
@@ -180,7 +176,6 @@ const SignUp = () => {
         authToken,
       )
       .then((res) => {
-        console.log(res);
         if (res.status === 204) {
           Swal.fire({
             title: '회원가입 성공',
@@ -296,9 +291,6 @@ const SignUp = () => {
       sliderRef.current.slickGoTo(2);
     }
   }, []);
-  useEffect(() => {
-    console.log('currentSlide : ', currentSlide);
-  }, [currentSlide]);
 
   const resetMedicine = () => {
     setMedicine('');
@@ -360,7 +352,6 @@ const SignUp = () => {
   const getMedicineList = async () => {
     const authToken = cookies.accessToken;
     await medicineApis.getList(authToken).then((res) => {
-      console.log('res : ', res);
       setMedicineList(res.data);
     });
   };

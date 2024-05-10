@@ -15,8 +15,18 @@ import './my-page.css';
 import AddMedicine from '../components/MyPage/AddMedicine';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
-import { handleToggle, useAdjustInputWidth } from '../utils/handlemedicine';
-import { getUserInfo } from '../utils/handleUser';
+import {
+  handleToggle,
+  useAdjustInputWidth,
+  updateMedicine,
+} from '../utils/handlemedicine';
+import {
+  getUserInfo,
+  updateBirthday,
+  updateNum,
+  calculateAge,
+  formatDate,
+} from '../utils/handleUser';
 import useStore from '../stores/store';
 
 const MyPageContainer = styled.div`
@@ -265,23 +275,11 @@ const MyPage = () => {
   const [newValue, setNewValue] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const [userInfo, setUserInfo] = useState({});
-  const [gender, setGender] = useState('');
 
   // 약 추가
 
   const [medicineList, setMedicineList] = useState([]);
-  const dummyMedicineList = [
-    {
-      id: 1,
-      medicine: '타이레놀',
-      cycle: [true, true, true],
-    },
-    {
-      id: 2,
-      medicine: '아스피린',
-      cycle: [true, false, true],
-    },
-  ];
+
   const accessToken = cookies.accessToken;
 
   // 슬라이더
@@ -291,17 +289,9 @@ const MyPage = () => {
 
   const navigate = useNavigate();
 
-  const handlePrev = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickPrev();
-    }
-  };
-  const handleNext = () => {
-    sliderRef.current.slickNext();
-  };
   const handleSlide = () => {
     if (currentSlide === 0) {
-      handleNext();
+      sliderRef.current.slickNext();
       setHideAll(false);
     } else if (currentSlide === 1) {
       sliderRef.current.slickPrev();
@@ -340,7 +330,7 @@ const MyPage = () => {
   }, [medicineList]);
 
   useEffect(() => {
-    if (!gender) {
+    if (gender === 'MALE') {
       setProfileImg(
         process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.svg',
       );
@@ -365,50 +355,6 @@ const MyPage = () => {
     setNewValue(userInfo.medicineResponses);
   };
 
-  const calculateAge = (birthdate) => {
-    const birthday = new Date(birthdate);
-    const today = new Date();
-    let age = today.getFullYear() - birthday.getFullYear();
-    const m = today.getMonth() - birthday.getMonth();
-
-    if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
-      age--;
-    }
-    return age;
-  };
-  const updateMedicine = async (id, data) => {
-    await medicineApis.update(id, data, accessToken).then((res) => {
-      if (res.status === 204) {
-        // getMedicineList();
-        Swal.fire({
-          title: '약품 수정',
-          text: '약품이 수정되었습니다.',
-          confirmButtonText: '확인',
-          icon: 'success',
-        });
-      }
-    });
-  };
-
-  const updateBirthday = async (date) => {
-    await myPagaApis
-      .updateBirthday({ birthday: date }, accessToken)
-      .then(async (res) => {
-        if (res.status === 204) {
-          await getUserInfo(accessToken, setUserInfo);
-          setDateModalState(false);
-        } else {
-          Swal.fire({
-            title: '생년월일 수정',
-            text: '생년월일 수정에 실패했습니다. 잠시 후 다시 시도해주세요.',
-            icon: 'warning',
-            confirmButtonText: '확인',
-          });
-          return;
-        }
-      });
-  };
-
   const handleDateFocus = () => {
     setDateModalState(true);
   };
@@ -416,48 +362,13 @@ const MyPage = () => {
     setDateModalState(false);
   };
 
-  const formatDate = (dateString, type) => {
-    const date = new Date(dateString);
-
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    if (type === 'format') {
-      // 페이지에 보여지는 값
-      return `${year}년 ${month}월 ${day}일`;
-    } else if (type === 'update') {
-      // api 호출에 사용되는 값
-      const formattedMonth = month < 10 ? `0${month}` : month;
-      const formattedDay = day < 10 ? `0${day}` : day;
-
-      return `${year}-${formattedMonth}-${formattedDay}`; // 포맷에 맞게 문자열을 반환합니다.
-    }
-  };
-
   const saveBirth = async (date) => {
-    await updateBirthday(formatDate(date, 'update'));
-  };
-
-  const updateNum = async () => {
-    await myPagaApis
-      .updateNumber({ phoneNumber: numValue }, accessToken)
-      .then((res) => {
-        if (res.status === 204) {
-          setEditNum(false);
-        } else {
-          Swal.fire({
-            title: '전화 번호',
-            text: '전화번호 수정에 실패했습니다. 잠시 후 다시 시도해주세요.',
-            type: 'warning',
-            confirmButtonText: '확인',
-          }).then((res) => {
-            if (res.isConfirmed) {
-              numRef.current.focus();
-            }
-          });
-        }
-      });
+    await updateBirthday(
+      formatDate(date, 'update'),
+      accessToken,
+      setUserInfo,
+      setDateModalState,
+    );
   };
 
   const saveEditNum = async () => {
@@ -474,7 +385,7 @@ const MyPage = () => {
       });
       return;
     } else {
-      await updateNum();
+      await updateNum(numValue, accessToken, setEditNum, numRef);
     }
   };
 
@@ -617,7 +528,7 @@ const MyPage = () => {
         medicineName: editingName,
         medicineTime: newValue[editingIndex].medicineTime,
       };
-      await updateMedicine(newValue[editingIndex].id, data);
+      await updateMedicine(newValue[editingIndex].id, data, accessToken);
       setEditingIndex(null);
     } else {
       // 수정사항 없음
@@ -686,7 +597,6 @@ const MyPage = () => {
             closeModal={handleDateBlur}
             birth={dateValue ? dateValue : new Date()}
             setBirth={setDateValue}
-            formatDate={formatDate}
             saveBirth={saveBirth}
             defaultDate={dateValue}
           />
