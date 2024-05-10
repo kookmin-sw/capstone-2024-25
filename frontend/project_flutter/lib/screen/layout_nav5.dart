@@ -27,8 +27,14 @@ class _LayoutNav5State extends State<LayoutNav5> {
             Expanded(
               child: InAppWebView(
                 key: webViewKey,
-                initialUrlRequest:
-                    URLRequest(url: WebUri("https://192.168.45.175:3000/ttt")),
+                initialUrlRequest: URLRequest(
+                    url: WebUri(
+                        "https://capstone-test-git-master-kwakheeguns-projects.vercel.app/chatBot")),
+                onPermissionRequest: (controller, request) async {
+                  return PermissionResponse(
+                      resources: request.resources,
+                      action: PermissionResponseAction.GRANT);
+                },
                 initialSettings: InAppWebViewSettings(
                     javaScriptCanOpenWindowsAutomatically: true,
                     useShouldOverrideUrlLoading: true,
