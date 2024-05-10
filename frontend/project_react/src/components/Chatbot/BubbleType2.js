@@ -41,7 +41,7 @@ const BubbleType2 = ({ content, gun }) => {
       setContents(gun);
       // setContents(gun);
     }
-  }, []);
+  }, [content]);
   useEffect(() => {
     console.log('gun : ', gun);
   }, [gun]);

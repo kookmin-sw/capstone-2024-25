@@ -65,12 +65,11 @@ const ChatSystem = ({ content, type }) => {
         <Profile type={type} />
         <NewsChatContainer>
           <BubbleType2 content={content.answer} gun={tempList} />
-          <BubbleMoreNews content="glmglm" clickYes={clickYes} />
-          {/*{showNext  ?(*/}
-          {/*        <BubbleType2 content={content.answer} gun={tempList} />*/}
-          {/*    */}
-          {/*    )*/}
-          {/*    :}*/}
+          {showNext ? (
+            <BubbleType2 content={content.answer} gun={nextList} />
+          ) : (
+            <BubbleMoreNews content="glmglm" clickYes={clickYes} />
+          )}
         </NewsChatContainer>
       </ChatContainer>
     );
