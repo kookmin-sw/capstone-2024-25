@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Input from '../Input';
+import { useEffect } from 'react';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const StepName = ({ value, setValue }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
+
   return (
     <StepWrapper>
       <StepTitle>이름 *</StepTitle>

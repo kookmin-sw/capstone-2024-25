@@ -40,7 +40,6 @@ public class MyPageService {
     public void updatePhoneNumber(final Member member, PhoneNumberUpdateRequest phoneNumberRequest) {
         Member savedMember = findById(member.getId());
         savedMember.setPhoneNumber(phoneNumberRequest.phoneNumber());
-
     }
 
     @Transactional

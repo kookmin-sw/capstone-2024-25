@@ -4,11 +4,14 @@ import capstone.allbom.common.exception.*;
 import capstone.allbom.game.domain.GameRepository;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.medicine.domain.MedicineRepository;
+import capstone.allbom.member.domain.ChatGender;
 import capstone.allbom.member.domain.Gender;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
+import capstone.allbom.member.dto.ChatProfileImgUpdateRequest;
 import capstone.allbom.member.dto.GeocodingResponse;
 import capstone.allbom.member.dto.MemberUpdateRequest;
+import capstone.allbom.member.dto.PhoneNumberUpdateRequest;
 import capstone.allbom.member.exception.MemberErrorCode;
 import capstone.allbom.member.infrastructure.api.GeocodingRequester;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +28,18 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final MedicineRepository medicineRepository;
-    private final GameRepository gameRepository;
     private final GeocodingRequester geocodingRequester;
 
     @Value("${member.profile-image.female}")
     private String FEMALE_IMAGE_URL;
     @Value("${member.profile-image.male}")
     private String MALE_IMAGE_URL;
+
+    @Value("${chatbot.profile-image.female}")
+    private String FEMALE_CHAT_IMAGE_URL;
+
+    @Value("${chatbot.profile-image.male}")
+    private String MALE_CHAT_IMAGE_URL;
 
     @Transactional(readOnly = true)
     public Member findById(final Long memberId) {
@@ -82,7 +89,7 @@ public class MemberService {
         if (gender == Gender.FEMALE) {
             savedMember.setProfileImageUrl(FEMALE_IMAGE_URL);
         } else {
-            savedMember.setPhoneNumber(MALE_IMAGE_URL);
+            savedMember.setProfileImageUrl(MALE_IMAGE_URL);
         }
 
         savedMember.setName(memberUpdateRequest.name());
@@ -152,6 +159,19 @@ public class MemberService {
 
         if (savedMember.getName() == null || savedMember.getPhoneNumber() == null) {
             throw new UnauthorizedException(DefaultErrorCode.NEED_ADDITIONAL_REGISTRATION);
+        }
+    }
+
+    @Transactional
+    public void updateChatbotImg(final Member member, ChatProfileImgUpdateRequest chatImgUpdateRequest) {
+        Member savedMember = findById(member.getId());
+
+        ChatGender chatGender = ChatGender.valueOf(chatImgUpdateRequest.chatGender().toUpperCase());
+
+        if (chatGender == ChatGender.GIRL) {
+            savedMember.setChatProfileImageUrl(FEMALE_CHAT_IMAGE_URL);
+        } else {
+            savedMember.setChatProfileImageUrl(MALE_CHAT_IMAGE_URL);
         }
     }
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import useStore from '../../stores/store';
 
 const ProfileImg = styled.div`
   width: 40px;
@@ -10,13 +11,28 @@ const ProfileImg = styled.div`
 
 const Profile = ({ type }) => {
   const [imgSrc, setImgSrc] = useState('');
+  const selectedAvatar = useStore((state) => state.selectedAvatar);
+  const gender = useStore((state) => state.gender);
+
+  useEffect(() => {
+    console.log('setSelectedAvatar : ', selectedAvatar);
+  }, []);
+
   useEffect(() => {
     if (type === 'System') {
-      setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg');
+      if (!selectedAvatar) {
+        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg');
+      } else {
+        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.svg');
+      }
     } else {
-      setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-male.jpg');
+      if (!gender) {
+        setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-male.jpg');
+      } else {
+        setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-female.jpg');
+      }
     }
-  }, [type]);
+  }, [type, selectedAvatar]);
   return <ProfileImg imgSrc={imgSrc} />;
 };
 export default Profile;

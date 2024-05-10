@@ -28,14 +28,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          {/*<Route path="/" element={<ComponentTest />} />*/}
-          {/*<Route path="/" element={<Chatbot />} />*/}
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
-          <Route path="/job-detail" element={<JobDetailPage />} />
+          <Route path="/job-detail/:jobId" element={<JobDetailPage />} />
           <Route path="/my-page" element={<MyPage />} />
 
-          {/*<Route path="/" element={<InputTest />} />*/}
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/auth/*" element={<SignUp />} />
@@ -61,7 +58,7 @@ function App() {
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
 
           {/* To do */}
-          <Route path="/toDo" element={<Nav4/>} />
+          <Route path="/toDo" element={<Nav4 />} />
         </Routes>
       </BrowserRouter>
     </div>

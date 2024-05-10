@@ -70,8 +70,6 @@ const AddressModal = ({
   setAddress,
   saveAddress,
 }) => {
-  const [inputAddressValue, setInputAddressValue] = useState('');
-  const [inputZipCodeValue, setInputZipCodeValue] = useState('');
   const [modalState, setModalState] = useState(false);
   const xClick = () => {
     closeModal();
@@ -82,13 +80,12 @@ const AddressModal = ({
     height: '500px',
     display: isOpen ? 'block' : 'none',
   }; // 스타일 정의 code
-  const onCompletePost = (data) => {
+  const onCompletePost = async (data) => {
     setModalState(false);
-    setInputAddressValue(data.address);
-    setInputZipCodeValue(data.zonecode);
-    setAddress(`(${data.zonecode}) ${data.address}`);
+    console.log('data : ', data);
+    setAddress(data.address);
     if (saveAddress) {
-      saveAddress();
+      await saveAddress(data.address);
     }
     closeModal();
   };
