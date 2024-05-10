@@ -13,7 +13,6 @@ const NewsContents = styled.p``;
 
 const NewsItem = ({ news }) => {
   const [category, setCategory] = useState('');
-  // console.log('news : ', news);
 
   useEffect(() => {
     switch (news.category) {
@@ -40,11 +39,13 @@ const NewsItem = ({ news }) => {
 
   return (
     <NewsItemContainer>
-      <NewsContents>{news.title}</NewsContents>
-      <NewsContents>{category + ' : '}</NewsContents>
+      <NewsContents>
+        [{news.title} - {category}]
+      </NewsContents>
       <NewsContents>{news.description}</NewsContents>
       <NewsContents>
-        자세히 보기 : <a href={news.link}>{news.link}</a>
+        자세히 보기 :<br />
+        <a href={news.link}>{news.link}</a>
       </NewsContents>
     </NewsItemContainer>
   );

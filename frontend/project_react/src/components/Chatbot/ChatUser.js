@@ -15,7 +15,7 @@ const ChatContainer = styled.div`
 const ChatUser = ({ text, type, content }) => {
   return (
     <ChatContainer type={type}>
-      <Profile type={type} />
+      <Profile type={'User'} />
       <Bubble text={text} type={type} />
     </ChatContainer>
   );
