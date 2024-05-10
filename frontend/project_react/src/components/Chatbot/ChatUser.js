@@ -12,7 +12,7 @@ const ChatContainer = styled.div`
   align-self: flex-end;
 `;
 
-const ChatUser = ({ text, type }) => {
+const ChatUser = ({ text, type, content }) => {
   return (
     <ChatContainer type={type}>
       <Profile type={type} />
