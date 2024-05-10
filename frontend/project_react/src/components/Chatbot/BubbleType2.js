@@ -10,7 +10,7 @@ const BubbleContainer = styled.div`
   height: fit-content;
   padding: 8px 12px;
   background-color: var(--primary-color);
-  border: none;
+  border: 1px solid #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   flex-direction: column;
@@ -29,26 +29,15 @@ const Divider = styled.div`
   margin: 8px 0;
 `;
 
-const BubbleType2 = ({ content, gun }) => {
+const BubbleType2 = ({ content, showList, clickYes, showNext }) => {
   const [header, setHeader] = useState('');
   const [contents, setContents] = useState([]);
   useEffect(() => {
     if (content) {
-      console.log('BubbleType2 content : ', content);
-      console.log('BubbleType2 gun : ', gun);
       setHeader(content.header + '\n' + '\n');
-      // setContents(content);
-      setContents(gun);
-      // setContents(gun);
+      setContents(showList);
     }
-  }, [content]);
-  useEffect(() => {
-    console.log('gun : ', gun);
-  }, [gun]);
-
-  // useEffect(() => {
-  //   console.log('articles : ', contents);
-  // }, [content.articles]);
+  }, [content, showList]);
 
   return (
     <BubbleContainer>
@@ -59,6 +48,8 @@ const BubbleType2 = ({ content, gun }) => {
           {contents.length - 1 !== index && <Divider />}
         </>
       ))}
+      {/* 추후에 마지막 채팅인지를 판단하는 기능도 필요. */}
+      {!showNext && <BubbleMoreNews content="glmglm" clickYes={clickYes} />}
     </BubbleContainer>
   );
 };

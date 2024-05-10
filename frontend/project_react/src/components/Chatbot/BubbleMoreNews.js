@@ -12,8 +12,9 @@ const BubbleContainer = styled.div`
   height: fit-content;
   padding: 8px 12px;
   background-color: var(--primary-color);
-  border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  //border: 2px solid #ffffff;
+  //border: none;
+  //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   box-sizing: border-box;
   gap: 12px;
