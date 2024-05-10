@@ -6,10 +6,10 @@ import { todoApis } from '../api/apis/todoApis';
 import ClearFrame from './todo/clear';
 
 const categoryKeywordList = {
-  exercise: ['운동', 'Barbell', '#EF6C20'],
-  growth: ['성장', 'book', '#FBC02D'],
-  hobby: ['취미', 'MusicNotes', '#0091EA'],
-  rest: ['휴식', 'ArmChair', '#D57AFF'],
+  exercise: ['운동', 'Barbell', '#FF4500'],
+  growth: ['성장', 'book', '#FF7D31'],
+  hobby: ['취미', 'MusicNotes', '#FBC02D'],
+  rest: ['휴식', 'ArmChair', '#0091EA'],
   eat: ['식사', 'ForkKnife', '#8BC34A'],
 };
 
@@ -55,7 +55,7 @@ export default function Nav4() {
       );
       setTimeout(() => {
         getAllTodo();
-      }, selectedCategory === "전체" ? 1200 : 0);
+      }, 1200);
     } catch (error) {
       console.log(error);
     }
@@ -108,10 +108,10 @@ export default function Nav4() {
 
         if (filteredTodos.length === 0) {
           if (selectedCategory === '전체') {
-            return <ClearFrame>모든 활동을 완료했어요!</ClearFrame>;
+            return <ClearFrame needAnimated={false}>모든 활동을 완료했어요!</ClearFrame>;
           } else {
             return (
-              <ClearFrame>{`오늘의 ${selectedCategory} 완료!`}</ClearFrame>
+              <ClearFrame needAnimated={false}>{`오늘의 ${selectedCategory} 완료!`}</ClearFrame>
             );
           }
         }
@@ -125,6 +125,7 @@ export default function Nav4() {
                 return (
                   <ClearFrame
                     key={index}
+                    needAnimated={true}
                   >{`오늘의 ${category[0]} 완료!`}</ClearFrame>
                 );
               }
@@ -161,7 +162,6 @@ const Frame = styled.div`
 
 const CardsFrame = styled.div`
   width: 100dvw;
-  padding-top: 10px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -179,6 +179,7 @@ const CategoryFrame = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12px 0;
+  margin-bottom: 10px;
   z-index: 1;
 `;
 

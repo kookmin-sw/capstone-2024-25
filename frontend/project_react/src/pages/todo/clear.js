@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export default function ClearComment({ children }) {
+export default function ClearComment({ needAnimated, children }) {
   return (
     <ClearFrame>
       <motion.img
-        initial={{ y: 50, opacity: 0 }}
+        initial={needAnimated && { y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
           type: 'spring',
@@ -17,7 +17,7 @@ export default function ClearComment({ children }) {
         style={{ width: '46px', height: '46px' }}
       />
       <motion.div
-        initial={{ y: 50, opacity: 0 }}
+        initial={needAnimated && { y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
           type: 'spring',
