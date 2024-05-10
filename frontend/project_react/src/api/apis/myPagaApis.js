@@ -1,4 +1,3 @@
-import { api_get } from '../crud';
 import instance from '../instance';
 
 export const myPagaApis = {
