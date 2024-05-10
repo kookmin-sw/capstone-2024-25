@@ -37,6 +37,11 @@ const PhoneNum = styled.a`
   color: #0066ff;
 `;
 
+const SpinnerImg = styled.img`
+  width: 120px;
+  height: 120px;
+`;
+
 const BubbleType3 = ({ content }) => {
   const [header, setHeader] = useState('');
   const [showContents, setShowContents] = useState([]);
@@ -78,24 +83,33 @@ const BubbleType3 = ({ content }) => {
 
   return (
     <BubbleContainer>
-      <BubbleValue>{header}</BubbleValue>
-      <BubbleWrapper>
-        {showContents.map((item, index) => (
-          <>
-            <BubbleValue>{item.location}</BubbleValue>
-            <BubbleValue>주소 : {item.address}</BubbleValue>
-            <BubbleValue>
-              전화번호 :{' '}
-              {item.phone === '정보 없음' ? (
-                item.phone
-              ) : (
-                <PhoneNum href={`tel:${item.phone}`}>{item.phone}</PhoneNum>
-              )}
-            </BubbleValue>
-            {showContents.length - 1 !== index && <Divider />}
-          </>
-        ))}
-      </BubbleWrapper>
+      {showContents.length !== 0 ? (
+        <>
+          <BubbleValue>{header}</BubbleValue>
+          <BubbleWrapper>
+            {showContents.map((item, index) => (
+              <>
+                <BubbleValue>{item.location}</BubbleValue>
+                <BubbleValue>주소 : {item.address}</BubbleValue>
+                <BubbleValue>
+                  전화번호 :{' '}
+                  {item.phone === '정보 없음' ? (
+                    item.phone
+                  ) : (
+                    <PhoneNum href={`tel:${item.phone}`}>{item.phone}</PhoneNum>
+                  )}
+                </BubbleValue>
+                {showContents.length - 1 !== index && <Divider />}
+              </>
+            ))}
+          </BubbleWrapper>
+        </>
+      ) : (
+        <SpinnerImg
+          src={process.env.PUBLIC_URL + '/images/Chatbot/spinner.gif'}
+          alt="spinner"
+        />
+      )}
     </BubbleContainer>
   );
 };

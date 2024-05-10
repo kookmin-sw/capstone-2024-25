@@ -15,7 +15,6 @@ const NewsChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  //justify-content: center;
   align-items: center;
 `;
 
@@ -24,11 +23,9 @@ const ChatSystem = ({ content, type }) => {
   const [showNext, setShowNext] = useState(false);
 
   useEffect(() => {
-    if (content.type === 'NEWS') {
-      if (content.answer.articles) {
-        const newTempList = content.answer.articles.slice(0, 3);
-        setTempList(newTempList);
-      }
+    if (content.type === 'NEWS' && content.answer.articles) {
+      const newTempList = content.answer.articles.slice(0, 3);
+      setTempList(newTempList);
     }
   }, [content]);
 
@@ -36,21 +33,20 @@ const ChatSystem = ({ content, type }) => {
     setTempList(content.answer.articles);
     setShowNext(true);
   };
+
   const clickNo = () => {
     setShowNext(true);
   };
 
-  if (type === 'GENERAL' || type === 'WEATHER') {
-    return (
-      <ChatContainer>
-        <Profile type={'System'} />
-        <BubbleType1 content={content.answer} />
-      </ChatContainer>
-    );
-  } else if (type === 'NEWS') {
-    return (
-      <ChatContainer>
-        <Profile type={'System'} />
+  let BubbleComponent;
+
+  switch (type) {
+    case 'GENERAL':
+    case 'WEATHER':
+      BubbleComponent = <BubbleType1 content={content.answer} />;
+      break;
+    case 'NEWS':
+      BubbleComponent = (
         <NewsChatContainer>
           <BubbleType2
             content={content.answer}
@@ -60,15 +56,18 @@ const ChatSystem = ({ content, type }) => {
             showNext={showNext}
           />
         </NewsChatContainer>
-      </ChatContainer>
-    );
-  } else {
-    return (
-      <ChatContainer>
-        <Profile type={'System'} />
-        <BubbleType3 content={content.answer} />
-      </ChatContainer>
-    );
+      );
+      break;
+    default:
+      BubbleComponent = <BubbleType3 content={content.answer} />;
   }
+
+  return (
+    <ChatContainer>
+      <Profile type={'System'} />
+      {BubbleComponent}
+    </ChatContainer>
+  );
 };
+
 export default ChatSystem;
