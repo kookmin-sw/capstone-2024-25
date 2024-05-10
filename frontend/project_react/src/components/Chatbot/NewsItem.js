@@ -13,7 +13,7 @@ const NewsContents = styled.p``;
 
 const NewsItem = ({ news }) => {
   const [category, setCategory] = useState('');
-  console.log('news : ', news);
+  // console.log('news : ', news);
 
   useEffect(() => {
     switch (news.category) {

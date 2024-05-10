@@ -421,12 +421,12 @@ const Chatbot = () => {
     ],
   };
 
-  useEffect(() => {
-    if (gugu) {
-      console.log(gugu.qnaPairs[1].question);
-      console.log(gugu.qnaPairs[1].answer);
-    }
-  }, [gugu]);
+  // useEffect(() => {
+  //   if (gugu) {
+  //     console.log(gugu.qnaPairs[1].question);
+  //     console.log(gugu.qnaPairs[1].answer);
+  //   }
+  // }, [gugu]);
 
   const [chatListDummy, setChatListDummy] = useState([
     {

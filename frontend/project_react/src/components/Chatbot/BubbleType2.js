@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import NewsItem from './NewsItem';
+import BubbleMoreNews from './BubbleMoreNews';
 
 const BubbleContainer = styled.div`
   display: flex;
@@ -28,20 +29,26 @@ const Divider = styled.div`
   margin: 8px 0;
 `;
 
-const BubbleType2 = ({ content }) => {
-  console.log('BubbleType2 content : ', content);
+const BubbleType2 = ({ content, gun }) => {
   const [header, setHeader] = useState('');
   const [contents, setContents] = useState([]);
   useEffect(() => {
     if (content) {
+      console.log('BubbleType2 content : ', content);
+      console.log('BubbleType2 gun : ', gun);
       setHeader(content.header + '\n' + '\n');
-      setContents(content.articles);
+      // setContents(content);
+      setContents(gun);
+      // setContents(gun);
     }
   }, []);
-
   useEffect(() => {
-    console.log('articles : ', contents);
-  }, [content.articles]);
+    console.log('gun : ', gun);
+  }, [gun]);
+
+  // useEffect(() => {
+  //   console.log('articles : ', contents);
+  // }, [content.articles]);
 
   return (
     <BubbleContainer>
