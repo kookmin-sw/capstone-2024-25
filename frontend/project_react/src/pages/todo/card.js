@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { todoApis } from '../../api/apis/todoApis';
@@ -38,7 +38,11 @@ const swipePower = (offset, velocity) => {
 
 export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
   const [[page, direction], setPage] = useState([0, 0]);
-  const [currentTodo, setCurrentTodo] = useState(mission);
+  const [currentTodo, setCurrentTodo] = useState();
+
+  useEffect(() => {
+    setCurrentTodo(mission);
+  }, [mission]);
 
   const paginate = (newDirection) => {
     console.log(page + newDirection, newDirection);

@@ -55,7 +55,7 @@ export default function Nav4() {
       );
       setTimeout(() => {
         getAllTodo();
-      }, 1200);
+      }, selectedCategory === "전체" ? 1200 : 0);
     } catch (error) {
       console.log(error);
     }
