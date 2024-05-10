@@ -10,6 +10,9 @@ const NewsItemContainer = styled.span`
   //border: ;
 `;
 const NewsContents = styled.p``;
+const NewsLink = styled.a`
+  color: #0066ff;
+`;
 
 const NewsItem = ({ news }) => {
   const [category, setCategory] = useState('');
@@ -45,7 +48,7 @@ const NewsItem = ({ news }) => {
       <NewsContents>{news.description}</NewsContents>
       <NewsContents>
         자세히 보기 :<br />
-        <a href={news.link}>{news.link}</a>
+        <NewsLink href={news.link}>{news.link}</NewsLink>
       </NewsContents>
     </NewsItemContainer>
   );

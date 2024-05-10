@@ -11,7 +11,6 @@ const PairContainer = styled.div`
 `;
 
 const ChatPair = ({ qnaPairs }) => {
-  // console.log(qnaPairs);
   return (
     <PairContainer>
       <ChatUser text={qnaPairs.question} />

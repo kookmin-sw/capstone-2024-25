@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 
 const ChatContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: flex-start;
   gap: 10px;
 `;

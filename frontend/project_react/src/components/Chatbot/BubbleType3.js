@@ -33,7 +33,9 @@ const Divider = styled.div`
   margin: 8px 0;
 `;
 
-const PhoneNum = styled.a``;
+const PhoneNum = styled.a`
+  color: #0066ff;
+`;
 
 const BubbleType3 = ({ content }) => {
   const [header, setHeader] = useState('');
@@ -74,10 +76,6 @@ const BubbleType3 = ({ content }) => {
     }
   }, [content]);
 
-  useEffect(() => {
-    console.log('showContents : ', showContents);
-  }, [showContents]);
-
   return (
     <BubbleContainer>
       <BubbleValue>{header}</BubbleValue>
@@ -91,7 +89,7 @@ const BubbleType3 = ({ content }) => {
               {item.phone === '정보 없음' ? (
                 item.phone
               ) : (
-                <a href={`tel:${item.phone}`}>{item.phone}</a>
+                <PhoneNum href={`tel:${item.phone}`}>{item.phone}</PhoneNum>
               )}
             </BubbleValue>
             {showContents.length - 1 !== index && <Divider />}

@@ -40,7 +40,6 @@ const ChattingWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border: 1px solid red;
 `;
 
 const CategoryWrapper = styled.div`
@@ -258,12 +257,13 @@ const Chatbot = () => {
       title: '뉴스',
       selected: false,
       values: [
-        { id: 1, title: '정치', selected: false, values: [] },
-        { id: 2, title: '경제', selected: false, values: [] },
-        { id: 3, title: '사회', selected: false, values: [] },
-        { id: 4, title: '세계', selected: false, values: [] },
-        { id: 5, title: '생활/문화', selected: false, values: [] },
-        { id: 6, title: 'IT/과학', selected: false, values: [] },
+        { id: 1, title: '전체', selected: false, values: [] },
+        { id: 2, title: '정치', selected: false, values: [] },
+        { id: 3, title: '경제', selected: false, values: [] },
+        { id: 4, title: '사회', selected: false, values: [] },
+        { id: 5, title: '세계', selected: false, values: [] },
+        { id: 6, title: '생활/문화', selected: false, values: [] },
+        { id: 7, title: 'IT/과학', selected: false, values: [] },
       ],
     },
     {
@@ -294,6 +294,8 @@ const Chatbot = () => {
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
+        // 날씨 선택 시 구현 추가
+        console.log('선택된 카테고리 타이틀 : ', category.title);
         setSelectedCategoryId(id);
         category.selected = true;
         setShowSubCategory(!showSubCategory);
@@ -317,6 +319,7 @@ const Chatbot = () => {
     const newSubCategoryList = categoryList.map((category) => {
       category.values.map((subCategory) => {
         if (subCategory.id === id && category.id === selectedCategoryId) {
+          console.log('선택된 서브카테고리 타이틀 : ', subCategory.title);
           setSelectedSubCategoryId(id);
           subCategory.selected = true;
         } else {
@@ -766,16 +769,7 @@ const Chatbot = () => {
         }}
         handleNext={() => setIsOpenSecond(false)}
       />
-      {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
       <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
-        {/*{chatListDummy.map((chat) => (*/}
-        {/*  <Chat*/}
-        {/*    text={chat.text}*/}
-        {/*    type={chat.type}*/}
-        {/*    key={chat.id}*/}
-        {/*    // isLast={chat.id === chatListDummy.length}*/}
-        {/*  />*/}
-        {/*))}*/}
         {gugu.qnaPairs.map((chat) => (
           <ChatPair qnaPairs={chat} />
         ))}
