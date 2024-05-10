@@ -33,7 +33,7 @@ const ButtonWrapper = styled.div`
   align-items: center;
 `;
 
-const BubbleMoreNews = ({ content, clickYes }) => {
+const BubbleMoreNews = ({ clickYes, clickNo }) => {
   return (
     <BubbleContainer>
       <BubbleValue>더 많은 뉴스를 보여드릴까요 ?</BubbleValue>
@@ -50,7 +50,7 @@ const BubbleMoreNews = ({ content, clickYes }) => {
           size="Small"
           height="Short"
           type="Secondary"
-          // onClick={logOut}
+          onClick={clickNo}
         />
       </ButtonWrapper>
     </BubbleContainer>

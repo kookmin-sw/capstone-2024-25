@@ -1,5 +1,4 @@
 // BubbleType2.js
-
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import NewsItem from './NewsItem';
@@ -29,12 +28,13 @@ const Divider = styled.div`
   margin: 8px 0;
 `;
 
-const BubbleType2 = ({ content, showList, clickYes, showNext }) => {
+const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
   const [header, setHeader] = useState('');
   const [contents, setContents] = useState([]);
+
   useEffect(() => {
     if (content) {
-      setHeader(content.header + '\n' + '\n');
+      setHeader(content.header);
       setContents(showList);
     }
   }, [content, showList]);
@@ -48,8 +48,13 @@ const BubbleType2 = ({ content, showList, clickYes, showNext }) => {
           {contents.length - 1 !== index && <Divider />}
         </>
       ))}
-      {/* 추후에 마지막 채팅인지를 판단하는 기능도 필요. */}
-      {!showNext && <BubbleMoreNews content="glmglm" clickYes={clickYes} />}
+      {!showNext && (
+        <BubbleMoreNews
+          content="glmglm"
+          clickYes={clickYes}
+          clickNo={clickNo}
+        />
+      )}
     </BubbleContainer>
   );
 };
