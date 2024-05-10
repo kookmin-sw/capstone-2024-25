@@ -18,14 +18,18 @@ import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
 import MyPage from './pages/MyPage';
+import './fonts/Font.css';
+import { createGlobalStyle } from 'styled-components';
 
 function App() {
   return (
     <div id="App">
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          {/*<Route path="/" element={<SignIn />} />*/}
-          <Route path="/" element={<ComponentTest />} />
+          <Route path="/" element={<SignIn />} />
+          {/*<Route path="/" element={<ComponentTest />} />*/}
+          {/*<Route path="/" element={<Chatbot />} />*/}
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail" element={<JobDetailPage />} />
@@ -65,3 +69,9 @@ function App() {
 }
 
 export default App;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: 'Pretendard', sans-serif;
+  }
+`;

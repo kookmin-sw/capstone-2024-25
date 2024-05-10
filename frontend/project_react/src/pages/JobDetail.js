@@ -68,6 +68,7 @@ const EmploymentTitle = styled.span`
 const EmploymentInfo = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 120px;
 `;
 
 const InfoItem = styled.div`
@@ -128,6 +129,29 @@ const ContentTitle = styled.span`
 const JobDetailPage = () => {
   const gun =
     ' * 인원 : 내부 미화원 1명 - 근무 시간 : 평일 09:00 ~ 15:30 (휴게 1시간) 토요일 09:00 ~ 10:30 - 급여 : 1,478,120 월';
+
+  const dummyData = {
+    company: '엘림에스(유)',
+    title: '단체 급식 보조원',
+    content:
+      '인천 만수한국아파트 미화원 채용합니다.(장애인 등록증 또는 장애인복지카드 소지자 우대)',
+    date: 'D - 4',
+    job: '단체 급식 보조원',
+    qualification: {
+      career: '관계 없음',
+      education: '관계 없음',
+    },
+    condition: {
+      location: '인천광역시 남동구 담방로21번, 단지 내부 (만수동, 한국 아파트)',
+      salary: '월급 147만원 ~ 147만원',
+    },
+    employment: {
+      employmentType: '기간의 정합이 있는 근로계약',
+      workType: '주 6일 근무',
+    },
+    jobContent: '여기는 데이터 넘어오는거 봐야 알 수 있을 것 같음요.',
+  };
+
   return (
     <JobDetailContainer>
       <ButtonWrapper>
@@ -144,7 +168,7 @@ const JobDetailPage = () => {
       </ButtonWrapper>
       <JobDetailHeader>
         <img src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'} />
-        <HeaderTitle>엘림에스(유)</HeaderTitle>
+        <HeaderTitle>{dummyData.company}</HeaderTitle>
       </JobDetailHeader>
       <JobDetailContent>
         <CompanyLogo
@@ -159,7 +183,7 @@ const JobDetailPage = () => {
             <DateWrapper>D - 4</DateWrapper>
             <InfoItemContentHorizontal>
               <InfoItemTitle>모집 직종</InfoItemTitle>
-              <ContentText>단체 급식 보조원</ContentText>
+              <ContentText>{dummyData.title}</ContentText>
             </InfoItemContentHorizontal>
           </InfoItem>
           <InfoItem>
@@ -218,7 +242,6 @@ const JobDetailPage = () => {
                   여기는 데이터 넘어오는거 봐야 알 수 있을 것 같음요.
                 </ContentText>
                 <ContentText>{gun}</ContentText>
-
                 <ContentItem></ContentItem>
               </ContentWrapper>
             </InfoItemContent>
