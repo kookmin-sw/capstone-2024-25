@@ -47,6 +47,8 @@ const CategoryWrapper = styled.div`
   justify-content: center;
   gap: 8px;
   background-color: #ffffff;
+  border-top: 2px solid var(--unselected-color);
+  padding: 8px 0;
 `;
 
 const BottomWrapper = styled.div`
