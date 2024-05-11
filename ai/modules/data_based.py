@@ -67,7 +67,7 @@ def handle_data_based(api_key, query, db_uri, address):
              우리 집 주소는 {address}야. 결과는 집 주변에 있는 최대 3개의 시설만 추출해서
              다음과 같은 형식으로 반환해줘: 시설명: 실제 시설명 \n 주소: 실제 주소 \n 전화번호: 실제 전화번호
              여러 시설이 있을 경우 각 시설 정보 앞에 번호를 부여하고 사이에 '\n'을 추가해줘.
-             그리고 어떤 테이블을 참고 했는지도 반환값의 첫 줄에 다음과 같은 형식으로 줘: 'table_name:'""")
+             그리고 한 번에 한 테이블만 참고하고, 어떤 테이블을 참고 했는지도 반환값의 첫 줄에 다음과 같은 형식으로 줘: 'table_name:'""")
 
     # SQL Agent 생성
     agent_executor = create_sql_agent(
