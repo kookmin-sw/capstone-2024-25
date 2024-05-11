@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { todoApis } from '../../api/apis/todoApis';
+import { useAccessToken } from '../../components/cookies';
 
 const variants = {
   enter: (direction) => {
@@ -39,6 +40,7 @@ const swipePower = (offset, velocity) => {
 export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
   const [[page, direction], setPage] = useState([0, 0]);
   const [currentTodo, setCurrentTodo] = useState();
+  const accessToken = useAccessToken();
 
   useEffect(() => {
     setCurrentTodo(mission);
@@ -57,7 +59,7 @@ export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
 
   async function getNextTodo() {
     try {
-      const response = await todoApis.getNextTodo(type);
+      const response = await todoApis.getNextTodo(accessToken, type);
       console.log(response);
       setCurrentTodo(response.data.routine);
     } catch (error) {
@@ -67,7 +69,7 @@ export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
 
   async function getPreviousTodo() {
     try {
-      const response = await todoApis.getPreviousTodo(type);
+      const response = await todoApis.getPreviousTodo(accessToken, type);
       console.log(response);
       setCurrentTodo(response.data.routine);
     } catch (error) {
