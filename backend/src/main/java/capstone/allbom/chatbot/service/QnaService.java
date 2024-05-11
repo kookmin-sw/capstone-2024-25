@@ -11,7 +11,6 @@ import capstone.allbom.chatbot.dto.twentyQuestions.TwentyQnaResponse;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
 import capstone.allbom.common.exception.NotFoundException;
-import capstone.allbom.game.domain.Game;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -128,5 +127,18 @@ public class QnaService {
         }
         return twentyQuestionsRepository.save(new TwentyQuestions(member));
     }
+
+//    @Transactional
+//    public TwentyAnswerResponse requestAI(final Member member) {
+//        TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
+//                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_TWENTY_QUESTIONS));
+//
+//        // AI 요청
+//
+//        // 이후 twentyQuestions solution, questionCount 업데이트
+//        if (twentyAnswerResponse.getQuestionCount() == 0 || twentyAnswerResponse.isCorrect == true) {
+//            twentyQuestions.setIsComplete(true);
+//        }
+//    }
 
 }
