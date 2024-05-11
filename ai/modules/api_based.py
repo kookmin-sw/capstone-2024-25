@@ -18,14 +18,12 @@ class ApiBased(BaseModel):
 def sort_shorten_news(news_api_key, page, category_eng):
     top_articles = []
     while len(top_articles) < 6:
-        print("호출")
         # API 요청 결과 저장
         news_data = get_news_data(news_api_key, page, category_eng)
 
         # 'results' 키에서 뉴스 목록을 추출
         articles = news_data["results"]
         next_page = news_data["nextPage"]
-        print(next_page)
 
         # 각 뉴스의 'description'을 기준으로 내림차순 정렬
         sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] != None else "", reverse=True)
@@ -45,7 +43,6 @@ def sort_shorten_news(news_api_key, page, category_eng):
                 top_articles.append(article_details)
             else:
                 break
-        print(len(top_articles))
 
         # 다음 페이지가 없거나 6개의 기사가 수집되면 반복 중단
         if not next_page or len(top_articles) == 6:
