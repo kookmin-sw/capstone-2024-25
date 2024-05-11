@@ -2,11 +2,16 @@ package capstone.allbom.chatbot.service;
 
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
-import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
-import capstone.allbom.chatbot.dto.QnaPair;
-import capstone.allbom.chatbot.dto.QnaResponse;
+import capstone.allbom.chatbot.domain.TwentyQuestions;
+import capstone.allbom.chatbot.domain.TwentyQuestionsRepository;
+import capstone.allbom.chatbot.dto.*;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyAnswerRequest;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyAnswerResponse;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyQnaResponse;
 import capstone.allbom.common.exception.BadRequestException;
 import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.NotFoundException;
+import capstone.allbom.game.domain.Game;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +32,14 @@ public class QnaService {
 
     private final QnaRepository qnaRepository;
     private final MemberRepository memberRepository;
+
+    private final TwentyQuestionsRepository twentyQuestionsRepository;
     
     @Value("https://allbom.s3.ap-northeast-2.amazonaws.com/chat_male.jpg")
     private String CHAT_MALE_IMAGE_URL;
 
     @Transactional
-    public QnaResponse getFifteenQnasByPagination(final Member member, Pageable pageable) {
+    public QnaResponse getFifteenQnasByPagination(final Member member, Pageable pageable) { // -> 클라이언트
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -49,7 +56,7 @@ public class QnaService {
     }
 
     @Transactional
-    public List<QnaAndTypeResponse> getTopFiveQnas(final Member member) {
+    public List<QnaAndTypeResponse> getTopFiveQnas(final Member member) { // -> AI
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -62,4 +69,13 @@ public class QnaService {
                 .map(QnaAndTypeResponse::from)
                 .toList();
     }
+
+    @Transactional
+    public AnswerRequest convertRequestTypeForAI(final Member member, QuestionRequest questionRequest) { // -> AI
+        List<QnaAndTypeResponse> topFiveQnas = getTopFiveQnas(member);
+        return AnswerRequest.from(member, questionRequest, topFiveQnas);
+    }
+
+
+
 }
