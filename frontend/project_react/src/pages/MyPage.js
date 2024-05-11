@@ -303,6 +303,8 @@ const MyPage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     beforeChange: (current, next) => setCurrentSlide(next), // 다음 슬라이드 인덱스 업데이트
+    draggable: false,
+    swipe: false,
     arrows: false,
     speed: 200, // 넘어가는 시간
   };
