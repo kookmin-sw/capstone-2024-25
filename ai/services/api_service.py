@@ -2,13 +2,18 @@ from newsdataapi import NewsDataApiClient
 import requests
 import json
 
+
 # news api 연결 함수
-def get_news_data(news_api_key, category="politics, business, world, sports, technology"):
+def get_news_data(news_api_key, page, category="politics, business, world, sports, technology"):
     # news api key 설정
     api = NewsDataApiClient(apikey=news_api_key)
 
-    # news 조회 결과 저장
-    response = api.news_api(category=category, country="kr")
+    if page == "": # 첫 번째 호출
+        # news 조회 결과 저장
+        response = api.news_api(category=category, country="kr")
+    else:
+        # news 조회 결과 저장
+        response = api.news_api(category=category, country="kr", page=page)
 
     return response
 

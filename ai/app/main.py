@@ -4,6 +4,7 @@ from ai.modules.data_based import handle_data_based
 from ai.modules.api_based import handle_news_api_based
 from ai.modules.api_based import handle_weather_api_based
 
+
 def main():
     query = input("질문을 입력해주세요: ")
     api_key = API_KEY
