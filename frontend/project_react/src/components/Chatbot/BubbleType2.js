@@ -1,5 +1,4 @@
 // BubbleType2.js
-
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import NewsItem from './NewsItem';
@@ -28,28 +27,46 @@ const Divider = styled.div`
   background-color: #ffffff;
   margin: 8px 0;
 `;
-
-const BubbleType2 = ({ content, showList, clickYes, showNext }) => {
+const SpinnerImg = styled.img`
+  width: 120px;
+  height: 120px;
+`;
+const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
   const [header, setHeader] = useState('');
   const [contents, setContents] = useState([]);
+
   useEffect(() => {
     if (content) {
-      setHeader(content.header + '\n' + '\n');
+      setHeader(content.header);
       setContents(showList);
     }
   }, [content, showList]);
 
   return (
     <BubbleContainer>
-      <BubbleValue>{header}</BubbleValue>
-      {contents.map((news, index) => (
+      {contents.length !== 0 ? (
         <>
-          <NewsItem key={index} news={news} />
-          {contents.length - 1 !== index && <Divider />}
+          <BubbleValue>{header}</BubbleValue>
+          {contents.map((news, index) => (
+            <>
+              <NewsItem key={index} news={news} />
+              {contents.length - 1 !== index && <Divider />}
+            </>
+          ))}
+          {!showNext && (
+            <BubbleMoreNews
+              content="glmglm"
+              clickYes={clickYes}
+              clickNo={clickNo}
+            />
+          )}
         </>
-      ))}
-      {/* 추후에 마지막 채팅인지를 판단하는 기능도 필요. */}
-      {!showNext && <BubbleMoreNews content="glmglm" clickYes={clickYes} />}
+      ) : (
+        <SpinnerImg
+          src={process.env.PUBLIC_URL + '/images/Chatbot/spinner.gif'}
+          alt="spinner"
+        />
+      )}
     </BubbleContainer>
   );
 };

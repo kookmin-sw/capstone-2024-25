@@ -1,7 +1,6 @@
 // Category.js
 
 import styled, { css } from 'styled-components';
-import { useState } from 'react';
 
 const selecteds = {
   true: css`
@@ -34,6 +33,7 @@ const SubCategoryWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
+  gap: 4px;
   width: fit-content;
   position: absolute;
   bottom: 160%;

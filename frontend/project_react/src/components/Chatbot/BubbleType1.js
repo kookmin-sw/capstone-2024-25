@@ -1,6 +1,7 @@
 // Bubble.js
 
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const BubbleContainer = styled.div`
   display: flex;
@@ -19,10 +20,30 @@ const BubbleValue = styled.span`
   word-break: break-all;
 `;
 
+const SpinnerImg = styled.img`
+  width: 120px;
+  height: 120px;
+`;
+
 const BubbleType1 = ({ content }) => {
+  const [showContents, setShowContents] = useState('');
+
+  useEffect(() => {
+    if (content) {
+      setShowContents(content);
+    }
+  }, []);
+
   return (
     <BubbleContainer>
-      <BubbleValue>{content}</BubbleValue>
+      {showContents === '' ? (
+        <SpinnerImg
+          src={process.env.PUBLIC_URL + '/images/Chatbot/spinner.gif'}
+          alt="spinner"
+        />
+      ) : (
+        <BubbleValue>{showContents}</BubbleValue>
+      )}
     </BubbleContainer>
   );
 };

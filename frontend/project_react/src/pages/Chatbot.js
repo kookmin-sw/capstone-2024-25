@@ -40,7 +40,6 @@ const ChattingWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border: 1px solid red;
 `;
 
 const CategoryWrapper = styled.div`
@@ -48,6 +47,8 @@ const CategoryWrapper = styled.div`
   justify-content: center;
   gap: 8px;
   background-color: #ffffff;
+  border-top: 2px solid var(--unselected-color);
+  padding: 8px 0;
 `;
 
 const BottomWrapper = styled.div`
@@ -258,12 +259,13 @@ const Chatbot = () => {
       title: '뉴스',
       selected: false,
       values: [
-        { id: 1, title: '정치', selected: false, values: [] },
-        { id: 2, title: '경제', selected: false, values: [] },
-        { id: 3, title: '사회', selected: false, values: [] },
-        { id: 4, title: '세계', selected: false, values: [] },
-        { id: 5, title: '생활/문화', selected: false, values: [] },
-        { id: 6, title: 'IT/과학', selected: false, values: [] },
+        { id: 1, title: '전체', selected: false, values: [] },
+        { id: 2, title: '정치', selected: false, values: [] },
+        { id: 3, title: '경제', selected: false, values: [] },
+        { id: 4, title: '사회', selected: false, values: [] },
+        { id: 5, title: '세계', selected: false, values: [] },
+        { id: 6, title: '생활/문화', selected: false, values: [] },
+        { id: 7, title: 'IT/과학', selected: false, values: [] },
       ],
     },
     {
@@ -294,6 +296,8 @@ const Chatbot = () => {
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
+        // 날씨 선택 시 구현 추가
+        console.log('선택된 카테고리 타이틀 : ', category.title);
         setSelectedCategoryId(id);
         category.selected = true;
         setShowSubCategory(!showSubCategory);
@@ -317,6 +321,7 @@ const Chatbot = () => {
     const newSubCategoryList = categoryList.map((category) => {
       category.values.map((subCategory) => {
         if (subCategory.id === id && category.id === selectedCategoryId) {
+          console.log('선택된 서브카테고리 타이틀 : ', subCategory.title);
           setSelectedSubCategoryId(id);
           subCategory.selected = true;
         } else {
@@ -416,6 +421,34 @@ const Chatbot = () => {
             'RECUPERATION',
           answer:
             '등록하신 주소를 기준으로 문화생활(교육) 장소를 소개해 드릴게요!\n1. 시설명: 남양주시 평생학습센터\n주소: 경기도 남양주시 다산동 3159-7 남양주시청제2청사\n전화번호: 031-590-2582\n2. 시설명: 동부광성평생교육문화원\n주소: 경기도 남양주시 와부읍 덕소리 177-2 동부광성교회\n전화번호: 정보 없음\n3. 시설명: 경복대학교 평생교육대학\n주소: 경기도 남양주시 진접읍 금곡리 383 경복대학교 남양주캠퍼스 학생회관\n전화번호: 031-570-9700',
+        },
+      },
+      {
+        question: '질문1 - GENERAL | WEATHER',
+        answer: {
+          type: 'GENERAL',
+          answer: '',
+        },
+      },
+      {
+        question: '질문2 - NEWS',
+        answer: {
+          type: 'NEWS',
+          answer: {},
+        },
+      },
+      {
+        question:
+          '질문3 -  "PARK" | "SHOPPING"| "EDUCATION" | "CARE" | "BATH" | "RECUPERATION"',
+        answer: {
+          type:
+            'PARK' |
+            'SHOPPING' |
+            'EDUCATION' |
+            'CARE' |
+            'BATH' |
+            'RECUPERATION',
+          answer: '',
         },
       },
     ],
@@ -766,16 +799,7 @@ const Chatbot = () => {
         }}
         handleNext={() => setIsOpenSecond(false)}
       />
-      {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
       <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
-        {/*{chatListDummy.map((chat) => (*/}
-        {/*  <Chat*/}
-        {/*    text={chat.text}*/}
-        {/*    type={chat.type}*/}
-        {/*    key={chat.id}*/}
-        {/*    // isLast={chat.id === chatListDummy.length}*/}
-        {/*  />*/}
-        {/*))}*/}
         {gugu.qnaPairs.map((chat) => (
           <ChatPair qnaPairs={chat} />
         ))}

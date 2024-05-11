@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import ChatUser from './ChatUser';
 import ChatSystem from './ChatSystem';
-import BubbleMoreNews from './BubbleMoreNews';
 
 const PairContainer = styled.div`
   display: flex;
@@ -12,7 +11,6 @@ const PairContainer = styled.div`
 `;
 
 const ChatPair = ({ qnaPairs }) => {
-  // console.log(qnaPairs);
   return (
     <PairContainer>
       <ChatUser text={qnaPairs.question} />
