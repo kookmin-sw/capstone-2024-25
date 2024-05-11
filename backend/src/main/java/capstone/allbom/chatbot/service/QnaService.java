@@ -76,6 +76,25 @@ public class QnaService {
         return AnswerRequest.from(member, questionRequest, topFiveQnas);
     }
 
+    // 스무고개
+    @Transactional
+    public TwentyQnaResponse getAllTwentyQuestionsQnas(final Member member) { // 대화 내역 조회 -> 클라이언트
+        Member savedMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
+
+        if (savedMember.getChatProfileImageUrl() == null) {
+            throw new BadRequestException(DefaultErrorCode.NEED_CHATBOT_PROFILE_UPDATE);
+        }
+
+        List<Qna> qnas = qnaRepository.findAllTwentyQuestionsOrderByCreatedAtDesc(savedMember.getId());
+
+        List<QnaPair> qnaPairs = qnas.stream()
+                .map(QnaPair::from)
+                .toList();
+
+        return TwentyQnaResponse.from(member, qnaPairs);
+    }
+
 
 
 }
