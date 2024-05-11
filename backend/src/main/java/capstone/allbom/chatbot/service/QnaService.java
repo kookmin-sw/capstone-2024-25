@@ -121,6 +121,12 @@ public class QnaService {
         return TwentyAnswerRequest.from(questionRequest, twentyQuestions, qnaPairs);
     }
 
-
+    @Transactional
+    public TwentyQuestions createTwentyQuestions(final Member member, QuestionRequest questionRequest) {
+        if (questionRequest.question().length() > 0) {
+            throw new BadRequestException(DefaultErrorCode.INVALID_TWENTY_QUESTIONS_REQUEST);
+        }
+        return twentyQuestionsRepository.save(new TwentyQuestions(member));
+    }
 
 }
