@@ -3,6 +3,8 @@ import json
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.prompts.few_shot import FewShotPromptTemplate
+from langchain_core.prompts.prompt import PromptTemplate
 
 
 # 답변 json 자료구조 정의
@@ -15,41 +17,65 @@ class DailyConversation(BaseModel):
 
 # 정답 생성 함수(question="" 일 경우)
 def generate_solution(api_key):
+    # 예시 설정
+    examples = [
+        {"input": "길이가 3인 한글로 된 단어를 만들어줘", "output": "바나나"},
+        {"input": "길이가 3인 한글로 된  단어를 만들어줘", "output": "가래떡"},
+        {"input": "길이가 3인 한글로 된  단어를 만들어줘", "output": "고무줄"},
+        {"input": "길이가 3인 한글로 된  단어를 만들어줘", "output": "고추장"},
+        {"input": "길이가 3인 한글로 된  단어를 만들어줘", "output": "도라지"},
+        {"input": "길이가 4인 한글로 된  단어를 만들어줘", "output": "계란말이"},
+        {"input": "길이가 4인 한글로 된  단어를 만들어줘", "output": "사과나무"},
+        {"input": "길이가 4인 한글로 된  단어를 만들어줘", "output": "기말고사"},
+        {"input": "길이가 4인 한글로 된  단어를 만들어줘", "output": "비빔국수"},
+        {"input": "길이가 4인 한글로 된  단어를 만들어줘", "output": "홍길동전"},
+    ]
+
+    # 프롬프트 템플릿 생성
+    example_prompt = PromptTemplate(
+        input_variables=["input", "output"],
+        template="{input}\nSolution: {output}"
+    )
+
+    # Few-shot 프롬프트 템플릿 생성
+    few_shot_prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        input_variables=["input"],
+        suffix="지금부터 스무고개 게임을 시작할 거야. 너는 게임의 출제자로, 정답을 설정해야 해. \
+                정답의 길이는 3 또는 4여야 하며, 한자나 특수문자 없이 오직 한글로만 이루어진 단어만 포함되어야 해. \
+                글자 수를 엄격하게 준수해야 함을 명심해. 답변은 다음과 같은 형식으로 줘: solution: 스무고개 문제의 정답"
+    )
+
     # openAI api key 설정
     os.environ["OPENAI_API_KEY"] = api_key
 
     # gpt-4 모델 설정
-    model = ChatOpenAI(model_name="gpt-4", temperature=2)
+    model = ChatOpenAI(model_name="gpt-4", temperature=1)
 
-    # 모델에 입력할 질문
-    query = f"""
-                 지금부터 스무고개 게임을 시작할 거야. 너는 게임의 출제자로, 정답을 설정해야 해.
-                 정답은 한글 단어로, 글자 수는 3글자 또는 4글자여야 하며, 단어만 포함되어야 해.
-                 예를 들어, 3글자로는 '바나나', '충전기', '무지개'가 있고,
-                 4글자로는 '사과나무', '운동선수', '단독주택' 등이 있어.
-                 글자 수를 엄격하게 준수해야 함을 명심해.
-                 답변은 다음과 같은 형식으로 줘: solution: 스무고개 문제의 정답
-              """
+    # 질문 설정 및 모델 호출
+    formatted_prompt = few_shot_prompt.format()
+    result = model.invoke(formatted_prompt)
 
-    # 모델 답변 저장
-    result = model.predict(query)
-
-    # 모델 답변에서 스무고개 정답 추출
-    solution = result.split(":")[1].strip()
+    # 모델 답변에서 정답 추출
+    solution = result.content.split("Solution: ")[1].strip().split("\n")[0]
 
     return solution
 
 
 # 남은 질문 횟수 계산 함수
 def calculate_question_count(qnas):
+    # 총 질문 횟수 - 이전 질문 횟수 - 1
     question_count = 20 - len(qnas) - 1
     return question_count
 
 
 # 정답 판별 함수(question!="" 일 경우)
 def verify_answer(solution, question, len_qnas):
+    # 남은 질문 횟수가 0보다 큰 경우
     if len_qnas > 0:
-        if (solution == question) or (solution in question):
+        # question이 solution과 같거나 solution이 question에 포함되는 경우, True
+        if solution in question:
             return True
     return False
 
