@@ -18,6 +18,8 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_ROUTINE_NUMBER(404, "요청한 투두 카테고리의 번호에 해당하는 내용이 존재하지 않습니다."),
     INVALID_FACILITY_TYPE_ID(400, "요청한 유형과 번호에 해당하는 시설이 존재하지 않습니다."),
     INVALID_QUERY_PARAMETER_SORTED(400, "일자리 리스트 조회하기 위한 쿼리 파라미터 값으로 0과 1만 가능합니다."),
+    INVALID_TWENTY_QUESTIONS_REQUEST(400, "새로운 스무고개 게임을 진행하려면 질문이 비어있어야 합니다."),
+    NOT_FOUND_TWENTY_QUESTIONS(404, "스무고개 테이블이 존재하지 않습니다."),
     NEED_CHATBOT_PROFILE_UPDATE(400, "챗봇 프로필 업데이트가 먼저 필요합니다."),
     INVALID_GAME_SUBJECT_TYPE(404, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(404, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),

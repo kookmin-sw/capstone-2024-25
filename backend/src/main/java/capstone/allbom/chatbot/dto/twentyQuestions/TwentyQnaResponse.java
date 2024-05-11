@@ -1,5 +1,6 @@
-package capstone.allbom.chatbot.dto;
+package capstone.allbom.chatbot.dto.twentyQuestions;
 
+import capstone.allbom.chatbot.dto.QnaPair;
 import capstone.allbom.member.domain.Member;
 
 import java.util.List;
