@@ -4,6 +4,7 @@ import TitleHeader from '../components/Header/TitleHeader';
 import { Card } from './todo/card';
 import { todoApis } from '../api/apis/todoApis';
 import ClearFrame from './todo/clear';
+import { useAccessToken } from '../components/cookies';
 
 const categoryKeywordList = {
   exercise: ['운동', 'Barbell', '#FF4500'],
@@ -29,6 +30,7 @@ const categoryList = [
 export default function Nav4() {
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [todoList, setTodoList] = useState();
+  const accessToken = useAccessToken();
 
   useEffect(() => {
     getAllTodo();
@@ -36,7 +38,7 @@ export default function Nav4() {
 
   async function getAllTodo() {
     try {
-      const response = await todoApis.getAllTodo();
+      const response = await todoApis.getAllTodo(accessToken);
       console.log(response.data);
       setTodoList(response.data);
     } catch (error) {
@@ -47,14 +49,16 @@ export default function Nav4() {
 
   async function clearTodo(type) {
     try {
-      const response = await todoApis.postTodoClear(type);
+      const response = await todoApis.postTodoClear(accessToken, type);
       console.log(response);
       // todoList에서 해당 type의 todo를 찾아서 isDone을 true로 변경
       setTodoList((prev) =>
-        prev.map((todo) => todo.type === type ? { ...todo, isDone: true } : todo),
+        prev.map((todo) =>
+          todo.type === type ? { ...todo, isDone: true } : todo,
+        ),
       );
       setTimeout(() => {
-        getAllTodo();
+        getAllTodo(accessToken);
       }, 1200);
     } catch (error) {
       console.log(error);
@@ -108,10 +112,16 @@ export default function Nav4() {
 
         if (filteredTodos.length === 0) {
           if (selectedCategory === '전체') {
-            return <ClearFrame needAnimated={false}>모든 활동을 완료했어요!</ClearFrame>;
+            return (
+              <ClearFrame needAnimated={false}>
+                모든 활동을 완료했어요!
+              </ClearFrame>
+            );
           } else {
             return (
-              <ClearFrame needAnimated={false}>{`오늘의 ${selectedCategory} 완료!`}</ClearFrame>
+              <ClearFrame
+                needAnimated={false}
+              >{`오늘의 ${selectedCategory} 완료!`}</ClearFrame>
             );
           }
         }

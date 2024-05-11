@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
+import { useAccessToken } from '../components/cookies';
 
 const mapCategoryList = [
   [
@@ -36,6 +37,7 @@ export default function Nav5() {
   const [currentBounds, setCurrentBounds] = useState();
   const [mapTags, setMapTags] = useState([]);
   const [markerInfo, setMarkerInfo] = useState();
+  const accessToken = useAccessToken();
 
   // 지도 초기화
   useEffect(() => {
@@ -73,7 +75,7 @@ export default function Nav5() {
   async function fetchMarkers() {
     if (currentBounds) {
       try {
-        const response = await mapApi.getMapMarkers(currentBounds);
+        const response = await mapApi.getMapMarkers(accessToken, currentBounds);
         // console.log('응답', response.data);
         setMapTags(response.data);
       } catch (error) {
@@ -84,7 +86,7 @@ export default function Nav5() {
 
   async function fetchMarkerInfo(type, id) {
     try {
-      const response = await mapApi.getMarkerInfo(type, id);
+      const response = await mapApi.getMarkerInfo(accessToken, type, id);
       console.log('응답', response.data);
       if (response.data.type === 'JOB') {
         setMarkerInfo({
