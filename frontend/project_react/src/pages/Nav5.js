@@ -7,13 +7,13 @@ import { mapApi } from '../../src/api/apis/mapApis';
 const mapCategoryList = [
   [
     ['전체', 'ALL', '#379237'],
-    ['병원·약국', 'HOSPITAL', '#EF6C20'],
-    ['복지주택', 'WELFAREHOUSE', '#FBC02D'],
+    ['병원·약국', 'HOSPITAL', '#FF7D31'],
+    ['복지주택', 'WELFAREHOUSE', '#00C0EA'],
   ],
   [
-    ['복지관', 'WELFARECENTER', '#0091EA'],
+    ['복지관', 'WELFARECENTER', '#2D3BB5'],
     ['케어센터', 'CARECENTER', '#8BC34A'],
-    ['일자리', 'job', '#D57AFF'],
+    ['일자리', 'job', '#CB5CFF'],
   ],
 ];
 
@@ -151,7 +151,7 @@ export default function Nav5() {
                       position={{ lat: tag['latitude'], lng: tag['longitude'] }}
                       image={{
                         src: `/images/map/marker_${
-                          tag['type'] === 'PHARMACY' ? 'HOSPITAL' : tag['type']
+                          tag['type'] === 'PHARMACY' ? 'PHARMACY' : tag['type']
                         }.svg`,
                         size:
                           markerInfo && tag['id'] === markerInfo.id
