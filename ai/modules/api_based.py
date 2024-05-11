@@ -7,7 +7,6 @@ from datetime import datetime
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
-from dotenv import load_dotenv
 
 
 # 답변 json 자료구조 정의
@@ -16,28 +15,44 @@ class ApiBased(BaseModel):
     answer: str = Field(description="Answer of the conversation")
 
 
-# 뉴스 정렬 및 description 수정 함수
-def sort_shorten_news(news_data):
-    # 'results' 키에서 뉴스 목록을 추출
-    articles = news_data["results"]
-
-    # 각 뉴스의 'description'을 기준으로 내림차순 정렬
-    sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] != None else "", reverse=True)
-
-    # 상위 6개 뉴스의 'title', 'category', 'description', 'link' 추출
+def sort_shorten_news(news_api_key, page, category_eng):
     top_articles = []
-    for article in sorted_articles[:6]:
-        article_details = {}
-        for key in ["title", "category", "description", "link"]:
-            if key == "category":
-                article_details[key] = article[key][0]
-            else:
-                article_details[key] = article[key]
-        top_articles.append(article_details)
+    while len(top_articles) < 6:
+        print("호출")
+        # API 요청 결과 저장
+        news_data = get_news_data(news_api_key, page, category_eng)
 
-    # 뉴스 description 100자 이후 삭제 및 '...' 추가
-    for article in top_articles:
-        article["description"] = article["description"][:101] + "..."
+        # 'results' 키에서 뉴스 목록을 추출
+        articles = news_data["results"]
+        next_page = news_data["nextPage"]
+        print(next_page)
+
+        # 각 뉴스의 'description'을 기준으로 내림차순 정렬
+        sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] != None else "", reverse=True)
+
+        # 상위 6개 뉴스의 'title', 'category', 'description', 'link' 추출
+        for article in sorted_articles:
+            if len(top_articles) < 6:
+                article_details = {}
+                for key in ["title", "category", "description", "link"]:
+                    if key == "category":
+                        article_details[key] = article[key][0] if article[key] else "Unknown"
+                    else:
+                        article_details[key] = article[key]
+                # 뉴스 description 100자 이후 삭제 및 '...' 추가
+                if article["description"]:
+                    article["description"] = article["description"][:101] + "..."
+                top_articles.append(article_details)
+            else:
+                break
+        print(len(top_articles))
+
+        # 다음 페이지가 없거나 6개의 기사가 수집되면 반복 중단
+        if not next_page or len(top_articles) == 6:
+            break
+
+        # 다음 페이지로 업데이트
+        page = next_page
 
     # 결과 출력
     return top_articles
@@ -89,10 +104,8 @@ def handle_news_api_based(api_key, news_api_key, query):
     category_kor = extract_news_category(api_key, query)
     # 뉴스 api 파라미터로 추가하기 위해 카테고리 영어 변환
     category_eng = filter_news_type(category_kor)
-    # api 요청 결과 저장
-    news_data = get_news_data(news_api_key, category_eng)
     # 뉴스 정렬 및 내용 정제
-    articles = sort_shorten_news(news_data)
+    articles = sort_shorten_news(news_api_key, "", category_eng)
 
     # 챗봇 답변 앞부분 문자열
     header = f"오늘 {datetime.today().strftime("%Y년 %m월 %d일")} {'주요' if category_kor == '전체' else category_kor} 뉴스를 알려드릴게요!"
