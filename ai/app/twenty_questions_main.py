@@ -1,6 +1,7 @@
 from config import API_KEY
 from ai.modules.twenty_questions import handle_twenty_questions
 
+
 def twenty_questions_main():
     api_key = API_KEY
     # 함수 실행을 위한 임시값: 초기 실행
@@ -15,7 +16,7 @@ def twenty_questions_main():
                                                              이제부터 스무고개를 시작할게요. 질문을 던져주세요!
                                                           """
                    }]
-    question_second = "강아지야?"
+    question_second = "무지개"
 
     # 함수 초기 실행 경우의 결과 저장
     init_response = handle_twenty_questions(api_key, solution_first, qnas_first, question_first)
