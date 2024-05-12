@@ -116,7 +116,7 @@ def main():
     elif category == "날씨":
         response = handle_weather_api_based(api_key, weather_api_key, data["gender"], data["address"])
     else:
-        response = handle_daily_conversation(api_key, query, data["gender"])
+        response = handle_daily_conversation(api_key, query, data["gender"], data["qnas"])
 
     print(response)
 
