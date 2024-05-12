@@ -150,20 +150,23 @@ def handle_news_api_based(api_key, news_api_key, query):
 # 날씨 기준 날짜, 기준 시간 설정 함수
 def get_base_date_time():
     try:
-        # base_time 설정
+        # base_hours 정의, 각 시작 시간에 따른 베이스 시간 매핑
+        base_hours = {
+            2: 23, 5: 2, 8: 5, 11: 8, 14: 11, 17: 14, 20: 17, 23: 20
+        }
+
+        # 현재 시간 불러오기
         now = datetime.now()
         hour = now.hour
         minute = now.minute
 
-        # 정의된 base_time 시간대
-        base_hours = [23, 20, 17, 14, 11, 8, 5, 2]
-
-        # 현재 시간 이전의 가장 가까운 base_time 찾기
-        if minute < 10:
-            hour -= 1  # 분이 10분 미만이면 이전 시간을 검토
-
-        # 가능한 base_hours 중에서 현재 시간 이하의 가장 큰 값을 찾음
-        base_hour = max([h for h in base_hours if h <= hour], default=23)
+        # 기본값으로 가장 늦은 시간 설정
+        base_hour = 23
+        # base_time 설정
+        for start_hour, base in base_hours.items():
+            if hour < start_hour or (hour == start_hour and minute < 10):
+                base_hour = base
+                break
 
         # 'base_hour'을 'base_time' 형식으로 변환
         base_time = f"{base_hour:02}00"
