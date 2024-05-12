@@ -22,6 +22,8 @@ files_to_tables = [
     'culture_education.csv', 'culture_park.csv', 'culture_shopping.csv',
     'visit_bath.csv', 'visit_care.csv', 'visit_recuperation.csv'
 ]
+
+
 # RDS 데이터 베이스 연결 함수
 def connect_database(host, port, user, password, dbname=None):
     conn_str = f"host={host} port={port} user={user} password={password}"
@@ -29,6 +31,7 @@ def connect_database(host, port, user, password, dbname=None):
         conn_str += f" dbname={dbname}"
     print(f"데이터베이스 연결 문자열: {conn_str}")
     return psycopg2.connect(conn_str)
+
 
 # RDS 데이터 베이스 존재 여부 확인 및 생성 함수
 def ensure_database():
@@ -58,11 +61,13 @@ def ensure_database():
         print(f"데이터베이스 접속 또는 생성 실패: {e}")
         return False
 
+
 # S3 버킷의 csv 파일 문자열 변환 함수
 def load_csv_from_s3(bucket, key):
     s3 = boto3.client('s3', region_name=region_name)
     response = s3.get_object(Bucket=bucket, Key=key)
     return response['Body'].read().decode('utf-8')
+
 
 # S3 버킷의 csv 파일 내용으로 PostgreSQL 테이블 생성 및 데이터 삽입 함수
 def create_table_from_csv(cur, table_name, csv_content):
@@ -75,6 +80,7 @@ def create_table_from_csv(cur, table_name, csv_content):
     for row in reader:
         insert_sql = f"INSERT INTO {table_name} VALUES ({', '.join(['%s'] * len(row))});"
         cur.execute(insert_sql, tuple(row))
+
 
 def main():
     if ensure_database():
@@ -92,6 +98,7 @@ def main():
         print("모든 테이블이 성공적으로 생성되었습니다.")
     else:
         print("데이터베이스 생성 실패로 인해 프로세스를 중단합니다.")
+
 
 if __name__ == "__main__":
     main()
