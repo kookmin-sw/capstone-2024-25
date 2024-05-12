@@ -72,5 +72,14 @@ def handle_daily_conversation(api_key, query, gender, previous_qnas):
         parsed_output = output_parser.parse(json.dumps(output_data))
 
         return parsed_output
-    except Exception as e:
-        return f"파싱 에러 발생: {e}"
+    except Exception:
+        # 출력 파싱
+        output_data = {
+            "type": "GENERAL",
+            "answer": "죄송해요. 질문을 명확히 이해하지 못했어요. 다시 질문해주세요."
+        }
+
+        # JSON 파서를 사용하여 데이터를 파싱
+        parsed_output = output_parser.parse(json.dumps(output_data))
+
+        return parsed_output

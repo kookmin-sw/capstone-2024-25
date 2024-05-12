@@ -32,17 +32,20 @@ def filter_type(table_name):
 
 # 쿼리문 내부 테이블명 추출 함수
 def extract_table_name(result):
-    # 정규 표현식을 사용하여 table_name 값을 추출
-    pattern = r"table_name:\s*(\w+)"
-    match = re.search(pattern, result)
-    if match:
-        table_name = match.group(1)
-        # 추출한 table_name 부분을 결과 문자열에서 삭제
-        updated_result = re.sub(pattern, "", result).strip()
-        return table_name, updated_result
-    else:
-        print("참고한 테이블이 없습니다.")
-        return None, result
+    try:
+        # 정규 표현식을 사용하여 table_name 값을 추출
+        pattern = r"table_name:\s*(\w+)"
+        match = re.search(pattern, result)
+        if match:
+            table_name = match.group(1)
+            # 추출한 table_name 부분을 결과 문자열에서 삭제
+            updated_result = re.sub(pattern, "", result).strip()
+            return table_name, updated_result
+        else:
+            print("참고한 테이블이 없습니다.")
+            return None, result
+    except Exception:
+        return None, None
 
 
 # 데이터 기반 챗봇 답변 함수
