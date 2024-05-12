@@ -45,17 +45,18 @@ def classify_query(query, previous_qnas):
             input_variables=["input"],
             suffix=f"""
                     사용자의 질문에 가장 잘 맞는 카테고리를 분류해야해. 각 카테고리에는 특정 주제가 있어.
-                    '뉴스(NEWS)': 정치, 경제, 세계, 스포츠, IT/과학 관련 질문
-                    '문화(EDUCATION, PARK, SHOPPING)': 교육, 공원, 쇼핑 관련 질문
-                    '방문서비스(CARE, BATH, RECUPERATION)': 간호, 목욕, 요양 서비스 관련 질문
-                    '날씨(WEATHER)': 기상 조건 질문
-                    '일상대화(GENERAL)': 그 외 일반 대화나 소셜 상호작용 관련 질문
+                    '뉴스': 정치, 경제, 세계, 스포츠, IT/과학 관련 질문(NEWS)
+                    '문화': 교육, 공원, 쇼핑 관련 질문(EDUCATION, PARK, SHOPPING)
+                    '방문서비스': 간호, 목욕, 요양 서비스 관련 질문(CARE, BATH, RECUPERATION)
+                    '날씨': 기상 조건 질문(WEATHER)
+                    '일상대화': 그 외 일반 대화나 소셜 상호작용 관련 질문(GENERAL)
     
                     사용자의 질문을 분석하여 가장 적절한 카테고리를 선택해야해.
                     질문의 내용과 맥락을 고려하여 가장 유사한 카테고리를 선택해줘.
                     뉴스, 문화, 방문서비스, 날씨 카테고리의 세부 내용을 참고하여 그 내용을 제공할 수 있으면 해당 카테고리로 분류해줘.
                     
                     위의 네가지 카테고리에 제공할 수 있는 내용이 없다면, 일상대화로 분류해줘.
+                    카테고리는 뉴스, 문화, 방문서비스, 날씨, 일상대화 중에 골라서 한글로 답변해야해.
                 
                     사용자 질문: '{query}'
                     이에 대한 답변은 category: 선택된 카테고리 형식으로 제공해줘.
@@ -113,17 +114,18 @@ def main():
 
         # 카테고리에 따른 함수 실행
         if category == "문화" or category == "방문서비스":
-            response = handle_data_based(api_key, query, db_uri, data["address"])
+            response = handle_data_based(api_key, data["question"], db_uri, data["address"])
         elif category == "뉴스":
-            response = handle_news_api_based(api_key, news_api_key, data["query"])
+            response = handle_news_api_based(api_key, news_api_key, data["question"])
         elif category == "날씨":
             response = handle_weather_api_based(api_key, weather_api_key, data["gender"], data["address"])
         else:
-            response = handle_daily_conversation(api_key, query, data["gender"], data["qnas"])
+            response = handle_daily_conversation(api_key, data["question"], data["gender"], data["qnas"])
 
         print(response)
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return {
             "type": "GENERAL",
             "answer": "죄송해요. 질문을 명확히 이해하지 못했어요. 다시 질문해주세요."
