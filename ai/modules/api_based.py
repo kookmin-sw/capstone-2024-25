@@ -26,7 +26,7 @@ def sort_shorten_news(news_api_key, page, category_eng):
         next_page = news_data["nextPage"]
 
         # 각 뉴스의 'description'을 기준으로 내림차순 정렬
-        sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] != None else "", reverse=True)
+        sorted_articles = sorted(articles, key=lambda x: x["description"] if x["description"] is not None else "", reverse=True)
 
         # 상위 6개 뉴스의 'title', 'category', 'description', 'link' 추출
         for article in sorted_articles:
@@ -74,7 +74,7 @@ def extract_news_category(api_key, query):
              """)
 
     # 모델 답변 저장
-    result = model.predict(query)
+    result = model.invoke(query).content
 
     # 모델 답변에서 한글 카테고리 추출
     category_kor = result.split(":")[1].strip()
@@ -207,6 +207,7 @@ def get_location(address):
 # JSON 날씨 데이터 추출 함수
 def extract_weather_data(json_data):
     weather_data = dict()
+    print(weather_data)
     for item in json_data['response']['body']['items']['item']:
         # 하늘 상태(SKY): 맑음(1), 구름많음(3), 흐림(4)
         if item['category'] == "SKY":
@@ -269,6 +270,7 @@ def handle_weather_api_based(api_key, weather_api_key, gender, address):
     base_date, base_time = get_base_date_time()
     nx, ny = get_location(address)
     weather_api_response = get_weather_data(weather_api_key, base_date, base_time, nx, ny)
+    print(weather_api_response)
     weather_data = extract_weather_data(weather_api_response)
     final_weather_data = reform_weather_data(weather_data)
 
@@ -290,7 +292,7 @@ def handle_weather_api_based(api_key, weather_api_key, gender, address):
              """
 
     # 모델 답변 저장
-    answer = model.predict(query)
+    answer = model.invoke(query).content
 
     # 출력 파서 정의
     output_parser = JsonOutputParser(pydantic_object=ApiBased)

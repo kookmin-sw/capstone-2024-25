@@ -100,7 +100,7 @@ def generate_answer(api_key, solution, question):
              """
 
     # 모델 답변 저장
-    answer = model.predict(query)
+    answer = model.invoke(query).content
 
     return answer
 
