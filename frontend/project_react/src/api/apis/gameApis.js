@@ -1,24 +1,59 @@
-import instance from "../instance";
+import instance from '../instance';
 
 export const wordOrderApis = {
-    getSentenceCategory: () => instance.get("???"),
-    getSentenceData: (category) => instance.get('api/game', {
-        params: {
-            type: category,
-        },
+  getProgress: (accessToken) =>
+    instance.get('api/game/progress', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }),
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  getSentence: (accessToken, type) =>
+    instance.get('api/game', {
+      params: {
+        type: type,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }),
+  postUserAnswer: (accessToken, type, answer) =>
+    instance.post(
+      'api/game',
+      {
+        sentence: answer,
+      },
+      {
+        params: {
+          type: type,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    ),
+  postUserSkip: (accessToken, type) =>
+    instance.post(
+      'api/game/skip',
+      {},
+      {
+        params: {
+          type: type,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    ),
+};
 
 export const crossWordApis = {
-    getCrossWordData: () => {},
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  getCrossWordData: () => {},
+  postUserCorrect: () => {},
+  postUserSkip: () => {},
+};
 
 export const twentyHeadsApis = {
-    getTwentyHeadsData: () => {},
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  getTwentyHeadsData: () => {},
+  postUserCorrect: () => {},
+  postUserSkip: () => {},
+};
