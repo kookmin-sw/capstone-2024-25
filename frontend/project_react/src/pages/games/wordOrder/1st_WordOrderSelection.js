@@ -43,7 +43,7 @@ export default function WordOrderSelection() {
 
   return (
     <Frame>
-      <TitleHeader showBackButton={true}></TitleHeader>
+      <TitleHeader showBackButton={true}/>
       <TitleDiv>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '400', margin: '0px' }}>
@@ -108,9 +108,9 @@ const Frame = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   gap: 20px;
 `;
 
