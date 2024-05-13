@@ -113,7 +113,7 @@ def generate_answer(api_key, solution, question):
 
 def handle_twenty_questions(api_key, solution, qnas, query):
     # 게임 첫 시작일 경우, 모델이 정답 생성
-    if solution == "" and qnas == "" and query == "":
+    if solution == "" and qnas == [] and query == "":
         question_count = 19
         is_correct = False
         solution = generate_solution(api_key)
