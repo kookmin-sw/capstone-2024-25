@@ -78,8 +78,11 @@ const SignUp = () => {
   const location = useLocation();
   useEffect(() => {
     if (location.state) {
-      setUserId(location.state.userId);
-      setPassword(location.state.password);
+      const locationState = location.state;
+      if (!locationState.isKaKao) {
+        setUserId(location.state.userId);
+        setPassword(location.state.password);
+      }
       setIsFirstLogin(true);
       medicineApis.getList(cookies.accessToken).then((res) => {
         setMedicineList(res.data);
