@@ -7,22 +7,33 @@ from ai.modules.daily_conversation import handle_daily_conversation
 from ai.modules.data_based import handle_data_based
 from ai.modules.api_based import handle_news_api_based
 from ai.modules.api_based import handle_weather_api_based
+from ai.modules.twenty_questions import handle_twenty_questions
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 
 
+# 이전 대화
 class PreviousQnAs(BaseModel):
     question: str
     answer: str
     type: Optional[str] = None
 
 
+# 일반 챗봇 질문
 class QueryData(BaseModel):
     qnas: List[PreviousQnAs]
-    address: str = "경기도 남양주시 경춘로 1037"
-    gender: str = "MALE"
-    isGame: bool = False
+    address: str
+    gender: str
+    isGame: bool
+    question: str
+
+
+# 스무고개 챗봇 질문
+class GameQueryData(BaseModel):
+    isGame: bool
+    solution: str
+    qnas: List[PreviousQnAs]
     question: str
 
 
@@ -125,3 +136,14 @@ def main(query_data: QueryData):
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+# 주어진 질문 데이터를 처리하는 스무고개 챗봇 API 엔드포인트
+@app.post("/chatbot_game/")
+def twenty_questions_main(query_data: GameQueryData):
+    try:
+        api_key = API_KEY
+        response = handle_twenty_questions(api_key, query_data.solution, query_data.qnas, query_data.question)
+        return {"response": response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
