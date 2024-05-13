@@ -29,14 +29,14 @@ const BubbleType1 = ({ content }) => {
   const [showContents, setShowContents] = useState('');
 
   useEffect(() => {
-    if (content) {
+    if (content && content.length !== 0) {
       setShowContents(content);
     }
   }, []);
 
   return (
     <BubbleContainer>
-      {showContents === '' ? (
+      {showContents.length === 0 ? (
         <SpinnerImg
           src={process.env.PUBLIC_URL + '/images/Chatbot/spinner.gif'}
           alt="spinner"
