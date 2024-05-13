@@ -111,7 +111,7 @@ def handle_news_api_based(api_key, news_api_key, query):
     articles = sort_shorten_news(news_api_key, "", category_eng)
 
     # 챗봇 답변 앞부분 문자열
-    header = f"오늘 {datetime.today().strftime("%Y년 %m월 %d일")} {'주요' if category_kor == '전체' else category_kor} 뉴스를 알려드릴게요!"
+    header = f"오늘 {datetime.today().strftime('%Y년 %m월 %d일')} {'주요' if category_kor == '전체' else category_kor} 뉴스를 알려드릴게요!"
 
     # answer JSON 데이터 생성
     answer = {'header': header, 'articles': articles}
