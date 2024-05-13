@@ -1,24 +1,24 @@
-import instance from "../instance";
+import instance from '../instance';
 
 export const wordOrderApis = {
-    getSentenceCategory: () => instance.get("???"),
-    getSentenceData: (category) => instance.get('api/game', {
-        params: {
-            type: category,
-        },
+  getProgress: (accessToken) =>
+    instance.get('api/game/progress', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }),
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  postUserCorrect: () => {},
+  postUserSkip: () => {},
+};
 
 export const crossWordApis = {
-    getCrossWordData: () => {},
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  getCrossWordData: () => {},
+  postUserCorrect: () => {},
+  postUserSkip: () => {},
+};
 
 export const twentyHeadsApis = {
-    getTwentyHeadsData: () => {},
-    postUserCorrect: () => {},
-    postUserSkip: () => {},
-}
+  getTwentyHeadsData: () => {},
+  postUserCorrect: () => {},
+  postUserSkip: () => {},
+};

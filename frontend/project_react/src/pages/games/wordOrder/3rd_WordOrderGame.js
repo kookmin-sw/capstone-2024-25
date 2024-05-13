@@ -15,7 +15,7 @@ export default function WordOrderGame() {
   const [userSelection, setUserSelection] = useState([]);
 
   useEffect(() => {
-    getSentence();
+    // getSentence();
   }, []);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function WordOrderGame() {
         title={'문장 순서 맞추기'}
       ></TitleHeader>
       <GameContent>
-        <CategoryLabel>{category}</CategoryLabel>
+        <CategoryLabel>{category.split(',')[0]}</CategoryLabel>
         <UserSelectionDiv>
           <UserSelectWords>
             {userSelection.map((Object, index) => (
@@ -142,6 +142,7 @@ const Frame = styled.div`
 `;
 
 const GameContent = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

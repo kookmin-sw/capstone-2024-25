@@ -17,7 +17,7 @@ export default function WordOrderIntro() {
       ></TitleHeader>
       <CategoryDiv>
         <h1 style={{ margin: '0' }}>주제</h1>
-        <CategoryLabel>{category}</CategoryLabel>
+        <CategoryLabel>{category.split(',')[0]}</CategoryLabel>
       </CategoryDiv>
       <p style={{ fontSize: '20px', wordBreak: 'break-word' }}>
         문장 순서 맞추기 게임은 뇌를 활성화시켜 인지 능력 향상에 도움을 줍니다.
