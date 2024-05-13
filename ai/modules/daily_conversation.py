@@ -24,7 +24,7 @@ def handle_daily_conversation(api_key, query, gender, previous_qnas):
     model = ChatOpenAI(model_name="gpt-4",  max_tokens=160)
 
     # 이전 대화를 문자열로 변환
-    qna_text = '\n'.join([f"질문: {qna['question']} 답변: {qna['answer']}" for qna in previous_qnas])
+    qna_text = '\n'.join([f"질문: {qna.question} 답변: {qna.answer}" for qna in previous_qnas])
 
     # 템플릿 변수 생성
     template = f"""
