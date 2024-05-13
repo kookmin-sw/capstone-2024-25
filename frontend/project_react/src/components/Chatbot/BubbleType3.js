@@ -73,7 +73,7 @@ const BubbleType3 = ({ content }) => {
   };
 
   useEffect(() => {
-    if (content) {
+    if (content && content.length !== 0) {
       setHeader(content.header);
       const newContents = content.split('\n');
       setHeader(newContents[0]);

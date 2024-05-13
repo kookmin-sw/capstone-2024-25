@@ -339,7 +339,7 @@ const Chatbot = () => {
     return inputString.replace(/\\\\"/g, '"');
   }
 
-  const gugu = {
+  const [gugu, setGugu] = useState({
     chatProfileImageUrl: 'string',
     qnaPairs: [
       {
@@ -452,7 +452,7 @@ const Chatbot = () => {
         },
       },
     ],
-  };
+  });
 
   // useEffect(() => {
   //   if (gugu) {
@@ -562,16 +562,34 @@ const Chatbot = () => {
     },
   ]);
 
-  const addChat = (text, type) => {
-    // 유저 텍스트 추가
-    // console.log('gmlgml');
-    const newChat = {
-      id: chatListDummy.length + 1,
-      text: userText,
-      type: 'User',
+  const categoryValues = ['날씨', '뉴스', 'IT'];
+
+  const scrollAfterSend = () => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper) {
+      console.log('아래로 이동');
+      chatWrapper.scrollTop = chatWrapper.scrollHeight;
+    }
+  };
+
+  const addChat = async (text, type) => {
+    const newQnaPair = {
+      question: userText,
+      answer: {
+        type: 'WEATHER',
+        answer: '',
+      },
     };
-    setChatListDummy([...chatListDummy, newChat]);
-    testFun(chatListDummy[chatListDummy.length - 1].text);
+    await setGugu((prevGugu) => ({
+      ...prevGugu, // 기존 gugu 객체의 다른 속성을 유지
+      qnaPairs: [...prevGugu.qnaPairs, newQnaPair], // 기존 qnaPairs 리스트에 새로운 요소 추가
+    }));
+    setUserText('');
+    const inputUserText = document.getElementById('input-text');
+    inputUserText.value = '';
+
+    await scrollAfterSend();
+    // testFun(chatListDummy[chatListDummy.length - 1].text);
   };
 
   const addSystemChat = () => {
@@ -849,6 +867,7 @@ const Chatbot = () => {
               />
               <InputText
                 type="text"
+                id="input-text"
                 onClick={handleViewportResize}
                 onChange={(e) => setUserText(e.target.value)}
               />
@@ -868,11 +887,8 @@ const Chatbot = () => {
               )}
             </ChatInputWrapper>
           )}
-          {/*<Footer ref={footerRef}>하단바 영역</Footer>*/}
         </BottomWrapper>
       </ChattingWrapper>
-
-      {/*<Footer>하단바 영역</Footer>*/}
     </ChatbotContainer>
   );
 };

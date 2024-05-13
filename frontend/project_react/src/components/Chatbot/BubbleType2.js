@@ -36,7 +36,7 @@ const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
   const [contents, setContents] = useState([]);
 
   useEffect(() => {
-    if (content) {
+    if (content && content.length !== 0) {
       setHeader(content.header);
       setContents(showList);
     }
@@ -54,11 +54,7 @@ const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
             </>
           ))}
           {!showNext && (
-            <BubbleMoreNews
-              content="glmglm"
-              clickYes={clickYes}
-              clickNo={clickNo}
-            />
+            <BubbleMoreNews clickYes={clickYes} clickNo={clickNo} />
           )}
         </>
       ) : (
