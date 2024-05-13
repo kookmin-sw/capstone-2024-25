@@ -18,6 +18,7 @@ import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
 import MyPage from './pages/MyPage';
+import LoadingPage from './pages/LoadingPage';
 import './fonts/Font.css';
 import { createGlobalStyle } from 'styled-components';
 
@@ -32,10 +33,11 @@ function App() {
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail/:jobId" element={<JobDetailPage />} />
           <Route path="/my-page" element={<MyPage />} />
+          <Route path="/loading" element={<LoadingPage />} />
 
           <Route path="/test" element={<ComponentTest />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/auth/*" element={<SignUp />} />
+          <Route path="/auth/*" element={<LoadingPage />} />
           <Route path="/ttt" element={<Test />} />
 
           <Route path="/map" element={<Nav5 />} />
