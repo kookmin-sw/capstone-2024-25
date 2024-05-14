@@ -1,16 +1,19 @@
 package capstone.allbom.chatbot.controller;
 
+import capstone.allbom.chatbot.dto.AnswerResponse;
 import capstone.allbom.chatbot.dto.QnaResponse;
+import capstone.allbom.chatbot.dto.QuestionRequest;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyAnswerResponse;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyQnaResponse;
 import capstone.allbom.chatbot.service.QnaService;
+import capstone.allbom.chatbot.service.TwentyQuestionsService;
 import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,14 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TwentyQuestionsController {
 
-    private final QnaService qnaService;
+    private final TwentyQuestionsService twentyQuestionsService;
 
     @GetMapping
-    public ResponseEntity<QnaResponse> getQnas(
-            @Auth final Member member,
-            Pageable pageable
+    public ResponseEntity<TwentyQnaResponse> getQnas(
+            @Auth final Member member
     ) {
-        QnaResponse qnaResponse = qnaService.getFifteenQnasByPagination(member, pageable);
-        return ResponseEntity.ok(qnaResponse);
+        TwentyQnaResponse twentyQnaResponse = twentyQuestionsService.getAllTwentyQuestionsQnas(member);
+        return ResponseEntity.ok(twentyQnaResponse);
+    }
+
+    @PostMapping
+    public ResponseEntity<TwentyAnswerResponse> requestQuestion(
+            @Auth final Member member,
+            @RequestBody final QuestionRequest questionRequest
+    ) {
+        TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsService.requestAnswer(member, questionRequest);
+        return ResponseEntity.ok(twentyAnswerResponse);
     }
 }

@@ -35,12 +35,14 @@ public class QnaController {
         return ResponseEntity.ok(qnaResponse);
     }
 
-//    @PostMapping
+    @PostMapping
 //    public ResponseEntity<AnswerResponse> requestQuestion(
-//            @Auth final Member member,
-//            @RequestBody final QuestionRequest questionRequest
-//    ) {
-//
-//    }
+    public ResponseEntity<AnswerResponse> requestQuestion(
+            @Auth final Member member,
+            @RequestBody final QuestionRequest questionRequest
+    ) {
+        AnswerResponse answerResponse = qnaService.requestAnswer(member, questionRequest);
+        return ResponseEntity.ok(answerResponse);
+    }
 
 }
