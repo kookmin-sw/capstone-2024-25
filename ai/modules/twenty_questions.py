@@ -68,8 +68,8 @@ def generate_solution(api_key):
 
 # 남은 질문 횟수 계산 함수
 def calculate_question_count(qnas):
-    # 총 질문 횟수 - 이전 질문 횟수 - 1
-    question_count = 20 - len(qnas) - 1
+    # 총 질문 횟수 - 이전 질문 횟수
+    question_count = 20 - len(qnas)
     return question_count
 
 
@@ -115,7 +115,7 @@ def generate_answer(api_key, solution, question):
 def handle_twenty_questions(api_key, solution, qnas, query):
     # 게임 첫 시작일 경우, 모델이 정답 생성
     if solution == "" and qnas == [] and query == "":
-        question_count = 19
+        question_count = 20
         is_correct = False
         solution = generate_solution(api_key)
         answer = f"""스무번 안에 제가 생각한 {len(solution)}글자 단어를 맞춰보세요. 저는 예/아니오 로만 답변할 수 있어요. 만약 설명이 더 필요한 부분에 있다면 부연설명을 할 수도 있어요. \n 이제부터 스무고개를 시작할게요. 질문을 던져주세요!"""
