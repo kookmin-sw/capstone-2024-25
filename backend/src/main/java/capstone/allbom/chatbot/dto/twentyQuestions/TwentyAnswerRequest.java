@@ -9,14 +9,14 @@ import java.util.List;
 
 public record TwentyAnswerRequest(
         Boolean isGame,
-        String question,
         String solution,
-        List<QnaPair> qnas
+        List<QnaPair> qnas,
+        String question
 ) {
     public static TwentyAnswerRequest from(QuestionRequest questionRequest, TwentyQuestions twentyQuestions, List<QnaPair> qnas) {
         return new TwentyAnswerRequest(
-                questionRequest.isGame(), questionRequest.question(),
-                twentyQuestions.getSolution(), qnas
+                questionRequest.isGame(), twentyQuestions.getSolution(),
+                qnas, questionRequest.question()
         );
     }
 }
