@@ -31,5 +31,12 @@ public class TwentyQuestionsController {
         return ResponseEntity.ok(twentyQnaResponse);
     }
 
-
+    @PostMapping
+    public ResponseEntity<TwentyAnswerResponse> requestQuestion(
+            @Auth final Member member,
+            @RequestBody final QuestionRequest questionRequest
+    ) {
+        TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsService.requestAnswer(member, questionRequest);
+        return ResponseEntity.ok(twentyAnswerResponse);
+    }
 }
