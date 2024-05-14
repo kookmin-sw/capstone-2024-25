@@ -96,6 +96,7 @@ public class TwentyQuestionsService {
         TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsRequester.requestAI(twentyAnswerRequest);
 
         if (twentyAnswerResponse.questionCount() == 0 || twentyAnswerResponse.isCorrect()) {
+            twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
             twentyQuestions.setIsComplete(true);
         } else if (twentyAnswerResponse.questionCount() == 20){
             twentyQuestions.setSolution(twentyAnswerResponse.solution());
