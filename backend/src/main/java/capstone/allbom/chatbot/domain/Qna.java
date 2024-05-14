@@ -45,6 +45,7 @@ public class Qna {
     // answer
     private AnswerType type;
 
+    @Column(length = 5096)
     private String answer;
 
     public static Qna from(final Member member, final QuestionRequest questionRequest, final AnswerResponse answerResponse) {
