@@ -3,6 +3,8 @@ package capstone.allbom.chatbot.domain;
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.chatbot.dto.AnswerResponse;
 import capstone.allbom.chatbot.dto.QuestionRequest;
+import capstone.allbom.chatbot.dto.twentyQuestions.TwentyAnswerResponse;
+import capstone.allbom.chatbot.service.TwentyQuestionsService;
 import capstone.allbom.facility.domain.FacilityType;
 import capstone.allbom.member.domain.LoginType;
 import capstone.allbom.member.domain.Member;
@@ -36,7 +38,6 @@ public class Qna {
     // question
     private Boolean isGame;
 
-
     private String question;
 
     private Boolean isChatbotFirst;
@@ -44,14 +45,29 @@ public class Qna {
     // answer
     private AnswerType type;
 
+    @Column(length = 5096)
     private String answer;
 
-    public static Qna from(final QuestionRequest questionRequest, final AnswerResponse answerResponse) {
+    public static Qna from(final Member member, final QuestionRequest questionRequest, final AnswerResponse answerResponse) {
         return Qna.builder()
+                .member(member)
                 .isGame(questionRequest.isGame())
                 .question(questionRequest.question())
                 .type(AnswerType.valueOf(answerResponse.type().toUpperCase()))
                 .answer(answerResponse.answer())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static Qna from(final Member member, final QuestionRequest questionRequest,
+                           final TwentyAnswerResponse twentyAnswerResponse, TwentyQuestions twentyQuestions) {
+        return Qna.builder()
+                .member(member)
+                .isGame(questionRequest.isGame())
+                .question(questionRequest.question())
+                .type(AnswerType.GENERAL)
+                .twentyQuestions(twentyQuestions)
+                .answer(twentyAnswerResponse.answer())
                 .createdAt(LocalDateTime.now())
                 .build();
     }

@@ -7,18 +7,17 @@ import java.util.List;
 
 // 응답 조회하기 위해 호출 - 2 (서버 -> AI)
 public record AnswerRequest(
-        Boolean isGame,
-        String question,
-        String gender,
+        List<QnaAndTypeResponse> qnas,
         String address,
-        List<QnaAndTypeResponse> qnas
+        String gender,
+        Boolean isGame,
+        String question
 ) {
     public static AnswerRequest from(Member member, QuestionRequest questionRequest, List<QnaAndTypeResponse> qnas) {
         return new AnswerRequest(
-                questionRequest.isGame(), questionRequest.question(),
-                member.getGender().toString(), member.getAddress(),
-//                qnaResponsesFrom(qnas);
-                qnas
+                qnas,
+                member.getAddress(), member.getGender().toString(),
+                questionRequest.isGame(), questionRequest.question()
         );
     }
 

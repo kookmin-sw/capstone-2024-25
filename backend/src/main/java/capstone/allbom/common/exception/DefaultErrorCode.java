@@ -24,6 +24,7 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_GAME_SUBJECT_TYPE(404, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(404, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_MEMBER_ADDRESS_PROVINCE(500, "요청한 주소를 시도로 변환하는 과정에서 문제가 발생했습니다."),
+    AI_SERVER_ERROR(500, "AI 서버로부터 답변을 받아오지 못했습니다."),
     COMPLETE_SUBJECT_ALL_PROBLEM(400, "해당 교과목의 모든 문제를 완료했습니다."),
     COMPLETE_ROUTINE_EXERCISE(400, "오늘의 운동을 완료했습니다."),
     COMPLETE_ROUTINE_GROWTH(400, "오늘의 성장을 완료했습니다."),
