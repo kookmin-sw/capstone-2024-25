@@ -93,7 +93,7 @@ class QnaServiceTest {
             qna6.setMember(member);
 
             // when
-            List<QnaAndTypeResponse> qnaPairs = qnaService.getTopFiveQnas(member);
+            List<QnaAndTypeResponse> qnaPairs = qnaService.getTopThreeQnas(member);
 
             // then
             assertEquals(5, qnaPairs.size());
