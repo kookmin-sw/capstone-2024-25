@@ -2,6 +2,8 @@ package capstone.allbom.chatbot.infrastructure.api;
 
 import capstone.allbom.chatbot.dto.AnswerRequest;
 import capstone.allbom.chatbot.dto.AnswerResponse;
+import capstone.allbom.common.exception.DefaultErrorCode;
+import capstone.allbom.common.exception.InternalServerError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +54,7 @@ public class ChatbotRequester {
             }
         } catch (IOException e) {
             // 예외 처리
-            e.printStackTrace();
-            return null;
+            throw new InternalServerError(DefaultErrorCode.AI_SERVER_ERROR);
         }
     }
 }
