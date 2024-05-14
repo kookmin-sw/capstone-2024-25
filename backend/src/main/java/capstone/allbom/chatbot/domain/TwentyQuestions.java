@@ -36,6 +36,7 @@ public class TwentyQuestions {
         this.questionCount = 20;
         this.isComplete = false;
         this.member = member;
+        this.solution = "";
         this.createdAt = LocalDateTime.now();
     }
 }
