@@ -86,4 +86,26 @@ public class TwentyQuestionsService {
         return twentyQuestionsRepository.save(new TwentyQuestions(member));
     }
 
+    @Transactional
+    public TwentyAnswerResponse requestAnswer(final Member member, QuestionRequest questionRequest) {
+        TwentyAnswerRequest twentyAnswerRequest = convertGameRequestTypeForAI(member, questionRequest);
+
+                TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
+                .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_TWENTY_QUESTIONS));
+
+        TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsRequester.requestAI(twentyAnswerRequest);
+
+        if (twentyAnswerResponse.questionCount() == 0 || twentyAnswerResponse.isCorrect()) {
+            twentyQuestions.setIsComplete(true);
+        } else if (twentyAnswerResponse.questionCount() == 20){
+            twentyQuestions.setSolution(twentyAnswerResponse.solution());
+        }
+        else {
+            twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
+        }
+
+        final Qna qna = Qna.from(member, questionRequest, twentyAnswerResponse, twentyQuestions);
+        qnaRepository.save(qna);
+        return twentyAnswerResponse;
+    }
 }
