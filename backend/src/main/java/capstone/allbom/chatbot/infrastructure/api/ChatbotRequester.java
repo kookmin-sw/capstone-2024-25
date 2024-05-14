@@ -53,7 +53,6 @@ public class ChatbotRequester {
                 return answerResponse;
             }
         } catch (IOException e) {
-            // 예외 처리
             throw new InternalServerError(DefaultErrorCode.AI_SERVER_ERROR);
         }
     }

@@ -16,8 +16,8 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     List<Qna> findByTwentyQuestionsId(Long twentyQuestionsId);
 
-    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId AND q.twentyQuestions.id = :twentyQuestionsId")
-    List<Qna> findByTwentyQuestionsAndMember(Long memberId, Long twentyQuestionsId); // 서버 거칠 때 정답이면 twentyQuestions 삭제하기
+    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId AND q.twentyQuestions.id = :twentyQuestionsId ORDER BY q.createdAt DESC")
+    List<Qna> findByTwentyQuestionsAndMember(Long memberId, Long twentyQuestionsId);
 
     List<Qna> findAll();
 
