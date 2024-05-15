@@ -86,7 +86,14 @@ public class TwentyQuestionsService {
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_TWENTY_QUESTIONS));
 
         TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsRequester.requestAI(twentyAnswerRequest);
+        updateTwentyQuestions(twentyQuestions, twentyAnswerResponse);
 
+        final Qna qna = Qna.from(member, questionRequest, twentyAnswerResponse, twentyQuestions);
+        qnaRepository.save(qna);
+        return twentyAnswerResponse;
+    }
+    @Transactional
+    public void updateTwentyQuestions(TwentyQuestions twentyQuestions, TwentyAnswerResponse twentyAnswerResponse) {
         if (twentyAnswerResponse.questionCount() == 0 || twentyAnswerResponse.isCorrect()) {
             twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
             twentyQuestions.setIsComplete(true);
@@ -96,9 +103,5 @@ public class TwentyQuestionsService {
         else {
             twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
         }
-
-        final Qna qna = Qna.from(member, questionRequest, twentyAnswerResponse, twentyQuestions);
-        qnaRepository.save(qna);
-        return twentyAnswerResponse;
     }
 }
