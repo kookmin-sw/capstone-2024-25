@@ -169,7 +169,7 @@ export default function Nav5() {
           <MapTypeControl position={'TOPRIGHT'} />
           <ZoomControl position={'RIGHT'} />
           <MapMarker position={centerState.center} />
-          {/* {!centerState.isLoading &&
+          {!centerState.isLoading &&
             mapSizeLevel < 4 &&
             mapTags.map(
               (tag, index) =>
@@ -203,7 +203,7 @@ export default function Nav5() {
                     />
                   </div>
                 ),
-            )} */}
+            )}
         </Map>
       </MapFrame>
       <CategoryFrame>
@@ -240,7 +240,7 @@ export default function Nav5() {
           height: '100px',
           zIndex: 3,
           position: 'absolute',
-          bottom: '50px',
+          bottom: '250px',
         }}
       >
         현재 위치로 이동
