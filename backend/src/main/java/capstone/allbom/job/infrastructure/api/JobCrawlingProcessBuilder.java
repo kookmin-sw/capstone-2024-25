@@ -27,13 +27,16 @@ public class JobCrawlingProcessBuilder {
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
         processBuilder.redirectErrorStream(true);
 
-        Process process = processBuilder.start();
-
-        if (process.waitFor() == 0) { // 파이썬 프로세스가 성공적으로 종료
-            log.info("process success exit");
+        try {
+            Process process = processBuilder.start();
+            if (process.waitFor() == 0) {
+                log.info("process success exit");
+                jobRequester.requestJob();
+            } else {
+                throw new BadRequestException(DefaultErrorCode.JOB_CRAWLING_EXECUTE_ERROR);
+            }
+        } catch (BadRequestException e) {
             jobRequester.requestJob();
-        } else {
-            throw new BadRequestException(DefaultErrorCode.JOB_CRAWLING_EXECUTE_ERROR);
         }
     }
 }
