@@ -33,7 +33,7 @@ public class JobCrawlingProcessBuilder {
             log.info("process success exit");
             jobRequester.requestJob();
         } else {
-            throw new BadRequestException(DefaultErrorCode.INVALID_SOLVED_PROBLEMS_SIZE);
+            throw new BadRequestException(DefaultErrorCode.JOB_CRAWLING_EXECUTE_ERROR);
         }
     }
 }
