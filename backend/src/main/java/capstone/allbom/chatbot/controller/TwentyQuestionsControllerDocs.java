@@ -31,7 +31,19 @@ public interface TwentyQuestionsControllerDocs {
             final Member member
     );
 
-
+    @Operation(summary = "스무고개 질문 전송 및 답변 조회하기", description = "스무고개 질문에 대한 답변을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "스무고개 질문 전송 및 답변 조회 성공"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "AI 서버로부터 답변을 받아오지 못한 경우",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
+            )
+    })
+    ResponseEntity<TwentyAnswerResponse> requestQuestion(
+            final Member member,
+            @RequestBody final QuestionRequest questionRequest
+    );
 
 
 }

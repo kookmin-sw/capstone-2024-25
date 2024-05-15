@@ -90,7 +90,7 @@ public class TwentyQuestionsService {
     public TwentyAnswerResponse requestAnswer(final Member member, QuestionRequest questionRequest) {
         TwentyAnswerRequest twentyAnswerRequest = convertGameRequestTypeForAI(member, questionRequest);
 
-                TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
+        TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_TWENTY_QUESTIONS));
 
         TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsRequester.requestAI(twentyAnswerRequest);
