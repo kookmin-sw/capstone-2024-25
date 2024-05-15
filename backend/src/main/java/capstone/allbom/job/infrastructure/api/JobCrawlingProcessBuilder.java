@@ -14,14 +14,14 @@ import java.io.IOException;
 @Slf4j
 public class JobCrawlingProcessBuilder {
 
-//    private final String PYTHON_FILE_URL = "../data/work/main.py";
-    private final String PYTHON_FILE_URL = "../data/work/test/test.py";
+    private final String PYTHON_FILE_URL = "../data/work/main.py";
+//    private final String PYTHON_FILE_URL = "../data/work/test/test.py";
     private final JobRequester jobRequester;
 
     @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
 //    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
-    @Scheduled(cron = "0 23 0 * * ?")
+    @Scheduled(cron = "0 33 6 * * ?")
     public void processPythonFile() throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
@@ -33,7 +33,7 @@ public class JobCrawlingProcessBuilder {
             log.info("process success exit");
             jobRequester.requestJob();
         } else {
-            throw new BadRequestException(DefaultErrorCode.INVALID_SOLVED_PROBLEMS_SIZE);
+            throw new BadRequestException(DefaultErrorCode.JOB_CRAWLING_EXECUTE_ERROR);
         }
     }
 }

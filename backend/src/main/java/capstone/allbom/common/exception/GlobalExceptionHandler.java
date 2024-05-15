@@ -119,6 +119,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleInternalServerException(final InternalServerError e) {
+        log.warn("[" + e.getClass() + "] : " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionResponse.from(e));
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleUnauthorizedException(final UnauthorizedException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

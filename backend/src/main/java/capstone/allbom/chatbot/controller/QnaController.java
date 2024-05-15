@@ -36,7 +36,6 @@ public class QnaController {
     }
 
     @PostMapping
-//    public ResponseEntity<AnswerResponse> requestQuestion(
     public ResponseEntity<AnswerResponse> requestQuestion(
             @Auth final Member member,
             @RequestBody final QuestionRequest questionRequest
