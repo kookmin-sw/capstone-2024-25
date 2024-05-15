@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import {
+  Map,
+  MapMarker,
+  MapTypeControl,
+  ZoomControl,
+} from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
 import { useAccessToken } from '../components/cookies';
@@ -38,13 +43,25 @@ export default function Nav5() {
   const [mapTags, setMapTags] = useState([]);
   const [markerInfo, setMarkerInfo] = useState();
   const accessToken = useAccessToken();
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
 
   // 지도 초기화
   useEffect(() => {
+    SetCurrentPosition();
+  }, []);
+
+  function SetCurrentPosition() {
+    console.log('현재 위치로 이동');
     if (navigator.geolocation) {
+      console.log('geolocation을 사용할수 있어요..');
       // GeoLocation을 이용해서 접속 위치를 받아옴
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log(
+            '현재 위치',
+            position.coords.latitude,
+            position.coords.longitude,
+          );
           setCenterState((prev) => ({
             ...prev,
             center: {
@@ -63,6 +80,7 @@ export default function Nav5() {
         },
       );
     } else {
+      console.log('geolocation을 사용할수 없어요..');
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정
       setCenterState((prev) => ({
         ...prev,
@@ -70,7 +88,7 @@ export default function Nav5() {
         isLoading: false,
       }));
     }
-  }, []);
+  }
 
   async function fetchMarkers() {
     if (currentBounds) {
@@ -139,8 +157,19 @@ export default function Nav5() {
               ne: bounds.getNorthEast().toString(),
             });
           }}
+          onClick={(_, mouseEvent) => {
+            const latlng = mouseEvent.latLng;
+            setPosition({
+              lat: latlng.getLat(),
+              lng: latlng.getLng(),
+            });
+          }}
         >
-          {!centerState.isLoading &&
+          <MapMarker position={position ?? centerState.center} />
+          <MapTypeControl position={'TOPRIGHT'} />
+          <ZoomControl position={'RIGHT'} />
+          <MapMarker position={centerState.center} />
+          {/* {!centerState.isLoading &&
             mapSizeLevel < 4 &&
             mapTags.map(
               (tag, index) =>
@@ -174,7 +203,7 @@ export default function Nav5() {
                     />
                   </div>
                 ),
-            )}
+            )} */}
         </Map>
       </MapFrame>
       <CategoryFrame>
@@ -204,6 +233,18 @@ export default function Nav5() {
           ))}
         </CategoryButtonDiv>
       </CategoryFrame>
+      <button
+        onClick={SetCurrentPosition}
+        style={{
+          width: '100%',
+          height: '100px',
+          zIndex: 3,
+          position: 'absolute',
+          bottom: '50px',
+        }}
+      >
+        현재 위치로 이동
+      </button>
       {markerInfo && (
         <MarkerInfo>
           <MarkerInfoLeft>
