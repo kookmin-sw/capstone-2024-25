@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,25 +47,28 @@ public class TwentyQuestionsService {
 
         List<Qna> qnas = qnaRepository.findAllTwentyQuestionsOrderByCreatedAtDesc(savedMember.getId());
 
+        Optional<TwentyQuestions> optionalTwentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId());
+
+        String solution = "";
+        int questionCount = 20;
+
+        if (optionalTwentyQuestions.isPresent()) {
+            TwentyQuestions twentyQuestions = optionalTwentyQuestions.get();
+            solution = twentyQuestions.getSolution();
+            questionCount = twentyQuestions.getQuestionCount();
+        }
+
         List<QnaPair> qnaPairs = qnas.stream()
                 .map(QnaPair::from)
                 .toList();
 
-        return TwentyQnaResponse.from(member, qnaPairs);
+        return TwentyQnaResponse.from(member, qnaPairs, solution, questionCount);
     }
 
     @Transactional
     public TwentyAnswerRequest convertGameRequestTypeForAI(final Member member, QuestionRequest questionRequest) { // -> AI
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
-
-//        List<Qna> qnas = qnaRepository.findAllTwentyQuestionsOrderByCreatedAtDesc(savedMember.getId());
-//
-//        if (qnas.size() == 0) {
-//            TwentyQuestions twentyQuestions = createTwentyQuestions(member);
-//        } else {
-//            twentyQuestionsRepository.findByMemberId(member.getId());
-//        }
 
         TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
                 .orElseGet(() -> createTwentyQuestions(member, questionRequest));
@@ -94,7 +98,14 @@ public class TwentyQuestionsService {
                 .orElseThrow(() -> new NotFoundException(DefaultErrorCode.NOT_FOUND_TWENTY_QUESTIONS));
 
         TwentyAnswerResponse twentyAnswerResponse = twentyQuestionsRequester.requestAI(twentyAnswerRequest);
+        updateTwentyQuestions(twentyQuestions, twentyAnswerResponse);
 
+        final Qna qna = Qna.from(member, questionRequest, twentyAnswerResponse, twentyQuestions);
+        qnaRepository.save(qna);
+        return twentyAnswerResponse;
+    }
+    @Transactional
+    public void updateTwentyQuestions(TwentyQuestions twentyQuestions, TwentyAnswerResponse twentyAnswerResponse) {
         if (twentyAnswerResponse.questionCount() == 0 || twentyAnswerResponse.isCorrect()) {
             twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
             twentyQuestions.setIsComplete(true);
@@ -104,9 +115,5 @@ public class TwentyQuestionsService {
         else {
             twentyQuestions.setQuestionCount(twentyAnswerResponse.questionCount());
         }
-
-        final Qna qna = Qna.from(member, questionRequest, twentyAnswerResponse, twentyQuestions);
-        qnaRepository.save(qna);
-        return twentyAnswerResponse;
     }
 }
