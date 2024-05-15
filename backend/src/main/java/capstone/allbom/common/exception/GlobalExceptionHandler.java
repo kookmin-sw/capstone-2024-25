@@ -118,6 +118,8 @@ public class GlobalExceptionHandler {
                 .body(ExceptionResponse.from(e));
     }
 
+
+
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleUnauthorizedException(final UnauthorizedException e) {
         log.warn("[" + e.getClass() + "] : " + e.getMessage());
