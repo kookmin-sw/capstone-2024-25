@@ -25,6 +25,8 @@ def calculate_dday(dday_element):
     current_date = datetime.now()
     if dday_element == '채용시까지':
         return '9999-12-31'
+    elif dday_element == '오늘접수마감':
+        return current_date.strftime('%Y-%m-%d')
     else:
         days_to_add = int(dday_element.replace('D-', '').replace('D', ''))  # 'D-' 또는 'D'를 제거
         deadline_date = current_date + timedelta(days=days_to_add)
