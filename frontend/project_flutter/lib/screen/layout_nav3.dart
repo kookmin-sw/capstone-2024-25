@@ -27,18 +27,21 @@ class _LayoutNav3State extends State<LayoutNav3> {
             Expanded(
               child: InAppWebView(
                 key: webViewKey,
-                initialUrlRequest:
-                    URLRequest(url: WebUri("http://192.168.45.175:3000")),
+                initialUrlRequest: URLRequest(
+                    url: WebUri("https://allbome-for-vercel.vercel.app/game")),
                 onPermissionRequest: (controller, request) async {
                   return PermissionResponse(
                       resources: request.resources,
                       action: PermissionResponseAction.GRANT);
                 },
                 initialSettings: InAppWebViewSettings(
-                    javaScriptCanOpenWindowsAutomatically: true,
-                    useShouldOverrideUrlLoading: true,
-                    useOnLoadResource: true,
-                    allowsBackForwardNavigationGestures: true),
+                  javaScriptCanOpenWindowsAutomatically: true,
+                  useShouldOverrideUrlLoading: true,
+                  useOnLoadResource: true,
+                  allowsBackForwardNavigationGestures: true,
+                  javaScriptEnabled: true,
+                  domStorageEnabled: true,
+                ),
                 onWebViewCreated: (controller) {
                   webViewController = controller;
                 },
