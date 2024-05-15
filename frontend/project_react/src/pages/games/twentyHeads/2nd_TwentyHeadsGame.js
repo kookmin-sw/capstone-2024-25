@@ -55,7 +55,10 @@ export default function TwentyHeadsGame() {
         </h1>
         {gameAnswer &&
           Array.from({ length: gameAnswer.length }).map((_, index) => (
-            <div
+            <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: index * 0.1 }}
               key={index}
               style={{
                 width: '44px',
@@ -63,12 +66,15 @@ export default function TwentyHeadsGame() {
                 backgroundColor: '#cccccc',
                 borderRadius: '8px',
               }}
-            ></div>
+            ></motion.div>
           ))}
       </AnswerDiv>
-      <p
+      <motion.p
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
         style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
-      >{`남은 질문 횟수: ${remainingQuestions}회`}</p>
+      >{`남은 질문 횟수: ${remainingQuestions}회`}</motion.p>
       <ChatBotDiv></ChatBotDiv>
       <div style={{ width: '100%' }}>
         <BottomButton
@@ -101,10 +107,10 @@ const AnswerDiv = styled.div`
 `;
 
 const ChatBotDiv = styled.div`
+  // 현식: 채팅창 부분 css! 구현을 어떻게 할지모르겠어서 일단 heigth를 100%으로 해뒀음
   width: 100%;
   height: 100%;
   border-radius: 16px;
   box-shadow: #aaaaaa 0px 0px 10px;
   --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
-  // 현식: 채팅창 부분! 구현을 어떻게 할지모르겠어서 일단 heigth를 100%으로 해뒀음
 `;
