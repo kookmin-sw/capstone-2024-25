@@ -36,7 +36,7 @@ export default function Nav1() {
           </div>
         </GameDiv>
         <GameDiv>
-          <GameButton onClick={() => navigate('crossWordIntro')}>
+          <GameButton onClick={() => navigate('twentyHeadsIntro')}>
             스무고개
           </GameButton>
           <div
@@ -55,7 +55,7 @@ export default function Nav1() {
           </div>
         </GameDiv>
         <GameDiv>
-          <GameButton onClick={() => navigate('twentyHeadsIntro')}>
+          <GameButton onClick={() => navigate('crosswordIntro')}>
             스무고개
           </GameButton>
           <div
@@ -86,7 +86,7 @@ const Frame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 20px;
 `;
 
 const GameBox = styled.div`

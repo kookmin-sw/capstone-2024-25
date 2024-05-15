@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import { useAccessToken } from '../../../components/cookies';
 import { CircularProgressbar } from 'react-circular-progressbar';
-import { progress } from 'framer-motion';
 
 const sentenceCategories = [
   ['문학', 'literature'],
@@ -51,7 +50,7 @@ export default function WordOrderSelection() {
           </h2>
           <img
             src="/images/bulb.svg"
-            style={{ width: '32px', height: '32px' }}
+            style={{ width: '28px', height: '28px' }}
           />
         </div>
         <h1 style={{ fontSize: '36px', fontWeight: '600', margin: '0px' }}>
@@ -108,9 +107,9 @@ const Frame = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   gap: 20px;
 `;
 

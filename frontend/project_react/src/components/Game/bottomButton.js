@@ -1,7 +1,11 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
+
 
 export default function BottomButton({ onClick, children }) {
-  return <Button onClick={onClick}>{children}</Button>;
+  return <Button onClick={onClick}
+
+  >{children}</Button>;
 }
 
 const Button = styled.div`

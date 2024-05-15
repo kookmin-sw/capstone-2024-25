@@ -165,9 +165,9 @@ const Frame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const CardsFrame = styled.div`

@@ -21,6 +21,8 @@ import MyPage from './pages/MyPage';
 import LoadingPage from './pages/LoadingPage';
 import './fonts/Font.css';
 import { createGlobalStyle } from 'styled-components';
+import TwentyHeadsGame from './pages/games/twentyHeads/2nd_TwentyHeadsGame';
+import CrossWordGame from './pages/games/crossWord/2nd_CrossWordGame';
 
 function App() {
   return (
@@ -57,7 +59,15 @@ function App() {
             element={<WordOrderGame />}
           />
           <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
+          <Route
+            path="/game/crossWordGame"
+            element={<CrossWordGame />}
+          />
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
+          <Route
+            path="/game/wordOrderGame"
+            element={<TwentyHeadsGame/>}
+          />
 
           {/* To do */}
           <Route path="/toDo" element={<Nav4 />} />

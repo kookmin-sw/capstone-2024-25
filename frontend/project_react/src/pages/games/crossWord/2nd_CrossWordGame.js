@@ -5,13 +5,13 @@ import TitleHeader from '../../../components/Header/TitleHeader';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion } from 'framer-motion';
 
-export default function CrossWordIntro() {
+export default function CrossWordGame() {
   const navigate = useNavigate();
 
   return (
     <Frame>
-      <TitleHeader showBackButton={true}></TitleHeader>
-      <CategoryDiv>
+      <TitleHeader showBackButton={true} title={'십자말풀이'}></TitleHeader>
+      {/* <CategoryDiv>
         <motion.div
           style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
           initial={{ opacity: 0, y: 20 }}
@@ -30,19 +30,21 @@ export default function CrossWordIntro() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          십자말풀이
+          스무고개
         </motion.h1>
       </CategoryDiv>
       <motion.p
         style={{ fontSize: '20px', wordBreak: 'break-word' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 1 }}
+        transition={{ delay: 0.2, duration: 0.7 }}
       >
-        뇌 기능을 건강하게 유지하기 위해서는 인지적으로 자극적인 활동이 꼭
-        필요합니다. 십자말풀이와 같이 퍼즐을 푸는 두뇌 게임은 뇌를 자극하여 작업
-        기억력을 향상시킬 수 있습니다.
-      </motion.p>
+        스무고개 게임은 질문을 통해 답을 추론하는 과정에서 뇌를 적극적으로
+        사용하게 합니다. 이를 통해 기억력, 문제 해결 능력, 논리적 사고 등을
+        자극하여 인지 기능을 강화할 수 있습니다. 또한, 다양한 질문을 만드는
+        과정에서 창의력이 길러져, 새로운 방식으로 생각하고 문제를 해결하는 데
+        도움이 됩니다.
+      </motion.p> */}
       <motion.div
         style={{ width: '100%' }}
         initial={{ opacity: 0, y: 40 }}
@@ -50,7 +52,9 @@ export default function CrossWordIntro() {
         transition={{ delay: 0.5 }}
       >
         <BottomButton
-          onClick={() => navigate(`/game/crossWordGame/`, { replace: true })}
+          onClick={() =>
+            navigate(`/game/wordOrderGame/`, { replace: true })
+          }
         >
           시작하기
         </BottomButton>
