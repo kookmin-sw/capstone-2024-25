@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/chatbot/game")
 @Slf4j
-public class TwentyQuestionsController {
+public class TwentyQuestionsController implements TwentyQuestionsControllerDocs{
 
     private final TwentyQuestionsService twentyQuestionsService;
 
