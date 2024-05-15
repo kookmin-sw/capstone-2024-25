@@ -16,13 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chatbot")
 @Slf4j
-public class QnaController {
+public class QnaController implements QnaControllerDocs{
 
     private final QnaService qnaService;
 

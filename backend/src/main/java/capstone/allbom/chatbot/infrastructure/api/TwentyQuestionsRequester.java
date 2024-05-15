@@ -38,7 +38,7 @@ public class TwentyQuestionsRequester {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonRequest = objectMapper.writeValueAsString(twentyAnswerRequest);
 
-            System.out.println("jsonRequest = " + jsonRequest);
+            log.info("jsonRequest={}", jsonRequest);
 
             StringEntity stringEntity = new StringEntity(jsonRequest, ContentType.APPLICATION_JSON);
             httpPost.setEntity(stringEntity);
@@ -48,11 +48,11 @@ public class TwentyQuestionsRequester {
                 HttpEntity entity = response.getEntity();
 
                 String responseBody = entity != null ? EntityUtils.toString(entity) : "";
-                System.out.println("Response Body: " + responseBody);
+                log.info("response body={}", responseBody);
                 String answer = objectMapper.readTree(responseBody).get("response").toString();
 
                 TwentyAnswerResponse twentyAnswerResponse = TwentyAnswerResponse.fromJson(answer);
-                System.out.println("twentyAnswerResponse = " + twentyAnswerResponse);
+                log.info("twentyQuestions response={}", twentyAnswerResponse);
                 return twentyAnswerResponse;
             }
         } catch (IOException e) {
