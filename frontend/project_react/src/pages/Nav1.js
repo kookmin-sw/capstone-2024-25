@@ -36,7 +36,7 @@ export default function Nav1() {
           </div>
         </GameDiv>
         <GameDiv>
-          <GameButton onClick={() => navigate('crossWordIntro')}>
+          <GameButton onClick={() => navigate('twentyHeadsIntro')}>
             스무고개
           </GameButton>
           <div
@@ -55,7 +55,7 @@ export default function Nav1() {
           </div>
         </GameDiv>
         <GameDiv>
-          <GameButton onClick={() => navigate('twentyHeadsIntro')}>
+          <GameButton onClick={() => navigate('crosswordIntro')}>
             스무고개
           </GameButton>
           <div

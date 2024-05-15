@@ -51,7 +51,7 @@ export default function WordOrderSelection() {
           </h2>
           <img
             src="/images/bulb.svg"
-            style={{ width: '32px', height: '32px' }}
+            style={{ width: '28px', height: '28px' }}
           />
         </div>
         <h1 style={{ fontSize: '36px', fontWeight: '600', margin: '0px' }}>
