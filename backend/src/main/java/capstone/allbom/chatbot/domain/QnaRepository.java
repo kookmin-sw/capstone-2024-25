@@ -21,7 +21,7 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
     List<Qna> findAll();
 
-    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId ORDER BY q.createdAt DESC")
+    @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId AND q.isGame = false ORDER BY q.createdAt DESC")
     List<Qna> findAllOrderByCreatedAtDesc(Long memberId);
 
     @Query("SELECT q FROM Qna q WHERE q.member.id = :memberId AND q.isGame = false ORDER BY q.createdAt DESC")
