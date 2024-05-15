@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,11 +47,22 @@ public class TwentyQuestionsService {
 
         List<Qna> qnas = qnaRepository.findAllTwentyQuestionsOrderByCreatedAtDesc(savedMember.getId());
 
+        Optional<TwentyQuestions> optionalTwentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId());
+
+        String solution = "";
+        int questionCount = 20;
+
+        if (optionalTwentyQuestions.isPresent()) {
+            TwentyQuestions twentyQuestions = optionalTwentyQuestions.get();
+            solution = twentyQuestions.getSolution();
+            questionCount = twentyQuestions.getQuestionCount();
+        }
+
         List<QnaPair> qnaPairs = qnas.stream()
                 .map(QnaPair::from)
                 .toList();
 
-        return TwentyQnaResponse.from(member, qnaPairs);
+        return TwentyQnaResponse.from(member, qnaPairs, solution, questionCount);
     }
 
     @Transactional
