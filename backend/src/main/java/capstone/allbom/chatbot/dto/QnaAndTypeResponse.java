@@ -1,7 +1,9 @@
 package capstone.allbom.chatbot.dto;
 
+import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.json.simple.JSONObject;
 
 // 질문-응답 쌍 전송 시 호출 (서버 -> AI)
 
@@ -17,8 +19,17 @@ public record QnaAndTypeResponse(
         String type
 ) {
     public static QnaAndTypeResponse from(Qna qna) {
+        String answer = qna.getType() == AnswerType.NEWS ? "" : qna.getAnswer();
+//        String answer;
+//        if (qna.getType() == AnswerType.NEWS) {
+//            JSONObject json = new JSONObject(qna.getAnswer());
+//            answer = json.getString("header");
+//        } else {
+//            answer = qna.getAnswer();
+//        }
+
         return new QnaAndTypeResponse(
-                qna.getQuestion(), qna.getAnswer(), qna.getType().toString()
+                qna.getQuestion(), answer, qna.getType().toString()
         );
     }
 }
