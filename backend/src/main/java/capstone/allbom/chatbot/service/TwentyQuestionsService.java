@@ -58,14 +58,6 @@ public class TwentyQuestionsService {
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
-//        List<Qna> qnas = qnaRepository.findAllTwentyQuestionsOrderByCreatedAtDesc(savedMember.getId());
-//
-//        if (qnas.size() == 0) {
-//            TwentyQuestions twentyQuestions = createTwentyQuestions(member);
-//        } else {
-//            twentyQuestionsRepository.findByMemberId(member.getId());
-//        }
-
         TwentyQuestions twentyQuestions = twentyQuestionsRepository.findByMemberId(member.getId())
                 .orElseGet(() -> createTwentyQuestions(member, questionRequest));
 
