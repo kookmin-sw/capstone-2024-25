@@ -37,7 +37,7 @@ export default function TwentyHeadsIntro() {
         style={{ fontSize: '20px', wordBreak: 'break-word' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.7 }}
+        transition={{ delay: 0.2, duration: 1 }}
       >
         스무고개 게임은 질문을 통해 답을 추론하는 과정에서 뇌를 적극적으로
         사용하게 합니다. 이를 통해 기억력, 문제 해결 능력, 논리적 사고 등을
@@ -75,7 +75,7 @@ const Frame = styled.div`
   gap: 20px;
 `;
 
-const CategoryDiv = styled.div`
+const CategoryDiv = styled(motion.div)`
   width: 100%;
   display: flex;
   flex-direction: column;

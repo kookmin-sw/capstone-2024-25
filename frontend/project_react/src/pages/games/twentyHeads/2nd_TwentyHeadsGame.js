@@ -1,64 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion } from 'framer-motion';
+import { twentyHeadsApis } from '../../../api/apis/gameApis';
+import { useAccessToken } from '../../../components/cookies';
 
 export default function TwentyHeadsGame() {
   const navigate = useNavigate();
+  const accessToken = useAccessToken();
+  const [gameAnswer, setGameAnswer] = useState('바나나'); // 바나나는 예시
+  const [remainingQuestions, setRemainingQuestions] = useState(20); // 20은 예시
+
+  useEffect(() => {
+    // 돔이 로드되면 getPassageData() 호출
+    // 게임 시작 시, 문제 데이터를 가져오기 위함
+    getPassageData();
+  }, []);
+
+  async function getPassageData() {
+    try {
+      const response = await twentyHeadsApis.getTwentyHeadsData(accessToken);
+      console.log(response.data);
+      // 만약 빈 배열이라면 게임을 다시 시작해야 하므로 postUserAnswer('') 호출
+      if (response.data.qnaPairs.length === 0) {
+        postUserAnswer('');
+      } else {
+        // 게임이 진행 내역이 존재하므로, 채팅창에 대화 내역을 출력
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function postUserAnswer(userAnswer) {
+    try {
+      const response = await twentyHeadsApis.postUserAnswer(
+        accessToken,
+        userAnswer,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Frame>
       <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
-      {/* <CategoryDiv>
-        <motion.div
-          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h2 style={{ margin: '0', fontSize: '24px', fontWeight: '500' }}>
-            두뇌 향상 게임
-          </h2>
-          <img
-            src="/images/bulb.svg"
-            style={{ width: '28px', height: '28px' }}
-          />
-        </motion.div>
-        <motion.h1
-          style={{ margin: '0', fontSize: '44px', fontWeight: '600' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          스무고개
-        </motion.h1>
-      </CategoryDiv>
-      <motion.p
-        style={{ fontSize: '20px', wordBreak: 'break-word' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.7 }}
-      >
-        스무고개 게임은 질문을 통해 답을 추론하는 과정에서 뇌를 적극적으로
-        사용하게 합니다. 이를 통해 기억력, 문제 해결 능력, 논리적 사고 등을
-        자극하여 인지 기능을 강화할 수 있습니다. 또한, 다양한 질문을 만드는
-        과정에서 창의력이 길러져, 새로운 방식으로 생각하고 문제를 해결하는 데
-        도움이 됩니다.
-      </motion.p> */}
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
+      <AnswerDiv>
+        <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
+          정답:
+        </h1>
+        {gameAnswer &&
+          Array.from({ length: gameAnswer.length }).map((_, index) => (
+            <div
+              key={index}
+              style={{
+                width: '44px',
+                height: '44px',
+                backgroundColor: '#cccccc',
+                borderRadius: '8px',
+              }}
+            ></div>
+          ))}
+      </AnswerDiv>
+      <p
+        style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
+      >{`남은 질문 횟수: ${remainingQuestions}회`}</p>
+      <ChatBotDiv></ChatBotDiv>
+      <div style={{ width: '100%' }}>
         <BottomButton
-          onClick={() =>
-            navigate(`/game/wordOrderGame/`, { replace: true })
-          }
+          onClick={() => navigate(`/game/wordOrderGame/`, { replace: true })}
         >
           시작하기
         </BottomButton>
-      </motion.div>
+      </div>
     </Frame>
   );
 }
@@ -75,10 +93,18 @@ const Frame = styled.div`
   gap: 20px;
 `;
 
-const CategoryDiv = styled.div`
-  width: 100%;
+const AnswerDiv = styled.div`
   display: flex;
-  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+`;
+
+const ChatBotDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  box-shadow: #aaaaaa 0px 0px 10px;
+  --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
+  // 현식: 채팅창 부분! 구현을 어떻게 할지모르겠어서 일단 heigth를 100%으로 해뒀음
 `;

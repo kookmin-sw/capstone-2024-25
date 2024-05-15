@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import { useAccessToken } from '../../../components/cookies';
 import { CircularProgressbar } from 'react-circular-progressbar';
-import { progress } from 'framer-motion';
 
 const sentenceCategories = [
   ['문학', 'literature'],

@@ -37,7 +37,7 @@ export default function CrossWordIntro() {
         style={{ fontSize: '20px', wordBreak: 'break-word' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.7 }}
+        transition={{ delay: 0.2, duration: 1 }}
       >
         뇌 기능을 건강하게 유지하기 위해서는 인지적으로 자극적인 활동이 꼭
         필요합니다. 십자말풀이와 같이 퍼즐을 푸는 두뇌 게임은 뇌를 자극하여 작업

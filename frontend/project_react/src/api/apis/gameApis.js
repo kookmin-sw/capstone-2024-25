@@ -53,7 +53,25 @@ export const crossWordApis = {
 };
 
 export const twentyHeadsApis = {
-  getTwentyHeadsData: () => {},
-  postUserCorrect: () => {},
-  postUserSkip: () => {},
+  getTwentyHeadsData: (accessToken) => {
+    return instance.get('api/chatbot/game', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  postUserAnswer: (accessToken, userAnswer) => {
+    return instance.post(
+      'api/chatbot/game',
+      {
+        isGame: true,
+        question: userAnswer,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+  },
 };
