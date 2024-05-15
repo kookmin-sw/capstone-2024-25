@@ -156,7 +156,7 @@ const Container = styled.div`
 
 const MotionCard = styled(motion.div)`
   position: absolute;
-  width: calc(100% - 60px);
+  width: calc(100% - 40px);
   height: 100%;
   display: flex;
   flex-direction: column;
