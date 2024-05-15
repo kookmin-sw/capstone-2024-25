@@ -33,7 +33,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/swagger-ui/swagger-initializer.js",
             "/api-docs/swagger-config",
             "/swagger-ui",
-            "/api-docs"
+            "/api-docs",
+            "/health-check"
     );
 
     private static final List<String> ALLOWED_START_URIS = List.of(
