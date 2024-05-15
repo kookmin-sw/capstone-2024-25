@@ -28,18 +28,20 @@ class _LayoutNav5State extends State<LayoutNav5> {
               child: InAppWebView(
                 key: webViewKey,
                 initialUrlRequest: URLRequest(
-                    url: WebUri(
-                        "https://capstone-test-git-master-kwakheeguns-projects.vercel.app/chatBot")),
+                    url: WebUri("https://allbome-for-vercel.vercel.app/map")),
                 onPermissionRequest: (controller, request) async {
                   return PermissionResponse(
                       resources: request.resources,
                       action: PermissionResponseAction.GRANT);
                 },
                 initialSettings: InAppWebViewSettings(
-                    javaScriptCanOpenWindowsAutomatically: true,
-                    useShouldOverrideUrlLoading: true,
-                    useOnLoadResource: true,
-                    allowsBackForwardNavigationGestures: true),
+                  javaScriptCanOpenWindowsAutomatically: true,
+                  useShouldOverrideUrlLoading: true,
+                  useOnLoadResource: true,
+                  allowsBackForwardNavigationGestures: true,
+                  javaScriptEnabled: true,
+                  domStorageEnabled: true,
+                ),
                 onWebViewCreated: (controller) {
                   webViewController = controller;
                 },
