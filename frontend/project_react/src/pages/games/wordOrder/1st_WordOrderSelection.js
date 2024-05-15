@@ -108,9 +108,9 @@ const Frame = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   gap: 20px;
 `;
 

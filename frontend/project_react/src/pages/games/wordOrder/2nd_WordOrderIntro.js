@@ -43,7 +43,7 @@ const Frame = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 30px;
+  padding: 20px;
   gap: 20px;
 `;
 
