@@ -118,8 +118,6 @@ def handle_news_api_based(api_key, news_api_key, query):
 
     # answer JSON 데이터 생성
     answer = {'header': header, 'articles': articles}
-    # JSON 문자열로 변환
-    result = json.dumps(answer, ensure_ascii=False)
 
     # 출력 파서 정의
     output_parser = JsonOutputParser(pydantic_object=ApiBased)
@@ -128,7 +126,7 @@ def handle_news_api_based(api_key, news_api_key, query):
         # 출력 파싱
         output_data = {
             "type": "NEWS",
-            "answer": result
+            "answer": answer
         }
 
         # JSON 파서를 사용하여 데이터를 파싱
