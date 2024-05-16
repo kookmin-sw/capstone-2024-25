@@ -40,7 +40,10 @@ def sort_shorten_news(news_api_key, page, category_eng):
                             article_details[key] = article[key]
                     # 뉴스 description 100자 이후 삭제 및 '...' 추가
                     if article["description"]:
-                        article["description"] = article["description"][:101] + "..."
+                        description = article["description"][:101] + "..."
+
+                    article_details["description"] = description
+
                     top_articles.append(article_details)
                 else:
                     break
