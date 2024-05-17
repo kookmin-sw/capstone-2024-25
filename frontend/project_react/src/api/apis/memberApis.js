@@ -9,4 +9,11 @@ export const memberApis = {
         Authorization: `Bearer ${accessToken}`,
       },
     }),
+  updateImage: (data, accessToken) =>
+    instance.patch('/api/member/chatbot', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }),
 };
