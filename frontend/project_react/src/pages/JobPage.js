@@ -43,10 +43,17 @@ const EmploymentWrapper = styled.div`
 `;
 
 const PaginationBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
+  //border: 1px solid green;
   .pagination {
     display: flex;
     justify-content: center;
-    max-width: 100%;
+    //align-self: center;
+    max-width: 80%;
     box-sizing: border-box;
     //margin-top: 15px;
     //border: 1px solid red;
@@ -58,7 +65,7 @@ const PaginationBox = styled.div`
   }
   ul.pagination li {
     //width: 40px;
-    //max-width: 44px;
+    max-width: 44px;
     height: 40px;
     //border: 1px solid #e2e2e2;
     display: flex;
