@@ -154,7 +154,7 @@ const Chatbot = () => {
   const inputRef = useRef();
   const footerRef = useRef();
 
-  const [gugu, setGugu] = useState({
+  const [chattingList, setChattingList] = useState({
     chatProfileImageUrl: '',
     qnaResponses: [],
   });
@@ -168,10 +168,6 @@ const Chatbot = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState('');
   const setGender = useStore((state) => state.setGender);
-
-  useEffect(() => {
-    console.log('gugu : ', gugu);
-  }, [gugu]);
 
   const {
     transcript,
@@ -244,9 +240,6 @@ const Chatbot = () => {
     setSelectMode('select');
   };
 
-  const sliceName = (name) => {
-    return name.slice(name.length - 2, name.length);
-  };
   const [firstChat, setFirstChat] = useState({
     answer: `안녕하세요. [${userName}]님! 올봄 챗봇입니다. 무엇을 도와드릴까요?`,
   });
@@ -271,7 +264,7 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        setGugu(res.data);
+        setChattingList(res.data);
       })
       .catch((error) => {
         console.log(error.response);
@@ -286,7 +279,6 @@ const Chatbot = () => {
   const postChat = async (data) => {
     try {
       const response = await chatbotApis.postChat(data, accessToken);
-      // console.log('postChat response : ', response);
       return response;
     } catch (error) {
       throw error;
@@ -296,6 +288,10 @@ const Chatbot = () => {
   useEffect(() => {
     setChatList();
   }, []);
+  useEffect(() => {
+    scrollAfterSend();
+    console.log(chattingList.length);
+  }, [chattingList.length]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -364,10 +360,6 @@ const Chatbot = () => {
         setSelectedCategoryId(id);
         category.selected = true;
         setShowSubCategory(!showSubCategory);
-        // 추후 SubCategory가 없을 경우와 있을 경우를 구별해서 요청을 보내도록.
-        // if(category.values.length === 0) {
-        // setShowSubCategory(false);
-        // }
       } else {
         category.values.map((subCategory) => {
           // setShowSubCategory(true);
@@ -413,134 +405,6 @@ const Chatbot = () => {
     setCategoryList(newSubCategoryList);
     setShowSubCategory(false);
   };
-  function convertQuotes(inputString) {
-    // 문자열 내의 잘못된 이스케이프 시퀀스를 올바른 형태로 변환
-    return inputString.replace(/\\\\"/g, '"');
-  }
-
-  // const [gugu, setGugu] = useState({
-  //   chatProfileImageUrl: 'string',
-  //   qnaPairs: [
-  //     {
-  //       question: '질문1 - GENERAL | WEATHER',
-  //       answer: {
-  //         type: 'GENERAL',
-  //         answer:
-  //           '아, 할아버지께서 심심하시군요. 저와 함께 얘기하면서 시간을 보내보시는 건 어떠신가요? 혹시 요즘 관심 있으신 취미나 특별히 하시고 싶은 일이 있으신가요?',
-  //       },
-  //     },
-  //     {
-  //       question: '질문2 - NEWS',
-  //       answer: {
-  //         type: 'NEWS',
-  //         answer: {
-  //           header: '오늘 2024년 05월 09일 주요 뉴스를 알려드릴게요!',
-  //           articles: [
-  //             {
-  //               title:
-  //                 "[중국 경기 회복 조짐에 철광석 ETN '질주']",
-  //               category: 'business',
-  //               description:
-  //                 '선물 ETN 한달 수익률 44.6% "中정부 각종 부양책에 수요↑" 철광석 최대 소비국으로 알려진...',
-  //               link: 'https://www.etoday.co.kr/news/view/2358051',
-  //             },
-  //             {
-  //               title:
-  //                 '폭설 · 비도 지진 일으킨다..."기상현상-지진 연관성 첫 규명"',
-  //               category: 'world',
-  //               description:
-  //                 '미국 매사추세츠공대 윌리엄 프랭크 교수팀은 9일 과학 저널 사이언스 어드밴시스에서 지난 수...',
-  //               link: 'https://news.sbs.co.kr/news/endPage.do?news_id=N1007640404',
-  //             },
-  //             {
-  //               title: '[1보] 국제유가, 상승...WTI 0.78%↑',
-  //               category: 'business',
-  //               description:
-  //                 '국제유가는 8일(현지시간) 상승했다. 이날 뉴욕상업거래소(NYMEX)에서 6월물 미국 서부 텍ᄉ...',
-  //               link: 'https://www.etoday.co.kr/news/view/2358132',
-  //             },
-  //             {
-  //               title:
-  //                 "코트라, 산업부와 '브라질 방산·항공 사절단' 파견",
-  //               category: 'technology',
-  //               description:
-  //                 '[서울=뉴시스]이창훈 기자 = 코트라(KOTRA)가 산업통상자원부와 7일부터 사흘간 브라질 리우데ᄌ...',
-  //               link: 'https://www.newsis.com/view/NISX20240508_0002727358',
-  //             },
-  //             {
-  //               title:
-  //                 "'신태용 매직' 인니, 마지막 한 방 남았다...오늘밤 기니와 파리행 최종전",
-  //               category: 'sports',
-  //               description:
-  //                 '[서울=뉴시스] 김진엽 기자 = 신태용 감독이 이끄는 인도네시아 23세 이하(U-23) 축구대표팀이 ...',
-  //               link: 'https://www.newsis.com/view/NISX20240508_0002727976',
-  //             },
-  //             {
-  //               title:
-  //                 '경찰, \'한-독 과학치안 협력센터\' 개소..."초국경 범죄 대응·수사기법 공유"',
-  //               category: 'politics',
-  //               description:
-  //                 '[서울=뉴스핌] 박우진 기자 = 한국과 독일 양국 치안기관이 범죄 대응과 수사기법 공유를 ...',
-  //               link: 'http://www.newspim.com/news/view/20240508001091',
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     },
-  //     {
-  //       question:
-  //         '질문3 -  "PARK" | "SHOPPING"| "EDUCATION" | "CARE" | "BATH" | "RECUPERATION"',
-  //       answer: {
-  //         type:
-  //           'PARK' |
-  //           'SHOPPING' |
-  //           'EDUCATION' |
-  //           'CARE' |
-  //           'BATH' |
-  //           'RECUPERATION',
-  //         answer:
-  //           '등록하신 주소를 기준으로 문화생활(교육) 장소를 소개해 드릴게요!\n1. 시설명: 남양주시 평생학습센터\n주소: 경기도 남양주시 다산동 3159-7 남양주시청제2청사\n전화번호: 031-590-2582\n2. 시설명: 동부광성평생교육문화원\n주소: 경기도 남양주시 와부읍 덕소리 177-2 동부광성교회\n전화번호: 정보 없음\n3. 시설명: 경복대학교 평생교육대학\n주소: 경기도 남양주시 진접읍 금곡리 383 경복대학교 남양주캠퍼스 학생회관\n전화번호: 031-570-9700',
-  //       },
-  //     },
-  //     {
-  //       question: '질문1 - GENERAL | WEATHER',
-  //       answer: {
-  //         type: 'GENERAL',
-  //         answer: '',
-  //       },
-  //     },
-  //     {
-  //       question: '질문2 - NEWS',
-  //       answer: {
-  //         type: 'NEWS',
-  //         answer: {},
-  //       },
-  //     },
-  //     {
-  //       question:
-  //         '질문3 -  "PARK" | "SHOPPING"| "EDUCATION" | "CARE" | "BATH" | "RECUPERATION"',
-  //       answer: {
-  //         type:
-  //           'PARK' |
-  //           'SHOPPING' |
-  //           'EDUCATION' |
-  //           'CARE' |
-  //           'BATH' |
-  //           'RECUPERATION',
-  //         answer: '',
-  //       },
-  //     },
-  //   ],
-  // });
-
-  // useEffect(() => {
-  //   if (gugu) {
-  //     console.log(gugu.qnaPairs[1].question);
-  //     console.log(gugu.qnaPairs[1].answer);
-  //   }
-  // }, [gugu]);
-
-  const categoryValues = ['날씨', '뉴스', 'IT'];
 
   const scrollAfterSend = () => {
     const chatWrapper = document.getElementById('chat-wrapper');
@@ -563,9 +427,9 @@ const Chatbot = () => {
     };
 
     // 사용자가 입력한 채팅을 먼저 화면에 보여줌
-    setGugu((prevGugu) => ({
-      ...prevGugu,
-      qnaResponses: [...prevGugu.qnaResponses, showingChat],
+    setChattingList((prevChattingList) => ({
+      ...prevChattingList,
+      qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
 
     try {
@@ -573,10 +437,10 @@ const Chatbot = () => {
       const updatedAnswer = response.data; // 서버에서 받은 응답
 
       // 응답을 받아 기존 채팅의 답변을 업데이트
-      setGugu((prevGugu) => ({
-        ...prevGugu,
-        qnaResponses: prevGugu.qnaResponses.map((chat, index) =>
-          index === prevGugu.qnaResponses.length - 1
+      setChattingList((prevChattingList) => ({
+        ...prevChattingList,
+        qnaResponses: prevChattingList.qnaResponses.map((chat, index) =>
+          index === prevChattingList.qnaResponses.length - 1
             ? {
                 ...chat,
                 answer: updatedAnswer.answer,
@@ -589,10 +453,10 @@ const Chatbot = () => {
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
-      setGugu((prevGugu) => ({
-        ...prevGugu,
-        qnaResponses: prevGugu.qnaResponses.map((chat, index) =>
-          index === prevGugu.qnaResponses.length - 1
+      setChattingList((prevChattingList) => ({
+        ...prevChattingList,
+        qnaResponses: prevChattingList.qnaResponses.map((chat, index) =>
+          index === prevChattingList.qnaResponses.length - 1
             ? {
                 ...chat,
                 answer:
@@ -834,10 +698,13 @@ const Chatbot = () => {
         handleNext={() => setIsOpenSecond(false)}
       />
       <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
-        {gugu.qnaResponses.length !== 0 ? (
+        {chattingList.qnaResponses.length !== 0 ? (
           <>
-            {gugu.qnaResponses.map((chat) => (
-              <ChatPair qnaPairs={chat} chatImg={gugu.chatProfileImageUrl} />
+            {chattingList.qnaResponses.map((chat) => (
+              <ChatPair
+                qnaPairs={chat}
+                chatImg={chattingList.chatProfileImageUrl}
+              />
             ))}
           </>
         ) : (
