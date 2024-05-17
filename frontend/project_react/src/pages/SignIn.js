@@ -14,8 +14,8 @@ const SignInWrapper = styled.div`
   height: 100vh;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 60px 28px;
+  justify-content: space-around;
+  padding: 5% 28px;
   box-sizing: border-box;
 `;
 
