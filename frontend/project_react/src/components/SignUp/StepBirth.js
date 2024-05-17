@@ -27,6 +27,7 @@ const DateWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   font-size: 24px;
+  font-weight: 600;
 `;
 const DatePlaceholder = styled.span`
   color: var(--unselected-color);
