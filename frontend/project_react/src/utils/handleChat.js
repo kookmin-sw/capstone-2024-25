@@ -27,3 +27,11 @@ export const parseNewsData = (rawData) => {
     return null;
   }
 };
+
+export const reverseQnaResponses = (data) => {
+  const reversedResponses = [...data.qnaResponses].reverse(); // 배열 복사 후 역순 정렬
+  return {
+    ...data, // 원본 객체의 다른 프로퍼티를 유지
+    qnaResponses: reversedResponses, // 역순으로 정렬된 새 배열을 사용
+  };
+};

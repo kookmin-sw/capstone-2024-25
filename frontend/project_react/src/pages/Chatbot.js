@@ -26,9 +26,9 @@ import { hasUnreliableEmptyValue } from '@testing-library/user-event/dist/utils'
 import {
   cultureRequest,
   newsRequest,
-  others,
   serviceRequest,
   weatherRequest,
+  reverseQnaResponses,
 } from '../utils/handleChat';
 
 const ChatbotContainer = styled.div`
@@ -264,7 +264,8 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        setChattingList(res.data);
+        const reverseList = reverseQnaResponses(res.data);
+        setChattingList(reverseList);
       })
       .catch((error) => {
         console.log(error.response);
