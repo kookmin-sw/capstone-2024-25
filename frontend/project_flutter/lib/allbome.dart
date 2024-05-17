@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_flutter/screen/layout_login.dart';
 import 'package:project_flutter/screen/layout_nav1.dart';
 import 'package:project_flutter/screen/layout_nav2.dart';
 import 'package:project_flutter/screen/layout_nav3.dart';
@@ -34,6 +35,10 @@ class _AllBomeState extends State<AllBome> {
             selectedIndex: currentPageIndex,
             destinations: const <Widget>[
               NavigationDestination(
+                icon: Icon(Icons.home),
+                label: '0',
+              ),
+              NavigationDestination(
                 // selectedIcon: Icon(Icons.sports_esports_rounded),
                 icon: Icon(Icons.sports_esports_rounded),
                 label: '1',
@@ -61,11 +66,12 @@ class _AllBomeState extends State<AllBome> {
           ),
           body: SafeArea(
             child: <Widget>[
-              LayoutNav1(),
-              LayoutNav2(),
-              LayoutNav3(),
-              LayoutNav4(),
-              LayoutNav5(),
+              const LayoutHome(),
+              const LayoutNav1(),
+              const LayoutNav2(),
+              const LayoutNav3(),
+              const LayoutNav4(),
+              const LayoutNav5(),
             ][currentPageIndex],
           )),
     );

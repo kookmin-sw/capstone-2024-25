@@ -2,16 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class LayoutNav1 extends StatefulWidget {
-  const LayoutNav1({super.key});
+class LayoutHome extends StatefulWidget {
+  const LayoutHome({super.key});
 
   @override
-  State<LayoutNav1> createState() {
-    return _LayoutNav1State();
+  State<LayoutHome> createState() {
+    return _LayoutHomeState();
   }
 }
 
-class _LayoutNav1State extends State<LayoutNav1> {
+class _LayoutHomeState extends State<LayoutHome> {
   final GlobalKey webViewKey = GlobalKey();
 
   InAppWebViewController? webViewController;
@@ -25,7 +25,7 @@ class _LayoutNav1State extends State<LayoutNav1> {
           child: InAppWebView(
             key: webViewKey,
             initialUrlRequest: URLRequest(
-                url: WebUri("https://allbome-for-vercel.vercel.app/game")),
+                url: WebUri("https://allbome-for-vercel.vercel.app")),
             onPermissionRequest: (controller, request) async {
               return PermissionResponse(
                   resources: request.resources,
