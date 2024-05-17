@@ -64,7 +64,7 @@ export const googleTTS = (text) => {
     },
     audioConfig: {
       audioEncoding: 'mp3',
-      speakingRate: 1.0,
+      speakingRate: 0.8,
       pitch: -4,
     },
   };
