@@ -1,7 +1,5 @@
 import os
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts.few_shot import FewShotPromptTemplate
-from langchain_core.prompts.prompt import PromptTemplate
 from config import API_KEY, DB_URI, NEWS_API_KEY, WEATHER_API_KEY
 from ai.modules.daily_conversation import handle_daily_conversation
 from ai.modules.data_based import handle_data_based
@@ -67,7 +65,7 @@ def classify_query(query):
         os.environ["OPENAI_API_KEY"] = API_KEY
 
         # gpt-4 모델 설정
-        model = ChatOpenAI(model_name="gpt-4")
+        model = ChatOpenAI(model_name="gpt-3.5-turbo")
 
         # 질문 설정 및 모델 호출
         # formatted_prompt = few_shot_prompt.format()
@@ -97,9 +95,9 @@ def main(query_data: QueryData):
         elif category == "뉴스":
             response = handle_news_api_based(api_key, news_api_key, query_data.question)
         elif category == "날씨":
-            response = handle_weather_api_based(api_key, weather_api_key, query_data.gender, query_data.address)
+            response = handle_weather_api_based(api_key, weather_api_key, query_data.address)
         else:
-            response = handle_daily_conversation(api_key, query_data.question, query_data.gender, query_data.qnas)
+            response = handle_daily_conversation(api_key, query_data.question, query_data.qnas)
 
         return {"response": response}
     except Exception as e:

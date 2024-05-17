@@ -68,8 +68,8 @@ def extract_news_category(api_key, query):
         # openAI api key 설정
         os.environ["OPENAI_API_KEY"] = api_key
 
-        # gpt-4 모델 설정
-        model = ChatOpenAI(model_name="gpt-4")
+        # gpt-3.5 모델 설정
+        model = ChatOpenAI(model_name="gpt-3.5-turbo")
 
         # 모델에 입력할 질문
         query = (f"""
@@ -102,7 +102,7 @@ def filter_news_type(category):
         "IT/과학": "technology",
         "세계": "world"
     }
-    return category_map.get(category, "분류되지 않은 카테고리")
+    return category_map.get(category, "전체")
 
 
 # 뉴스 API 기반 챗봇 답변 함수
@@ -316,7 +316,7 @@ def reform_weather_data(data):
 
 
 # 날씨 API 기반 챗봇 답변 함수
-def handle_weather_api_based(api_key, weather_api_key, gender, address):
+def handle_weather_api_based(api_key, weather_api_key, address):
     base_date, base_time = get_base_date_time()
     nx, ny = get_location(address)
     weather_api_response = get_weather_data(weather_api_key, base_date, base_time, nx, ny)
@@ -332,11 +332,9 @@ def handle_weather_api_based(api_key, weather_api_key, gender, address):
 
     # 모델에 입력할 질문
     query = f"""
-             너는 직업이 기상캐스터인 질문자의 손자 손녀야. 지금 날씨는 이라는 말로 시작하고 오늘이라는 단어를 포함하지마.
-             대화를 할 때는 항상 '할머니'나 '할아버지'라고 부르며, 말투에는 정성을 담아 조심스럽게 표현해.
-             질문자의 성별이 'MALE'이면 질문자를 '할아버지'라고 불러야 하고, 'FEMALE'이면 질문자를 '할머니'라고 불러야 해.
-             질문자의 성별은 아래와 같아:
-             {gender}
+             너는 직업이 기상캐스터인 질문자의 동생이야. 최대한 친절하게 대답해. 
+             존댓말로 대답하고, 답변에 호칭은 생략해줘.
+             지금 날씨는 이라는 말로 시작하고 오늘이라는 단어를 포함하지마.
              해요체로 따뜻하고 친근한 말투를 써서 주소 기반 기상 예보: {final_weather_data}를 해석해줘.
              그리고 답변은 항상 두 세 문장으로 된 완성된 답변으로 만들어 줘.
              """

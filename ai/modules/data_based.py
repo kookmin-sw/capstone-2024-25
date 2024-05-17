@@ -20,31 +20,35 @@ class DataBased(BaseModel):
 # 질문-답변 타입 설정 함수
 def filter_type(table_name):
     category_map = {
-        "culture_education": ("EDUCATION", "문화생활(교육) 장소를"),
-        "culture_park": ("PARK", "문화생활(공원) 장소를"),
-        "culture_shopping": ("SHOPPING", "문화생활(쇼핑) 장소를"),
-        "visit_bath": ("BATH", "방문목욕서비스 기관을"),
-        "visit_care": ("CARE", "방문간호서비스 기관을"),
-        "visit_recuperation": ("RECUPERATION", "방문요양서비스 기관을")
+        "문화생활 교육 장소": "EDUCATION",
+        "문화생활 공원 장소": "PARK",
+        "문화생활 쇼핑 장소": "SHOPPING",
+        "방문목욕서비스 기관": "BATH",
+        "방문간호서비스 기관": "CARE",
+        "방문요양서비스 기관": "RECUPERATION",
     }
-    return category_map.get(table_name, ("UNCLASSIFIED", "분류되지 않은 카테고리"))
+    return category_map.get(table_name, "GENERAL")
 
 
 # 쿼리문 내부 테이블명 추출 함수
 def extract_table_name(result):
     try:
-        # 정규 표현식을 사용하여 table_name 값을 추출
-        pattern = r"table_name:\s*(\w+)"
+        # 정규 표현식을 사용하여 테이블 이름을 추출
+        pattern = r"table_name:\s*([\w\(\)_]+)"  # 괄호, 언더바, 알파벳, 숫자를 포함하도록 수정
         match = re.search(pattern, result)
         if match:
-            table_name = match.group(1)
-            # 추출한 table_name 부분을 결과 문자열에서 삭제
-            updated_result = re.sub(pattern, "", result).strip()
-            return table_name, updated_result
+            # 테이블 이름 추출
+            table_name = match.group(1).strip()
+            # 추출한 테이블 이름 부분을 결과 문자열에서 삭제
+            updated_result = re.sub(pattern, "", result, count=1).strip()
+            # 테이블 이름에서 공백 대신 사용된 언더바를 공백으로 변환
+            normalized_table_name = table_name.replace('_', ' ')
+            return normalized_table_name, updated_result
         else:
             print("참고한 테이블이 없습니다.")
             return None, result
-    except Exception:
+    except Exception as e:
+        print(f"오류 발생: {e}")
         return None, None
 
 
@@ -87,10 +91,10 @@ def handle_data_based(api_key, query, db_uri, address):
     table_name, result = extract_table_name(result)
 
     # 테이블 명으로 질문-답변 카테고리 설정
-    category_eng, category_kor = filter_type(table_name)
+    category_eng = filter_type(table_name)
 
     # 최종 답변 결과 저장
-    answer = f"등록하신 주소를 기준으로 {category_kor} 소개해 드릴게요!\n" + result
+    answer = f"등록하신 주소를 기준으로 {table_name}을(를) 소개해 드릴게요!\n" + result
 
     # 출력 파서 정의
     output_parser = JsonOutputParser(pydantic_object=DataBased)
@@ -108,4 +112,3 @@ def handle_data_based(api_key, query, db_uri, address):
         return parsed_output
     except Exception as e:
         return f"파싱 에러 발생: {e}"
-
