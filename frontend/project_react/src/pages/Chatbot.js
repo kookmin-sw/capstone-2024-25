@@ -265,6 +265,7 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
+        console.log('챗봇 답변 : ', res.data);
         setGugu(res.data);
       })
       .catch((error) => {
@@ -280,6 +281,7 @@ const Chatbot = () => {
   const postChat = async (data) => {
     try {
       const response = await chatbotApis.postChat(data, accessToken);
+      // console.log('postChat response : ', response);
       return response;
     } catch (error) {
       throw error;
@@ -301,7 +303,7 @@ const Chatbot = () => {
         { id: 2, title: '정치', selected: false, values: [] },
         { id: 3, title: '경제', selected: false, values: [] },
         { id: 4, title: '세계', selected: false, values: [] },
-        { id: 5, title: '생활/문화', selected: false, values: [] },
+        { id: 5, title: '스포츠', selected: false, values: [] },
         { id: 6, title: 'IT/과학', selected: false, values: [] },
       ],
     },
@@ -325,21 +327,18 @@ const Chatbot = () => {
           title: '간호',
           selected: false,
           values: [],
-          qValue: '방문간호서비스',
         },
         {
           id: 2,
           title: '목욕',
           selected: false,
           values: [],
-          qValue: '방문목욕서비스',
         },
         {
           id: 3,
           title: '요양',
           selected: false,
           values: [],
-          qValue: '방문요양서비스',
         },
       ],
     },
@@ -567,6 +566,7 @@ const Chatbot = () => {
     try {
       const response = await postChat(question);
       const updatedAnswer = response.data.answer; // 서버에서 받은 응답
+      console.log('updatedAnswer : ', updatedAnswer);
 
       // 응답을 받아 기존 채팅의 답변을 업데이트
       setGugu((prevGugu) => ({
