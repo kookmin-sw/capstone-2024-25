@@ -141,7 +141,7 @@ const CategoryList = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  gap: 20px;
+  gap: 12px;
 `;
 
 const CategoryButton = styled.div`
