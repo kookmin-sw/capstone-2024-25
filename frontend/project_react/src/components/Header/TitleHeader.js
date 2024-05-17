@@ -10,7 +10,7 @@ export default function TitleHeader({ title, showBackButton, showDivider }) {
       <Row>
         {showBackButton && (
           <div onClick={() => navigate(-1, { replace: true })}>
-            <img src="/images/JobPage/arrow-back.svg" />
+            <img src="/images/JobPage/arrow-back.svg" alt='뒤로가기'/>
           </div>
         )}
         <Title>{title}</Title>

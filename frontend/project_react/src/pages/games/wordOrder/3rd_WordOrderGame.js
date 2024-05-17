@@ -182,7 +182,7 @@ export default function WordOrderGame() {
               ))}
             </UserSelectWords>
             <motion.img
-              src="/images/reset.svg"
+              src="/images/game/reset.svg"
               style={{ position: 'absolute', right: '10px', bottom: '10px' }}
               alt="reset"
               onClick={() => {
