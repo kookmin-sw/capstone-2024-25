@@ -67,6 +67,13 @@ public class JobService {
                 .toList();
     }
 
+    public List<JobListResponse> findJobsByOccupation(Province province, String occupation, Pageable pageable) {
+        List<Job> jobs = jobRepository.findByOccupationContaining(province, pageable, occupation);
+        return jobs.stream()
+                .map(JobListResponse::from)
+                .toList();
+    }
+
     @Transactional
     public void updateDday(Job job) {
         LocalDate currentDate = LocalDate.now();
