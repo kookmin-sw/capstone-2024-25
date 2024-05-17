@@ -6,6 +6,7 @@ import Button from '../Button';
 import { useEffect, useRef, useState } from 'react';
 import { ko } from 'date-fns/locale';
 import { formatDate } from '../../utils/handleUser';
+import Swal from 'sweetalert2';
 
 const customModalStyles = {
   overlay: {
@@ -44,6 +45,7 @@ const ModalHeader = styled.div`
 `;
 const ModalTitle = styled.div`
   font-size: 24px;
+  font-weight: 600;
 `;
 const XBtn = styled.img`
   position: absolute;
@@ -70,6 +72,7 @@ const ModalContent = styled.div`
 
 const DateInfo = styled.p`
   font-size: 24px;
+  font-weight: 600;
 `;
 const ContentFooter = styled.div`
   position: absolute;
@@ -132,6 +135,10 @@ const BirthModal = ({
   saveBirth,
   defaultDate,
 }) => {
+  useEffect(() => {
+    console.log('birth : ', birth);
+    console.log('defaultDate : ', defaultDate);
+  }, [birth, defaultDate]);
   const [selectedDay, setSelectedDay] = useState(birth);
 
   const [showYear, setShowYear] = useState(false);
@@ -156,11 +163,22 @@ const BirthModal = ({
     closeModal();
   };
   const btnClick = () => {
-    setBirth(selectedDay);
-    if (saveBirth) {
-      saveBirth(selectedDay);
+    const today = new Date();
+    if (selectedDay > today) {
+      Swal.fire({
+        title: '생년월일을 확인해주세요',
+        text: '오늘 이후의 날짜는 생년월일로 선택할 수 없습니다.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+      return;
+    } else {
+      setBirth(selectedDay);
+      if (saveBirth) {
+        saveBirth(selectedDay);
+      }
+      closeModal();
     }
-    closeModal();
   };
   const dayPickerProps = {
     components: {

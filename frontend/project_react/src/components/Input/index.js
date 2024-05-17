@@ -26,6 +26,7 @@ const InputStyled = styled.input`
   ::placeholder {
     color: var(--unselected-color);
   }
+  font-weight: 600;
 `;
 const InputInfo = styled.div`
   font-size: 16px;
@@ -35,6 +36,7 @@ const InputInfo = styled.div`
       : infoState === 'success'
       ? 'black'
       : 'var(--unselected-color)'};
+  font-weight: 700;
 `;
 
 const Input = ({

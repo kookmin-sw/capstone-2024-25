@@ -36,6 +36,7 @@ const customModalStyles = {
 const ModalTitle = styled.span`
   align-self: center;
   font-size: 16px;
+  font-weight: 600;
 `;
 
 const ModalContent = styled.div`
@@ -44,6 +45,7 @@ const ModalContent = styled.div`
   grid-template-columns: 1px auto;
   gap: 12px;
   align-items: start;
+  font-weight: 600;
 `;
 
 const ContentText = styled.span`

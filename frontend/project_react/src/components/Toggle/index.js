@@ -40,6 +40,7 @@ const ToggleStyled = styled.button`
   ${({ selected }) => selecteds[selected]}
   ${({ size }) => sizes[size]}
   box-sizing: border-box;
+  font-weight: 600;
 `;
 
 const Toggle = ({ text, size, selected, onClick }) => {

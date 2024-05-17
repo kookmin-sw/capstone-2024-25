@@ -25,6 +25,7 @@ const RegionWrapper = styled.div`
   right: ${(props) => (props.sorted === 0 ? '114px' : '124px')};
   //transition: right 0.3s ease-in-out;
   background-color: #ffffff;
+  font-weight: 500;
 `;
 const FilterSelect = styled(RegionWrapper)`
   width: fit-content;

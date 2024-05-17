@@ -11,6 +11,7 @@ const BubbleContainer = styled.div`
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
+  font-weight: 500;
 `;
 const BubbleValue = styled.span`
   font-size: 16px;
