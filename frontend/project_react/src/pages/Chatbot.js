@@ -271,8 +271,6 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        console.log('res : ', res);
-        console.log('챗봇 답변 : ', res.data);
         setGugu(res.data);
       })
       .catch((error) => {
@@ -572,12 +570,7 @@ const Chatbot = () => {
 
     try {
       const response = await postChat(question);
-      console.log('new response : ', response);
       const updatedAnswer = response.data; // 서버에서 받은 응답
-      console.log('updatedAnswer.answer : ', updatedAnswer.answer);
-      console.log('typeof updatedAnswer : ', typeof updatedAnswer);
-
-      // console.log('gugu : ', gugu);
 
       // 응답을 받아 기존 채팅의 답변을 업데이트
       setGugu((prevGugu) => ({
@@ -593,8 +586,6 @@ const Chatbot = () => {
             : chat,
         ),
       }));
-
-      // scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -613,6 +604,8 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
+    } finally {
+      scrollAfterSend();
     }
 
     setUserText('');
