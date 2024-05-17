@@ -215,7 +215,6 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
       })
       .catch((error) => {
         if (error.response.data.code === 400) {
-          console.log(error);
           Swal.fire({
             title: '약품 삭제',
             text: '약품 삭제에 실패했습니다.',

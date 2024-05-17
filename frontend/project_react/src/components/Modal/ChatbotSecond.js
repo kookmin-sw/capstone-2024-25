@@ -113,7 +113,6 @@ const ChatbotModalSecond = ({ isOpen, handlePrev, setIsOpenSecond }) => {
       chatGender: selectAvatarGender,
     };
     await memberApis.updateImage(updateData, accessToken).then((res) => {
-      console.log(res);
       setIsOpenSecond(false);
       setSelectedAvatar(selectAvatarGender);
     });

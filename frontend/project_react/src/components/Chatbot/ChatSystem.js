@@ -26,15 +26,9 @@ const ChatSystem = ({ content, type, chatImg }) => {
   const [showBubble, setShowBubble] = useState(0);
 
   useEffect(() => {
-    console.log('ChatSystem content : ', content);
-    // console.log('ChatSystem content : ', typeof content);
-    console.log('ChatSystem type : ', type);
     if (content.type === 'NEWS') {
       const answerToJson = JSON.parse(content);
-      console.log('answerToJson : ', answerToJson);
-      console.log('answerToJson.articles : ', typeof answerToJson.header);
       if (content.answer.articles) {
-        console.log('content.answer.articles : ', content.answer.articles);
         const newTempList = content.answer.articles.slice(0, 3);
         setTempList(newTempList);
       }
@@ -43,10 +37,6 @@ const ChatSystem = ({ content, type, chatImg }) => {
     setBubbleContent(content);
     setBubbleType(type);
   }, [content]);
-
-  useEffect(() => {
-    console.log('tempList : ', tempList);
-  }, [tempList]);
 
   const clickYes = () => {
     setTempList(content.answer.articles);

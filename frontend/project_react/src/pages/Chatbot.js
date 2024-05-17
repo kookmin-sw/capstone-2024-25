@@ -262,11 +262,9 @@ const Chatbot = () => {
   }, []);
 
   const setChatList = async () => {
-    // console.log('accessToken : ', accessToken);
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        console.log('res.data : ', res.data);
         setGugu(res.data);
       })
       .catch((error) => {
@@ -280,13 +278,10 @@ const Chatbot = () => {
       });
   };
   const postChat = async (data) => {
-    // console.log('addChat 실행');
     try {
       const response = await chatbotApis.postChat(data, accessToken);
-      console.log('postChat res : ', response);
       return response;
     } catch (error) {
-      console.log('postChat error : ', error);
       throw error;
     }
   };
@@ -294,9 +289,6 @@ const Chatbot = () => {
   useEffect(() => {
     setChatList();
   }, []);
-  useEffect(() => {
-    console.log('gugu : ', gugu);
-  }, [gugu]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -363,7 +355,7 @@ const Chatbot = () => {
         console.log('선택된 카테고리 타이틀 : ', category.title);
         if (category.title === '날씨') {
           const requestCategory = weatherRequest();
-          // addChat(requestCategory);
+          addChat(requestCategory);
         }
         setSelectedCategoryId(id);
         category.selected = true;
@@ -555,7 +547,6 @@ const Chatbot = () => {
   };
 
   const addChat = async (userQuestion) => {
-    console.log('addChat 실행');
     const question = {
       isGame: 'false',
       question: userQuestion,
@@ -604,6 +595,7 @@ const Chatbot = () => {
             : chat,
         ),
       }));
+      console.log('답변 error : ', error);
     }
 
     setUserText('');
@@ -810,7 +802,7 @@ const Chatbot = () => {
     <ChatbotContainer ref={containerRef}>
       <ChatbotHeader
         onClick={() => {
-          console.log('categoryList : ', categoryList);
+          navigate('/my-page');
         }}
       />
       <ChatbotModalFirst

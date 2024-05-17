@@ -12,11 +12,6 @@ const PairContainer = styled.div`
 `;
 
 const ChatPair = ({ qnaPairs, chatImg }) => {
-  // console.log('qnaPairs : ', qnaPairs);
-  // console.log('qnaPairs.answer : ', qnaPairs.answer);
-  useEffect(() => {
-    console.log('qnaPairs : ', qnaPairs);
-  }, [qnaPairs]);
   return (
     <PairContainer>
       <ChatUser text={qnaPairs.question} />
