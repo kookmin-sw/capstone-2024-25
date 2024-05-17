@@ -125,7 +125,7 @@ export default function WordOrderGame() {
           if (result.isConfirmed) {
             startNewGame();
           } else if (result.isDenied) {
-            navigate('/game/wordOrderSelection');
+            navigate(-1, {replace: true});
           }
         });
       } else {
