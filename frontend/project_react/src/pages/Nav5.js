@@ -29,8 +29,8 @@ export default function Nav5() {
   // 지도 관련 동작
   const [centerState, setCenterState] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: 37.61074948136638,
+      lng: 126.99701001237902
     },
     errMsg: null,
     isLoading: true,
@@ -158,7 +158,7 @@ export default function Nav5() {
           }}
         >
           <MapMarker position={position ?? centerState.center} />
-          <MapMarker position={centerState.center} />
+          {/* <MapMarker position={centerState.center} /> */}
           {!centerState.isLoading &&
             mapSizeLevel < 4 &&
             mapTags.map(

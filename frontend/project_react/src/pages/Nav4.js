@@ -10,7 +10,7 @@ const categoryKeywordList = {
   exercise: ['운동', 'Barbell', '#FF4500'],
   growth: ['성장', 'book', '#FF7D31'],
   hobby: ['취미', 'MusicNotes', '#FBC02D'],
-  rest: ['휴식', 'ArmChair', '#0091EA'],
+  rest: ['휴식', 'chair', '#0091EA'],
   eat: ['식사', 'ForkKnife', '#8BC34A'],
 };
 
