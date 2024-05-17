@@ -262,32 +262,33 @@ const SignUp = () => {
   // const code = new URL(window.location.href).searchParams.get('code');
   // console.log('code : ', code);
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-    // 인증 코드가 있는 경우 카카오 로그인을 처리하는 함수를 호출합니다.
-    if (code) {
-      console.log('gmlgml');
-      kakaoLogin(code);
-    } else {
-      console.log('dksla');
-    }
-  }, []);
-
-  // 카카오 인증 코드를 이용하여 서버에 사용자 정보 요청을 보내는 함수입니다.
-  const kakaoLogin = (code) => {
-    axios
-      .get(`http://localhost:8080/auth/kakao/callback?code=${code}`)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log('Login successful', response.data);
-        }
-      })
-      .catch((error) => {
-        console.error('Login failed', error);
-      });
-  };
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const code = urlParams.get('code');
+  //
+  //   // 인증 코드가 있는 경우 카카오 로그인을 처리하는 함수를 호출합니다.
+  //   if (code) {
+  //     console.log('gmlgml');
+  //     kakaoLogin(code);
+  //   } else {
+  //     console.log('dksla');
+  //   }
+  // }, []);
+  //
+  // // 카카오 인증 코드를 이용하여 서버에 사용자 정보 요청을 보내는 함수입니다.
+  // const kakaoLogin = (code) => {
+  //   console.log('signup kakaoLogin 실행');
+  //   axios
+  //     .get(`https://allbom.site/auth/kakao/callback?code=${code}`)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log('Login successful', response.data);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Login failed', error);
+  //     });
+  // };
 
   useEffect(() => {
     if (isFirstLogin) {
