@@ -609,8 +609,10 @@ const Chatbot = () => {
     }
 
     setUserText('');
-    // const inputUserText = document.getElementById('input-text');
-    // inputUserText.value = '';
+    const inputUserText = document.getElementById('input-text');
+    if (inputUserText) {
+      inputUserText.value = '';
+    }
 
     await scrollAfterSend();
   };
