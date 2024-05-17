@@ -27,11 +27,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                                              @Param("northEastLatitude") Double northEastLatitude,
                                              @Param("northEastLongitude") Double northEastLongitude);
 
-//    @Query("SELECT j FROM Job j WHERE j.province = :province ORDER BY (6371 * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude))))")
-//    List<Job> findJobsNearbyMemberAddress(@Param("province") Province province,
-//                                          @Param("latitude") Double latitude,
-//                                          @Param("longitude") Double longitude);
-
     @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date()" +
             "ORDER BY (6371 * ACOS(SIN(RADIANS(:latitude)) * SIN(RADIANS(j.latitude)) " +
             "+ COS(RADIANS(:latitude)) * COS(RADIANS(j.latitude)) * COS(RADIANS(j.longitude) - RADIANS(:longitude))))")
@@ -52,4 +47,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     @Query("SELECT j FROM Job j WHERE j.province = :province AND j.deadline >= current_date() ORDER BY j.deadline ASC")
     List<Job> findJobsOrderByDeadlinePagination(@Param("province") Province province,
                                           Pageable pageable);
+
+    @Query("SELECT j FROM Job j WHERE j.province = :province AND j.occupation LIKE %:occupation% AND j.deadline >= current_date() ORDER BY j.deadline ASC")
+    List<Job> findByOccupationContaining(@Param("province") Province province,
+                                         Pageable pageable, String occupation);
 }
