@@ -55,6 +55,7 @@ public class GeocodingRequester {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject jsonResponse = (JSONObject) parser.parse(response.getBody());
+                System.out.println("jsonResponse = " + jsonResponse);
                 JSONArray addresses = (JSONArray) jsonResponse.get("addresses");
 
                 if (addresses != null && !addresses.isEmpty()) {
