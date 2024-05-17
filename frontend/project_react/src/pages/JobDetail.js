@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { jobApis } from '../api/apis/jobApis';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const JobDetailContainer = styled.div`
   display: flex;
@@ -109,6 +109,7 @@ const InfoItemTitle = styled.div`
   color: var(--unselected-color);
   border: 2px solid var(--unselected-color);
   border-radius: 30px;
+  white-space: nowrap;
 `;
 
 const DateWrapper = styled(InfoItemTitle)`
@@ -152,6 +153,7 @@ const JobDetailPage = () => {
   const [dateColor, setDateColor] = useState('#000000');
   const { jobId } = useParams();
   const accessToken = cookies.accessToken;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (dueState === 0) {
@@ -222,7 +224,12 @@ const JobDetailPage = () => {
         </FloatingButton>
       </ButtonWrapper>
       <JobDetailHeader>
-        <img src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'} />
+        <img
+          src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
         <HeaderTitle>{jobInfo.companyName}</HeaderTitle>
       </JobDetailHeader>
       <JobDetailContent>
