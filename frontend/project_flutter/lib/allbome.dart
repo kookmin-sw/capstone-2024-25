@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_flutter/screen/layout_login.dart';
 import 'package:project_flutter/screen/layout_nav1.dart';
 import 'package:project_flutter/screen/layout_nav2.dart';
@@ -19,6 +20,10 @@ class _AllBomeState extends State<AllBome> {
   @override
   Widget build(BuildContext context) {
     // final ThemeData theme = Theme.of(context);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // 상태 표시줄을 투명하게 설정
+        statusBarIconBrightness: Brightness.dark));
+
     return MaterialApp(
       home: Scaffold(
           bottomNavigationBar: NavigationBar(
