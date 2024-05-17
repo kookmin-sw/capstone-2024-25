@@ -76,7 +76,8 @@ const SignIn = () => {
 
   // 환경 변수에서 카카오 API 키와 리다이렉트 URI를 가져옵니다.
   const Rest_api_key = process.env.REACT_APP_REST_API_KEY; // REST API KEY
-  const redirect_uri = 'http://localhost:3000/auth/kakao/callback'; //Redirect URI
+  const redirect_uri =
+    'https://allbome-for-vercel.vercel.app/auth/kakao/callback'; //Redirect URI
 
   const signIn = async () => {
     await authApi
