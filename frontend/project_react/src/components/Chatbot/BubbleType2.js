@@ -37,6 +37,7 @@ const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
 
   useEffect(() => {
     if (content && content.length !== 0) {
+      console.log('content : ', content);
       setHeader(content.header);
       setContents(showList);
     }
