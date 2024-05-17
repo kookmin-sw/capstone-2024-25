@@ -53,6 +53,7 @@ public class ChatbotRequester {
                 return answerResponse;
             }
         } catch (IOException e) {
+            System.out.println("e = " + e);
             throw new InternalServerError(DefaultErrorCode.AI_SERVER_ERROR);
         }
     }
