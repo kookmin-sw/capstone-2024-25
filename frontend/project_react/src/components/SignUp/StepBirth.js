@@ -16,6 +16,7 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
 const DateWrapper = styled.div`
@@ -29,6 +30,7 @@ const DateWrapper = styled.div`
 `;
 const DatePlaceholder = styled.span`
   color: var(--unselected-color);
+  font-weight: 600;
 `;
 
 const StepBirth = ({ value, setValue, setBirthPossible }) => {

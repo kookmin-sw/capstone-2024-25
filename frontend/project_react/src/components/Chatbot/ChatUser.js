@@ -10,6 +10,7 @@ const ChatContainer = styled.div`
   align-items: flex-start;
   gap: 10px;
   align-self: flex-end;
+  font-weight: 500;
 `;
 
 const ChatUser = ({ text, type, content }) => {

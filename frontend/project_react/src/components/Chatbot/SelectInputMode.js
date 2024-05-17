@@ -25,7 +25,7 @@ const SelectItem = styled.div`
 `;
 const ItemText = styled.span`
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 const SelectInputMode = ({ setSelectMode, clickVoice }) => {

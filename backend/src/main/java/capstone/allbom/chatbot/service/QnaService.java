@@ -53,7 +53,7 @@ public class QnaService {
     }
 
     @Transactional
-    public List<QnaAndTypeResponse> getTopThreeQnas(final Member member) { // -> AI
+    public List<QnaAndTypeForAiResponse> getTopThreeQnas(final Member member) { // -> AI
         Member savedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new BadRequestException(DefaultErrorCode.NOT_FOUND_MEMBER_ID));
 
@@ -63,14 +63,14 @@ public class QnaService {
                 .toList();
 
         return qnas.stream()
-                .map(QnaAndTypeResponse::from)
+                .map(QnaAndTypeForAiResponse::from)
                 .toList();
     }
 
     @Transactional
     public AnswerRequest convertRequestTypeForAI(final Member member, QuestionRequest questionRequest) { // -> AI
-        List<QnaAndTypeResponse> topFiveQnas = getTopThreeQnas(member);
-        return AnswerRequest.from(member, questionRequest, topFiveQnas);
+        List<QnaAndTypeForAiResponse> topThreeQnas = getTopThreeQnas(member);
+        return AnswerRequest.from(member, questionRequest, topThreeQnas);
     }
 
     @Transactional

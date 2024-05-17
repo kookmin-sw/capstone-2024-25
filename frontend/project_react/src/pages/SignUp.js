@@ -35,7 +35,7 @@ const SignUpWrapper = styled.div`
 const SignUpTitle = styled.div`
   font-size: 40px;
   align-self: flex-start;
-  margin-left: 20px;
+  font-weight: 600;
 `;
 
 const StepWrapper = styled.div`
@@ -65,6 +65,7 @@ const ButtonSpace = styled.div`
 const FooterText = styled.div`
   font-size: 16px;
   color: var(--unselected-color);
+  font-weight: 500;
 `;
 const LoginButton = styled.span`
   color: var(--primary-color);
@@ -476,7 +477,7 @@ const SignUp = () => {
           />
         </ButtonWrapper>
         <FooterText>
-          이미 계정이 있으신가요?
+          이미 계정이 있으신가요?{' '}
           <LoginButton
             onClick={() => {
               navigate('/');

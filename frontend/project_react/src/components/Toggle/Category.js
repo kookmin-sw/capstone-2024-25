@@ -26,6 +26,7 @@ const ToggleStyled = styled.button`
   position: relative;
   font-size: 20px;
   white-space: nowrap;
+  font-weight: 700;
 `;
 const SubCategoryWrapper = styled.div`
   display: flex;

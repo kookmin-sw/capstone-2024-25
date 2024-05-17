@@ -3,6 +3,7 @@ package capstone.allbom.chatbot.service;
 import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import capstone.allbom.chatbot.domain.QnaRepository;
+import capstone.allbom.chatbot.dto.QnaAndTypeForAiResponse;
 import capstone.allbom.chatbot.dto.QnaAndTypeResponse;
 import capstone.allbom.member.domain.Member;
 import capstone.allbom.member.domain.MemberRepository;
@@ -93,7 +94,7 @@ class QnaServiceTest {
             qna6.setMember(member);
 
             // when
-            List<QnaAndTypeResponse> qnaPairs = qnaService.getTopThreeQnas(member);
+            List<QnaAndTypeForAiResponse> qnaPairs = qnaService.getTopThreeQnas(member);
 
             // then
             assertEquals(5, qnaPairs.size());

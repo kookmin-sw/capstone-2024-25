@@ -3,12 +3,8 @@ package capstone.allbom.chatbot.dto;
 import capstone.allbom.chatbot.domain.AnswerType;
 import capstone.allbom.chatbot.domain.Qna;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.json.simple.JSONObject;
 
-// 질문-응답 쌍 전송 시 호출 (서버 -> AI)
-
-@Schema(description = "대화 내역과 타입 쌍")
-public record QnaAndTypeResponse(
+public record QnaAndTypeForAiResponse(
         @Schema(description = "질문", example = "오늘은 뭐하지")
         String question,
 
@@ -18,9 +14,12 @@ public record QnaAndTypeResponse(
         @Schema(description = "답변 유형", example = "GENERAL")
         String type
 ) {
-    public static QnaAndTypeResponse from(Qna qna) {
-        return new QnaAndTypeResponse(
-                qna.getQuestion(), qna.getAnswer(), qna.getType().toString()
+    public static QnaAndTypeForAiResponse from(Qna qna) {
+        String answer = qna.getType() == AnswerType.NEWS ? "" : qna.getAnswer();
+
+        return new QnaAndTypeForAiResponse(
+                qna.getQuestion(), answer, qna.getType().toString()
         );
     }
 }
+

@@ -121,6 +121,7 @@ const AddButton = styled.img`
 
 const EditTitle = styled.div`
   font-size: 20px;
+  font-weight: 500;
 `;
 
 const InputWrapper = styled.div`
@@ -131,6 +132,7 @@ const InputWrapper = styled.div`
   box-sizing: border-box;
   font-size: 24px;
   color: var(--unselected-color);
+  font-weight: 600;
 `;
 
 const DateWrapper = styled(InputWrapper)`
@@ -148,6 +150,7 @@ const EditInfo = styled.input`
     color: var(--unselected-color);
   }
   box-sizing: border-box;
+  font-weight: 600;
 `;
 
 const MedicineWrapper = styled.div`
@@ -165,6 +168,16 @@ const MedicineWrapper = styled.div`
   padding: 12px 8px;
   box-sizing: border-box;
 `;
+
+const ItemWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
 const MedicineItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -177,6 +190,7 @@ const MedicineItem = styled.div`
       : '2px solid var(--secondary-unselected-color)'};
   padding-bottom: 20px;
   overflow-x: hidden;
+  //border: 1px solid red;
 `;
 
 const MedicineInfo = styled.div`
@@ -204,19 +218,20 @@ const MedicineName = styled.span`
 const ModifyWrapper = styled.div`
   display: flex;
   gap: 20px;
+  > span {
+    white-space: nowrap;
+    font-weight: 600;
+  }
 `;
 
 const EditBtn = styled.span`
   color: var(--select-color);
-  white-space: nowrap;
 `;
 const DeleteBtn = styled.span`
   color: var(--error-color);
-  white-space: nowrap;
 `;
 const CompleteBtn = styled.span`
-  color: var(--primary-color);
-  white-space: nowrap;
+  color: var(--select-color);
 `;
 const CycleWrapper = styled.div`
   display: flex;
@@ -687,7 +702,7 @@ const MyPage = () => {
           <Slider id="slider" ref={sliderRef} {...settings}>
             <MedicineWrapper>
               {medicineList?.length !== 0 ? (
-                <div>
+                <ItemWrapper>
                   {newValue.map((item, index) => (
                     <MedicineItem
                       key={item.id}
@@ -761,7 +776,7 @@ const MyPage = () => {
                       </MedicineInfo>
                     </MedicineItem>
                   ))}
-                </div>
+                </ItemWrapper>
               ) : (
                 <NoMedicine>추가하신 약품이 없습니다.</NoMedicine>
               )}

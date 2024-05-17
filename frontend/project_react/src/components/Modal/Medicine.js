@@ -46,6 +46,7 @@ const ModalHeader = styled.div`
 
 const ModalTitle = styled.div`
   font-size: 24px;
+  font-weight: 600;
 `;
 const XBtn = styled.img`
   position: absolute;
@@ -92,24 +93,26 @@ const MedicineName = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 600;
 `;
 
 const ModifyWrapper = styled.div`
   display: flex;
   gap: 20px;
+  > span {
+    white-space: nowrap;
+    font-weight: 600;
+  }
 `;
 
 const EditBtn = styled.span`
   color: var(--select-color);
-  white-space: nowrap;
 `;
 const DeleteBtn = styled.span`
   color: var(--error-color);
-  white-space: nowrap;
 `;
 const CompleteBtn = styled.span`
-  color: var(--primary-color);
-  white-space: nowrap;
+  color: var(--select-color);
 `;
 const CycleWrapper = styled.div`
   display: flex;
@@ -126,6 +129,7 @@ const EditName = styled.input`
   border: none;
   outline: none;
   border-bottom: 4px solid var(--secondary-unselected-color);
+  font-weight: 600;
 `;
 
 const NoValueWrapper = styled.div`
@@ -315,7 +319,7 @@ const MedicineModal = ({ isOpen, closeModal, value, setValue, showModal }) => {
                           saveBtn();
                         }}
                       >
-                        완료
+                        확인
                       </CompleteBtn>
                     ) : (
                       <EditBtn

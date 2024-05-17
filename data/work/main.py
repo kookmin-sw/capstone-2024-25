@@ -162,7 +162,7 @@ driver = webdriver.Chrome(service=customsService, options=customsOptions)
 region_codes = {
     'SEOUL': '11000', 'BUSAN': '26000','DAEGU': '27000',
     'INCHEON': '28000', 'GWANGJU': '29000', 'DAEJEON': '30000',
-    'ULSAN': '31000', 'SEJONG': '36110', '4GYEONGGI': '41000',
+    'ULSAN': '31000', 'SEJONG': '36110', 'GYEONGGI': '41000',
     'CHUNGBUK': '43000', 'CHUNGNAM': '44000', 'JEONNAM': '46000',
     'GYEONGBUK': '47000', 'GYEONGNAM': '48000', 'JEJU': '50000',
     'GANGWON': '51000', 'JEONBUK': '52000',}

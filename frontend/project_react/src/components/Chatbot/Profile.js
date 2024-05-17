@@ -34,7 +34,7 @@ const Profile = ({ type, chatImg }) => {
         setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-female.jpg');
       }
     }
-  }, [type, chatImg]);
+  }, [type, chatImg, selectedAvatar]);
   return <ProfileImg imgSrc={imgSrc} />;
 };
 export default Profile;

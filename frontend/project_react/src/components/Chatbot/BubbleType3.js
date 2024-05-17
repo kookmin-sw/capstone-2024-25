@@ -13,6 +13,7 @@ const BubbleContainer = styled.div`
   border-radius: 12px;
   flex-direction: column;
   gap: 16px;
+  font-weight: 500;
 `;
 const BubbleValue = styled.span`
   font-size: 16px;
