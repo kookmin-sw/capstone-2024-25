@@ -2,6 +2,7 @@ package capstone.allbom.job.controller;
 
 import capstone.allbom.common.exception.ExceptionResponse;
 import capstone.allbom.common.jwt.Auth;
+import capstone.allbom.job.domain.Province;
 import capstone.allbom.job.dto.JobDetailResponse;
 import capstone.allbom.job.dto.JobListResponse;
 import capstone.allbom.member.domain.Member;
@@ -52,5 +53,17 @@ public interface JobControllerDocs {
     ResponseEntity<JobDetailResponse> getDetailJob(
             final Member member,
             @Positive(message = "일자리 ID는 양의 정수만 가능합니다.") final Long jobId
+    );
+
+    @Operation(summary = "일자리 직종명으로 검색하기", description = "직종명으로 일자리를 검색한다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "일자리 직종명으로 검색 성공"),
+    })
+    ResponseEntity<List<JobListResponse>> searchJobByOccupation(
+            final Member member,
+            @Parameter(description = "직종명", example = "경비원")
+            final String name,
+            @Parameter(description = "페이지네이션 (page: 현재 페이지 수 - 1, size: 10으로 고정)", example = "page=0&size=10")
+            Pageable pageable
     );
 }
