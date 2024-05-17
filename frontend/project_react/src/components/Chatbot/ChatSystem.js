@@ -5,6 +5,7 @@ import BubbleType3 from './BubbleType3';
 import Profile from './Profile';
 import { useEffect, useState } from 'react';
 import { parseNewsData } from '../../utils/handleChat';
+import { googleTTS } from '../../pages/ComponentTest';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -40,8 +41,19 @@ const ChatSystem = ({ content, type, chatImg }) => {
 
   const clickYes = () => {
     const answerToJson = parseNewsData(content);
-
     setTempList(answerToJson.articles);
+    console.log('clickYes : ', answerToJson.articles);
+    let completeSentence = '';
+
+    const voiceList = answerToJson.articles.slice(
+      3,
+      answerToJson.articles.length,
+    );
+    voiceList.map((news) => {
+      const newsTitle = news.title;
+      completeSentence += newsTitle + '\n';
+    });
+    googleTTS(completeSentence);
     setShowNext(true);
   };
 
@@ -75,7 +87,9 @@ const ChatSystem = ({ content, type, chatImg }) => {
     case 'CARE':
     case 'BATH':
     case 'RECUPERATION':
-      BubbleComponent = <BubbleType3 content={bubbleContent} />;
+      BubbleComponent = (
+        <BubbleType3 content={bubbleContent} bubbleType={bubbleType} />
+      );
       break;
     default:
       BubbleComponent = <BubbleType1 content={bubbleContent} />;

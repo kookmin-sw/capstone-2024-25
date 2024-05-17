@@ -16,8 +16,8 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
-export const testFun = (text) => {
-  // console.log('testFun');
+export const googleTTS = (text) => {
+  // console.log('googleTTS');
   // console.log('text : ', text);
   const data = {
     voice: {
@@ -71,7 +71,7 @@ export const base64ToBlob = (base64, mimeType) => {
 
 const ComponentTest = () => {
   const gun = () => {
-    testFun();
+    googleTTS();
   };
 
   const text = '텍스트';
@@ -130,7 +130,7 @@ const ComponentTest = () => {
           size="Large"
           selected={true}
           onClick={() => {
-            testFun();
+            googleTTS();
           }}
         />
         <Toggle text="Medium Selected" size="Medium" selected={true} />

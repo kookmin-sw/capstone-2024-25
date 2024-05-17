@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-
+import { convertArrayToObjectList } from '../../utils/handleChat';
 const BubbleContainer = styled.div`
   display: flex;
   height: fit-content;
@@ -43,37 +43,14 @@ const SpinnerImg = styled.img`
   height: 120px;
 `;
 
-const BubbleType3 = ({ content }) => {
+const BubbleType3 = ({ content, bubbleType }) => {
   const [header, setHeader] = useState('');
   const [showContents, setShowContents] = useState([]);
 
-  const keyList = { 시설명: 'location', 전화번호: 'phone', 주소: 'address' };
-
-  const convertArrayToObjectList = (data) => {
-    const result = [];
-    let currentObject = {};
-
-    data.forEach((line, index) => {
-      const parts = line.split(': ');
-      const keyName = parts[0].trim();
-      const value = parts.slice(1).join(': ').trim();
-
-      if (keyName.match(/^\d+\./)) {
-        if (index !== 0) {
-          result.push(currentObject);
-          currentObject = {};
-        }
-        currentObject[keyList[keyName.replace(/^\d+\.\s*/, '')]] = value;
-      } else {
-        currentObject[keyList[keyName]] = value;
-      }
-    });
-
-    result.push(currentObject);
-    return result;
-  };
-
   useEffect(() => {
+    if (bubbleType === 'SHOPPING' || bubbleType === 'PARK') {
+      console.log('bubbleType : ', bubbleType);
+    }
     if (content && content.length !== 0) {
       setHeader(content.header);
       const newContents = content.split('\n');
@@ -92,14 +69,18 @@ const BubbleType3 = ({ content }) => {
               <>
                 <BubbleValue>{item.location}</BubbleValue>
                 <BubbleValue>주소 : {item.address}</BubbleValue>
-                <BubbleValue>
-                  전화번호 :{' '}
-                  {item.phone === '정보 없음' ? (
-                    item.phone
-                  ) : (
-                    <PhoneNum href={`tel:${item.phone}`}>{item.phone}</PhoneNum>
-                  )}
-                </BubbleValue>
+                {bubbleType !== 'SHOPPING' && bubbleType !== 'PARK' && (
+                  <BubbleValue>
+                    전화번호 :{' '}
+                    {item.phone === '정보 없음' ? (
+                      item.phone
+                    ) : (
+                      <PhoneNum href={`tel:${item.phone}`}>
+                        {item.phone}
+                      </PhoneNum>
+                    )}
+                  </BubbleValue>
+                )}
                 {showContents.length - 1 !== index && <Divider />}
               </>
             ))}

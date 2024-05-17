@@ -13,7 +13,8 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { getUserInfo } from '../utils/handleUser';
 
-import { testFun } from './ComponentTest';
+import { googleTTS } from './ComponentTest';
+import { convertArrayToObjectList } from '../utils/handleChat';
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,7 @@ import {
   serviceRequest,
   weatherRequest,
   reverseQnaResponses,
+  parseNewsData,
 } from '../utils/handleChat';
 
 const ChatbotContainer = styled.div`
@@ -193,6 +195,7 @@ const Chatbot = () => {
         if (!isTimerFirst) {
           console.log('입력이 3초 동안 없어 음성 인식 중지');
           SpeechRecognition.stopListening();
+          addChat(transcript);
           resetTranscript();
           setSelectMode('select');
         }
@@ -452,6 +455,46 @@ const Chatbot = () => {
             : chat,
         ),
       }));
+      const gun = parseNewsData(updatedAnswer.answer);
+      if (
+        updatedAnswer.type === 'GENERAL' ||
+        updatedAnswer.type === 'WEATHER'
+      ) {
+        googleTTS(updatedAnswer.answer);
+      } else if (updatedAnswer.type === 'NEWS') {
+        let completeSentence = '';
+        const newsHeader = gun.header;
+        completeSentence += newsHeader + '\n';
+        const articles = gun.articles.slice(0, gun.articles.length / 2);
+        articles.map((article) => {
+          completeSentence += article.title + '\n';
+        });
+        completeSentence += '더 많은 뉴스를 보여드릴까요 ?';
+        googleTTS(completeSentence);
+      } else if (
+        updatedAnswer.type === 'PARK' ||
+        updatedAnswer.type === 'SHOPPING' ||
+        updatedAnswer.type === 'EDUCATION' ||
+        updatedAnswer.type === 'CARE' ||
+        updatedAnswer.type === 'BATH'
+      ) {
+        const spittedValue = updatedAnswer.answer.split('\n');
+        let completeSentence = '';
+        const otherHeader = spittedValue[0];
+        completeSentence += otherHeader + '\n';
+        const otherContents = convertArrayToObjectList(spittedValue.slice(1));
+        otherContents.map((content) => {
+          completeSentence += content.location + '\n';
+          completeSentence += '주소 ' + content.address + '\n';
+          if (
+            updatedAnswer.type !== 'SHOPPING' &&
+            updatedAnswer.type !== 'PARK'
+          ) {
+            completeSentence += '전화번호 ' + content.phone + '\n';
+          }
+        });
+        googleTTS(completeSentence);
+      }
       // scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
