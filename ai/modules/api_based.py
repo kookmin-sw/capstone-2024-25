@@ -68,8 +68,8 @@ def extract_news_category(api_key, query):
         # openAI api key 설정
         os.environ["OPENAI_API_KEY"] = api_key
 
-        # gpt-4 모델 설정
-        model = ChatOpenAI(model_name="gpt-4")
+        # gpt-3.5 모델 설정
+        model = ChatOpenAI(model_name="gpt-3.5-turbo")
 
         # 모델에 입력할 질문
         query = (f"""

@@ -1,7 +1,5 @@
 import os
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts.few_shot import FewShotPromptTemplate
-from langchain_core.prompts.prompt import PromptTemplate
 from config import API_KEY, DB_URI, NEWS_API_KEY, WEATHER_API_KEY
 from ai.modules.daily_conversation import handle_daily_conversation
 from ai.modules.data_based import handle_data_based
@@ -67,7 +65,7 @@ def classify_query(query):
         os.environ["OPENAI_API_KEY"] = API_KEY
 
         # gpt-4 모델 설정
-        model = ChatOpenAI(model_name="gpt-4")
+        model = ChatOpenAI(model_name="gpt-3.5-turbo")
 
         # 질문 설정 및 모델 호출
         # formatted_prompt = few_shot_prompt.format()
