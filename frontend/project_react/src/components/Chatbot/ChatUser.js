@@ -17,7 +17,7 @@ const ChatUser = ({ text, type, content }) => {
   return (
     <ChatContainer type={type}>
       <Profile type={'User'} />
-      <Bubble text={text} type={type} />
+      {text !== '' && <Bubble text={text} type={type} />}
     </ChatContainer>
   );
 };
