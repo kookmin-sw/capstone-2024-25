@@ -9,6 +9,7 @@ import {
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
 import { useAccessToken } from '../components/cookies';
+import { useLocation } from 'react-router-dom';
 
 const mapCategoryList = [
   [
@@ -30,7 +31,7 @@ export default function Nav5() {
   const [centerState, setCenterState] = useState({
     center: {
       lat: 37.61074948136638,
-      lng: 126.99701001237902
+      lng: 126.99701001237902,
     },
     errMsg: null,
     isLoading: true,
@@ -44,9 +45,13 @@ export default function Nav5() {
   const [markerInfo, setMarkerInfo] = useState();
   const accessToken = useAccessToken();
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
+  const location = useLocation();
 
   // 지도 초기화
   useEffect(() => {
+    if (location.state) {
+      console.log('location.state : ', location.state);
+    }
     SetCurrentPosition();
   }, []);
 
@@ -96,7 +101,10 @@ export default function Nav5() {
         const response = await mapApi.getMapMarkers(accessToken, currentBounds);
         setMapTags(response.data);
       } catch (error) {
-        console.error('마커를 서버로부터 받아오는 데에 에러 발생',error.response.data.code);
+        console.error(
+          '마커를 서버로부터 받아오는 데에 에러 발생',
+          error.response.data.code,
+        );
       }
     }
   }

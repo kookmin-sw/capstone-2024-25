@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { jobApis } from '../api/apis/jobApis';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const JobDetailContainer = styled.div`
   display: flex;
@@ -174,6 +174,7 @@ const JobDetailPage = () => {
 
   const getJobDetail = async () => {
     await jobApis.getJobDetail(jobId, accessToken).then((res) => {
+      console.log('res.data : ', res.data);
       setJobInfo(res.data);
       if (res.data.dday.startsWith('D')) {
         classifyDate(extractDay(res.data.dday));
@@ -210,10 +211,23 @@ const JobDetailPage = () => {
     }
   };
 
+  const clickMap = () => {
+    navigate('/map', {
+      state: {
+        jobId: jobInfo.id,
+        // password: password,
+      },
+    });
+  };
+
   return (
     <JobDetailContainer>
       <ButtonWrapper>
-        <MapButton>
+        <MapButton
+          onClick={() => {
+            clickMap();
+          }}
+        >
           <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
           지도 보기
         </MapButton>

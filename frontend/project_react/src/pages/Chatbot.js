@@ -431,6 +431,7 @@ const Chatbot = () => {
       ...prevChattingList,
       qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
+    scrollAfterSend();
 
     try {
       const response = await postChat(question);
@@ -450,6 +451,7 @@ const Chatbot = () => {
             : chat,
         ),
       }));
+      scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -468,6 +470,7 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
+      scrollAfterSend();
     } finally {
       scrollAfterSend();
     }
