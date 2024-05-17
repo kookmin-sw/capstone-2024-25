@@ -451,7 +451,7 @@ const Chatbot = () => {
             : chat,
         ),
       }));
-      scrollAfterSend();
+      // scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -470,7 +470,7 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
-      scrollAfterSend();
+      // scrollAfterSend();
     } finally {
       scrollAfterSend();
     }
