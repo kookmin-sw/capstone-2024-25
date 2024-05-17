@@ -18,16 +18,35 @@ const NewsChatContainer = styled.div`
   align-items: center;
 `;
 
-const ChatSystem = ({ content, type }) => {
+const ChatSystem = ({ content, type, chatImg }) => {
   const [tempList, setTempList] = useState([]);
   const [showNext, setShowNext] = useState(false);
+  const [bubbleContent, setBubbleContent] = useState(null);
+  const [bubbleType, setBubbleType] = useState('');
+  const [showBubble, setShowBubble] = useState(0);
 
   useEffect(() => {
-    if (content.type === 'NEWS' && content.answer.articles) {
-      const newTempList = content.answer.articles.slice(0, 3);
-      setTempList(newTempList);
+    console.log('ChatSystem content : ', content);
+    // console.log('ChatSystem content : ', typeof content);
+    console.log('ChatSystem type : ', type);
+    if (content.type === 'NEWS') {
+      const answerToJson = JSON.parse(content);
+      console.log('answerToJson : ', answerToJson);
+      console.log('answerToJson.articles : ', typeof answerToJson.header);
+      if (content.answer.articles) {
+        console.log('content.answer.articles : ', content.answer.articles);
+        const newTempList = content.answer.articles.slice(0, 3);
+        setTempList(newTempList);
+      }
     }
+
+    setBubbleContent(content);
+    setBubbleType(type);
   }, [content]);
+
+  useEffect(() => {
+    console.log('tempList : ', tempList);
+  }, [tempList]);
 
   const clickYes = () => {
     setTempList(content.answer.articles);
@@ -40,16 +59,16 @@ const ChatSystem = ({ content, type }) => {
 
   let BubbleComponent;
 
-  switch (type) {
+  switch (bubbleType) {
     case 'GENERAL':
     case 'WEATHER':
-      BubbleComponent = <BubbleType1 content={content.answer} />;
+      BubbleComponent = <BubbleType1 content={bubbleContent} />;
       break;
     case 'NEWS':
       BubbleComponent = (
         <NewsChatContainer>
           <BubbleType2
-            content={content.answer}
+            content={bubbleContent}
             showList={tempList}
             clickYes={clickYes}
             clickNo={clickNo}
@@ -59,12 +78,12 @@ const ChatSystem = ({ content, type }) => {
       );
       break;
     default:
-      BubbleComponent = <BubbleType3 content={content.answer} />;
+      BubbleComponent = <BubbleType3 content={bubbleContent} />;
   }
 
   return (
     <ChatContainer>
-      <Profile type={'System'} />
+      <Profile type={'System'} chatImg={chatImg} />
       {BubbleComponent}
     </ChatContainer>
   );

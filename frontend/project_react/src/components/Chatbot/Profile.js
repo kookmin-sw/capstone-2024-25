@@ -9,17 +9,23 @@ const ProfileImg = styled.div`
   background: url(${(props) => props.imgSrc}) no-repeat center/cover;
 `;
 
-const Profile = ({ type }) => {
+const Profile = ({ type, chatImg }) => {
   const [imgSrc, setImgSrc] = useState('');
-  const selectedAvatar = useStore((state) => state.selectedAvatar);
   const gender = useStore((state) => state.gender);
-
+  const selectedAvatar = useStore((state) => state.selectedAvatar);
   useEffect(() => {
     if (type === 'System') {
-      if (!selectedAvatar) {
-        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg');
+      if (!chatImg) {
+        // chatImg가 없을 때 ( 처음 )
+        if (selectedAvatar === 'BOY') {
+          setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.jpg');
+        } else {
+          setImgSrc(
+            process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.jpg',
+          );
+        }
       } else {
-        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.svg');
+        setImgSrc(chatImg);
       }
     } else {
       if (gender === 'MALE') {
@@ -28,7 +34,7 @@ const Profile = ({ type }) => {
         setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-female.jpg');
       }
     }
-  }, [type, selectedAvatar]);
+  }, [type, chatImg]);
   return <ProfileImg imgSrc={imgSrc} />;
 };
 export default Profile;

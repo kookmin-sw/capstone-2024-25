@@ -2,6 +2,10 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Button from '../Button';
 import useStore from '../../stores/store'; // 스토어 임포트
+import { memberApis } from '../../api/apis/memberApis';
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { getUserInfo } from '../../utils/handleUser';
 
 const customModalStyles = {
   overlay: {
@@ -58,7 +62,7 @@ const ModalContent = styled.div`
 `;
 
 const AvatarMale = styled.div`
-  background: url(${process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg'})
+  background: url(${process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.jpg'})
     no-repeat center fixed;
   ${({ selected }) =>
     selected &&
@@ -69,7 +73,7 @@ const AvatarMale = styled.div`
 `;
 const AvatarFemale = styled.div`
   background: url(${process.env.PUBLIC_URL +
-    '/images/Chatbot/avatar-female.svg'})
+    '/images/Chatbot/avatar-female.jpg'})
     no-repeat center fixed;
   ${({ selected }) =>
     selected &&
@@ -98,28 +102,46 @@ const ButtonWrapper = styled.div`
   gap: 8px;
 `;
 
-const ChatbotModalSecond = ({ isOpen, handlePrev, handleNext }) => {
-  const selectedAvatar = useStore((state) => state.selectedAvatar);
+const ChatbotModalSecond = ({ isOpen, handlePrev, setIsOpenSecond }) => {
+  const [selectAvatarGender, setSelectAvatarGender] = useState('BOY');
   const setSelectedAvatar = useStore((state) => state.setSelectedAvatar);
+  const [cookies] = useCookies(['accessToken']);
+  const accessToken = cookies.accessToken;
+
+  const handleNext = async () => {
+    const updateData = {
+      chatGender: selectAvatarGender,
+    };
+    await memberApis.updateImage(updateData, accessToken).then((res) => {
+      console.log(res);
+      setIsOpenSecond(false);
+      setSelectedAvatar(selectAvatarGender);
+    });
+    await getUserInfo(accessToken);
+  };
+
   const clickMale = () => {
-    setSelectedAvatar(0);
+    setSelectAvatarGender('BOY');
   };
   const clickFemale = () => {
-    setSelectedAvatar(1);
+    setSelectAvatarGender('GIRL');
   };
 
   return (
     <Modal isOpen={isOpen} style={customModalStyles}>
       <ModalTitle>올봄 챗봇의 캐릭터를 선택해주세요 !</ModalTitle>
       <ModalContent>
-        <AvatarMale onClick={() => clickMale()} selected={selectedAvatar === 0}>
-          {selectedAvatar === 1 && <Overlay />}
+        <AvatarMale
+          onClick={() => clickMale()}
+          selected={selectAvatarGender === 'BOY'}
+        >
+          {selectAvatarGender === 'GIRL' && <Overlay />}
         </AvatarMale>
         <AvatarFemale
           onClick={() => clickFemale()}
-          selected={selectedAvatar === 1}
+          selected={selectAvatarGender === 'GIRL'}
         >
-          {selectedAvatar === 0 && <Overlay />}
+          {selectAvatarGender === 'BOY' && <Overlay />}
         </AvatarFemale>
       </ModalContent>
       <ButtonWrapper>

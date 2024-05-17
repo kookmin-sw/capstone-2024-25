@@ -17,9 +17,9 @@ const Profile = ({ type }) => {
   useEffect(() => {
     if (type === 'System') {
       if (!selectedAvatar) {
-        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.svg');
+        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.jpg');
       } else {
-        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.svg');
+        setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.jpg');
       }
     } else {
       if (gender === 'MALE') {

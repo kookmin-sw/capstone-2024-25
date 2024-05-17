@@ -208,18 +208,18 @@ const JobDetailPage = () => {
   return (
     <JobDetailContainer>
       <ButtonWrapper>
+        <MapButton>
+          <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
+          지도 보기
+        </MapButton>
         <FloatingButton href={jobInfo.worknetUrl}>
-          <MapButton>
-            <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
-            지도 보기
-          </MapButton>
+          <ShowDetailButton>
+            <img
+              src={process.env.PUBLIC_URL + '/images/JobPage/show-detail.svg'}
+            />
+            상세 보기
+          </ShowDetailButton>
         </FloatingButton>
-        <ShowDetailButton>
-          <img
-            src={process.env.PUBLIC_URL + '/images/JobPage/show-detail.svg'}
-          />
-          상세 보기
-        </ShowDetailButton>
       </ButtonWrapper>
       <JobDetailHeader>
         <img src={process.env.PUBLIC_URL + '/images/JobPage/arrow-back.svg'} />

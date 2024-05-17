@@ -30,9 +30,10 @@ const BubbleType1 = ({ content }) => {
 
   useEffect(() => {
     if (content && content.length !== 0) {
+      console.log('BubbleType1 content : ', content);
       setShowContents(content);
     }
-  }, []);
+  }, [content]);
 
   return (
     <BubbleContainer>
@@ -42,7 +43,7 @@ const BubbleType1 = ({ content }) => {
           alt="spinner"
         />
       ) : (
-        <BubbleValue>{showContents}</BubbleValue>
+        <BubbleValue>{showContents.toString()}</BubbleValue>
       )}
     </BubbleContainer>
   );
