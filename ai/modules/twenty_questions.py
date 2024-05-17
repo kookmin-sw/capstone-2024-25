@@ -83,6 +83,13 @@ def verify_answer(solution, question, len_qnas):
     return False
 
 
+# 질문 수 계산 및 정답 검증 로직을 핸들링하는 함수
+def handle_game_progress(solution, qnas, question):
+    question_count = calculate_question_count(qnas)
+    is_correct = verify_answer(solution, question, question_count)
+    return question_count, is_correct
+
+
 # 사용자 질문에 대한 답변 생성 함수
 def generate_answer(api_key, solution, question):
     try:
@@ -112,18 +119,52 @@ def generate_answer(api_key, solution, question):
         return "죄송해요. 답변 처리 중 문제가 발생했어요. 다시 질문해주세요."
 
 
+# 힌트 생성 함수
+def generate_hint(api_key, solution):
+    try:
+        # openAI api key 설정
+        os.environ["OPENAI_API_KEY"] = api_key
+
+        # gpt-4 모델 설정
+        model = ChatOpenAI(model_name="gpt-4", temperature=1)
+
+        # 모델에 입력할 질문
+        hint_query = f"""
+                        너는 스무고개 게임의 출제자야. 정답은 '{solution}'야.
+                        참여자가 힌트를 요청했어. 이 힌트에 대한 답변을 생성해야 해:
+                        - 힌트는 정답과 직접적으로 관련된 정보를 제공해야 하며,
+                        - 정답을 직접적으로 밝히지 않으면서도 유용한 정보가 되어야 해.
+                        - 최대한 창의적으로 짧게 존댓말로 답변해줘.
+                      """
+
+        # 모델 답변 저장
+        hint = model.invoke(hint_query).content
+
+        return hint
+    except Exception:
+        return "죄송해요. 힌트 제공 중 문제가 발생했어요. 다시 시도해주세요."
+
+
 def handle_twenty_questions(api_key, solution, qnas, query):
+    question = query.replace(" ", "")
+    question = question.strip()
+
     # 게임 첫 시작일 경우, 모델이 정답 생성
     if solution == "" and qnas == [] and query == "":
         question_count = 20
         is_correct = False
         solution = generate_solution(api_key)
         answer = f"""스무번 안에 제가 생각한 {len(solution)}글자 단어를 맞춰보세요. 저는 예/아니오 로만 답변할 수 있어요. 만약 설명이 더 필요한 부분에 있다면 부연설명을 할 수도 있어요. \n 이제부터 스무고개를 시작할게요. 질문을 던져주세요!"""
+
     else:
-        question_count = calculate_question_count(qnas)
-        is_correct = verify_answer(solution, query, question_count)
-        solution = solution
-        answer = generate_answer(api_key, solution, query)
+        if "정답" in question:
+            answer = "죄송해요. 정답 관련 질문에는 대답해 드릴 수 없어요."
+        elif "힌트" in question:
+            answer = generate_hint(api_key, solution)
+        else:
+            answer = generate_answer(api_key, solution, question)
+
+        question_count, is_correct = handle_game_progress(solution, qnas, question)
 
     # 출력 파서 정의
     output_parser = JsonOutputParser(pydantic_object=DailyConversation)
@@ -143,4 +184,3 @@ def handle_twenty_questions(api_key, solution, qnas, query):
         return parsed_output
     except Exception as e:
         return f"파싱 에러 발생: {e}"
-
