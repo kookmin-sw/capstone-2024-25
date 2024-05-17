@@ -7,13 +7,13 @@ import java.util.List;
 
 // 응답 조회하기 위해 호출 - 2 (서버 -> AI)
 public record AnswerRequest(
-        List<QnaAndTypeResponse> qnas,
+        List<QnaAndTypeForAiResponse> qnas,
         String address,
         String gender,
         Boolean isGame,
         String question
 ) {
-    public static AnswerRequest from(Member member, QuestionRequest questionRequest, List<QnaAndTypeResponse> qnas) {
+    public static AnswerRequest from(Member member, QuestionRequest questionRequest, List<QnaAndTypeForAiResponse> qnas) {
         return new AnswerRequest(
                 qnas,
                 member.getAddress(), member.getGender().toString(),
