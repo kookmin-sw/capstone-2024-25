@@ -29,7 +29,6 @@ const ChatSystem = ({ content, type, chatImg }) => {
   useEffect(() => {
     if (content && type === 'NEWS') {
       const answerToJson = parseNewsData(content);
-      console.log('answerToJson : ', answerToJson);
       if (answerToJson.articles) {
         const newTempList = answerToJson.articles.slice(0, 3);
         setTempList(newTempList);
