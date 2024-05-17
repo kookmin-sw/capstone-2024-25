@@ -3,7 +3,8 @@ from ai.services.api_service import get_weather_data
 import os
 import json
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.pydantic_v1 import BaseModel, Field
@@ -40,7 +41,10 @@ def sort_shorten_news(news_api_key, page, category_eng):
                             article_details[key] = article[key]
                     # 뉴스 description 100자 이후 삭제 및 '...' 추가
                     if article["description"]:
-                        article["description"] = article["description"][:101] + "..."
+                        description = article["description"][:101] + "..."
+
+                    article_details["description"] = description
+
                     top_articles.append(article_details)
                 else:
                     break
@@ -110,8 +114,12 @@ def handle_news_api_based(api_key, news_api_key, query):
     # 뉴스 정렬 및 내용 정제
     articles = sort_shorten_news(news_api_key, "", category_eng)
 
+    # 한국 시간대로 현재 시간 가져오기
+    kst_now = datetime.now(ZoneInfo("Asia/Seoul"))
+
     # 챗봇 답변 앞부분 문자열
-    header = f"오늘 {datetime.today().strftime('%Y년 %m월 %d일')} {'주요' if category_kor == '전체' else category_kor} 뉴스를 알려드릴게요!"
+    header = f"오늘 {kst_now.strftime('%Y년 %m월 %d일')} {'주요' if category_kor == '전체' else category_kor} 뉴스를 알려드릴게요!"
+    print(header)
 
     # answer JSON 데이터 생성
     answer = {'header': header, 'articles': articles}
@@ -155,27 +163,39 @@ def get_base_date_time():
             2: 23, 5: 2, 8: 5, 11: 8, 14: 11, 17: 14, 20: 17, 23: 20
         }
 
+        # 한국 시간대로 현재 시간 가져오기
+        kst_now = datetime.now(ZoneInfo("Asia/Seoul"))  # ZoneInfo를 사용하여 한국 시간대 설정
+
         # 현재 시간 불러오기
-        now = datetime.now()
-        hour = now.hour
-        minute = now.minute
+        hour = kst_now.hour
+        minute = kst_now.minute
+        print(hour, minute)
 
         # 기본값으로 가장 늦은 시간 설정
         base_hour = 23
-        # base_time 설정
+
+        # base_date 기본 설정, 동일한 시간대 사용
+        base_date = kst_now.date()
+
         for start_hour, base in base_hours.items():
             if hour < start_hour or (hour == start_hour and minute < 10):
                 base_hour = base
+                if start_hour == 2 and base == 23:
+                    # 만약 start_hour가 2이고 base가 23인 경우, 하루 전 날짜를 사용
+                    base_date = base_date - timedelta(days=1)
                 break
 
         # 'base_hour'을 'base_time' 형식으로 변환
         base_time = f"{base_hour:02}00"
+        print(base_time)
 
-        # base_date 설정
-        base_date = datetime.today().strftime("%Y%m%d")
+        # base_date 설정, 한국 시간대의 날짜를 문자열로 변환
+        base_date = base_date.strftime("%Y%m%d")
+        print(base_date)
 
         return base_date, base_time
-    except Exception:
+    except Exception as e:
+        print("Error:", e)
         return None, None
 
 
