@@ -57,7 +57,6 @@ const StepId = ({ value, setValue, setIdPossible }) => {
       .catch((err) => {
         setErrorState(1);
         setIdPossible(false);
-        console.log('err : ', err);
       });
   };
   return (

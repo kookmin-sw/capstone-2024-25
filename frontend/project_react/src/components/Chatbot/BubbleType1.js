@@ -30,7 +30,6 @@ const BubbleType1 = ({ content }) => {
 
   useEffect(() => {
     if (content && content.length !== 0) {
-      console.log('BubbleType1 content : ', content);
       setShowContents(content);
     }
   }, [content]);
