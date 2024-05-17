@@ -49,7 +49,20 @@ const JobPageContent = styled.div`
   gap: 24px;
 `;
 
-const JobPageHeader = () => {
+const JobPageHeader = ({ jobName, setJobName, searchJob }) => {
+  const handleSearch = (e) => {
+    setJobName(e.target.value);
+  };
+
+  const clickSearch = async () => {
+    await searchJob();
+    setJobName('');
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  };
+
   return (
     <HeaderWrapper>
       <HeaderTitle>어르신 일자리</HeaderTitle>
@@ -57,8 +70,11 @@ const JobPageHeader = () => {
         <img
           src={process.env.PUBLIC_URL + '/images/JobPage/search.svg'}
           alt="search"
+          onClick={() => {
+            clickSearch();
+          }}
         />
-        <SearchInput placeholder="직종을 입력하세요" />
+        <SearchInput id="search-input" placeholder="직종을 입력하세요" />
       </SearchWrapper>
     </HeaderWrapper>
   );

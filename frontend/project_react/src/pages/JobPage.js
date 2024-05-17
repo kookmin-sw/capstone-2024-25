@@ -113,8 +113,16 @@ const JobPage = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const [page, setPage] = useState(1);
   const [sorted, setSorted] = useState(0);
+  const [jobName, setJobName] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const accessToken = cookies.accessToken;
+
+  const searchJob = async () => {
+    await jobApis.searchJob(jobName, page - 1, accessToken).then((res) => {
+      setJobList(res.data);
+      console.log('searchJob res.data : ', res.data);
+    });
+  };
 
   const getJobList = async () => {
     await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
@@ -161,7 +169,11 @@ const JobPage = () => {
   };
   return (
     <JobContainer>
-      <JobPageHeader />
+      <JobPageHeader
+        jobName={jobName}
+        setJobName={setJobName}
+        searchJob={searchJob}
+      />
       <JobPageContent>
         <JobDropdown
           toggleFilter={toggleFilter}
