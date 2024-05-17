@@ -17,6 +17,7 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
 const StepId = ({ value, setValue, setIdPossible }) => {

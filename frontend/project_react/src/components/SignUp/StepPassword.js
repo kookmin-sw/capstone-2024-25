@@ -21,6 +21,7 @@ const StepItem = styled.div`
 const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
+  font-weight: 600;
 `;
 
 const StepPassword = ({
@@ -79,7 +80,7 @@ const StepPassword = ({
   const checkPwList = [
     '비밀번호를 한 번 더 입력해주세요.',
     '비밀번호가 일치하지 않습니다.',
-    '비밀번호를 한 번 더 입력해주세요.',
+    '',
   ];
   const stateList = ['', 'error', 'success'];
 

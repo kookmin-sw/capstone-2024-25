@@ -128,6 +128,7 @@ const InputText = styled.input`
   outline: none;
   padding-left: 6px;
   font-size: 16px;
+  font-weight: 600;
   &::placeholder {
     color: #787878;
   }
@@ -877,9 +878,11 @@ const Chatbot = () => {
               />
               <InputText
                 type="text"
+                어
                 id="input-text"
                 onClick={handleViewportResize}
                 onChange={(e) => setUserText(e.target.value)}
+                placeholder="대화를 입력하세요"
               />
               {userText === '' ? (
                 <SendButton

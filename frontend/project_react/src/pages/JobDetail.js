@@ -30,7 +30,7 @@ const JobDetailButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 12px;
+  padding: 10px 12px;
   gap: 12px;
   color: #ffffff;
   border-radius: 32px;
@@ -42,6 +42,7 @@ const MapButton = styled(JobDetailButton)`
 
 const ShowDetailButton = styled(JobDetailButton)`
   background-color: #000000;
+  font-weight: 700;
 `;
 
 const JobDetailHeader = styled.div`
@@ -53,6 +54,7 @@ const JobDetailHeader = styled.div`
 
 const HeaderTitle = styled.span`
   font-size: 24px;
+  font-weight: 600;
 `;
 
 const JobDetailContent = styled.div`
@@ -71,6 +73,7 @@ const EmploymentTitle = styled.span`
   width: 100%;
   word-break: break-all;
   font-size: 20px;
+  font-weight: 700;
 `;
 
 const EmploymentInfo = styled.div`
@@ -104,7 +107,7 @@ const InfoItemContentHorizontal = styled(InfoItemContent)`
 const InfoItemTitle = styled.div`
   width: fit-content;
   padding: 4px 14px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 20px;
   color: var(--unselected-color);
   border: 2px solid var(--unselected-color);
@@ -139,7 +142,7 @@ const ContentItem = styled.div`
 
 const ContentTitle = styled.span`
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 const FloatingButton = styled.a`

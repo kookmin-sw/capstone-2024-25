@@ -15,6 +15,7 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
 const StepNum = ({ value, setValue, setNumPossible }) => {
@@ -50,7 +51,7 @@ const StepNum = ({ value, setValue, setNumPossible }) => {
   const checkNumList = [
     '예시) 01012345678',
     '전화번호를 올바르게 입력해주세요.',
-    '예시) 01012345678',
+    '',
     '숫자만 입력해주세요.',
   ];
   return (

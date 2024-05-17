@@ -17,6 +17,7 @@ const HeaderTitle = styled.div`
   padding: 24px 0;
   border-bottom: 1px solid var(--unselected-color);
   box-sizing: border-box;
+  font-weight: 700;
 `;
 
 const SearchWrapper = styled.div`

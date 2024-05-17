@@ -29,6 +29,7 @@ const StepItem = styled.div`
 const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
+  font-weight: 600;
 `;
 
 const CycleWrapper = styled.div`

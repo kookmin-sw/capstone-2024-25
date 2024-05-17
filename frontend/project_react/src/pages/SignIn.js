@@ -33,6 +33,7 @@ const FooterText = styled.div`
   font-size: 16px;
   color: var(--unselected-color);
   margin-top: 20px;
+  font-weight: 500;
 `;
 
 const SignInButton = styled.span`
@@ -48,7 +49,6 @@ const HorizontalLine = styled.div`
 
 const KakaoButton = styled.div`
   width: 100%;
-  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,6 +59,8 @@ const KakaoButton = styled.div`
   border-radius: 10px;
   font-size: 24px;
   position: relative;
+  font-weight: 600;
+  padding: 18px 0;
 `;
 
 const KakaoImage = styled.img`

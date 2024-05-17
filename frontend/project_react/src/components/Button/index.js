@@ -12,10 +12,12 @@ const sizes = {
 
 const heights = {
   Tall: css`
-    height: 60px;
+    padding: 18px 0;
+    //height: 60px;
   `,
   Short: css`
-    height: 40px;
+    padding: 6px 0;
+    //height: 40px;
   `,
 };
 
@@ -61,6 +63,7 @@ const ButtonStyled = styled.button`
       background-color: #8b8b8b;
       cursor: not-allowed;
     `}
+  font-weight: 700;
 `;
 
 const Button = ({ text, size, height, type, disabled, onClick, fontSize }) => {

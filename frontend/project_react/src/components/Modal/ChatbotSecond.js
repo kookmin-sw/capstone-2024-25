@@ -41,6 +41,7 @@ const customModalStyles = {
 const ModalTitle = styled.span`
   align-self: center;
   font-size: 20px;
+  font-weight: 600;
 `;
 
 const ModalContent = styled.div`
@@ -112,6 +113,7 @@ const ChatbotModalSecond = ({ isOpen, handlePrev, setIsOpenSecond }) => {
     const updateData = {
       chatGender: selectAvatarGender,
     };
+    console.log('selectAvatarGender : ', selectAvatarGender);
     await memberApis.updateImage(updateData, accessToken).then((res) => {
       setIsOpenSecond(false);
       setSelectedAvatar(selectAvatarGender);

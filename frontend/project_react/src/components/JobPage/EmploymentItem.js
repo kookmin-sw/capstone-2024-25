@@ -24,6 +24,7 @@ const EmploymentHeader = styled.div`
 const EmploymentTitle = styled.span`
   width: 100%;
   font-size: 20px;
+  font-weight: 700;
 `;
 
 const HorizontalLine = styled.div`
