@@ -26,7 +26,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private static final String LOCALHOST_FRONTEND = "http://localhost:3000";
     private static final String HTTPS_LOCALHOST_FRONTEND = "https://localhost:3000";
-//    private static final String PROD_SERVER = "https://allbom.com";
+    private static final String HTTPS_PROD_FRONTEND = "https://allbome-for-vercel.vercel.app";
+    private static final String PROD_SERVER = "https://allbom.site";
 
     private final MemberIdHolder memberIdHolder;
     private final RequestLogInterceptor requestLogInterceptor;
@@ -39,6 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         config.setAllowCredentials(true);
         config.addAllowedOrigin(LOCALHOST_FRONTEND);
         config.addAllowedOrigin(HTTPS_LOCALHOST_FRONTEND);
+        config.addAllowedOrigin(HTTPS_PROD_FRONTEND);
+        config.addAllowedOrigin(PROD_SERVER);
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.addExposedHeader(HttpHeaders.LOCATION);
