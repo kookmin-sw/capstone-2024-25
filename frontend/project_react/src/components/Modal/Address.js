@@ -2,6 +2,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
+import { expandRegionName } from '../../utils/handleAddress';
 
 const customModalStyles = {
   overlay: {
@@ -82,9 +83,13 @@ const AddressModal = ({
   }; // 스타일 정의 code
   const onCompletePost = async (data) => {
     setModalState(false);
-    setAddress(data.address);
+    const city = data.address.split(' ')[0];
+    const newAddress =
+      expandRegionName(city) + data.address.substr(city.length);
+    setAddress(newAddress);
+
     if (saveAddress) {
-      await saveAddress(data.address);
+      await saveAddress(newAddress);
     }
     closeModal();
   };
