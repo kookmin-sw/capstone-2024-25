@@ -95,9 +95,9 @@ def main(query_data: QueryData):
         elif category == "뉴스":
             response = handle_news_api_based(api_key, news_api_key, query_data.question)
         elif category == "날씨":
-            response = handle_weather_api_based(api_key, weather_api_key, query_data.gender, query_data.address)
+            response = handle_weather_api_based(api_key, weather_api_key, query_data.address)
         else:
-            response = handle_daily_conversation(api_key, query_data.question, query_data.gender, query_data.qnas)
+            response = handle_daily_conversation(api_key, query_data.question, query_data.qnas)
 
         return {"response": response}
     except Exception as e:
