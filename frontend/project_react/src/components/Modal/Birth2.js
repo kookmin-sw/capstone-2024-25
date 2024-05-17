@@ -135,10 +135,7 @@ const BirthModal = ({
   saveBirth,
   defaultDate,
 }) => {
-  useEffect(() => {
-    console.log('birth : ', birth);
-    console.log('defaultDate : ', defaultDate);
-  }, [birth, defaultDate]);
+  useEffect(() => {}, [birth, defaultDate]);
   const [selectedDay, setSelectedDay] = useState(birth);
 
   const [showYear, setShowYear] = useState(false);
