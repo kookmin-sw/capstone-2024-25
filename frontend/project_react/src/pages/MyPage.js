@@ -28,6 +28,7 @@ import {
   formatDate,
 } from '../utils/handleUser';
 import useStore from '../stores/store';
+import { expandRegionName } from '../utils/handleAddress';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -455,6 +456,7 @@ const MyPage = () => {
   };
 
   const saveAddress = async (address) => {
+    console.log('saveAddress address : ', address);
     await updateAddress(address, detailAddress);
   };
 
