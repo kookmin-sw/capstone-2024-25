@@ -145,7 +145,7 @@ export default function Nav5() {
           }}
           onTileLoaded={(map) => {
             console.log('지도 타일이 로드됐어요', currentBounds);
-            if (mapSizeLevel < 4) {
+            if (mapSizeLevel < 6) {
               fetchMarkers();
             }
           }}
@@ -160,7 +160,7 @@ export default function Nav5() {
           <MapMarker position={position ?? centerState.center} />
           <MapMarker position={centerState.center} />
           {!centerState.isLoading &&
-            mapSizeLevel < 4 &&
+            mapSizeLevel < 6 &&
             mapTags.map(
               (tag, index) =>
                 (selectedCategory === 'ALL' ||

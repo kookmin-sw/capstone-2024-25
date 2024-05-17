@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LayoutHome extends StatefulWidget {
   const LayoutHome({super.key});
@@ -41,6 +42,30 @@ class _LayoutHomeState extends State<LayoutHome> {
             ),
             onWebViewCreated: (controller) {
               webViewController = controller;
+            },
+            shouldOverrideUrlLoading: (controller, navigationAction) async {
+              var uri = navigationAction.request.url!;
+
+              if (![
+                "http",
+                "https",
+                "file",
+                "chrome",
+                "data",
+                "javascript",
+                "about"
+              ].contains(uri.scheme)) {
+                if (await canLaunchUrl(uri)) {
+                  // Launch the App
+                  await launchUrl(
+                    uri,
+                  );
+                  // and cancel the request
+                  return NavigationActionPolicy.CANCEL;
+                }
+              }
+
+              return NavigationActionPolicy.ALLOW;
             },
           ),
         ),
