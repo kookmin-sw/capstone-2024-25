@@ -225,7 +225,7 @@ export default function WordOrderGame() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '20px',
+            gap: '10px',
           }}
         >
           {hasFailed && (
