@@ -69,8 +69,16 @@ const ChatSystem = ({ content, type, chatImg }) => {
         </NewsChatContainer>
       );
       break;
-    default:
+    case 'PARK':
+    case 'SHOPPING':
+    case 'EDUCATION':
+    case 'CARE':
+    case 'BATH':
+    case 'RECUPERATION':
       BubbleComponent = <BubbleType3 content={bubbleContent} />;
+      break;
+    default:
+      BubbleComponent = <BubbleType1 content={bubbleContent} />;
   }
 
   return (

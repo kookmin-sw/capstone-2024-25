@@ -11,10 +11,10 @@ const PairContainer = styled.div`
   width: 100%;
 `;
 
-const ChatPair = ({ qnaPairs, chatImg }) => {
+const ChatPair = ({ qnaPairs, chatImg, isGame }) => {
   return (
     <PairContainer>
-      <ChatUser text={qnaPairs.question} />
+      <ChatUser text={qnaPairs.question} isGame={isGame} />
       <ChatSystem
         content={qnaPairs.answer}
         type={qnaPairs.type}

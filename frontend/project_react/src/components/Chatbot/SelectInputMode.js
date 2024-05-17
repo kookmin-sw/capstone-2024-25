@@ -36,12 +36,12 @@ const SelectInputMode = ({ setSelectMode, clickVoice }) => {
   return (
     <SelectWrapper>
       <SelectItem onClick={() => modeVoice()}>
-        <img src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'} />
+        <img src={process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'} />
         <ItemText>음성으로 입력하기</ItemText>
       </SelectItem>
       <SelectItem onClick={() => setSelectMode('keyboard')}>
         <img
-          src={process.env.PUBLIC_URL + 'images/Chatbot/keyboard-icon.svg'}
+          src={process.env.PUBLIC_URL + '/images/Chatbot/keyboard-icon.svg'}
         />
         <ItemText>자판으로 입력하기</ItemText>
       </SelectItem>

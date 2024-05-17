@@ -26,9 +26,9 @@ import { hasUnreliableEmptyValue } from '@testing-library/user-event/dist/utils'
 import {
   cultureRequest,
   newsRequest,
-  others,
   serviceRequest,
   weatherRequest,
+  reverseQnaResponses,
 } from '../utils/handleChat';
 
 const ChatbotContainer = styled.div`
@@ -53,7 +53,7 @@ const ChattingWrapper = styled.div`
   height: 100%;
 `;
 
-const CategoryWrapper = styled.div`
+export const CategoryWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -71,7 +71,7 @@ const BottomWrapper = styled.div`
   left: 0;
 `;
 
-const InputVoiceWrapper = styled.div`
+export const InputVoiceWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -85,25 +85,25 @@ const InputVoiceWrapper = styled.div`
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
-const MicImg = styled.img`
+export const MicImg = styled.img`
   min-width: 10%;
   max-width: 10%;
 `;
-const InputVoiceText = styled.span`
+export const InputVoiceText = styled.span`
   max-width: 80%;
   font-size: 16px;
   font-weight: bold;
   white-space: pre-wrap;
 `;
 
-const XImg = styled.img`
+export const XImg = styled.img`
   position: absolute;
   width: 20px;
   top: 12px;
   right: 12px;
 `;
 
-const ChatInputWrapper = styled.div`
+export const ChatInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -115,12 +115,12 @@ const ChatInputWrapper = styled.div`
   background-color: #ffffff;
 `;
 
-const XImage = styled.img`
+export const XImage = styled.img`
   width: 32px;
   height: 32px;
 `;
 
-const InputText = styled.input`
+export const InputText = styled.input`
   width: 100%;
   height: 36px;
   border: 1px solid #b4b4b4;
@@ -134,7 +134,7 @@ const InputText = styled.input`
   }
 `;
 
-const SendButton = styled.img`
+export const SendButton = styled.img`
   width: 32px;
   height: 32px;
 `;
@@ -264,7 +264,8 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        setChattingList(res.data);
+        const reverseList = reverseQnaResponses(res.data);
+        setChattingList(reverseList);
       })
       .catch((error) => {
         console.log(error.response);
