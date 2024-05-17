@@ -113,7 +113,6 @@ const ChatbotModalSecond = ({ isOpen, handlePrev, setIsOpenSecond }) => {
     const updateData = {
       chatGender: selectAvatarGender,
     };
-    console.log('selectAvatarGender : ', selectAvatarGender);
     await memberApis.updateImage(updateData, accessToken).then((res) => {
       setIsOpenSecond(false);
       setSelectedAvatar(selectAvatarGender);
@@ -123,9 +122,11 @@ const ChatbotModalSecond = ({ isOpen, handlePrev, setIsOpenSecond }) => {
 
   const clickMale = () => {
     setSelectAvatarGender('BOY');
+    setSelectedAvatar(selectAvatarGender);
   };
   const clickFemale = () => {
     setSelectAvatarGender('GIRL');
+    setSelectedAvatar(selectAvatarGender);
   };
 
   return (

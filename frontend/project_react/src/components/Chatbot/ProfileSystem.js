@@ -16,7 +16,7 @@ const Profile = ({ type }) => {
 
   useEffect(() => {
     if (type === 'System') {
-      if (!selectedAvatar) {
+      if (selectedAvatar === 'BOY') {
         setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-male.jpg');
       } else {
         setImgSrc(process.env.PUBLIC_URL + '/images/Chatbot/avatar-female.jpg');
