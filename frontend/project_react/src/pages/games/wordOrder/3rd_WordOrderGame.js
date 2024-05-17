@@ -8,7 +8,6 @@ import { useAccessToken } from '../../../components/cookies';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion, useAnimation } from 'framer-motion';
 import Swal from 'sweetalert2';
-import { set } from 'date-fns';
 
 export default function WordOrderGame() {
   const navigate = useNavigate();
@@ -85,6 +84,7 @@ export default function WordOrderGame() {
         showCancelButton: true,
         confirmButtonText: '네',
         cancelButtonText: '아니요',
+        allowOutsideClick: false,
       });
       if (tmp.isConfirmed) {
         const res = await wordOrderApis.postUserSkip(
@@ -120,11 +120,12 @@ export default function WordOrderGame() {
           showDenyButton: true,
           denyButtonText: '그만하기',
           confirmButtonText: '다음 문제',
+          allowOutsideClick: false,
         }).then((result) => {
           if (result.isConfirmed) {
             startNewGame();
           } else if (result.isDenied) {
-            navigate('/game/wordOrderSelection');
+            navigate(-1, {replace: true});
           }
         });
       } else {
@@ -132,6 +133,7 @@ export default function WordOrderGame() {
           icon: 'error',
           title: '틀렸습니다!',
           text: '다시 시도해보세요.',
+          allowOutsideClick: false,
         }).then(() => {
           setHasFailed(true);
           setUserSelection([]);
@@ -180,7 +182,7 @@ export default function WordOrderGame() {
               ))}
             </UserSelectWords>
             <motion.img
-              src="/images/reset.svg"
+              src="/images/game/reset.svg"
               style={{ position: 'absolute', right: '10px', bottom: '10px' }}
               alt="reset"
               onClick={() => {
@@ -303,12 +305,6 @@ const UserSelectionDiv = styled.div`
 const WordButtons = styled.div`
   width: 100%;
   gap: 4px;
-`;
-
-const Word = styled.p`
-  padding: 0px;
-  margin: 0px;
-  font-size: 22px;
 `;
 
 const Button = styled(motion.button)`

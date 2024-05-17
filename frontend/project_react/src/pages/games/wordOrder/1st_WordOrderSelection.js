@@ -49,7 +49,7 @@ export default function WordOrderSelection() {
             두뇌 향상 게임
           </h2>
           <img
-            src="/images/bulb.svg"
+            src="/images/game/bulb.svg"
             style={{ width: '28px', height: '28px' }}
           />
         </div>

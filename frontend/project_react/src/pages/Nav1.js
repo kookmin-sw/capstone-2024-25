@@ -11,14 +11,22 @@ export default function Nav1() {
     <Frame>
       <TitleHeader title={'두뇌 향상 게임'} showDivider={true}></TitleHeader>
       <GameBox>
-        <img src="/images/bulb.svg" style={{width: "48px", height: "48px"}}/>
+        <img
+          src="/images/game/bulb.svg"
+          style={{ width: '48px', height: '48px' }}
+          alt="전구"
+        />
         <GameInfo>
           정기적인 두뇌 활동은 뇌 건강 유지에 필수적입니다. 게임을 통해 두뇌를
           자극하고 문제해결력, 기억력, 주의력을 향상시켜 보세요!
         </GameInfo>
         <GameDiv>
           <GameButton onClick={() => navigate('wordOrderSelection')}>
-            문장 순서 맞추기
+            <img
+              src="/images/game/wordorder1.png"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px'}}
+              alt="문장 순서 맞추기"
+            />
           </GameButton>
           <div
             style={{
@@ -31,13 +39,19 @@ export default function Nav1() {
               문장 순서 맞추기
             </h2>
             <p style={{ fontSize: '16px', margin: '0px', textAlign: 'right' }}>
-            단어를 조합하여<br/>올바른 문장을 만드세요
+              단어를 조합하여
+              <br />
+              올바른 문장을 만드세요
             </p>
           </div>
         </GameDiv>
         <GameDiv>
           <GameButton onClick={() => navigate('twentyHeadsIntro')}>
-            스무고개
+            <img
+              src="images/game/twentyheads1.png"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px'}}
+              alt="스무고개"
+            />
           </GameButton>
           <div
             style={{
@@ -50,13 +64,19 @@ export default function Nav1() {
               스무고개
             </h2>
             <p style={{ fontSize: '16px', margin: '0px', textAlign: 'right' }}>
-            20개의 질문 만으로 AI가<br/>생각한 단어를 맞혀보세요
+              20개의 질문 만으로 AI가
+              <br />
+              생각한 단어를 맞혀보세요
             </p>
           </div>
         </GameDiv>
         <GameDiv>
           <GameButton onClick={() => navigate('crosswordIntro')}>
-            스무고개
+            <img
+              src="images/game/crossword1.png"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
+              alt="십자말풀이"
+            />
           </GameButton>
           <div
             style={{
@@ -124,7 +144,8 @@ const GameButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: rgb(102, 102, 102) 0px 8px 6px -6px;
+  
+  box-shadow: rgb(102, 102, 102) 0px 8px 20px -10px;
   --darkreader-inline-boxshadow: #4d5356 0px 8px 6px -6px;
   transition: transform 0.3s;
 

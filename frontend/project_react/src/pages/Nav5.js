@@ -94,10 +94,9 @@ export default function Nav5() {
     if (currentBounds) {
       try {
         const response = await mapApi.getMapMarkers(accessToken, currentBounds);
-        // console.log('응답', response.data);
         setMapTags(response.data);
       } catch (error) {
-        console.error('에러요', error.response.data.code);
+        console.error('마커를 서버로부터 받아오는 데에 에러 발생',error.response.data.code);
       }
     }
   }
@@ -105,7 +104,7 @@ export default function Nav5() {
   async function fetchMarkerInfo(type, id) {
     try {
       const response = await mapApi.getMarkerInfo(accessToken, type, id);
-      console.log('응답', response.data);
+      console.log('마커정보:', response.data);
       if (response.data.type === 'JOB') {
         setMarkerInfo({
           id: response.data.id,
@@ -123,7 +122,7 @@ export default function Nav5() {
         });
       }
     } catch (error) {
-      console.error('에러요', error.response.data.code);
+      console.error('마커 세부 정보 에러', error.response.data.code);
     }
   }
 
@@ -157,17 +156,8 @@ export default function Nav5() {
               ne: bounds.getNorthEast().toString(),
             });
           }}
-          onClick={(_, mouseEvent) => {
-            const latlng = mouseEvent.latLng;
-            setPosition({
-              lat: latlng.getLat(),
-              lng: latlng.getLng(),
-            });
-          }}
         >
           <MapMarker position={position ?? centerState.center} />
-          <MapTypeControl position={'TOPRIGHT'} />
-          <ZoomControl position={'RIGHT'} />
           <MapMarker position={centerState.center} />
           {!centerState.isLoading &&
             mapSizeLevel < 4 &&
@@ -233,18 +223,6 @@ export default function Nav5() {
           ))}
         </CategoryButtonDiv>
       </CategoryFrame>
-      <button
-        onClick={SetCurrentPosition}
-        style={{
-          width: '100%',
-          height: '100px',
-          zIndex: 3,
-          position: 'absolute',
-          bottom: '250px',
-        }}
-      >
-        현재 위치로 이동
-      </button>
       {markerInfo && (
         <MarkerInfo>
           <MarkerInfoLeft>
