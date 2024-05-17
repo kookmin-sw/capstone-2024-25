@@ -4,6 +4,7 @@ import BubbleType2 from './BubbleType2';
 import BubbleType3 from './BubbleType3';
 import Profile from './Profile';
 import { useEffect, useState } from 'react';
+import { parseNewsData } from '../../utils/handleChat';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -26,20 +27,22 @@ const ChatSystem = ({ content, type, chatImg }) => {
   const [showBubble, setShowBubble] = useState(0);
 
   useEffect(() => {
-    if (content.type === 'NEWS') {
-      const answerToJson = JSON.parse(content);
-      if (content.answer.articles) {
-        const newTempList = content.answer.articles.slice(0, 3);
+    if (content && type === 'NEWS') {
+      const answerToJson = parseNewsData(content);
+      console.log('answerToJson : ', answerToJson);
+      if (answerToJson.articles) {
+        const newTempList = answerToJson.articles.slice(0, 3);
         setTempList(newTempList);
       }
     }
-
     setBubbleContent(content);
     setBubbleType(type);
   }, [content]);
 
   const clickYes = () => {
-    setTempList(content.answer.articles);
+    const answerToJson = parseNewsData(content);
+
+    setTempList(answerToJson.articles);
     setShowNext(true);
   };
 

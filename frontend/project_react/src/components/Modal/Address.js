@@ -83,10 +83,13 @@ const AddressModal = ({
   }; // 스타일 정의 code
   const onCompletePost = async (data) => {
     setModalState(false);
+    console.log('data.address : ', data.address);
     const city = data.address.split(' ')[0];
+    console.log('city : ', city);
     const newAddress =
       expandRegionName(city) + data.address.substr(city.length);
     setAddress(newAddress);
+    console.log('newAddress : ', newAddress);
 
     if (saveAddress) {
       await saveAddress(newAddress);

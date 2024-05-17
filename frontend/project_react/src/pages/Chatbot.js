@@ -168,6 +168,11 @@ const Chatbot = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState('');
   const setGender = useStore((state) => state.setGender);
+
+  useEffect(() => {
+    console.log('gugu : ', gugu);
+  }, [gugu]);
+
   const {
     transcript,
     listening,
@@ -266,7 +271,6 @@ const Chatbot = () => {
     await chatbotApis
       .getChatList(accessToken)
       .then((res) => {
-        console.log('챗봇 답변 : ', res.data);
         setGugu(res.data);
       })
       .catch((error) => {
@@ -566,19 +570,22 @@ const Chatbot = () => {
 
     try {
       const response = await postChat(question);
-      const updatedAnswer = response.data.answer; // 서버에서 받은 응답
-      console.log('updatedAnswer : ', updatedAnswer);
+      const updatedAnswer = response.data; // 서버에서 받은 응답
 
       // 응답을 받아 기존 채팅의 답변을 업데이트
       setGugu((prevGugu) => ({
         ...prevGugu,
         qnaResponses: prevGugu.qnaResponses.map((chat, index) =>
           index === prevGugu.qnaResponses.length - 1
-            ? { ...chat, answer: updatedAnswer, isLoading: false }
+            ? {
+                ...chat,
+                answer: updatedAnswer.answer,
+                type: updatedAnswer.type,
+                isLoading: false,
+              }
             : chat,
         ),
       }));
-      // scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -597,11 +604,15 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
+    } finally {
+      scrollAfterSend();
     }
 
     setUserText('');
-    // const inputUserText = document.getElementById('input-text');
-    // inputUserText.value = '';
+    const inputUserText = document.getElementById('input-text');
+    if (inputUserText) {
+      inputUserText.value = '';
+    }
 
     await scrollAfterSend();
   };

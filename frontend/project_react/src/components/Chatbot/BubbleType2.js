@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import NewsItem from './NewsItem';
 import BubbleMoreNews from './BubbleMoreNews';
+import { parseNewsData } from '../../utils/handleChat';
 
 const BubbleContainer = styled.div`
   display: flex;
@@ -38,7 +39,10 @@ const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
 
   useEffect(() => {
     if (content && content.length !== 0) {
-      setHeader(content.header);
+      const parsedData = parseNewsData(content);
+      // console.log('parseNewsData : ', parseNewsData(content));
+      setHeader(parsedData.header);
+      // console.log('showList : ', showList);
       setContents(showList);
     }
   }, [content, showList]);
