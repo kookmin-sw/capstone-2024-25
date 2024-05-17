@@ -83,6 +83,7 @@ export default function Nav1() {
               display: 'flex',
               justifyContent: 'space-between',
               padding: '2px',
+              marginBottom: '20px',
             }}
           >
             <h2 style={{ fontSize: '20px', fontWeight: '700', margin: '0px' }}>

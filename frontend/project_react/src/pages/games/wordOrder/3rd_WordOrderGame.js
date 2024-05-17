@@ -192,7 +192,7 @@ export default function WordOrderGame() {
               animate={controls}
             />
           </UserSelectionDiv>
-          <h2 style={{ fontSize: '20px', fontWeight: '300', margin: '0px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '300', margin: '8px' }}>
             <span style={{ fontSize: '24px' }}>어휘</span>를 선택하여{' '}
             <span style={{ fontSize: '24px' }}>문장</span>을 완성하세요
           </h2>
@@ -225,7 +225,7 @@ export default function WordOrderGame() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '20px',
+            gap: '10px',
           }}
         >
           {hasFailed && (
@@ -278,7 +278,7 @@ const GameContent = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 20px;
-  gap: 20px;
+  gap: 10px;
 `;
 
 const UserSelectWords = styled.div`
