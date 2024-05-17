@@ -350,12 +350,12 @@ const MyPage = () => {
   useEffect(() => {
     if (gender === 'MALE') {
       setProfileImg(
-        process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.svg',
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.jpg',
       );
       setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-male.svg');
     } else {
       setProfileImg(
-        process.env.PUBLIC_URL + '/images/MyPage/profile-user-female.svg',
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-female.jpg',
       );
       setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-female.svg');
     }

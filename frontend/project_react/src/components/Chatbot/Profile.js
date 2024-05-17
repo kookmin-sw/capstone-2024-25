@@ -29,9 +29,13 @@ const Profile = ({ type, chatImg }) => {
       }
     } else {
       if (gender === 'MALE') {
-        setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-male.jpg');
+        setImgSrc(
+          process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.jpg',
+        );
       } else {
-        setImgSrc(process.env.PUBLIC_URL + 'images/Chatbot/user-female.jpg');
+        setImgSrc(
+          process.env.PUBLIC_URL + 'images/MyPage/profile-user-female.jpg',
+        );
       }
     }
   }, [type, chatImg, selectedAvatar]);
