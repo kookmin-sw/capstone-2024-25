@@ -62,4 +62,15 @@ public class JobController implements JobControllerDocs{
         jobService.updateDday(job);
         return ResponseEntity.ok(JobDetailResponse.from(job));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<JobListResponse>> searchJobByOccupation(
+            @Auth Member member,
+            @RequestParam final String name,
+            Pageable pageable
+    ) {
+        List<JobListResponse> jobResponses = new ArrayList<>();
+        jobResponses = jobService.findJobsByOccupation(member.getProvince(), name, pageable);
+        return ResponseEntity.ok(jobResponses);
+    }
 }
