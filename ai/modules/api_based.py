@@ -102,7 +102,7 @@ def filter_news_type(category):
         "IT/과학": "technology",
         "세계": "world"
     }
-    return category_map.get(category, "분류되지 않은 카테고리")
+    return category_map.get(category, "전체")
 
 
 # 뉴스 API 기반 챗봇 답변 함수
