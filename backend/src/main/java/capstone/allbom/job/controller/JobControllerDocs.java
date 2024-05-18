@@ -5,6 +5,7 @@ import capstone.allbom.common.jwt.Auth;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.job.dto.JobDetailResponse;
 import capstone.allbom.job.dto.JobListResponse;
+import capstone.allbom.job.dto.JobResponse;
 import capstone.allbom.member.domain.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +34,7 @@ public interface JobControllerDocs {
                     content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
             )
     })
-    ResponseEntity<List<JobListResponse>> getJobs(
+    ResponseEntity<JobResponse> getJobs(
             final Member member,
             @Parameter(description = "정렬 유형 (0: 가까운 순, 1: 마감일자 순)", example = "0, 1")
             final Integer sorted,
@@ -59,7 +60,7 @@ public interface JobControllerDocs {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "일자리 직종명으로 검색 성공"),
     })
-    ResponseEntity<List<JobListResponse>> searchJobByOccupation(
+    ResponseEntity<JobResponse> searchJobByOccupation(
             final Member member,
             @Parameter(description = "직종명", example = "경비원")
             final String name,

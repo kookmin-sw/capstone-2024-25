@@ -9,6 +9,7 @@ import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.job.dto.JobDetailResponse;
 import capstone.allbom.job.dto.JobListResponse;
+import capstone.allbom.job.dto.JobResponse;
 import capstone.allbom.job.service.JobService;
 import capstone.allbom.member.domain.Member;
 import com.amazonaws.Response;
@@ -31,7 +32,7 @@ public class JobController implements JobControllerDocs{
     private final JobService jobService;
 
     @GetMapping
-    public ResponseEntity<List<JobListResponse>> getJobs(
+    public ResponseEntity<JobResponse> getJobs(
             @Auth Member member,
             @RequestParam final Integer sorted,
             Pageable pageable
@@ -50,7 +51,7 @@ public class JobController implements JobControllerDocs{
             throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
         }
 
-        return ResponseEntity.ok(jobResponses);
+        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
     }
 
     @GetMapping("/{jobId}")
@@ -64,13 +65,13 @@ public class JobController implements JobControllerDocs{
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<JobListResponse>> searchJobByOccupation(
+    public ResponseEntity<JobResponse> searchJobByOccupation(
             @Auth Member member,
             @RequestParam final String name,
             Pageable pageable
     ) {
         List<JobListResponse> jobResponses = new ArrayList<>();
         jobResponses = jobService.findJobsByOccupation(member.getProvince(), name, pageable);
-        return ResponseEntity.ok(jobResponses);
+        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
     }
 }
