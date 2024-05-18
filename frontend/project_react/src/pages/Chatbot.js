@@ -56,6 +56,9 @@ const ChattingWrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
+const DownPoint = styled.div`
+  height: 1px;
+`;
 
 export const CategoryWrapper = styled.div`
   display: flex;
@@ -156,7 +159,8 @@ const Chatbot = () => {
   const [keyboardOpened, setKeyboardOpened] = useState(false);
   const containerRef = useRef();
   const inputRef = useRef();
-  const footerRef = useRef();
+  const downRef = useRef();
+  const chatPage = useRef(1);
 
   const [chattingList, setChattingList] = useState({
     chatProfileImageUrl: '',
@@ -172,6 +176,7 @@ const Chatbot = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState('');
   const [isWaiting, setIsWaiting] = useState(false);
+  const [loadFirst, setLoadFirst] = useState(false);
 
   const setGender = useStore((state) => state.setGender);
 
@@ -199,7 +204,9 @@ const Chatbot = () => {
         if (!isTimerFirst) {
           console.log('입력이 3초 동안 없어 음성 인식 중지');
           SpeechRecognition.stopListening();
-          addChat(transcript);
+          if (!isWaiting) {
+            addChat(transcript);
+          }
           resetTranscript();
           setSelectMode('select');
         }
@@ -261,14 +268,13 @@ const Chatbot = () => {
   useEffect(() => {
     const chatWrapper = document.getElementById('chat-wrapper');
     if (chatWrapper) {
-      console.log('아래로 이동');
       chatWrapper.scrollTop = chatWrapper.scrollHeight;
     }
   }, []);
 
   const setChatList = async () => {
     await chatbotApis
-      .getChatList(accessToken)
+      .getChatList(accessToken, chatPage.current - 1)
       .then((res) => {
         const reverseList = reverseQnaResponses(res.data);
         setChattingList(reverseList);
@@ -282,6 +288,7 @@ const Chatbot = () => {
           setIsOpenFirst(true);
         }
       });
+    await setLoadFirst(true);
   };
   const postChat = async (data) => {
     try {
@@ -295,10 +302,12 @@ const Chatbot = () => {
   useEffect(() => {
     setChatList();
   }, []);
+
   useEffect(() => {
-    scrollAfterSend();
-    console.log(chattingList.length);
-  }, [chattingList.length]);
+    if (loadFirst) {
+      scrollDown();
+    }
+  }, [loadFirst]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -358,18 +367,24 @@ const Chatbot = () => {
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
-        // 날씨 선택 시 구현 추가
-        console.log('선택된 카테고리 타이틀 : ', category.title);
-        if (category.title === '날씨') {
-          const requestCategory = weatherRequest();
-          addChat(requestCategory);
+        if (category.selected === true) {
+          category.selected = false;
+          setShowSubCategory(!showSubCategory);
+        } else {
+          // 날씨 선택 시 구현 추가
+          setSelectedCategoryId(id);
+          console.log('선택된 카테고리 타이틀 : ', category.title);
+          if (category.title === '날씨') {
+            const requestCategory = weatherRequest();
+            if (!isWaiting) {
+              addChat(requestCategory);
+            }
+          }
+          category.selected = true;
+          setShowSubCategory(!showSubCategory);
         }
-        setSelectedCategoryId(id);
-        category.selected = true;
-        setShowSubCategory(!showSubCategory);
       } else {
         category.values.map((subCategory) => {
-          // setShowSubCategory(true);
           subCategory.selected = false;
         });
         category.selected = false;
@@ -396,8 +411,9 @@ const Chatbot = () => {
           } else if (category.title === '문화') {
             requestCategory = cultureRequest(subCategory.title);
           }
-
-          addChat(requestCategory);
+          if (!isWaiting) {
+            addChat(requestCategory);
+          }
 
           setSelectedSubCategoryId(id);
 
@@ -416,11 +432,15 @@ const Chatbot = () => {
   const scrollAfterSend = () => {
     const chatWrapper = document.getElementById('chat-wrapper');
     if (chatWrapper) {
-      console.log('아래로 이동');
       chatWrapper.scrollTop = chatWrapper.scrollHeight;
     }
   };
-
+  const scrollDown = () => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (downRef) {
+      chatWrapper.scrollTo(0, downRef.current?.offsetTop);
+    }
+  };
   const addChat = async (userQuestion) => {
     const question = {
       isGame: 'false',
@@ -434,13 +454,18 @@ const Chatbot = () => {
     };
 
     // 사용자가 입력한 채팅을 먼저 화면에 보여줌
-    setChattingList((prevChattingList) => ({
+    await setChattingList((prevChattingList) => ({
       ...prevChattingList,
       qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
     setIsWaiting(true);
-    scrollAfterSend();
 
+    setUserText('');
+    const inputUserText = document.getElementById('input-text');
+    if (inputUserText) {
+      inputUserText.value = '';
+    }
+    await scrollDown();
     try {
       const response = await postChat(question);
       const updatedAnswer = response.data; // 서버에서 받은 응답
@@ -503,7 +528,8 @@ const Chatbot = () => {
         googleTTS(completeSentence);
       }
       setIsWaiting(false);
-      scrollAfterSend();
+      // scrollAfterSend();
+      scrollDown();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -522,17 +548,14 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
-      scrollAfterSend();
+      // scrollAfterSend();
+      scrollDown();
       setIsWaiting(false);
     }
 
-    setUserText('');
-    const inputUserText = document.getElementById('input-text');
-    if (inputUserText) {
-      inputUserText.value = '';
-    }
+    scrollDown();
 
-    await scrollAfterSend();
+    // await scrollAfterSend();
   };
 
   /* 모바일 가상 키보드 start */
@@ -628,22 +651,15 @@ const Chatbot = () => {
   };
   const handleKeyboardVisibility = () => {
     const chattingWrapper = wrapperRef.current;
-    // const footer = footerRef.current;
-    const chatInput = inputRef.current;
     const currentHeight = window.visualViewport.height;
     // 키보드가 열렸다고 판단되면 스크롤을 막음
     if (currentHeight < originHeight) {
       setKeyboardOpened(true);
       window.scroll(0, 0);
-
-      // footer.style.display = 'none';
-      // chatInput.style.height = '80px';
       chattingWrapper.scrollTop = chattingWrapper.scrollHeight;
       setupEventListeners(); // 스크롤 방지 이벤트 리스너 설정
     } else {
       setKeyboardOpened(false);
-      // footer.style.display = 'block';
-      // chatInput.style.height = '158px';
       removeEventListeners(); // 스크롤 방지 이벤트 리스너 제거
     }
   };
@@ -690,23 +706,36 @@ const Chatbot = () => {
     };
   }, []);
 
+  const getNextList = async () => {
+    try {
+      const res = await chatbotApis.getChatList(
+        accessToken,
+        chatPage.current - 1,
+      );
+      const reverseList = reverseQnaResponses(res.data);
+
+      setChattingList((prev) => ({
+        ...prev,
+        qnaResponses: [...reverseList.qnaResponses, ...prev.qnaResponses],
+      }));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   useEffect(() => {
     const chatWrapper = document.getElementById('chat-wrapper');
     const gun = () => {
       if (chatWrapper) {
         if (chatWrapper.scrollTop === 0) {
-          console.log('위 도착');
-          // 채팅 리스트 페이지네이션에 사용. 중복 요청을 방지하기 위해 변수 하나 선언해서 useState 로 관리 필요해보임.
-          // console.log('chatWrapper.scrollTop : ', chatWrapper.scrollTop);
-          // console.log('chatWrapper.clientHeight : ', chatWrapper.clientHeight);
+          chatPage.current += 1;
+          getNextList();
         }
       }
     };
     if (chatWrapper) {
-      // console.log('chatWrapper : ', chatWrapper);
       chatWrapper.addEventListener('scroll', gun);
     } else {
-      // console.log('g,;g,;');
     }
     return () => {
       chatWrapper.removeEventListener('scroll', gun);
@@ -720,7 +749,8 @@ const Chatbot = () => {
       <ChatbotContainer ref={containerRef}>
         <ChatbotHeader
           onClick={() => {
-            navigate('/my-page');
+            // navigate('/my-page');
+            scrollDown();
           }}
         />
         <ChatbotModalFirst
@@ -748,10 +778,12 @@ const Chatbot = () => {
                   chatImg={chattingList.chatProfileImageUrl}
                 />
               ))}
+              <DownPoint ref={downRef} />
             </>
           ) : (
             <ChatSystem content={firstChat.answer} type={'GENERAL'} />
           )}
+
           <BottomWrapper ref={inputRef}>
             {selectMode === 'voice' && (
               <InputVoiceWrapper>
@@ -804,7 +836,7 @@ const Chatbot = () => {
                   onChange={(e) => setUserText(e.target.value)}
                   placeholder="대화를 입력하세요"
                 />
-                {userText === '' && !isWaiting ? (
+                {userText === '' || isWaiting ? (
                   <SendButton
                     src={
                       process.env.PUBLIC_URL +
