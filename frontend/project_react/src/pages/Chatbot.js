@@ -32,15 +32,17 @@ import {
   reverseQnaResponses,
   parseNewsData,
 } from '../utils/handleChat';
+import Layout from '../layouts/Layout';
 
 const ChatbotContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const ChattingWrapper = styled.div`
@@ -49,7 +51,7 @@ const ChattingWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px; // 나중에 ChatPair 로 옮길 예정
-  padding: 12px 24px 100px 24px;
+  padding: 12px 24px 120px 24px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -68,7 +70,7 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
 `;
@@ -250,7 +252,6 @@ const Chatbot = () => {
   });
 
   useEffect(() => {
-    // console.log('userName 변경 : ', userName);
     setFirstChat({
       answer: `안녕하세요. [${userName}]님! 올봄 챗봇입니다. 무엇을 도와드릴까요?`,
     });
@@ -715,112 +716,115 @@ const Chatbot = () => {
   /* 모바일 가상 키보드 end */
 
   return (
-    <ChatbotContainer ref={containerRef}>
-      <ChatbotHeader
-        onClick={() => {
-          navigate('/my-page');
-        }}
-      />
-      <ChatbotModalFirst
-        isOpen={isOpenFirst}
-        close={() => {
-          setIsOpenSecond(true);
-          setIsOpenFirst(false);
-        }}
-      />
-      <ChatbotModalSecond
-        isOpen={isOpenSecond}
-        setIsOpenSecond={setIsOpenSecond}
-        handlePrev={() => {
-          setIsOpenFirst(true);
-          setIsOpenSecond(false);
-        }}
-        handleNext={() => setIsOpenSecond(false)}
-      />
-      <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
-        {chattingList.qnaResponses.length !== 0 ? (
-          <>
-            {chattingList.qnaResponses.map((chat) => (
-              <ChatPair
-                qnaPairs={chat}
-                chatImg={chattingList.chatProfileImageUrl}
-              />
-            ))}
-          </>
-        ) : (
-          <ChatSystem content={firstChat.answer} type={'GENERAL'} />
-        )}
-        <BottomWrapper ref={inputRef}>
-          {selectMode === 'voice' && (
-            <InputVoiceWrapper>
-              <MicImg
-                src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
-              />
-              <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
-              <XImg
-                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => voiceXClick()}
-              />
-            </InputVoiceWrapper>
-          )}
-          {selectMode !== 'voice' && (
-            <CategoryWrapper>
-              {categoryList.map((category) => (
-                <Category
-                  parentCategoryId={category.id}
-                  key={category.id}
-                  text={category.title}
-                  selected={category.selected}
-                  color={'var(--primary-color)'}
-                  values={category.values}
-                  categoryClick={() => categoryClick(category.id)}
-                  subCategoryClick={subCategoryClick}
-                  showSubCategory={showSubCategory}
-                  setShowSubCategory={setShowSubCategory}
-                  unselectedColor={'var(--primary-color)'}
+    <Layout>
+      <ChatbotContainer ref={containerRef}>
+        <ChatbotHeader
+          onClick={() => {
+            navigate('/my-page');
+          }}
+        />
+        <ChatbotModalFirst
+          isOpen={isOpenFirst}
+          close={() => {
+            setIsOpenSecond(true);
+            setIsOpenFirst(false);
+          }}
+        />
+        <ChatbotModalSecond
+          isOpen={isOpenSecond}
+          setIsOpenSecond={setIsOpenSecond}
+          handlePrev={() => {
+            setIsOpenFirst(true);
+            setIsOpenSecond(false);
+          }}
+          handleNext={() => setIsOpenSecond(false)}
+        />
+        <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
+          {chattingList.qnaResponses.length !== 0 ? (
+            <>
+              {chattingList.qnaResponses.map((chat) => (
+                <ChatPair
+                  qnaPairs={chat}
+                  chatImg={chattingList.chatProfileImageUrl}
                 />
               ))}
-            </CategoryWrapper>
+            </>
+          ) : (
+            <ChatSystem content={firstChat.answer} type={'GENERAL'} />
           )}
-          {selectMode === 'select' && (
-            <SelectInputMode
-              setSelectMode={setSelectMode}
-              clickVoice={clickVoice}
-            />
-          )}
-          {selectMode === 'keyboard' && (
-            <ChatInputWrapper>
-              <XImage
-                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => setSelectMode('select')}
-              />
-              <InputText
-                type="text"
-                어
-                id="input-text"
-                onClick={handleViewportResize}
-                onChange={(e) => setUserText(e.target.value)}
-                placeholder="대화를 입력하세요"
-              />
-              {userText === '' && !isWaiting ? (
-                <SendButton
-                  src={
-                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
-                  }
+          <BottomWrapper ref={inputRef}>
+            {selectMode === 'voice' && (
+              <InputVoiceWrapper>
+                <MicImg
+                  src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
                 />
-              ) : (
-                <SendButton
-                  onClick={() => addChat(userText)}
-                  src={
-                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
-                  }
+                <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
+                <XImg
+                  src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                  onClick={() => voiceXClick()}
                 />
-              )}
-            </ChatInputWrapper>
-          )}
-        </BottomWrapper>
-      </ChattingWrapper>
-    </ChatbotContainer>
+              </InputVoiceWrapper>
+            )}
+            {selectMode !== 'voice' && (
+              <CategoryWrapper>
+                {categoryList.map((category) => (
+                  <Category
+                    parentCategoryId={category.id}
+                    key={category.id}
+                    text={category.title}
+                    selected={category.selected}
+                    color={'var(--primary-color)'}
+                    values={category.values}
+                    categoryClick={() => categoryClick(category.id)}
+                    subCategoryClick={subCategoryClick}
+                    showSubCategory={showSubCategory}
+                    setShowSubCategory={setShowSubCategory}
+                    unselectedColor={'var(--primary-color)'}
+                  />
+                ))}
+              </CategoryWrapper>
+            )}
+            {selectMode === 'select' && (
+              <SelectInputMode
+                setSelectMode={setSelectMode}
+                clickVoice={clickVoice}
+              />
+            )}
+            {selectMode === 'keyboard' && (
+              <ChatInputWrapper>
+                <XImage
+                  src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                  onClick={() => setSelectMode('select')}
+                />
+                <InputText
+                  type="text"
+                  어
+                  id="input-text"
+                  onClick={handleViewportResize}
+                  onChange={(e) => setUserText(e.target.value)}
+                  placeholder="대화를 입력하세요"
+                />
+                {userText === '' && !isWaiting ? (
+                  <SendButton
+                    src={
+                      process.env.PUBLIC_URL +
+                      'images/Chatbot/send-icon-off.svg'
+                    }
+                  />
+                ) : (
+                  <SendButton
+                    onClick={() => addChat(userText)}
+                    src={
+                      process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
+                    }
+                  />
+                )}
+              </ChatInputWrapper>
+            )}
+          </BottomWrapper>
+        </ChattingWrapper>
+      </ChatbotContainer>
+    </Layout>
   );
 };
 

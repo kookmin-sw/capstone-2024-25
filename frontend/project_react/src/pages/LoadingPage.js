@@ -23,7 +23,6 @@ const LoadingPage = () => {
   const kakaoLogin = async () => {
     await authApi.kakaoLogin(code.get('code')).then((res) => {
       setCookie('accessToken', res.data.accessToken);
-      console.log(res);
       if (res.data.hasEssentialInfo === false) {
         navigate('/sign-up', {
           state: {

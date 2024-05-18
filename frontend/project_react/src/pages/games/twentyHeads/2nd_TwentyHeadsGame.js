@@ -24,6 +24,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import { getUserInfo } from '../../../utils/handleUser';
+import Layout from '../../../layouts/Layout';
 
 export default function TwentyHeadsGame() {
   const navigate = useNavigate();
@@ -148,102 +149,108 @@ export default function TwentyHeadsGame() {
   }
 
   return (
-    <Frame>
-      <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
-      <AnswerDiv>
-        <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
-          정답:
-        </h1>
-        {gameAnswer &&
-          Array.from({ length: gameAnswer.length }).map((_, index) => (
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: index * 0.1 }}
-              key={index}
-              style={{
-                width: '44px',
-                height: '44px',
-                backgroundColor: '#cccccc',
-                borderRadius: '8px',
-              }}
-            ></motion.div>
-          ))}
-      </AnswerDiv>
-      <motion.p
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
-      >{`남은 질문 횟수: ${remainingQuestions}회`}</motion.p>
-      <ChatBotDiv>
-        <ChattingWrapper>
-          {chattingList.map((chat, index) => (
-            <ChatPair key={index} qnaPairs={chat} chatImg={avatarImg} />
-          ))}
+    <Layout>
+      <Frame>
+        <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
+        <AnswerDiv>
+          <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
+            정답:
+          </h1>
+          {gameAnswer &&
+            Array.from({ length: gameAnswer.length }).map((_, index) => (
+              <motion.div
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                key={index}
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  backgroundColor: '#cccccc',
+                  borderRadius: '8px',
+                }}
+              ></motion.div>
+            ))}
+        </AnswerDiv>
+        <motion.p
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
+        >{`남은 질문 횟수: ${remainingQuestions}회`}</motion.p>
+        <ChatBotDiv>
+          <ChattingWrapper>
+            {chattingList.map((chat, index) => (
+              <ChatPair key={index} qnaPairs={chat} chatImg={avatarImg} />
+            ))}
 
-          <BottomWrapper ref={inputRef}>
-            {selectMode === 'voice' && (
-              <InputVoiceWrapper>
-                <MicImg
-                  src={process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'}
-                />
-                <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
-                <XImg
-                  src={process.env.PUBLIC_URL + '/images/x-img.svg'}
-                  onClick={() => voiceXClick()}
-                />
-              </InputVoiceWrapper>
-            )}
-            {selectMode === 'select' && (
-              <SelectInputMode
-                setSelectMode={setSelectMode}
-                clickVoice={clickVoice}
-              />
-            )}
-            {selectMode === 'keyboard' && (
-              <ChatInputWrapper>
-                <XImage
-                  src={process.env.PUBLIC_URL + '/images/x-img.svg'}
-                  onClick={() => setSelectMode('select')}
-                />
-                <InputText
-                  type="text"
-                  어
-                  id="input-text"
-                  // onClick={handleViewportResize}
-                  onChange={(e) => setUserText(e.target.value)}
-                  placeholder="대화를 입력하세요"
-                />
-                {userText === '' ? (
-                  <SendButton
+            <BottomWrapper ref={inputRef}>
+              {selectMode === 'voice' && (
+                <InputVoiceWrapper>
+                  <MicImg
                     src={
-                      process.env.PUBLIC_URL +
-                      '/images/Chatbot/send-icon-off.svg'
+                      process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'
                     }
                   />
-                ) : (
-                  <SendButton
-                    // onClick={() => addChat(userText)}
-                    src={
-                      process.env.PUBLIC_URL +
-                      '/images/Chatbot/send-icon-on.svg'
-                    }
+                  <InputVoiceText>
+                    {transcript || inputVoiceInfo}
+                  </InputVoiceText>
+                  <XImg
+                    src={process.env.PUBLIC_URL + '/images/x-img.svg'}
+                    onClick={() => voiceXClick()}
                   />
-                )}
-              </ChatInputWrapper>
-            )}
-          </BottomWrapper>
-        </ChattingWrapper>
-      </ChatBotDiv>
-      <div style={{ width: '100%' }}>
-        <BottomButton
-          onClick={() => navigate(`/game/wordOrderGame/`, { replace: true })}
-        >
-          시작하기
-        </BottomButton>
-      </div>
-    </Frame>
+                </InputVoiceWrapper>
+              )}
+              {selectMode === 'select' && (
+                <SelectInputMode
+                  setSelectMode={setSelectMode}
+                  clickVoice={clickVoice}
+                />
+              )}
+              {selectMode === 'keyboard' && (
+                <ChatInputWrapper>
+                  <XImage
+                    src={process.env.PUBLIC_URL + '/images/x-img.svg'}
+                    onClick={() => setSelectMode('select')}
+                  />
+                  <InputText
+                    type="text"
+                    어
+                    id="input-text"
+                    // onClick={handleViewportResize}
+                    onChange={(e) => setUserText(e.target.value)}
+                    placeholder="대화를 입력하세요"
+                  />
+                  {userText === '' ? (
+                    <SendButton
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/images/Chatbot/send-icon-off.svg'
+                      }
+                    />
+                  ) : (
+                    <SendButton
+                      // onClick={() => addChat(userText)}
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/images/Chatbot/send-icon-on.svg'
+                      }
+                    />
+                  )}
+                </ChatInputWrapper>
+              )}
+            </BottomWrapper>
+          </ChattingWrapper>
+        </ChatBotDiv>
+        <div style={{ width: '100%' }}>
+          <BottomButton
+            onClick={() => navigate(`/game/wordOrderGame/`, { replace: true })}
+          >
+            시작하기
+          </BottomButton>
+        </div>
+      </Frame>
+    </Layout>
   );
 }
 

@@ -6,6 +6,7 @@ import BottomButton from '../../../components/Game/bottomButton';
 import { motion, transform } from 'framer-motion';
 import { crossWordData } from './crossWordData';
 import { set } from 'date-fns';
+import Layout from '../../../layouts/Layout';
 
 export default function CrossWordGame() {
   const [crosswordArr, setCrosswordArr] = useState([]);
@@ -95,6 +96,7 @@ export default function CrossWordGame() {
   }, []);
 
   return (
+  <Layout>
     <Frame>
       <TitleHeader showBackButton={true} title={'십자말풀이'}></TitleHeader>
       <SquareWrapper ref={parentRef}>
@@ -240,6 +242,7 @@ export default function CrossWordGame() {
         </WordSegDiv>
       </SquareWrapper>
     </Frame>
+  </Layout>
   );
 }
 

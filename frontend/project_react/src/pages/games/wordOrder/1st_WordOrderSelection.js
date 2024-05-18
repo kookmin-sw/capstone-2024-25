@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import { useAccessToken } from '../../../components/cookies';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import Layout from '../../../layouts/Layout';
 
 const sentenceCategories = [
   ['문학', 'literature'],
@@ -41,61 +42,63 @@ export default function WordOrderSelection() {
   }
 
   return (
-    <Frame>
-      <TitleHeader showBackButton={true}/>
-      <TitleDiv>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '400', margin: '0px' }}>
-            두뇌 향상 게임
-          </h2>
-          <img
-            src="/images/game/bulb.svg"
-            style={{ width: '28px', height: '28px' }}
-          />
-        </div>
-        <h1 style={{ fontSize: '36px', fontWeight: '600', margin: '0px' }}>
-          문장 순서 맞추기
-        </h1>
-      </TitleDiv>
-      <CagegoryListBox>
-        <CategoryList>
-          {sentenceCategories.map((category, index) => (
-            <CategoryButton
-              key={index}
-              onClick={() => navigate(`/game/wordOrderIntro/${category}`)}
-            >
-              <h2
-                style={{ fontSize: '36px', fontWeight: '500', margin: '0px' }}
+    <Layout>
+      <Frame>
+        <TitleHeader showBackButton={true} />
+        <TitleDiv>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: '400', margin: '0px' }}>
+              두뇌 향상 게임
+            </h2>
+            <img
+              src="/images/game/bulb.svg"
+              style={{ width: '28px', height: '28px' }}
+            />
+          </div>
+          <h1 style={{ fontSize: '36px', fontWeight: '600', margin: '0px' }}>
+            문장 순서 맞추기
+          </h1>
+        </TitleDiv>
+        <CagegoryListBox>
+          <CategoryList>
+            {sentenceCategories.map((category, index) => (
+              <CategoryButton
+                key={index}
+                onClick={() => navigate(`/game/wordOrderIntro/${category}`)}
               >
-                {category[0]}
-              </h2>
-              <CircularProgressbar
-                value={progress[category[1]]}
-                text={`${progress[category[1]]}%`}
-                strokeWidth={12}
-                styles={{
-                  root: { height: '54px', width: '54px' },
-                  path: {
-                    stroke: '#4fce84',
-                    strokeLinecap: 'round',
-                    transition: 'stroke-dashoffset 0.5s ease 0s',
-                  },
-                  trail: {
-                    stroke: '#d7d7d7',
-                  },
-                  text: {
-                    fill: `#333333`,
-                    fontSize: '28px',
-                    dominantBaseline: 'middle', // Add this
-                    textAnchor: 'middle', // Add this
-                  },
-                }}
-              />
-            </CategoryButton>
-          ))}
-        </CategoryList>
-      </CagegoryListBox>
-    </Frame>
+                <h2
+                  style={{ fontSize: '36px', fontWeight: '500', margin: '0px' }}
+                >
+                  {category[0]}
+                </h2>
+                <CircularProgressbar
+                  value={progress[category[1]]}
+                  text={`${progress[category[1]]}%`}
+                  strokeWidth={12}
+                  styles={{
+                    root: { height: '54px', width: '54px' },
+                    path: {
+                      stroke: '#4fce84',
+                      strokeLinecap: 'round',
+                      transition: 'stroke-dashoffset 0.5s ease 0s',
+                    },
+                    trail: {
+                      stroke: '#d7d7d7',
+                    },
+                    text: {
+                      fill: `#333333`,
+                      fontSize: '28px',
+                      dominantBaseline: 'middle', // Add this
+                      textAnchor: 'middle', // Add this
+                    },
+                  }}
+                />
+              </CategoryButton>
+            ))}
+          </CategoryList>
+        </CagegoryListBox>
+      </Frame>
+    </Layout>
   );
 }
 
