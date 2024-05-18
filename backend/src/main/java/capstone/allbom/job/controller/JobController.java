@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class JobController implements JobControllerDocs{
             Pageable pageable
     ) {
         List<JobListResponse> jobResponses = new ArrayList<>();
+        Long totalSize = jobService.getTotalSize(member.getProvince());
 
         log.info("pageable={}", pageable);
 
@@ -51,7 +54,7 @@ public class JobController implements JobControllerDocs{
             throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
         }
 
-        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
+        return ResponseEntity.ok(JobResponse.from(member, jobResponses, totalSize));
     }
 
     @GetMapping("/{jobId}")
@@ -70,8 +73,11 @@ public class JobController implements JobControllerDocs{
             @RequestParam final String name,
             Pageable pageable
     ) {
+        String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
         List<JobListResponse> jobResponses = new ArrayList<>();
-        jobResponses = jobService.findJobsByOccupation(member.getProvince(), name, pageable);
-        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
+        jobResponses = jobService.findJobsByOccupation(member.getProvince(), decodedName, pageable);
+        Long totalSize = jobService.getTotalSizeOrderByOccupation(member.getProvince(), decodedName);
+
+        return ResponseEntity.ok(JobResponse.from(member,jobResponses, totalSize));
     }
 }
