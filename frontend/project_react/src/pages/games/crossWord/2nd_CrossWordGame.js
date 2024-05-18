@@ -96,30 +96,34 @@ export default function CrossWordGame() {
   }, []);
 
   useEffect(() => {
-    crosswordArr.forEach((row, rowIndex) => {
-      row.forEach((item, colIndex) => {
-        console.log('ee',item[1])
-        if (!item[1] || item[1] === '') {
-          return;
+    if (crosswordArr.length === 0) return;
+    let isEnd = true;
+    for (let i = 0; i < 7; i++) {
+      for (let j = 0; j < 7; j++) {
+        if (crosswordArr[i][j] !== "" && crosswordArr[i][j][1] === '') {
+          isEnd = false;
+          break;
+        }
+      }
+    }
+
+    if (isEnd) {
+      // 모든 단어를 맞추면 완료 메시지를 띄웁니다.
+      Swal.fire({
+        icon: 'success',
+        title: '정답입니다!',
+        showDenyButton: true,
+        denyButtonText: '그만하기',
+        confirmButtonText: '다음 문제',
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log('다음 문제로 이동');
+        } else if (result.isDenied) {
+          navigate(-1, { replace: true });
         }
       });
-    });
-
-    // 모든 단어를 맞추면 완료 메시지를 띄웁니다.
-    Swal.fire({
-      icon: 'success',
-      title: '정답입니다!',
-      showDenyButton: true,
-      denyButtonText: '그만하기',
-      confirmButtonText: '다음 문제',
-      allowOutsideClick: false,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        console.log('다음 문제로 이동');
-      } else if (result.isDenied) {
-        navigate(-1, { replace: true });
-      }
-    });
+    }
   }, [crosswordArr]);
 
   return (
