@@ -727,7 +727,7 @@ const Chatbot = () => {
     const chatWrapper = document.getElementById('chat-wrapper');
     const gun = () => {
       if (chatWrapper) {
-        if (chatWrapper.scrollTop === 0) {
+        if (chatWrapper.scrollTop === 20) {
           chatPage.current += 1;
           getNextList();
         }

@@ -52,18 +52,19 @@ const Footer = () => {
 
   const setMainImg = async () => {
     await myPagaApis.getInfo(accessToken).then((res) => {
+      console.log('res.data : ', res.data);
       if (pathname.startsWith('/chatbot')) {
         setChatBotImg(
           process.env.PUBLIC_URL + '/images/Footer/footer-chatbot.svg',
         );
       } else {
-        if (res.data.profileImageUrl === null) {
+        if (res.data.chatProfileImageUrl === null) {
           // 나중에 아바타 이미지로 변경
           setChatBotImg(
             process.env.PUBLIC_URL + '/images/Footer/footer-chatbot.svg',
           );
         } else {
-          setChatBotImg(res.data.profileImageUrl);
+          setChatBotImg(res.data.chatProfileImageUrl);
         }
       }
     });
