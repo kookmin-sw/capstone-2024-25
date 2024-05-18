@@ -202,7 +202,9 @@ const Chatbot = () => {
         if (!isTimerFirst) {
           console.log('입력이 3초 동안 없어 음성 인식 중지');
           SpeechRecognition.stopListening();
-          addChat(transcript);
+          if (!isWaiting) {
+            addChat(transcript);
+          }
           resetTranscript();
           setSelectMode('select');
         }
@@ -361,18 +363,22 @@ const Chatbot = () => {
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
-        // 날씨 선택 시 구현 추가
-        console.log('선택된 카테고리 타이틀 : ', category.title);
-        if (category.title === '날씨') {
-          const requestCategory = weatherRequest();
-          addChat(requestCategory);
+        if (category.selected === true) {
+          category.selected = false;
+          setShowSubCategory(!showSubCategory);
+        } else {
+          // 날씨 선택 시 구현 추가
+          setSelectedCategoryId(id);
+          console.log('선택된 카테고리 타이틀 : ', category.title);
+          if (category.title === '날씨') {
+            const requestCategory = weatherRequest();
+            addChat(requestCategory);
+          }
+          category.selected = true;
+          setShowSubCategory(!showSubCategory);
         }
-        setSelectedCategoryId(id);
-        category.selected = true;
-        setShowSubCategory(!showSubCategory);
       } else {
         category.values.map((subCategory) => {
-          // setShowSubCategory(true);
           subCategory.selected = false;
         });
         category.selected = false;
@@ -426,7 +432,10 @@ const Chatbot = () => {
   const scrollDown = () => {
     console.log('down 실행');
     const chatWrapper = document.getElementById('chat-wrapper');
-    chatWrapper.scrollTo(0, downRef.current.offsetTop);
+    if (downRef) {
+      console.log('downRef : ', downRef);
+      chatWrapper.scrollTo(0, downRef.current?.offsetTop);
+    }
   };
   const addChat = async (userQuestion) => {
     const question = {
@@ -441,14 +450,18 @@ const Chatbot = () => {
     };
 
     // 사용자가 입력한 채팅을 먼저 화면에 보여줌
-    setChattingList((prevChattingList) => ({
+    await setChattingList((prevChattingList) => ({
       ...prevChattingList,
       qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
     setIsWaiting(true);
-    // scrollAfterSend();
-    // downRef;
-    scrollDown();
+
+    setUserText('');
+    const inputUserText = document.getElementById('input-text');
+    if (inputUserText) {
+      inputUserText.value = '';
+    }
+    await scrollDown();
     try {
       const response = await postChat(question);
       const updatedAnswer = response.data; // 서버에서 받은 응답
@@ -536,11 +549,6 @@ const Chatbot = () => {
       setIsWaiting(false);
     }
 
-    setUserText('');
-    const inputUserText = document.getElementById('input-text');
-    if (inputUserText) {
-      inputUserText.value = '';
-    }
     scrollDown();
 
     // await scrollAfterSend();
@@ -724,7 +732,8 @@ const Chatbot = () => {
       <ChatbotContainer ref={containerRef}>
         <ChatbotHeader
           onClick={() => {
-            navigate('/my-page');
+            // navigate('/my-page');
+            scrollDown();
           }}
         />
         <ChatbotModalFirst
