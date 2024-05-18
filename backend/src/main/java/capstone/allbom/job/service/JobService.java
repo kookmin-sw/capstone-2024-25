@@ -53,13 +53,6 @@ public class JobService {
                 .toList();
     }
 
-    public List<JobListResponse> findJobsOrderByAddress(Province province, Double latitude, Double longitude) {
-        List<Job> jobs = jobRepository.findJobsOrderByAddress(province, latitude, longitude);
-        return jobs.stream()
-                .map(JobListResponse::from)
-                .toList();
-    }
-
     public List<JobListResponse> findJobsOrderByDeadlinePagination(Province province, Pageable pageable) {
         List<Job> jobs = jobRepository.findJobsOrderByDeadlinePagination(province, pageable);
         return jobs.stream()
@@ -67,11 +60,19 @@ public class JobService {
                 .toList();
     }
 
+    public Long getTotalSize(Province province) {
+        return jobRepository.getTotalSizeByProvince(province);
+    }
+
     public List<JobListResponse> findJobsByOccupation(Province province, String occupation, Pageable pageable) {
-        List<Job> jobs = jobRepository.findByOccupationContaining(province, pageable, occupation);
+        List<Job> jobs = jobRepository.findByOccupationPagination(province, pageable, occupation);
         return jobs.stream()
                 .map(JobListResponse::from)
                 .toList();
+    }
+
+    public Long getTotalSizeOrderByOccupation(Province province, String occupation) {
+        return jobRepository.getTotalSizeByOccupation(province, occupation);
     }
 
     @Transactional

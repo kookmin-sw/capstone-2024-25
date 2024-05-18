@@ -40,6 +40,7 @@ public class JobController implements JobControllerDocs{
             Pageable pageable
     ) {
         List<JobListResponse> jobResponses = new ArrayList<>();
+        Long totalSize = jobService.getTotalSize(member.getProvince());
 
         log.info("pageable={}", pageable);
 
@@ -53,7 +54,7 @@ public class JobController implements JobControllerDocs{
             throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
         }
 
-        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
+        return ResponseEntity.ok(JobResponse.from(member, jobResponses, totalSize));
     }
 
     @GetMapping("/{jobId}")
@@ -75,6 +76,8 @@ public class JobController implements JobControllerDocs{
         String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
         List<JobListResponse> jobResponses = new ArrayList<>();
         jobResponses = jobService.findJobsByOccupation(member.getProvince(), decodedName, pageable);
-        return ResponseEntity.ok(JobResponse.from(member, jobResponses));
+        Long totalSize = jobService.getTotalSizeOrderByOccupation(member.getProvince(), decodedName);
+
+        return ResponseEntity.ok(JobResponse.from(member,jobResponses, totalSize));
     }
 }
