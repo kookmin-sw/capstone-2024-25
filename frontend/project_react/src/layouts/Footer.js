@@ -52,7 +52,6 @@ const Footer = () => {
 
   const setMainImg = async () => {
     await myPagaApis.getInfo(accessToken).then((res) => {
-      console.log('res.data : ', res.data);
       if (pathname.startsWith('/chatbot')) {
         setChatBotImg(
           process.env.PUBLIC_URL + '/images/Footer/footer-chatbot.svg',
@@ -74,9 +73,6 @@ const Footer = () => {
     setMainImg();
   }, [pathname]);
 
-  useEffect(() => {
-    console.log('pathname 변경');
-  }, [pathname]);
   // pathname이 변경될 때만 상태 업데이트 실행
   useEffect(() => {
     setIsGameOn(pathname.startsWith('/game'));
