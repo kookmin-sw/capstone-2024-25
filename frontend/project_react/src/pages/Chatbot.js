@@ -56,6 +56,9 @@ const ChattingWrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
+const DownPoint = styled.div`
+  height: 1px;
+`;
 
 export const CategoryWrapper = styled.div`
   display: flex;
@@ -156,7 +159,7 @@ const Chatbot = () => {
   const [keyboardOpened, setKeyboardOpened] = useState(false);
   const containerRef = useRef();
   const inputRef = useRef();
-  const footerRef = useRef();
+  const downRef = useRef();
 
   const [chattingList, setChattingList] = useState({
     chatProfileImageUrl: '',
@@ -420,7 +423,11 @@ const Chatbot = () => {
       chatWrapper.scrollTop = chatWrapper.scrollHeight;
     }
   };
-
+  const scrollDown = () => {
+    console.log('down 실행');
+    const chatWrapper = document.getElementById('chat-wrapper');
+    chatWrapper.scrollTo(0, downRef.current.offsetTop);
+  };
   const addChat = async (userQuestion) => {
     const question = {
       isGame: 'false',
@@ -439,8 +446,9 @@ const Chatbot = () => {
       qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
     setIsWaiting(true);
-    scrollAfterSend();
-
+    // scrollAfterSend();
+    // downRef;
+    scrollDown();
     try {
       const response = await postChat(question);
       const updatedAnswer = response.data; // 서버에서 받은 응답
@@ -503,7 +511,8 @@ const Chatbot = () => {
         googleTTS(completeSentence);
       }
       setIsWaiting(false);
-      scrollAfterSend();
+      // scrollAfterSend();
+      scrollDown();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -522,7 +531,8 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
-      scrollAfterSend();
+      // scrollAfterSend();
+      scrollDown();
       setIsWaiting(false);
     }
 
@@ -531,8 +541,9 @@ const Chatbot = () => {
     if (inputUserText) {
       inputUserText.value = '';
     }
+    scrollDown();
 
-    await scrollAfterSend();
+    // await scrollAfterSend();
   };
 
   /* 모바일 가상 키보드 start */
@@ -628,22 +639,15 @@ const Chatbot = () => {
   };
   const handleKeyboardVisibility = () => {
     const chattingWrapper = wrapperRef.current;
-    // const footer = footerRef.current;
-    const chatInput = inputRef.current;
     const currentHeight = window.visualViewport.height;
     // 키보드가 열렸다고 판단되면 스크롤을 막음
     if (currentHeight < originHeight) {
       setKeyboardOpened(true);
       window.scroll(0, 0);
-
-      // footer.style.display = 'none';
-      // chatInput.style.height = '80px';
       chattingWrapper.scrollTop = chattingWrapper.scrollHeight;
       setupEventListeners(); // 스크롤 방지 이벤트 리스너 설정
     } else {
       setKeyboardOpened(false);
-      // footer.style.display = 'block';
-      // chatInput.style.height = '158px';
       removeEventListeners(); // 스크롤 방지 이벤트 리스너 제거
     }
   };
@@ -748,10 +752,12 @@ const Chatbot = () => {
                   chatImg={chattingList.chatProfileImageUrl}
                 />
               ))}
+              <DownPoint ref={downRef} />
             </>
           ) : (
             <ChatSystem content={firstChat.answer} type={'GENERAL'} />
           )}
+
           <BottomWrapper ref={inputRef}>
             {selectMode === 'voice' && (
               <InputVoiceWrapper>

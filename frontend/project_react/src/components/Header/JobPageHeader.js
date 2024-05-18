@@ -14,7 +14,7 @@ const HeaderTitle = styled.div`
   justify-content: flex-start;
   width: 100%;
   font-size: 20px;
-  padding: 24px 0;
+  padding-bottom: 24px;
   border-bottom: 1px solid var(--unselected-color);
   box-sizing: border-box;
   font-weight: 700;

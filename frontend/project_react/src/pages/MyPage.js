@@ -38,7 +38,7 @@ const MyPageContainer = styled.div`
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 48px 30px;
+  padding: 20px;
   gap: 32px;
 `;
 

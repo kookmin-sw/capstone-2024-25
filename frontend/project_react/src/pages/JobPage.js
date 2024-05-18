@@ -17,8 +17,9 @@ const JobContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 0 18px;
+  padding: 20px;
   gap: 8px;
+  border: 1px solid red;
 `;
 
 const JobPageContent = styled.div`
