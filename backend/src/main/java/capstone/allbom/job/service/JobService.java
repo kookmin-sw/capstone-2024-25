@@ -60,7 +60,7 @@ public class JobService {
                 .toList();
     }
 
-    public Long getTotalSize(Province province) {
+    public Long getTotalSizeByProvince(Province province) {
         return jobRepository.getTotalSizeByProvince(province);
     }
 
@@ -71,7 +71,7 @@ public class JobService {
                 .toList();
     }
 
-    public Long getTotalSizeOrderByOccupation(Province province, String occupation) {
+    public Long getTotalSizeByOccupation(Province province, String occupation) {
         return jobRepository.getTotalSizeByOccupation(province, occupation);
     }
 

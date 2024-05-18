@@ -40,7 +40,7 @@ public class JobController implements JobControllerDocs{
             Pageable pageable
     ) {
         List<JobListResponse> jobResponses = new ArrayList<>();
-        Long totalSize = jobService.getTotalSize(member.getProvince());
+        Long totalSize = jobService.getTotalSizeByProvince(member.getProvince());
 
         log.info("pageable={}", pageable);
 
@@ -76,7 +76,7 @@ public class JobController implements JobControllerDocs{
         String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
         List<JobListResponse> jobResponses = new ArrayList<>();
         jobResponses = jobService.findJobsByOccupation(member.getProvince(), decodedName, pageable);
-        Long totalSize = jobService.getTotalSizeOrderByOccupation(member.getProvince(), decodedName);
+        Long totalSize = jobService.getTotalSizeByOccupation(member.getProvince(), decodedName);
 
         return ResponseEntity.ok(JobResponse.from(member,jobResponses, totalSize));
     }
