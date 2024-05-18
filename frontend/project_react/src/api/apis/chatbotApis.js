@@ -2,12 +2,18 @@ import instance from '../instance';
 import delayedInstance from '../delayedInstance';
 
 export const chatbotApis = {
-  getChatList: (accessToken) =>
-    instance.get(`/api/chatbot`, {
+  getChatList: (accessToken, chatPage) =>
+    instance.get(`/api/chatbot?page=${chatPage}&size=10`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     }),
+  // getChatList: (accessToken, chatPage) =>
+  //     instance.get(`/api/chatbot?page=${chatPage}&size=10`, {
+  //         headers: {
+  //             Authorization: `Bearer ${accessToken}`,
+  //         },
+  //     }),
   postChat: (data, accessToken) =>
     delayedInstance.post('/api/chatbot', data, {
       headers: {
