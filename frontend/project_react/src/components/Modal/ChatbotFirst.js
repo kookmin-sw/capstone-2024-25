@@ -60,16 +60,14 @@ const ChatbotModalFirst = ({ isOpen, close }) => {
         <ContentText>·</ContentText>
         <ContentText>무엇이든 물어보세요 !</ContentText>
         <ContentText>·</ContentText>
-        <ContentText>또는, 추천 키워드들을 통해 질문해주세요 !</ContentText>
+        <ContentText>추천 키워드들을 통해 질문해주세요 !</ContentText>
         <ContentText>·</ContentText>
         <ContentText>
           추천 키워드를 사용하면 현재 위치를 기반으로 날씨, 뉴스, 문화,
           방문서비스 정보를 얻을 수 있습니다!
         </ContentText>
         <ContentText>·</ContentText>
-        <ContentText>
-          또는, 손자, 손녀처럼 편하게 말동무 해드립니다.
-        </ContentText>
+        <ContentText>편하게 말동무 해드립니다.</ContentText>
         <ContentText>·</ContentText>
         <ContentText>음성 혹은 자판 둘 다 사용 가능합니다.</ContentText>
         <ContentText>·</ContentText>

@@ -14,7 +14,7 @@ const HeaderTitle = styled.div`
   justify-content: flex-start;
   width: 100%;
   font-size: 20px;
-  padding-bottom: 24px;
+  padding: 24px 0;
   border-bottom: 1px solid var(--unselected-color);
   box-sizing: border-box;
   font-weight: 700;
@@ -66,7 +66,7 @@ const JobPageHeader = ({ jobName, setJobName, searchJob }) => {
 
   return (
     <HeaderWrapper>
-      <HeaderTitle>어르신 일자리</HeaderTitle>
+      <HeaderTitle>장년 일자리</HeaderTitle>
       <SearchWrapper>
         <img
           src={process.env.PUBLIC_URL + '/images/JobPage/search.svg'}
