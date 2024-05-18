@@ -97,6 +97,7 @@ export default function Nav5() {
       try {
         const response = await mapApi.getMapMarkers(accessToken, currentBounds);
         setMapTags(response.data);
+        console.log('마커들:', response.data);
       } catch (error) {
         console.error(
           '마커를 서버로부터 받아오는 데에 에러 발생',
@@ -363,7 +364,7 @@ const MarkerInfo = styled.div`
   gap: 16px;
   bottom: 0;
   z-index: 1;
-  box-shadow: rgb(68, 68, 68) 0px 0px 5px;
+  box-shadow: 0px -24px 14px -28px #888;
   --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
 `;
 
