@@ -26,6 +26,33 @@ const mapCategoryList = [
 export default function Nav5() {
   useKakaoLoader();
 
+  // window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
+  //   window.flutter_inappwebview
+  //     .callHandler('test')
+  //     .then(function (result) {
+  //       // print to the console the data coming
+  //       // from the Flutter side.
+  //       console.log(JSON.stringify(result));
+
+  //       window.flutter_inappwebview.callHandler(
+  //         'handlerFooWithArgs',
+  //         1,
+  //         true,
+  //         ['bar', 5],
+  //         { foo: 'baz' },
+  //         result,
+  //       );
+  //     });
+  // });
+
+  function callFlutter() {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview.callHandler('test');
+    } else {
+      console.error("Flutter WebView is not initialized.");
+    }
+  };
+
   // 지도 관련 동작
   const [centerState, setCenterState] = useState({
     center: {
@@ -96,7 +123,10 @@ export default function Nav5() {
         const response = await mapApi.getMapMarkers(accessToken, currentBounds);
         setMapTags(response.data);
       } catch (error) {
-        console.error('마커를 서버로부터 받아오는 데에 에러 발생',error.response.data.code);
+        console.error(
+          '마커를 서버로부터 받아오는 데에 에러 발생',
+          error.response.data.code,
+        );
       }
     }
   }
@@ -251,7 +281,9 @@ export default function Nav5() {
               {markerInfo.address}
             </div>
           </MarkerInfoLeft>
-          <MarkerInfoRight>
+          <MarkerInfoRight
+          onClick={() => callFlutter()}
+          >
             <img
               src={
                 markerInfo.type === 'JOB'
