@@ -169,6 +169,8 @@ const Chatbot = () => {
   const accessToken = cookies.accessToken;
   const [userInfo, setUserInfo] = useState({});
   const [userName, setUserName] = useState('');
+  const [isWaiting, setIsWaiting] = useState(false);
+
   const setGender = useStore((state) => state.setGender);
 
   const {
@@ -435,6 +437,7 @@ const Chatbot = () => {
       ...prevChattingList,
       qnaResponses: [...prevChattingList.qnaResponses, showingChat],
     }));
+    setIsWaiting(true);
     scrollAfterSend();
 
     try {
@@ -455,17 +458,20 @@ const Chatbot = () => {
             : chat,
         ),
       }));
-      const gun = parseNewsData(updatedAnswer.answer);
       if (
         updatedAnswer.type === 'GENERAL' ||
         updatedAnswer.type === 'WEATHER'
       ) {
         googleTTS(updatedAnswer.answer);
       } else if (updatedAnswer.type === 'NEWS') {
+        const newsData = parseNewsData(updatedAnswer.answer);
         let completeSentence = '';
-        const newsHeader = gun.header;
+        const newsHeader = newsData.header;
         completeSentence += newsHeader + '\n';
-        const articles = gun.articles.slice(0, gun.articles.length / 2);
+        const articles = newsData.articles.slice(
+          0,
+          newsData.articles.length / 2,
+        );
         articles.map((article) => {
           completeSentence += article.title + '\n';
         });
@@ -495,7 +501,8 @@ const Chatbot = () => {
         });
         googleTTS(completeSentence);
       }
-      // scrollAfterSend();
+      setIsWaiting(false);
+      scrollAfterSend();
     } catch (error) {
       console.log('error : ', error);
       // 서버 오류 메시지를 사용자에게 표시
@@ -514,9 +521,8 @@ const Chatbot = () => {
         ),
       }));
       console.log('답변 error : ', error);
-      // scrollAfterSend();
-    } finally {
       scrollAfterSend();
+      setIsWaiting(false);
     }
 
     setUserText('');
@@ -684,24 +690,11 @@ const Chatbot = () => {
   }, []);
 
   useEffect(() => {
-    if (wrapperRef) {
-      // console.log('wrapperRef : ', wrapperRef.current);
-      // console.log(
-      //   'wrapperRef.current.clientHeight : ',
-      //   wrapperRef.current.clientHeight,
-      // );
-      // console.log(
-      //   'wrapperRef.current.scrollHeight : ',
-      //   wrapperRef.current.scrollHeight,
-      // );
-    }
-  }, [wrapperRef]);
-
-  useEffect(() => {
     const chatWrapper = document.getElementById('chat-wrapper');
     const gun = () => {
       if (chatWrapper) {
         if (chatWrapper.scrollTop === 0) {
+          console.log('위 도착');
           // 채팅 리스트 페이지네이션에 사용. 중복 요청을 방지하기 위해 변수 하나 선언해서 useState 로 관리 필요해보임.
           // console.log('chatWrapper.scrollTop : ', chatWrapper.scrollTop);
           // console.log('chatWrapper.clientHeight : ', chatWrapper.clientHeight);
@@ -809,7 +802,7 @@ const Chatbot = () => {
                 onChange={(e) => setUserText(e.target.value)}
                 placeholder="대화를 입력하세요"
               />
-              {userText === '' ? (
+              {userText === '' && !isWaiting ? (
                 <SendButton
                   src={
                     process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
