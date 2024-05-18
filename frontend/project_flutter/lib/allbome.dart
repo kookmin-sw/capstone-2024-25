@@ -1,84 +1,192 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_flutter/screen/layout_login.dart';
-import 'package:project_flutter/screen/layout_nav1.dart';
-import 'package:project_flutter/screen/layout_nav2.dart';
-import 'package:project_flutter/screen/layout_nav3.dart';
-import 'package:project_flutter/screen/layout_nav4.dart';
-import 'package:project_flutter/screen/layout_nav5.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AllBome extends StatefulWidget {
   const AllBome({super.key});
 
   @override
-  State<AllBome> createState() => _AllBomeState();
+  State<AllBome> createState() {
+    return _AllBomeState();
+  }
 }
 
 class _AllBomeState extends State<AllBome> {
-  int currentPageIndex = 0;
+  final GlobalKey webViewKey = GlobalKey();
+
+  InAppWebViewController? webViewController;
+  InAppWebViewSettings settings = InAppWebViewSettings(
+      isInspectable: kDebugMode,
+      mediaPlaybackRequiresUserGesture: false,
+      allowsInlineMediaPlayback: true,
+      iframeAllow: "microphone; geolocation",
+      iframeAllowFullscreen: true);
+
+  PullToRefreshController? pullToRefreshController;
+  String url = "";
+  double progress = 0;
+  final urlController = TextEditingController();
+  bool _hasCallSupport = false;
+  Future<void>? _launched;
+
+  @override
+  void initState() {
+    super.initState();
+    canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
+      setState(() {
+        _hasCallSupport = result;
+      });
+    });
+
+    pullToRefreshController = kIsWeb
+        ? null
+        : PullToRefreshController(
+            settings: PullToRefreshSettings(
+              color: Colors.blue,
+            ),
+            onRefresh: () async {
+              if (defaultTargetPlatform == TargetPlatform.android) {
+                webViewController?.reload();
+              } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+                webViewController?.loadUrl(
+                    urlRequest:
+                        URLRequest(url: await webViewController?.getUrl()));
+              }
+            },
+          );
+    canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
+      setState(() {
+        _hasCallSupport = result;
+      });
+    });
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeData theme = Theme.of(context);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // 상태 표시줄을 투명하게 설정
-        statusBarIconBrightness: Brightness.dark));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: Color.fromARGB(0, 255, 255, 255),
+    //   systemNavigationBarIconBrightness: Brightness.dark,
+    // ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            InAppWebView(
+              key: webViewKey,
+              initialUrlRequest: URLRequest(
+                  url: WebUri("https://allbome-for-vercel.vercel.app")),
+              initialSettings: settings,
+              pullToRefreshController: pullToRefreshController,
+              onWebViewCreated: (controller) {
+                webViewController = controller;
 
-    return MaterialApp(
-      home: Scaffold(
-          bottomNavigationBar: NavigationBar(
-            onDestinationSelected: (int index) {
-              setState(() {
-                currentPageIndex = index;
-              });
-            },
-            height: 60.0,
-            // elevation: 0.5,
-            // shadowColor: Colors.black,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-            // indicatorColor: const Color(0xFF379237),
-            selectedIndex: currentPageIndex,
-            destinations: const <Widget>[
-              NavigationDestination(
-                icon: Icon(Icons.home),
-                label: '0',
-              ),
-              NavigationDestination(
-                // selectedIcon: Icon(Icons.sports_esports_rounded),
-                icon: Icon(Icons.sports_esports_rounded),
-                label: '1',
-              ),
-              NavigationDestination(
-                // selectedIcon: Icon(Icons.work),
-                icon: Icon(Icons.work),
-                label: '2',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.local_florist_rounded),
-                label: '3',
-              ),
-              NavigationDestination(
-                icon: Badge(
-                  child: Icon(Icons.alarm_rounded),
-                ),
-                label: '4',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.map_outlined),
-                label: '5',
-              ),
-            ],
-          ),
-          body: SafeArea(
-            child: <Widget>[
-              const LayoutHome(),
-              const LayoutNav1(),
-              const LayoutNav2(),
-              const LayoutNav3(),
-              const LayoutNav4(),
-              const LayoutNav5(),
-            ][currentPageIndex],
-          )),
+                // controller.addJavaScriptHandler(
+                //     handlerName: 'handlerFoo',
+                //     callback: (args) {
+                //       // return data to the JavaScript side!
+                //       return {'bar': 'bar_value', 'baz': 'baz_value'};
+                //     });
+
+                controller.addJavaScriptHandler(
+                    handlerName: 'test',
+                    callback: (args) {
+                      print(args[0]);
+                      print('으갸갹 도착');
+                      if (_hasCallSupport) {
+                        print('전화걸기를 지원합니다.');
+                        setState(() {
+                          _launched = _makePhoneCall(args[0]);
+                        });
+                      } else {
+                        print('전화걸기를 지원하지 않습니다.');
+                      }
+                      // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
+                    });
+              },
+              onLoadStart: (controller, url) {
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onPermissionRequest: (controller, request) async {
+                return PermissionResponse(
+                    resources: request.resources,
+                    action: PermissionResponseAction.GRANT);
+              },
+              shouldOverrideUrlLoading: (controller, navigationAction) async {
+                var uri = navigationAction.request.url!;
+
+                if (![
+                  "http",
+                  "https",
+                  "file",
+                  "chrome",
+                  "data",
+                  "javascript",
+                  "about"
+                ].contains(uri.scheme)) {
+                  if (await canLaunchUrl(uri)) {
+                    // Launch the App
+                    await launchUrl(
+                      uri,
+                    );
+                    // and cancel the request
+                    return NavigationActionPolicy.CANCEL;
+                  }
+                }
+
+                return NavigationActionPolicy.ALLOW;
+              },
+              onLoadStop: (controller, url) async {
+                pullToRefreshController?.endRefreshing();
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onReceivedError: (controller, request, error) {
+                pullToRefreshController?.endRefreshing();
+              },
+              onProgressChanged: (controller, progress) {
+                if (progress == 100) {
+                  pullToRefreshController?.endRefreshing();
+                }
+                setState(() {
+                  this.progress = progress / 100;
+                  urlController.text = url;
+                });
+              },
+              onUpdateVisitedHistory: (controller, url, androidIsReload) {
+                setState(() {
+                  this.url = url.toString();
+                  urlController.text = this.url;
+                });
+              },
+              onConsoleMessage: (controller, consoleMessage) {
+                if (kDebugMode) {
+                  print('리액트로부터.. $consoleMessage');
+                }
+              },
+            ),
+            progress < 1.0
+                ? LinearProgressIndicator(value: progress)
+                : Container(),
+          ],
+        ),
+      ),
     );
   }
 }

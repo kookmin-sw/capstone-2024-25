@@ -123,7 +123,9 @@ export const Card = ({ title, color, type, imgSrc, mission, clearTodo }) => {
               style={{ marginLeft: '24px' }}
               onClick={() => paginate(-1)}
             />
-            <h2 style={{ color: 'white' }}>{currentTodo}</h2>
+            <h2 style={{ color: 'white', width: '100%', textAlign: 'center' }}>
+              {currentTodo}
+            </h2>
             <img
               src={`/images/todo/arrow.svg`}
               width="44px"
