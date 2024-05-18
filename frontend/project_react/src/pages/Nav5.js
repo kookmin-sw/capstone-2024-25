@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import {
-  Map,
-  MapMarker,
-} from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
 import { useAccessToken } from '../components/cookies';
@@ -25,33 +22,6 @@ const mapCategoryList = [
 
 export default function Nav5() {
   useKakaoLoader();
-
-  // window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
-  //   window.flutter_inappwebview
-  //     .callHandler('test')
-  //     .then(function (result) {
-  //       // print to the console the data coming
-  //       // from the Flutter side.
-  //       console.log(JSON.stringify(result));
-
-  //       window.flutter_inappwebview.callHandler(
-  //         'handlerFooWithArgs',
-  //         1,
-  //         true,
-  //         ['bar', 5],
-  //         { foo: 'baz' },
-  //         result,
-  //       );
-  //     });
-  // });
-
-  function callFlutter() {
-    if (window.flutter_inappwebview) {
-      window.flutter_inappwebview.callHandler('test');
-    } else {
-      console.error("Flutter WebView is not initialized.");
-    }
-  };
 
   // 지도 관련 동작
   const [centerState, setCenterState] = useState({
@@ -77,7 +47,7 @@ export default function Nav5() {
   useEffect(() => {
     if (location.state) {
       console.log('location.state : ', location.state);
-      fetchMarkerInfo("JOB", location.state);
+      fetchMarkerInfo('JOB', location.state);
     }
     SetCurrentPosition();
   }, []);
@@ -162,139 +132,27 @@ export default function Nav5() {
   }
 
   return (
-  <Layout>
-    <Frame>
-      <MapFrame>
-        <Map // 지도를 표시할 Container
-          id="map"
-          center={centerState.center} // 지도의 중심좌표
-          isPanto={true}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          level={mapSizeLevel} // 지도의 확대 레벨
-          onZoomChanged={(map) => {
-            const level = map.getLevel();
-            setMapSizeLevel(level);
-            console.log(`현재 지도 레벨은 ${level} 입니다`);
-          }}
-          onTileLoaded={(map) => {
-            console.log('지도 타일이 로드됐어요', currentBounds);
-            if (mapSizeLevel < 6) {
-              fetchMarkers();
-            }
-          }}
-          onBoundsChanged={(map) => {
-            const bounds = map.getBounds();
-            setCurrentBounds({
-              sw: bounds.getSouthWest().toString(),
-              ne: bounds.getNorthEast().toString(),
-            });
-          }}
-        >
-          <MapMarker position={position ?? centerState.center} />
-          {/* <MapMarker position={centerState.center} /> */}
-          {!centerState.isLoading &&
-            mapSizeLevel < 6 &&
-            mapTags.map(
-              (tag, index) =>
-                (selectedCategory === 'ALL' ||
-                  ('PHARMACY' === tag['type'] &&
-                    selectedCategory === 'HOSPITAL') ||
-                  selectedCategory === tag['type']) && (
-                  <div key={index}>
-                    <MapMarker
-                      position={{ lat: tag['latitude'], lng: tag['longitude'] }}
-                      image={{
-                        src: `/images/map/marker_${
-                          tag['type'] === 'PHARMACY' ? 'PHARMACY' : tag['type']
-                        }.svg`,
-                        size:
-                          markerInfo && tag['id'] === markerInfo.id
-                            ? { width: 60, height: 60 }
-                            : { width: 40, height: 40 },
-                      }}
-                      onClick={() => {
-                        console.log(tag);
-                        fetchMarkerInfo(tag['type'], tag['id']);
-                        setCenterState((prev) => ({
-                          ...prev,
-                          center: {
-                            lat: tag['latitude'],
-                            lng: tag['longitude'],
-                          },
-                        }));
-                      }}
-                    />
-                  </div>
-                ),
-            )}
-        </Map>
-      </MapFrame>
-      <CategoryFrame>
-        <CategoryButtonDiv>
-          {mapCategoryList[0].map((category, index) => (
-            <CategoryButton
-              key={index}
-              $color={category[2]}
-              $isSelected={selectedCategory === category[1]}
-              onClick={() => setSelectedCategory(category[1])}
-            >
-              {category[0]}
-            </CategoryButton>
-          ))}
-        </CategoryButtonDiv>
-        <Spacer direction="column" size="12px" />
-        <CategoryButtonDiv>
-          {mapCategoryList[1].map((category, index) => (
-            <CategoryButton
-              key={index}
-              $color={category[2]}
-              $isSelected={selectedCategory === category[1]}
-              onClick={() => setSelectedCategory(category[1])}
-            >
-              {category[0]}
-            </CategoryButton>
-          ))}
-        </CategoryButtonDiv>
-      </CategoryFrame>
-      {markerInfo && (
-        <MarkerInfo>
-          <MarkerInfoLeft>
-            <div
-              style={{
-                width: '100%',
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                fontSize: '24px',
-                fontWeight: 'bold',
-              }}
-            >
-              {markerInfo.type === 'JOB'
-                ? markerInfo.occupation
-                : markerInfo.name}
-            </div>
-            <div
-              style={{
-                width: '100%',
-                overflow: 'hidden',
-                wordBreak: 'break-all',
-                fontSize: '18px',
-              }}
-            >
-              {markerInfo.address}
-            </div>
-          </MarkerInfoLeft>
-          <MarkerInfoRight
-          onClick={() => callFlutter()}
-          >
-            <img
-              src={
-                markerInfo.type === 'JOB'
-                  ? '/images/map/jobDetail.svg'
-                  : '/images/map/phone.svg'
+    <Layout>
+      <Frame>
+        <MapFrame>
+          <Map // 지도를 표시할 Container
+            id="map"
+            center={centerState.center} // 지도의 중심좌표
+            isPanto={true}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            level={mapSizeLevel} // 지도의 확대 레벨
+            onZoomChanged={(map) => {
+              const level = map.getLevel();
+              setMapSizeLevel(level);
+              console.log(`현재 지도 레벨은 ${level} 입니다`);
+            }}
+            onTileLoaded={(map) => {
+              console.log('지도 타일이 로드됐어요', currentBounds);
+              if (mapSizeLevel < 4) {
+                fetchMarkers();
               }
             }}
             onBoundsChanged={(map) => {
@@ -424,8 +282,6 @@ export default function Nav5() {
       </Frame>
     </Layout>
   );
-  
-  
 }
 
 const Frame = styled.div`
