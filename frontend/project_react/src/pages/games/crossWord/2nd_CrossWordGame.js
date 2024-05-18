@@ -1,84 +1,156 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion } from 'framer-motion';
+import { crossWordData } from './crossWordData';
+import { se } from 'date-fns/locale';
 
 export default function CrossWordGame() {
   const navigate = useNavigate();
+  const crosswordArr = new Array(7).fill(0).map(() => new Array(7).fill(''));
+  const crosswordData = crossWordData[0];
+  crosswordData.horizontal.forEach((quiz) => {
+    for (let i = 0; i < quiz.word.length; i++) {
+      crosswordArr[quiz.row][quiz.col + i] = quiz.word[i];
+    }
+  });
+  crosswordData.vertical.forEach((quiz) => {
+    for (let i = 0; i < quiz.word.length; i++) {
+      crosswordArr[quiz.row + i][quiz.col] = quiz.word[i];
+    }
+  });
+  // 십자말풀이 확인 콘솔로그
+  // for (let i = 0; i < 7; i++) {
+  //   console.log(crosswordArr[i]);
+  // }
+  const parentRef = useRef(null);
+  const [size, setSize] = useState(0);
+  const [selectedHorizontalExplanation, setSelectedHorizontalExplanation] =
+    useState(null);
+  const [selectedVerticalExplanation, setSelectedVerticalExplanation] =
+    useState(null);
+  useEffect(() => {
+    const updateSize = () => {
+      if (parentRef.current) {
+        const { clientWidth, clientHeight } = parentRef.current;
+        setSize(Math.min(clientWidth, clientHeight));
+      }
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   return (
     <Frame>
       <TitleHeader showBackButton={true} title={'십자말풀이'}></TitleHeader>
-      {/* <CategoryDiv>
-        <motion.div
-          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h2 style={{ margin: '0', fontSize: '24px', fontWeight: '500' }}>
-            두뇌 향상 게임
-          </h2>
-          <img
-            src="/images/bulb.svg"
-            style={{ width: '28px', height: '28px' }}
-          />
-        </motion.div>
-        <motion.h1
-          style={{ margin: '0', fontSize: '44px', fontWeight: '600' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          스무고개
-        </motion.h1>
-      </CategoryDiv>
-      <motion.p
-        style={{ fontSize: '20px', wordBreak: 'break-word' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.7 }}
-      >
-        스무고개 게임은 질문을 통해 답을 추론하는 과정에서 뇌를 적극적으로
-        사용하게 합니다. 이를 통해 기억력, 문제 해결 능력, 논리적 사고 등을
-        자극하여 인지 기능을 강화할 수 있습니다. 또한, 다양한 질문을 만드는
-        과정에서 창의력이 길러져, 새로운 방식으로 생각하고 문제를 해결하는 데
-        도움이 됩니다.
-      </motion.p> */}
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <BottomButton
-          onClick={() =>
-            navigate(`/game/wordOrderGame/`, { replace: true })
-          }
-        >
-          시작하기
-        </BottomButton>
-      </motion.div>
+      <SquareWrapper ref={parentRef}>
+        <CrosswordDiv size={size}>
+          {crosswordArr.map((row, rowIndex) => (
+            <div
+              key={rowIndex}
+              style={{ display: 'flex', width: '100%', height: '14.2857%' }}
+            >
+              {row.map((item, colIndex) => (
+                <div
+                  key={colIndex}
+                  style={{
+                    width: '14.2857%',
+                    height: '100%',
+                    border: '1px solid black',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 4,
+                    fontSize: 22,
+                    fontWeight: '600',
+                    backgroundColor: item === '' ? '#8D8D8D' : 'white',
+                  }}
+                  onClick={() => {
+                    const horizontalExplanation = crosswordData.horizontal.find(
+                      (quiz) =>
+                        quiz.row === rowIndex &&
+                        colIndex >= quiz.col &&
+                        colIndex < quiz.col + quiz.word.length,
+                    );
+                    const verticalExplanation = crosswordData.vertical.find(
+                      (quiz) =>
+                        quiz.col === colIndex &&
+                        rowIndex >= quiz.row &&
+                        rowIndex < quiz.row + quiz.word.length,
+                    );
+
+                    if (horizontalExplanation) {
+                      setSelectedHorizontalExplanation(
+                        horizontalExplanation.explanation,
+                      );
+                      console.log(horizontalExplanation.explanation);
+                    } else {
+                      setSelectedHorizontalExplanation(null);
+                    }
+                    if (verticalExplanation) {
+                      setSelectedVerticalExplanation(
+                        verticalExplanation.explanation,
+                      );
+                      console.log(verticalExplanation.explanation);
+                    } else {
+                      setSelectedVerticalExplanation(null);
+                    }
+                  }}
+                ></div>
+              ))}
+            </div>
+          ))}
+        </CrosswordDiv>
+        <ExplanationDiv>
+          <p style={{ margin: '0px' }}>
+            {selectedHorizontalExplanation ? selectedHorizontalExplanation : ''}
+          </p>
+          <p style={{ margin: '0px' }}>
+            {selectedVerticalExplanation ? selectedVerticalExplanation : ''}
+          </p>
+        </ExplanationDiv>
+      </SquareWrapper>
     </Frame>
   );
 }
 
 const Frame = styled.div`
   box-sizing: border-box;
-  width: 100%;
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 20px;
   gap: 20px;
 `;
 
-const CategoryDiv = styled.div`
+const SquareWrapper = styled.div`
   width: 100%;
+  height: 100%;
+  margin: 10px;
+`;
+
+const CrosswordDiv = styled.div`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+`;
+
+const ExplanationDiv = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  overflow-y: auto;
+  gap: 12px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #F5F5F5;
+  box-shadow: rgb(68, 68, 68) 0px 0px 5px;
+  --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
 `;
