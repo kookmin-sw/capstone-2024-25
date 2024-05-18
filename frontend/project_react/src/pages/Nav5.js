@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import {
   Map,
   MapMarker,
-  MapTypeControl,
-  ZoomControl,
 } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
@@ -51,6 +49,7 @@ export default function Nav5() {
   useEffect(() => {
     if (location.state) {
       console.log('location.state : ', location.state);
+      fetchMarkerInfo("JOB", location.state);
     }
     SetCurrentPosition();
   }, []);

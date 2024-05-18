@@ -23,7 +23,7 @@ export default function Nav1() {
         <GameDiv>
           <GameButton onClick={() => navigate('wordOrderSelection')}>
             <img
-              src="/images/game/wordorder1.png"
+              src="/images/game/wordorder2.png"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px'}}
               alt="문장 순서 맞추기"
             />
@@ -48,7 +48,7 @@ export default function Nav1() {
         <GameDiv>
           <GameButton onClick={() => navigate('twentyHeadsIntro')}>
             <img
-              src="images/game/twentyheads1.png"
+              src="images/game/twentyheads2.png"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px'}}
               alt="스무고개"
             />
@@ -73,7 +73,7 @@ export default function Nav1() {
         <GameDiv>
           <GameButton onClick={() => navigate('crosswordIntro')}>
             <img
-              src="images/game/crossword1.png"
+              src="images/game/crossword2.png"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
               alt="십자말풀이"
             />
