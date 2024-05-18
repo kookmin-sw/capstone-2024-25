@@ -4,8 +4,9 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './map/useKakaoLoader';
 import { mapApi } from '../../src/api/apis/mapApis';
 import { useAccessToken } from '../components/cookies';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../layouts/Layout';
+import { set } from 'date-fns';
 
 const mapCategoryList = [
   [
@@ -42,14 +43,15 @@ export default function Nav5() {
   const accessToken = useAccessToken();
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const location = useLocation();
+  const navigate = useNavigate();
 
   // 지도 초기화
   useEffect(() => {
     if (location.state) {
-      console.log('location.state : ', location.state);
-      fetchMarkerInfo('JOB', location.state);
+      fetchMarkerInfo('job', location.state.jobId);
+    } else {
+      SetCurrentPosition();
     }
-    SetCurrentPosition();
   }, []);
 
   function SetCurrentPosition() {
@@ -97,6 +99,7 @@ export default function Nav5() {
       try {
         const response = await mapApi.getMapMarkers(accessToken, currentBounds);
         setMapTags(response.data);
+        console.log('마커들:', response.data);
       } catch (error) {
         console.error(
           '마커를 서버로부터 받아오는 데에 에러 발생',
@@ -110,6 +113,19 @@ export default function Nav5() {
     try {
       const response = await mapApi.getMarkerInfo(accessToken, type, id);
       console.log('마커정보:', response.data);
+      if (location.state && response.data.type === 'JOB') {
+        setPosition({
+          lat: response.data.latitude,
+          lng: response.data.longitude,
+        });
+        setCenterState((prev) => ({
+          ...prev,
+          center: {
+            lat: response.data.latitude,
+            lng: response.data.longitude,
+          },
+        }));
+      }
       if (response.data.type === 'JOB') {
         setMarkerInfo({
           id: response.data.id,
@@ -171,10 +187,17 @@ export default function Nav5() {
               });
             }}
           >
-            <MapMarker position={position ?? centerState.center} />
+            <MapMarker
+              position={position ?? centerState.center}
+              image={{
+                src: '/images/map/marker_JOB.svg',
+                size: { width: 60, height: 60 },
+              }}
+            />
             {/* <MapMarker position={centerState.center} /> */}
             {!centerState.isLoading &&
               mapSizeLevel < 4 &&
+              !location.state &&
               mapTags.map(
                 (tag, index) =>
                   (selectedCategory === 'ALL' ||
@@ -215,33 +238,60 @@ export default function Nav5() {
               )}
           </Map>
         </MapFrame>
-        <CategoryFrame>
-          <CategoryButtonDiv>
-            {mapCategoryList[0].map((category, index) => (
-              <CategoryButton
-                key={index}
-                $color={category[2]}
-                $isSelected={selectedCategory === category[1]}
-                onClick={() => setSelectedCategory(category[1])}
-              >
-                {category[0]}
-              </CategoryButton>
-            ))}
-          </CategoryButtonDiv>
-          <Spacer direction="column" size="12px" />
-          <CategoryButtonDiv>
-            {mapCategoryList[1].map((category, index) => (
-              <CategoryButton
-                key={index}
-                $color={category[2]}
-                $isSelected={selectedCategory === category[1]}
-                onClick={() => setSelectedCategory(category[1])}
-              >
-                {category[0]}
-              </CategoryButton>
-            ))}
-          </CategoryButtonDiv>
-        </CategoryFrame>
+        {location.state ? (
+          <div
+            style={{
+              position: 'absolute',
+              width: '60px',
+              height: '60px',
+              zIndex: '50',
+              top: '20px',
+              left: '20px',
+              backgroundColor: '#20B627',
+              borderRadius: '12px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <img
+              style={{ width: '50px' }}
+              src="/images/JobPage/arrow-back-white.svg"
+              alt="뒤로가기"
+            />
+          </div>
+        ) : (
+          <CategoryFrame>
+            <CategoryButtonDiv>
+              {mapCategoryList[0].map((category, index) => (
+                <CategoryButton
+                  key={index}
+                  $color={category[2]}
+                  $isSelected={selectedCategory === category[1]}
+                  onClick={() => setSelectedCategory(category[1])}
+                >
+                  {category[0]}
+                </CategoryButton>
+              ))}
+            </CategoryButtonDiv>
+            <Spacer direction="column" size="12px" />
+            <CategoryButtonDiv>
+              {mapCategoryList[1].map((category, index) => (
+                <CategoryButton
+                  key={index}
+                  $color={category[2]}
+                  $isSelected={selectedCategory === category[1]}
+                  onClick={() => setSelectedCategory(category[1])}
+                >
+                  {category[0]}
+                </CategoryButton>
+              ))}
+            </CategoryButtonDiv>
+          </CategoryFrame>
+        )}
         {markerInfo && (
           <MarkerInfo>
             <MarkerInfoLeft>
@@ -270,7 +320,15 @@ export default function Nav5() {
                 {markerInfo.address}
               </div>
             </MarkerInfoLeft>
-            <MarkerInfoRight onClick={() => handleCall(markerInfo.phone)}>
+            <MarkerInfoRight
+              onClick={() => {
+                if (markerInfo.type === 'JOB') {
+                  navigate(`/job-detail/${markerInfo.id}`);
+                } else {
+                  handleCall(markerInfo.phone);
+                }
+              }}
+            >
               <img
                 src={
                   markerInfo.type === 'JOB'
@@ -363,7 +421,7 @@ const MarkerInfo = styled.div`
   gap: 16px;
   bottom: 0;
   z-index: 1;
-  box-shadow: rgb(68, 68, 68) 0px 0px 5px;
+  box-shadow: 0px -24px 14px -28px #888;
   --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
 `;
 
