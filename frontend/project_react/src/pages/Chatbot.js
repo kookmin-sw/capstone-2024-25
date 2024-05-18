@@ -749,8 +749,7 @@ const Chatbot = () => {
       <ChatbotContainer ref={containerRef}>
         <ChatbotHeader
           onClick={() => {
-            // navigate('/my-page');
-            scrollDown();
+            navigate('/my-page');
           }}
         />
         <ChatbotModalFirst
