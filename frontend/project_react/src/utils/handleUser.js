@@ -9,6 +9,7 @@ export const getUserInfo = async (
 ) => {
   await myPagaApis.getInfo(accessToken).then((res) => {
     if (res.status === 200) {
+      console.log('res.data : ', res.data);
       if (setUserInfo) {
         setUserInfo(res.data);
       }

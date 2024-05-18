@@ -76,6 +76,7 @@ const JobDropdown = ({
   sorted,
   setSorted,
   setOpenFilter,
+  region,
 }) => {
   const selectDistance = () => {
     setSorted(0);
@@ -89,7 +90,7 @@ const JobDropdown = ({
 
   return (
     <FilterWrapper>
-      <RegionWrapper sorted={sorted}>서울</RegionWrapper>
+      <RegionWrapper sorted={sorted}>{region}</RegionWrapper>
       <FilterSelect onClick={() => toggleFilter()} openFilter={openFilter}>
         <FilterSelected>
           <FilterText>{sorted === 0 ? '거리순' : '마감일자순'}</FilterText>

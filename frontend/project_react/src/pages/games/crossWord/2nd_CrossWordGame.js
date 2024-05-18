@@ -4,14 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../../../components/Header/TitleHeader';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion } from 'framer-motion';
+import Layout from '../../../layouts/Layout';
 
 export default function CrossWordGame() {
   const navigate = useNavigate();
 
   return (
-    <Frame>
-      <TitleHeader showBackButton={true} title={'십자말풀이'}></TitleHeader>
-      {/* <CategoryDiv>
+    <Layout>
+      <Frame>
+        <TitleHeader showBackButton={true} title={'십자말풀이'}></TitleHeader>
+        {/* <CategoryDiv>
         <motion.div
           style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
           initial={{ opacity: 0, y: 20 }}
@@ -45,21 +47,20 @@ export default function CrossWordGame() {
         과정에서 창의력이 길러져, 새로운 방식으로 생각하고 문제를 해결하는 데
         도움이 됩니다.
       </motion.p> */}
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <BottomButton
-          onClick={() =>
-            navigate(`/game/wordOrderGame/`, { replace: true })
-          }
+        <motion.div
+          style={{ width: '100%' }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
         >
-          시작하기
-        </BottomButton>
-      </motion.div>
-    </Frame>
+          <BottomButton
+            onClick={() => navigate(`/game/wordOrderGame/`, { replace: true })}
+          >
+            시작하기
+          </BottomButton>
+        </motion.div>
+      </Frame>
+    </Layout>
   );
 }
 

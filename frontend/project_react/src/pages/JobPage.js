@@ -7,6 +7,8 @@ import JobEmploymentItem from '../components/JobPage/EmploymentItem';
 import Pagination from 'react-js-pagination';
 import { jobApis } from '../api/apis/jobApis';
 import { useCookies } from 'react-cookie';
+import { convertRegionName } from '../utils/handleJob';
+import Layout from '../layouts/Layout';
 
 const JobContainer = styled.div`
   display: flex;
@@ -29,6 +31,7 @@ const JobPageContent = styled.div`
   overflow-y: auto;
   gap: 24px;
   box-sizing: border-box;
+  margin-bottom: 78px;
 `;
 
 const EmploymentWrapper = styled.div`
@@ -39,7 +42,6 @@ const EmploymentWrapper = styled.div`
   gap: 12px;
   box-sizing: border-box;
   margin-top: 24px;
-  padding-bottom: 20px;
 `;
 
 const PaginationBox = styled.div`
@@ -103,25 +105,31 @@ const JobPage = () => {
   const [sorted, setSorted] = useState(0);
   const [jobName, setJobName] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [region, setRegion] = useState('서울');
+  const [maxPage, setMaxPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const accessToken = cookies.accessToken;
+
+  useEffect(() => {
+    getJobList();
+  }, []);
 
   const searchJob = async () => {
     await jobApis.searchJob(jobName, page - 1, accessToken).then((res) => {
       setJobList(res.data);
+      setRegion(convertRegionName(res.data.province));
     });
   };
 
   const getJobList = async () => {
     await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
-      setJobList(res.data); // id, companyName, title, occupation
-      console.log('searchJob res.data : ', res.data);
+      console.log('res.data : ', res.data);
+      setJobList(res.data.jobListResponses); // id, companyName, title, occupation
+      setMaxPage(res.data.totalJobSize / 10 + 1);
+      setTotalCount(res.data.totalJobSize);
     });
-    // scroll to top
   };
 
-  useEffect(() => {
-    getJobList();
-  }, []);
   useEffect(() => {
     const jobContent = document.getElementById('job-content');
     if (jobContent) {
@@ -150,34 +158,41 @@ const JobPage = () => {
     setPage(page);
   };
   return (
-    <JobContainer>
-      <JobPageHeader
-        jobName={jobName}
-        setJobName={setJobName}
-        searchJob={searchJob}
-      />
-      <JobPageContent id="job-content">
-        <JobDropdown
-          toggleFilter={toggleFilter}
-          openFilter={openFilter}
-          sorted={sorted}
-          setSorted={setSorted}
-          setOpenFilter={setOpenFilter}
+    <Layout>
+      <JobContainer>
+        <JobPageHeader
+          jobName={jobName}
+          setJobName={setJobName}
+          searchJob={searchJob}
         />
-        <EmploymentWrapper>
-          <JobEmploymentItem jobList={jobList} />
-          <PaginationBox>
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={4}
-              totalItemsCount={3000}
-              pageRangeDisplayed={4}
-              onChange={handlePageChange}
-            ></Pagination>
-          </PaginationBox>
-        </EmploymentWrapper>
-      </JobPageContent>
-    </JobContainer>
+        <JobPageContent id="job-content">
+          <JobDropdown
+            toggleFilter={toggleFilter}
+            openFilter={openFilter}
+            sorted={sorted}
+            setSorted={setSorted}
+            setOpenFilter={setOpenFilter}
+            region={region}
+          />
+          <EmploymentWrapper>
+            {jobList.length !== 0 && (
+              <>
+                <JobEmploymentItem jobList={jobList} />
+                <PaginationBox>
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={10}
+                    totalItemsCount={totalCount}
+                    pageRangeDisplayed={maxPage < 4 ? totalCount : 4}
+                    onChange={handlePageChange}
+                  ></Pagination>
+                </PaginationBox>
+              </>
+            )}
+          </EmploymentWrapper>
+        </JobPageContent>
+      </JobContainer>
+    </Layout>
   );
 };
 

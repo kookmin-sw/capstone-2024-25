@@ -8,6 +8,7 @@ import { useAccessToken } from '../../../components/cookies';
 import BottomButton from '../../../components/Game/bottomButton';
 import { motion, useAnimation } from 'framer-motion';
 import Swal from 'sweetalert2';
+import Layout from '../../../layouts/Layout';
 
 export default function WordOrderGame() {
   const navigate = useNavigate();
@@ -125,7 +126,7 @@ export default function WordOrderGame() {
           if (result.isConfirmed) {
             startNewGame();
           } else if (result.isDenied) {
-            navigate(-1, {replace: true});
+            navigate(-1, { replace: true });
           }
         });
       } else {
@@ -149,106 +150,108 @@ export default function WordOrderGame() {
   }
 
   return (
-    <Frame>
-      <TitleHeader
-        showBackButton={true}
-        title={'문장 순서 맞추기'}
-      ></TitleHeader>
-      <GameFrame>
-        <GameContent>
-          <CategoryLabel>{category.split(',')[0]}</CategoryLabel>
-          <UserSelectionDiv>
-            <UserSelectWords>
-              {userSelection.map((Object, index) => (
-                <motion.p
-                  key={index}
-                  style={{
-                    fontSize: '22px',
-                    marginLeft: '2px',
-                    marginRight: '2px',
-                    marginTop: '0px',
-                    marginBottom: '0px',
-                  }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 24,
-                  }}
-                >
-                  {Object['word']}
-                </motion.p>
-              ))}
-            </UserSelectWords>
-            <motion.img
-              src="/images/game/reset.svg"
-              style={{ position: 'absolute', right: '10px', bottom: '10px' }}
-              alt="reset"
-              onClick={() => {
-                rotateImage();
-                setUserSelection([]);
-              }}
-              animate={controls}
-            />
-          </UserSelectionDiv>
-          <h2 style={{ fontSize: '20px', fontWeight: '300', margin: '8px' }}>
-            <span style={{ fontSize: '24px' }}>어휘</span>를 선택하여{' '}
-            <span style={{ fontSize: '24px' }}>문장</span>을 완성하세요
-          </h2>
-          <WordButtons>
-            {wordList.map((word, index) => (
-              <Button
-                key={sentenceData + index}
+    <Layout>
+      <Frame>
+        <TitleHeader
+          showBackButton={true}
+          title={'문장 순서 맞추기'}
+        ></TitleHeader>
+        <GameFrame>
+          <GameContent>
+            <CategoryLabel>{category.split(',')[0]}</CategoryLabel>
+            <UserSelectionDiv>
+              <UserSelectWords>
+                {userSelection.map((Object, index) => (
+                  <motion.p
+                    key={index}
+                    style={{
+                      fontSize: '22px',
+                      marginLeft: '2px',
+                      marginRight: '2px',
+                      marginTop: '0px',
+                      marginBottom: '0px',
+                    }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 24,
+                    }}
+                  >
+                    {Object['word']}
+                  </motion.p>
+                ))}
+              </UserSelectWords>
+              <motion.img
+                src="/images/game/reset.svg"
+                style={{ position: 'absolute', right: '10px', bottom: '10px' }}
+                alt="reset"
                 onClick={() => {
-                  setUserSelection([
-                    ...userSelection,
-                    { word: word, index: index },
-                  ]);
+                  rotateImage();
+                  setUserSelection([]);
                 }}
+                animate={controls}
+              />
+            </UserSelectionDiv>
+            <h2 style={{ fontSize: '20px', fontWeight: '300', margin: '8px' }}>
+              <span style={{ fontSize: '24px' }}>어휘</span>를 선택하여{' '}
+              <span style={{ fontSize: '24px' }}>문장</span>을 완성하세요
+            </h2>
+            <WordButtons>
+              {wordList.map((word, index) => (
+                <Button
+                  key={sentenceData + index}
+                  onClick={() => {
+                    setUserSelection([
+                      ...userSelection,
+                      { word: word, index: index },
+                    ]);
+                  }}
+                  style={{
+                    visibility: isSelectedWord(index) ? 'hidden' : 'visible',
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  {word}
+                </Button>
+              ))}
+            </WordButtons>
+            {isLoading && <p>로딩 중...</p>}
+          </GameContent>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            {hasFailed && (
+              <motion.p
                 style={{
-                  visibility: isSelectedWord(index) ? 'hidden' : 'visible',
+                  fontSize: '22px',
+                  fontWeight: '600',
+                  margin: '0px',
+                  color: '#2167FF',
+                  textDecoration: 'underline',
                 }}
+                onClick={skipQuestion}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {word}
-              </Button>
-            ))}
-          </WordButtons>
-          {isLoading && <p>로딩 중...</p>}
-        </GameContent>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          {hasFailed && (
-            <motion.p
-              style={{
-                fontSize: '22px',
-                fontWeight: '600',
-                margin: '0px',
-                color: '#2167FF',
-                textDecoration: 'underline',
-              }}
-              onClick={skipQuestion}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2}}
-            >
-              문제 건너뛰기
-            </motion.p>
-          )}
-          <BottomButton onClick={postUserAnswer}>제출하기</BottomButton>
-        </div>
-      </GameFrame>
-    </Frame>
+                문제 건너뛰기
+              </motion.p>
+            )}
+            <BottomButton onClick={postUserAnswer}>제출하기</BottomButton>
+          </div>
+        </GameFrame>
+      </Frame>
+    </Layout>
   );
 }
 
