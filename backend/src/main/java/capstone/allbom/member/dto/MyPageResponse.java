@@ -14,6 +14,9 @@ public record MyPageResponse(
         @Schema(description = "프로필 이미지 URL", example = "https://allbom.s3.ap-northeast-2.amazonaws.com/female.jpg")
         String profileImageUrl,
 
+        @Schema(description = "챗봇 프로필 이미지 URL", example = "https://allbom.s3.ap-northeast-2.amazonaws.com/chat_male.jpg")
+        String chatProfileImageUrl,
+
         @Schema(description = "이름", example = "이은선")
         String name,
 
@@ -46,7 +49,7 @@ public record MyPageResponse(
     }
 
     public static MyPageResponse from(Member member) {
-        return new MyPageResponse(member.getProfileImageUrl(), member.getName(),
+        return new MyPageResponse(member.getProfileImageUrl(), member.getChatProfileImageUrl(), member.getName(),
                 member.getGender().toString(), calculateAge(member.getBirthday()),
                 member.getBirthday(), member.getPhoneNumber(), member.getAddress(),
                 member.getDetailAddress(), medicineFrom(member.getMedicines()));
