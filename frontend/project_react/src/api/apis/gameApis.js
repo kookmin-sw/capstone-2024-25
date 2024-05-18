@@ -1,3 +1,4 @@
+import delayedInstance from '../delayedInstance';
 import instance from '../instance';
 
 export const wordOrderApis = {
@@ -54,14 +55,14 @@ export const crossWordApis = {
 
 export const twentyHeadsApis = {
   getTwentyHeadsData: (accessToken) => {
-    return instance.get('api/chatbot/game', {
+    return delayedInstance.get('api/chatbot/game', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
   },
   postUserAnswer: (accessToken, userAnswer) => {
-    return instance.post(
+    return delayedInstance.post(
       'api/chatbot/game',
       {
         isGame: true,
