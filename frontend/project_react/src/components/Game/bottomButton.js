@@ -1,7 +1,11 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
+
 
 export default function BottomButton({ onClick, children }) {
-  return <Button onClick={onClick}>{children}</Button>;
+  return <Button onClick={onClick}
+
+  >{children}</Button>;
 }
 
 const Button = styled.div`
@@ -9,7 +13,7 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  padding: 12px 0;
   border-radius: 12px;
   font-size: 28px;
   font-weight: bold;

@@ -5,24 +5,44 @@ import ChatbotHeader from '../components/Header/ChatbotHeader';
 import ChatbotModalFirst from '../components/Modal/ChatbotFirst';
 import ChatbotModalSecond from '../components/Modal/ChatbotSecond';
 import Chat from '../components/Chatbot/Chat';
+import ChatPair from '../components/Chatbot/ChatPair';
 import Category from '../components/Toggle/Category';
 import SelectInputMode from '../components/Chatbot/SelectInputMode';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
+import { getUserInfo } from '../utils/handleUser';
 
-import { testFun } from './ComponentTest';
+import { googleTTS } from './ComponentTest';
+import { convertArrayToObjectList } from '../utils/handleChat';
 
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import useStore from '../stores/store';
+
+import { chatbotApis } from '../api/apis/chatbotApis';
+import ChatSystem from '../components/Chatbot/ChatSystem';
+import { hasUnreliableEmptyValue } from '@testing-library/user-event/dist/utils';
+import {
+  cultureRequest,
+  newsRequest,
+  serviceRequest,
+  weatherRequest,
+  reverseQnaResponses,
+  parseNewsData,
+} from '../utils/handleChat';
+import Layout from '../layouts/Layout';
 
 const ChatbotContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const ChattingWrapper = styled.div`
@@ -30,36 +50,41 @@ const ChattingWrapper = styled.div`
   overflow-y: scroll;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 16px;
-  padding: 12px 24px 100px 24px;
+  gap: 16px; // 나중에 ChatPair 로 옮길 예정
+  padding: 12px 24px 120px 24px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 `;
+const DownPoint = styled.div`
+  height: 1px;
+`;
 
-const CategoryWrapper = styled.div`
+export const CategoryWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
   background-color: #ffffff;
+  border-top: 2px solid var(--unselected-color);
+  padding: 8px 0;
 `;
 
 const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
 `;
 
-const InputVoiceWrapper = styled.div`
+export const InputVoiceWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   align-self: center;
   width: 88%;
-  height: 84px;
+  padding: 12px 24px;
   box-sizing: border-box;
   border: 1px solid var(--unselected-color);
   border-radius: 4px;
@@ -67,41 +92,42 @@ const InputVoiceWrapper = styled.div`
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
-const MicImg = styled.img`
-  width: 42px;
+export const MicImg = styled.img`
+  min-width: 10%;
+  max-width: 10%;
 `;
-const InputVoiceText = styled.span`
+export const InputVoiceText = styled.span`
+  max-width: 80%;
   font-size: 16px;
   font-weight: bold;
   white-space: pre-wrap;
 `;
 
-const XImg = styled.img`
+export const XImg = styled.img`
   position: absolute;
   width: 20px;
   top: 12px;
   right: 12px;
 `;
 
-const ChatInputWrapper = styled.div`
+export const ChatInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-self: center;
   gap: 8px;
   padding: 6px 14px;
-  //height: 64px;
   box-sizing: border-box;
   width: 100%;
   background-color: #ffffff;
 `;
 
-const XImage = styled.img`
+export const XImage = styled.img`
   width: 32px;
   height: 32px;
 `;
 
-const InputText = styled.input`
+export const InputText = styled.input`
   width: 100%;
   height: 36px;
   border: 1px solid #b4b4b4;
@@ -109,17 +135,20 @@ const InputText = styled.input`
   outline: none;
   padding-left: 6px;
   font-size: 16px;
+  font-weight: 600;
   &::placeholder {
     color: #787878;
   }
 `;
 
-const SendButton = styled.img`
+export const SendButton = styled.img`
   width: 32px;
   height: 32px;
 `;
 
 const Chatbot = () => {
+  const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   const [isOpenFirst, setIsOpenFirst] = useState(false);
   const [isOpenSecond, setIsOpenSecond] = useState(false);
   const [userText, setUserText] = useState('');
@@ -130,12 +159,26 @@ const Chatbot = () => {
   const [keyboardOpened, setKeyboardOpened] = useState(false);
   const containerRef = useRef();
   const inputRef = useRef();
-  const footerRef = useRef();
+  const downRef = useRef();
+  const chatPage = useRef(1);
+
+  const [chattingList, setChattingList] = useState({
+    chatProfileImageUrl: '',
+    qnaResponses: [],
+  });
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
 
   const [showSubCategory, setShowSubCategory] = useState(false);
+
+  const accessToken = cookies.accessToken;
+  const [userInfo, setUserInfo] = useState({});
+  const [userName, setUserName] = useState('');
+  const [isWaiting, setIsWaiting] = useState(false);
+  const [loadFirst, setLoadFirst] = useState(false);
+
+  const setGender = useStore((state) => state.setGender);
 
   const {
     transcript,
@@ -143,36 +186,128 @@ const Chatbot = () => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  // const [timer, setTimer] = useState(null);
-  // const [startTimer, setStartTimer] = useState(null);
-  const clickVoice = () => {
-    SpeechRecognition.startListening({ continuous: true });
-    console.log('gugu 실행');
+  const [timer, setTimer] = useState(null);
+  const [initialTimer, setInitialTimer] = useState(null);
+  const [isTimerFirst, setIsTimerFirst] = useState(true);
+  useEffect(() => {
+    if (!browserSupportsSpeechRecognition) {
+      alert('Speech recognition not supported');
+    }
+    getUserInfo(accessToken, setUserInfo, setUserName, setGender);
+  }, []);
+
+  // 타이머를 리셋하고 새로 설정하는 함수
+  const resetTimer = () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(() => {
+        if (!isTimerFirst) {
+          console.log('입력이 3초 동안 없어 음성 인식 중지');
+          SpeechRecognition.stopListening();
+          if (!isWaiting) {
+            addChat(transcript);
+          }
+          resetTranscript();
+          setSelectMode('select');
+        }
+      }, 3000),
+    );
   };
-  const voiceXClick = () => {
-    resetTranscript();
-    SpeechRecognition.stopListening();
-    setSelectMode('select');
+
+  // 음성 인식 시작 시 5초 타이머 설정
+  const startInitialTimer = () => {
+    clearTimeout(initialTimer);
+    const newInitialTimer = setTimeout(() => {
+      console.log('최초 5초 동안 입력 없음, 인식 중지');
+      if (!transcript) {
+        SpeechRecognition.stopListening();
+        setSelectMode('select');
+      }
+    }, 5000);
+    setInitialTimer(newInitialTimer);
   };
-  const [voiceInputStartTime, setVoiceInputStartTime] = useState(null);
 
   useEffect(() => {
+    // 음성 인식이 활성화되어 있고, transcript가 변화할 때마다 타이머를 리셋
     if (listening) {
-      setVoiceInputStartTime(Date.now());
+      setIsTimerFirst(false);
+      resetTimer();
     }
 
-    const checkEndTimer = () => {
-      if (voiceInputStartTime && Date.now() - voiceInputStartTime >= 2000) {
-        setVoiceInputStartTime(null);
-        resetTranscript();
-        SpeechRecognition.stopListening();
-      }
+    return () => {
+      clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+      clearTimeout(initialTimer);
     };
+  }, [transcript, listening]);
 
-    const timerId = setTimeout(checkEndTimer, 2000);
+  const clickVoice = () => {
+    setIsTimerFirst(true);
+    SpeechRecognition.startListening({ continuous: true });
+    startInitialTimer(); // 음성 인식 시작과 동시에 최초 타이머 설정
+  };
 
-    return () => clearTimeout(timerId);
-  }, [listening, transcript, voiceInputStartTime]);
+  const voiceXClick = () => {
+    SpeechRecognition.stopListening();
+    clearTimeout(timer);
+    clearTimeout(initialTimer); // 모든 타이머 종료
+    resetTranscript();
+    setSelectMode('select');
+  };
+
+  const [firstChat, setFirstChat] = useState({
+    answer: `안녕하세요. [${userName}]님! 올봄 챗봇입니다. 무엇을 도와드릴까요?`,
+  });
+
+  useEffect(() => {
+    setFirstChat({
+      answer: `안녕하세요. [${userName}]님! 올봄 챗봇입니다. 무엇을 도와드릴까요?`,
+    });
+  }, [userName]);
+
+  // 처음 렌더링 시 채팅창 가장 아래로 스크롤
+  useEffect(() => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper) {
+      chatWrapper.scrollTop = chatWrapper.scrollHeight;
+    }
+  }, []);
+
+  const setChatList = async () => {
+    await chatbotApis
+      .getChatList(accessToken, chatPage.current - 1)
+      .then((res) => {
+        const reverseList = reverseQnaResponses(res.data);
+        setChattingList(reverseList);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        if (
+          error.response.data.message ==
+          '챗봇 프로필 업데이트가 먼저 필요합니다.'
+        ) {
+          setIsOpenFirst(true);
+        }
+      });
+    await setLoadFirst(true);
+  };
+  const postChat = async (data) => {
+    try {
+      const response = await chatbotApis.postChat(data, accessToken);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    setChatList();
+  }, []);
+
+  useEffect(() => {
+    if (loadFirst) {
+      scrollDown();
+    }
+  }, [loadFirst]);
 
   const [categoryList, setCategoryList] = useState([
     { id: 1, title: '날씨', selected: false, values: [] },
@@ -181,11 +316,11 @@ const Chatbot = () => {
       title: '뉴스',
       selected: false,
       values: [
-        { id: 1, title: '정치', selected: false, values: [] },
-        { id: 2, title: '경제', selected: false, values: [] },
-        { id: 3, title: '사회', selected: false, values: [] },
+        { id: 1, title: '전체', selected: false, values: [] },
+        { id: 2, title: '정치', selected: false, values: [] },
+        { id: 3, title: '경제', selected: false, values: [] },
         { id: 4, title: '세계', selected: false, values: [] },
-        { id: 5, title: '생활/문화', selected: false, values: [] },
+        { id: 5, title: '스포츠', selected: false, values: [] },
         { id: 6, title: 'IT/과학', selected: false, values: [] },
       ],
     },
@@ -204,9 +339,24 @@ const Chatbot = () => {
       title: '방문서비스',
       selected: false,
       values: [
-        { id: 1, title: '간호', selected: false, values: [] },
-        { id: 2, title: '목욕', selected: false, values: [] },
-        { id: 3, title: '요양', selected: false, values: [] },
+        {
+          id: 1,
+          title: '간호',
+          selected: false,
+          values: [],
+        },
+        {
+          id: 2,
+          title: '목욕',
+          selected: false,
+          values: [],
+        },
+        {
+          id: 3,
+          title: '요양',
+          selected: false,
+          values: [],
+        },
       ],
     },
   ]);
@@ -217,16 +367,24 @@ const Chatbot = () => {
   const categoryClick = (id) => {
     const newCategoryList = categoryList.map((category) => {
       if (category.id === id) {
-        setSelectedCategoryId(id);
-        category.selected = true;
-        setShowSubCategory(!showSubCategory);
-        // 추후 SubCategory가 없을 경우와 있을 경우를 구별해서 요청을 보내도록.
-        // if(category.values.length === 0) {
-        // setShowSubCategory(false);
-        // }
+        if (category.selected === true) {
+          category.selected = false;
+          setShowSubCategory(!showSubCategory);
+        } else {
+          // 날씨 선택 시 구현 추가
+          setSelectedCategoryId(id);
+          console.log('선택된 카테고리 타이틀 : ', category.title);
+          if (category.title === '날씨') {
+            const requestCategory = weatherRequest();
+            if (!isWaiting) {
+              addChat(requestCategory);
+            }
+          }
+          category.selected = true;
+          setShowSubCategory(!showSubCategory);
+        }
       } else {
         category.values.map((subCategory) => {
-          // setShowSubCategory(true);
           subCategory.selected = false;
         });
         category.selected = false;
@@ -240,7 +398,25 @@ const Chatbot = () => {
     const newSubCategoryList = categoryList.map((category) => {
       category.values.map((subCategory) => {
         if (subCategory.id === id && category.id === selectedCategoryId) {
+          console.log('선택된 서브카테고리 타이틀 : ', subCategory.title);
+          let requestCategory = '';
+          if (category.title === '뉴스') {
+            if (subCategory.title === '전체') {
+              requestCategory = newsRequest('');
+            } else {
+              requestCategory = newsRequest(subCategory.title);
+            }
+          } else if (category.title === '방문서비스') {
+            requestCategory = serviceRequest(subCategory.title);
+          } else if (category.title === '문화') {
+            requestCategory = cultureRequest(subCategory.title);
+          }
+          if (!isWaiting) {
+            addChat(requestCategory);
+          }
+
           setSelectedSubCategoryId(id);
+
           subCategory.selected = true;
         } else {
           subCategory.selected = false;
@@ -253,89 +429,133 @@ const Chatbot = () => {
     setShowSubCategory(false);
   };
 
-  const [chatListDummy, setChatListDummy] = useState([
-    {
-      id: 1,
-      text: 'nope',
-      type: 'System',
-    },
-    {
-      id: 2,
-      text: 'nope',
-      type: 'User',
-    },
-    {
-      id: 3,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'System',
-    },
-    {
-      id: 4,
-      text: 'nope',
-      type: 'User',
-    },
-    {
-      id: 5,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'System',
-    },
-    {
-      id: 6,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'User',
-    },
-    {
-      id: 7,
-      text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-      type: 'System',
-    },
-    {
-      id: 8,
-      text:
-        '오늘 2024년 3월 4일 주요 뉴스입니다.\n' +
-        '\n' +
-        '정치:\n' +
-        '민생토론회: 윤석렬 대통령은 대구에서 민생토론회를 개최했습니다. 주요 내용은 부동산, 일자리, 탈원전 정책 등이었습니다.\n' +
-        '\n' +
-        '사회:\n' +
-        '농축산업에 AI 적용: 정부는 농축산업에 AI 기술을 적용하여 스마트 온실과 축사를 확대할 계획입니다.\n' +
-        '\n' +
-        '경제:\n' +
-        '황재복 SPC 대표 구속기로 석방: 황재복 SPC 대표는 구속기로 석방되었습니다.',
-      type: 'System',
-    },
-    // {
-    //   id: 9,
-    //   text: 'nope',
-    //   type: 'System',
-    // },
-    // {
-    //   id: 10,
-    //   text: 'nopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenopenope',
-    //   type: 'User',
-    // },
-  ]);
-
-  const addChat = (text, type) => {
-    // 유저 텍스트 추가
-    // console.log('gmlgml');
-    // const newChat = {
-    //   id: chatListDummy.length + 1,
-    //   text: userText,
-    //   type: 'User',
-    // };
-    // setChatListDummy([...chatListDummy, newChat]);
-    testFun(chatListDummy[chatListDummy.length - 1].text);
+  const scrollAfterSend = () => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper) {
+      chatWrapper.scrollTop = chatWrapper.scrollHeight;
+    }
   };
-
-  const addSystemChat = () => {
-    const newChat = {
-      id: chatListDummy.length + 1,
-      text: chatListDummy[chatListDummy.length - 1].text,
-      type: 'User',
+  const scrollDown = () => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (downRef) {
+      chatWrapper.scrollTo(0, downRef.current?.offsetTop);
+    }
+  };
+  const addChat = async (userQuestion) => {
+    const question = {
+      isGame: 'false',
+      question: userQuestion,
     };
-    setChatListDummy([...chatListDummy, newChat]);
-    // testFun(userText);
+    const showingChat = {
+      answer: '',
+      question: userQuestion,
+      type: 'GENERAL',
+      isLoading: true, // 로딩 상태 추가
+    };
+
+    // 사용자가 입력한 채팅을 먼저 화면에 보여줌
+    await setChattingList((prevChattingList) => ({
+      ...prevChattingList,
+      qnaResponses: [...prevChattingList.qnaResponses, showingChat],
+    }));
+    setIsWaiting(true);
+
+    setUserText('');
+    const inputUserText = document.getElementById('input-text');
+    if (inputUserText) {
+      inputUserText.value = '';
+    }
+    await scrollDown();
+    try {
+      const response = await postChat(question);
+      const updatedAnswer = response.data; // 서버에서 받은 응답
+
+      // 응답을 받아 기존 채팅의 답변을 업데이트
+      setChattingList((prevChattingList) => ({
+        ...prevChattingList,
+        qnaResponses: prevChattingList.qnaResponses.map((chat, index) =>
+          index === prevChattingList.qnaResponses.length - 1
+            ? {
+                ...chat,
+                answer: updatedAnswer.answer,
+                type: updatedAnswer.type,
+                isLoading: false,
+              }
+            : chat,
+        ),
+      }));
+      if (
+        updatedAnswer.type === 'GENERAL' ||
+        updatedAnswer.type === 'WEATHER'
+      ) {
+        googleTTS(updatedAnswer.answer);
+      } else if (updatedAnswer.type === 'NEWS') {
+        const newsData = parseNewsData(updatedAnswer.answer);
+        let completeSentence = '';
+        const newsHeader = newsData.header;
+        completeSentence += newsHeader + '\n';
+        const articles = newsData.articles.slice(
+          0,
+          newsData.articles.length / 2,
+        );
+        articles.map((article) => {
+          completeSentence += article.title + '\n';
+        });
+        completeSentence += '더 많은 뉴스를 보여드릴까요 ?';
+        googleTTS(completeSentence);
+      } else if (
+        updatedAnswer.type === 'PARK' ||
+        updatedAnswer.type === 'SHOPPING' ||
+        updatedAnswer.type === 'EDUCATION' ||
+        updatedAnswer.type === 'CARE' ||
+        updatedAnswer.type === 'BATH'
+      ) {
+        const spittedValue = updatedAnswer.answer.split('\n');
+        let completeSentence = '';
+        const otherHeader = spittedValue[0];
+        completeSentence += otherHeader + '\n';
+        const otherContents = convertArrayToObjectList(spittedValue.slice(1));
+        otherContents.map((content) => {
+          completeSentence += content.location + '\n';
+          completeSentence += '주소 ' + content.address + '\n';
+          if (
+            updatedAnswer.type !== 'SHOPPING' &&
+            updatedAnswer.type !== 'PARK'
+          ) {
+            completeSentence += '전화번호 ' + content.phone + '\n';
+          }
+        });
+        googleTTS(completeSentence);
+      }
+      setIsWaiting(false);
+      // scrollAfterSend();
+      scrollDown();
+    } catch (error) {
+      console.log('error : ', error);
+      // 서버 오류 메시지를 사용자에게 표시
+      setChattingList((prevChattingList) => ({
+        ...prevChattingList,
+        qnaResponses: prevChattingList.qnaResponses.map((chat, index) =>
+          index === prevChattingList.qnaResponses.length - 1
+            ? {
+                ...chat,
+                answer:
+                  error.response?.data?.message ||
+                  '답변을 가져오는 중 오류가 발생했습니다.',
+                isLoading: false,
+              }
+            : chat,
+        ),
+      }));
+      console.log('답변 error : ', error);
+      // scrollAfterSend();
+      scrollDown();
+      setIsWaiting(false);
+    }
+
+    scrollDown();
+
+    // await scrollAfterSend();
   };
 
   /* 모바일 가상 키보드 start */
@@ -431,22 +651,15 @@ const Chatbot = () => {
   };
   const handleKeyboardVisibility = () => {
     const chattingWrapper = wrapperRef.current;
-    // const footer = footerRef.current;
-    const chatInput = inputRef.current;
     const currentHeight = window.visualViewport.height;
     // 키보드가 열렸다고 판단되면 스크롤을 막음
     if (currentHeight < originHeight) {
       setKeyboardOpened(true);
       window.scroll(0, 0);
-
-      // footer.style.display = 'none';
-      // chatInput.style.height = '80px';
       chattingWrapper.scrollTop = chattingWrapper.scrollHeight;
       setupEventListeners(); // 스크롤 방지 이벤트 리스너 설정
     } else {
       setKeyboardOpened(false);
-      // footer.style.display = 'block';
-      // chatInput.style.height = '158px';
       removeEventListeners(); // 스크롤 방지 이벤트 리스너 제거
     }
   };
@@ -493,106 +706,156 @@ const Chatbot = () => {
     };
   }, []);
 
+  const getNextList = async () => {
+    try {
+      const res = await chatbotApis.getChatList(
+        accessToken,
+        chatPage.current - 1,
+      );
+      const reverseList = reverseQnaResponses(res.data);
+
+      setChattingList((prev) => ({
+        ...prev,
+        qnaResponses: [...reverseList.qnaResponses, ...prev.qnaResponses],
+      }));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  useEffect(() => {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    const gun = () => {
+      if (chatWrapper) {
+        if (chatWrapper.scrollTop === 0) {
+          chatPage.current += 1;
+          getNextList();
+        }
+      }
+    };
+    if (chatWrapper) {
+      chatWrapper.addEventListener('scroll', gun);
+    } else {
+    }
+    return () => {
+      chatWrapper.removeEventListener('scroll', gun);
+    };
+  }, []);
+
   /* 모바일 가상 키보드 end */
 
   return (
-    <ChatbotContainer ref={containerRef}>
-      <ChatbotHeader
-        onClick={() => {
-          console.log('categoryList : ', categoryList);
-        }}
-      />
-      <ChatbotModalFirst
-        isOpen={isOpenFirst}
-        close={() => {
-          setIsOpenSecond(true);
-          setIsOpenFirst(false);
-        }}
-      />
-      <ChatbotModalSecond
-        isOpen={isOpenSecond}
-        handlePrev={() => {
-          setIsOpenFirst(true);
-          setIsOpenSecond(false);
-        }}
-        handleNext={() => setIsOpenSecond(false)}
-      />
-      {/*<button onClick={() => setIsOpenFirst(true)}>gmlgml</button>*/}
-      <ChattingWrapper ref={wrapperRef}>
-        {chatListDummy.map((chat) => (
-          <Chat text={chat.text} type={chat.type} key={chat.id} />
-        ))}
-        <BottomWrapper ref={inputRef}>
-          {selectMode === 'voice' && (
-            <InputVoiceWrapper>
-              <MicImg
-                src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
-              />
-              <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
-              <XImg
-                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => setSelectMode('select')}
-              />
-            </InputVoiceWrapper>
-          )}
-          {selectMode !== 'voice' && (
-            <CategoryWrapper>
-              {categoryList.map((category) => (
-                <Category
-                  parentCategoryId={category.id}
-                  key={category.id}
-                  text={category.title}
-                  selected={category.selected}
-                  color={'var(--primary-color)'}
-                  values={category.values}
-                  categoryClick={() => categoryClick(category.id)}
-                  subCategoryClick={subCategoryClick}
-                  showSubCategory={showSubCategory}
-                  setShowSubCategory={setShowSubCategory}
-                  unselectedColor={'var(--primary-color)'}
+    <Layout>
+      <ChatbotContainer ref={containerRef}>
+        <ChatbotHeader
+          onClick={() => {
+            navigate('/my-page');
+          }}
+        />
+        <ChatbotModalFirst
+          isOpen={isOpenFirst}
+          close={() => {
+            setIsOpenSecond(true);
+            setIsOpenFirst(false);
+          }}
+        />
+        <ChatbotModalSecond
+          isOpen={isOpenSecond}
+          setIsOpenSecond={setIsOpenSecond}
+          handlePrev={() => {
+            setIsOpenFirst(true);
+            setIsOpenSecond(false);
+          }}
+          handleNext={() => setIsOpenSecond(false)}
+        />
+        <ChattingWrapper ref={wrapperRef} id="chat-wrapper">
+          {chattingList.qnaResponses.length !== 0 ? (
+            <>
+              {chattingList.qnaResponses.map((chat) => (
+                <ChatPair
+                  qnaPairs={chat}
+                  chatImg={chattingList.chatProfileImageUrl}
                 />
               ))}
-            </CategoryWrapper>
+              <DownPoint ref={downRef} />
+            </>
+          ) : (
+            <ChatSystem content={firstChat.answer} type={'GENERAL'} />
           )}
-          {selectMode === 'select' && (
-            <SelectInputMode
-              setSelectMode={setSelectMode}
-              clickVoice={clickVoice}
-            />
-          )}
-          {selectMode === 'keyboard' && (
-            <ChatInputWrapper>
-              <XImage
-                src={process.env.PUBLIC_URL + 'images/x-img.svg'}
-                onClick={() => voiceXClick()}
-              />
-              <InputText
-                type="text"
-                onClick={handleViewportResize}
-                onChange={(e) => setUserText(e.target.value)}
-              />
-              {userText === '' ? (
-                <SendButton
-                  src={
-                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-off.svg'
-                  }
-                />
-              ) : (
-                <SendButton
-                  onClick={() => addChat()}
-                  src={
-                    process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
-                  }
-                />
-              )}
-            </ChatInputWrapper>
-          )}
-          {/*<Footer ref={footerRef}>하단바 영역</Footer>*/}
-        </BottomWrapper>
-      </ChattingWrapper>
 
-      {/*<Footer>하단바 영역</Footer>*/}
-    </ChatbotContainer>
+          <BottomWrapper ref={inputRef}>
+            {selectMode === 'voice' && (
+              <InputVoiceWrapper>
+                <MicImg
+                  src={process.env.PUBLIC_URL + 'images/Chatbot/mic-icon.svg'}
+                />
+                <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
+                <XImg
+                  src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                  onClick={() => voiceXClick()}
+                />
+              </InputVoiceWrapper>
+            )}
+            {selectMode !== 'voice' && (
+              <CategoryWrapper>
+                {categoryList.map((category) => (
+                  <Category
+                    parentCategoryId={category.id}
+                    key={category.id}
+                    text={category.title}
+                    selected={category.selected}
+                    color={'var(--primary-color)'}
+                    values={category.values}
+                    categoryClick={() => categoryClick(category.id)}
+                    subCategoryClick={subCategoryClick}
+                    showSubCategory={showSubCategory}
+                    setShowSubCategory={setShowSubCategory}
+                    unselectedColor={'var(--primary-color)'}
+                  />
+                ))}
+              </CategoryWrapper>
+            )}
+            {selectMode === 'select' && (
+              <SelectInputMode
+                setSelectMode={setSelectMode}
+                clickVoice={clickVoice}
+              />
+            )}
+            {selectMode === 'keyboard' && (
+              <ChatInputWrapper>
+                <XImage
+                  src={process.env.PUBLIC_URL + 'images/x-img.svg'}
+                  onClick={() => setSelectMode('select')}
+                />
+                <InputText
+                  type="text"
+                  어
+                  id="input-text"
+                  onClick={handleViewportResize}
+                  onChange={(e) => setUserText(e.target.value)}
+                  placeholder="대화를 입력하세요"
+                />
+                {userText === '' || isWaiting ? (
+                  <SendButton
+                    src={
+                      process.env.PUBLIC_URL +
+                      'images/Chatbot/send-icon-off.svg'
+                    }
+                  />
+                ) : (
+                  <SendButton
+                    onClick={() => addChat(userText)}
+                    src={
+                      process.env.PUBLIC_URL + 'images/Chatbot/send-icon-on.svg'
+                    }
+                  />
+                )}
+              </ChatInputWrapper>
+            )}
+          </BottomWrapper>
+        </ChattingWrapper>
+      </ChatbotContainer>
+    </Layout>
   );
 };
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const FilterWrapper = styled.div`
   align-self: flex-end;
@@ -8,6 +9,7 @@ const FilterWrapper = styled.div`
 
 const RegionWrapper = styled.div`
   max-height: 32px;
+  max-width: 114px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,8 +21,11 @@ const RegionWrapper = styled.div`
   font-size: 16px;
   position: absolute;
   top: 0;
-  right: 124px;
+  //right: 124px;
+  right: ${(props) => (props.sorted === 0 ? '114px' : '124px')};
+  transition: right 0.2s ease-in-out;
   background-color: #ffffff;
+  font-weight: 500;
 `;
 const FilterSelect = styled(RegionWrapper)`
   width: fit-content;
@@ -37,8 +42,9 @@ const FilterSelect = styled(RegionWrapper)`
 
 const FilterSelected = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  gap: 28px;
+  gap: 4px;
 `;
 
 const FilterText = styled.span`
@@ -64,13 +70,30 @@ const FilterItemWrapper = styled.div`
   border-top: 1px solid #000000;
 `;
 
-const JobDropdown = ({ toggleFilter, openFilter }) => {
+const JobDropdown = ({
+  toggleFilter,
+  openFilter,
+  sorted,
+  setSorted,
+  setOpenFilter,
+  region,
+}) => {
+  const selectDistance = () => {
+    setSorted(0);
+    toggleFilter();
+  };
+
+  const selectDeadline = () => {
+    setSorted(1);
+    toggleFilter();
+  };
+
   return (
     <FilterWrapper>
-      <RegionWrapper>서울</RegionWrapper>
+      <RegionWrapper sorted={sorted}>{region}</RegionWrapper>
       <FilterSelect onClick={() => toggleFilter()} openFilter={openFilter}>
         <FilterSelected>
-          <FilterText>거리 순</FilterText>
+          <FilterText>{sorted === 0 ? '거리순' : '마감일자순'}</FilterText>
           <ArrowImg
             src={process.env.PUBLIC_URL + '/images/JobPage/arrow-up.svg'}
             alt="search"
@@ -78,11 +101,11 @@ const JobDropdown = ({ toggleFilter, openFilter }) => {
           />
         </FilterSelected>
         <FilterItemWrapper openFilter={openFilter}>
-          <FilterSelected>
-            <FilterText>거리 순</FilterText>
+          <FilterSelected onClick={() => selectDistance()}>
+            <FilterText>거리순</FilterText>
           </FilterSelected>
-          <FilterSelected>
-            <FilterText>마감일자 순</FilterText>
+          <FilterSelected onClick={() => selectDeadline()}>
+            <FilterText>마감일자순</FilterText>
           </FilterSelected>
         </FilterItemWrapper>
       </FilterSelect>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import Button from '../Button';
+import { memberApis } from '../../api/apis/memberApis';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -16,21 +17,48 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
-const StepId = ({ value, setValue }) => {
+const StepId = ({ value, setValue, setIdPossible }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
   const [errorState, setErrorState] = useState(0);
-  const stateList = ['', 'error', 'success'];
+  const stateList = ['', 'error', 'error', 'success'];
   const infoTextList = [
     '6자 이상 12자 이내. 영문, 숫자 사용 가능',
     '이미 사용중인 아이디입니다.',
+    '아이디는 6자 이상 12자 이내로 입력해주세요.',
     '사용 가능한 아이디입니다.',
   ];
+  const validateId = (id) => {
+    // 6자 이상 12자 이내의 문자열인지 검사
+    const regex = /^[a-zA-Z0-9]{6,12}$/;
+    return regex.test(id);
+  };
   const checkId = () => {
-    setErrorState(2);
+    // setValue(tmp);
+    if (!validateId(value)) {
+      setErrorState(2);
+      setIdPossible(false);
+      return;
+    }
+    memberApis
+      .duplicate(value)
+      .then((res) => {
+        if (res.status === 200) {
+          setErrorState(3);
+          setIdPossible(true);
+        } else if (res.status === 400) {
+          setErrorState(1);
+          setIdPossible(false);
+        }
+      })
+      .catch((err) => {
+        setErrorState(1);
+        setIdPossible(false);
+      });
   };
   return (
     <StepWrapper>

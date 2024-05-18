@@ -2,6 +2,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
+import { expandRegionName } from '../../utils/handleAddress';
 
 const customModalStyles = {
   overlay: {
@@ -70,8 +71,6 @@ const AddressModal = ({
   setAddress,
   saveAddress,
 }) => {
-  const [inputAddressValue, setInputAddressValue] = useState('');
-  const [inputZipCodeValue, setInputZipCodeValue] = useState('');
   const [modalState, setModalState] = useState(false);
   const xClick = () => {
     closeModal();
@@ -82,13 +81,14 @@ const AddressModal = ({
     height: '500px',
     display: isOpen ? 'block' : 'none',
   }; // 스타일 정의 code
-  const onCompletePost = (data) => {
+  const onCompletePost = async (data) => {
     setModalState(false);
-    setInputAddressValue(data.address);
-    setInputZipCodeValue(data.zonecode);
-    setAddress(`(${data.zonecode}) ${data.address}`);
+    const city = data.address.split(' ')[0];
+    const newAddress =
+      expandRegionName(city) + data.address.substr(city.length);
+    setAddress(newAddress);
     if (saveAddress) {
-      saveAddress();
+      await saveAddress(newAddress);
     }
     closeModal();
   };

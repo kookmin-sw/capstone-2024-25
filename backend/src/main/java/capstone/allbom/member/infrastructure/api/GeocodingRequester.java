@@ -50,10 +50,14 @@ public class GeocodingRequester {
                 String.class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
+            log.info("response={}", response);
+
             JSONParser parser = new JSONParser();
             try {
                 JSONObject jsonResponse = (JSONObject) parser.parse(response.getBody());
+                System.out.println("jsonResponse = " + jsonResponse);
                 JSONArray addresses = (JSONArray) jsonResponse.get("addresses");
+
                 if (addresses != null && !addresses.isEmpty()) {
                     JSONObject addressObj = (JSONObject) addresses.get(0); // Assuming there's only one address
                     String latitude = (String) addressObj.get("y");

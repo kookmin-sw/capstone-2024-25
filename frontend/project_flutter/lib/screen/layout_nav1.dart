@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
-import 'package:project_flutter/screen/game/crossword/intro_crossword.dart';
-import 'package:project_flutter/screen/game/twentyheads/intro_twentyheads.dart';
-import 'package:project_flutter/screen/game/wordorder/intro_wordorder.dart';
-import 'package:project_flutter/widget/gamecard.dart';
-import 'package:project_flutter/widget/header.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LayoutNav1 extends StatefulWidget {
   const LayoutNav1({super.key});
@@ -17,88 +13,124 @@ class LayoutNav1 extends StatefulWidget {
 }
 
 class _LayoutNav1State extends State<LayoutNav1> {
+  final GlobalKey webViewKey = GlobalKey();
+
+  InAppWebViewController? webViewController;
+  InAppWebViewSettings settings = InAppWebViewSettings(
+      isInspectable: kDebugMode,
+      mediaPlaybackRequiresUserGesture: false,
+      allowsInlineMediaPlayback: true,
+      iframeAllow: "microphone; geolocation",
+      iframeAllowFullscreen: true);
+
+  PullToRefreshController? pullToRefreshController;
+  String url = "";
+  double progress = 0;
+  final urlController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    pullToRefreshController = kIsWeb
+        ? null
+        : PullToRefreshController(
+            settings: PullToRefreshSettings(
+              color: Colors.blue,
+            ),
+            onRefresh: () async {
+              if (defaultTargetPlatform == TargetPlatform.android) {
+                webViewController?.reload();
+              } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+                webViewController?.loadUrl(
+                    urlRequest:
+                        URLRequest(url: await webViewController?.getUrl()));
+              }
+            },
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            HeaderWidget(title: '두뇌 향상 게임', isShowBackButton: false),
-            const Divider(
-              color: Color(0xFFABABAB),
-              height: 0,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/bulb.svg',
-                      semanticsLabel: 'Acme Logo',
-                    ),
-                    const Gap(20),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: const Text(
-                          '치매예방 게임을 하시면 두뇌 향상에 많이 도움이 됩니다 믿으시고 하루에 10개씩 하십시오'),
-                    ),
-                    const Gap(20),
-                    Expanded(
-                      child: GameCard(
-                        thumbnail: 'assets/wordgame.png',
-                        onTap: () => Navigator.of(context)
-                            .push(_createRoute(WordOrderIntro())),
-                        title: '문장 순서 맞히기',
-                        description: '단어를 순서대로 배열하여\n문장을 완성하세요',
-                      ),
-                    ),
-                    const Gap(30),
-                    Expanded(
-                      child: GameCard(
-                        thumbnail: 'assets/wordgame.png',
-                        onTap: () => Navigator.of(context)
-                            .push(_createRoute(CrossWordIntro())),
-                        title: '십자말풀이',
-                        description: '빈칸의 단어를 맞혀\n격자를 완성하세요',
-                      ),
-                    ),
-                    const Gap(30),
-                    Expanded(
-                      child: GameCard(
-                        thumbnail: 'assets/wordgame.png',
-                        onTap: () => Navigator.of(context)
-                            .push(_createRoute(TwentyHeadsIntro())),
-                        title: '스무고개',
-                        description: '20개의 질문 만으로 AI가\n생각한 단어를 맞혀보세요',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ));
+    return Stack(
+      children: [
+        InAppWebView(
+          key: webViewKey,
+          initialUrlRequest:
+              URLRequest(url: WebUri("https://allbome-for-vercel.vercel.app/game")),
+          initialSettings: settings,
+          pullToRefreshController: pullToRefreshController,
+          onWebViewCreated: (controller) {
+            webViewController = controller;
+          },
+          onLoadStart: (controller, url) {
+            setState(() {
+              this.url = url.toString();
+              urlController.text = this.url;
+            });
+          },
+          onPermissionRequest: (controller, request) async {
+            return PermissionResponse(
+                resources: request.resources,
+                action: PermissionResponseAction.GRANT);
+          },
+          shouldOverrideUrlLoading: (controller, navigationAction) async {
+            var uri = navigationAction.request.url!;
+
+            if (![
+              "http",
+              "https",
+              "file",
+              "chrome",
+              "data",
+              "javascript",
+              "about"
+            ].contains(uri.scheme)) {
+              if (await canLaunchUrl(uri)) {
+                // Launch the App
+                await launchUrl(
+                  uri,
+                );
+                // and cancel the request
+                return NavigationActionPolicy.CANCEL;
+              }
+            }
+
+            return NavigationActionPolicy.ALLOW;
+          },
+          onLoadStop: (controller, url) async {
+            pullToRefreshController?.endRefreshing();
+            setState(() {
+              this.url = url.toString();
+              urlController.text = this.url;
+            });
+          },
+          onReceivedError: (controller, request, error) {
+            pullToRefreshController?.endRefreshing();
+          },
+          onProgressChanged: (controller, progress) {
+            if (progress == 100) {
+              pullToRefreshController?.endRefreshing();
+            }
+            setState(() {
+              this.progress = progress / 100;
+              urlController.text = url;
+            });
+          },
+          onUpdateVisitedHistory: (controller, url, androidIsReload) {
+            setState(() {
+              this.url = url.toString();
+              urlController.text = this.url;
+            });
+          },
+          onConsoleMessage: (controller, consoleMessage) {
+            if (kDebugMode) {
+              print(consoleMessage);
+            }
+          },
+        ),
+        progress < 1.0 ? LinearProgressIndicator(value: progress) : Container(),
+      ],
+    );
   }
-}
-
-Route _createRoute(Widget gameIntroWidget) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => gameIntroWidget,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }

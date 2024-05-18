@@ -1,7 +1,6 @@
 // Category.js
 
 import styled, { css } from 'styled-components';
-import { useState } from 'react';
 
 const selecteds = {
   true: css`
@@ -27,6 +26,7 @@ const ToggleStyled = styled.button`
   position: relative;
   font-size: 20px;
   white-space: nowrap;
+  font-weight: 700;
 `;
 const SubCategoryWrapper = styled.div`
   display: flex;
@@ -34,6 +34,7 @@ const SubCategoryWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
+  gap: 4px;
   width: fit-content;
   position: absolute;
   bottom: 160%;

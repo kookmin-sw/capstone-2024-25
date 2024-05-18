@@ -5,6 +5,30 @@ import BirthModal from '../components/Modal/Birth2';
 import Swal from 'sweetalert2';
 import AddressModal from '../components/Modal/Address';
 import Toggle from '../components/Toggle';
+import { myPagaApis } from '../api/apis/myPagaApis';
+import { useCookies } from 'react-cookie';
+import { medicineApis } from '../api/apis/medicineApis';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+import './my-page.css';
+import AddMedicine from '../components/MyPage/AddMedicine';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
+import {
+  handleToggle,
+  useAdjustInputWidth,
+  updateMedicine,
+} from '../utils/handlemedicine';
+import {
+  getUserInfo,
+  updateBirthday,
+  updateNum,
+  calculateAge,
+  formatDate,
+} from '../utils/handleUser';
+import useStore from '../stores/store';
+import { expandRegionName } from '../utils/handleAddress';
 
 const MyPageContainer = styled.div`
   display: flex;
@@ -12,8 +36,9 @@ const MyPageContainer = styled.div`
   align-items: center;
   height: 100vh;
   box-sizing: border-box;
-  overflow: hidden;
-  padding: 48px 30px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 20px;
   gap: 32px;
 `;
 
@@ -70,6 +95,12 @@ const EditItem = styled.div`
   width: 100%;
   gap: 4px;
   box-sizing: border-box;
+  //border: 1px solid red;
+  //overflow-y: scroll;
+`;
+
+const EditMedicine = styled(EditItem)`
+  gap: 12px;
 `;
 
 const EditHeader = styled.div`
@@ -78,8 +109,20 @@ const EditHeader = styled.div`
   gap: 4px;
 `;
 
+const MedicineTitle = styled(EditHeader)`
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+const AddButton = styled.img`
+  transition: transform 0.3s ease-in-out; // 부드러운 전환 효과
+  transform: ${({ currentSlide }) =>
+    currentSlide === 1 ? 'rotate(45deg)' : 'rotate(0deg)'};
+`;
+
 const EditTitle = styled.div`
   font-size: 20px;
+  font-weight: 500;
 `;
 
 const InputWrapper = styled.div`
@@ -90,6 +133,7 @@ const InputWrapper = styled.div`
   box-sizing: border-box;
   font-size: 24px;
   color: var(--unselected-color);
+  font-weight: 600;
 `;
 
 const DateWrapper = styled(InputWrapper)`
@@ -107,6 +151,7 @@ const EditInfo = styled.input`
     color: var(--unselected-color);
   }
   box-sizing: border-box;
+  font-weight: 600;
 `;
 
 const MedicineWrapper = styled.div`
@@ -124,6 +169,16 @@ const MedicineWrapper = styled.div`
   padding: 12px 8px;
   box-sizing: border-box;
 `;
+
+const ItemWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
 const MedicineItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -136,6 +191,7 @@ const MedicineItem = styled.div`
       : '2px solid var(--secondary-unselected-color)'};
   padding-bottom: 20px;
   overflow-x: hidden;
+  //border: 1px solid red;
 `;
 
 const MedicineInfo = styled.div`
@@ -163,19 +219,20 @@ const MedicineName = styled.span`
 const ModifyWrapper = styled.div`
   display: flex;
   gap: 20px;
+  > span {
+    white-space: nowrap;
+    font-weight: 600;
+  }
 `;
 
 const EditBtn = styled.span`
   color: var(--select-color);
-  white-space: nowrap;
 `;
 const DeleteBtn = styled.span`
   color: var(--error-color);
-  white-space: nowrap;
 `;
 const CompleteBtn = styled.span`
-  color: var(--primary-color);
-  white-space: nowrap;
+  color: var(--select-color);
 `;
 const CycleWrapper = styled.div`
   display: flex;
@@ -194,10 +251,30 @@ const EditName = styled.input`
   border-bottom: 4px solid var(--secondary-unselected-color);
 `;
 
+const NoMedicine = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 40px;
+  color: var(--unselected-color);
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const MyPage = () => {
-  const [profileImgSrc, setProfileImgSrc] = useState(''); // 사용자 성별에 맞게
-  const [genderImgSrc, setGenderImgSrc] = useState(''); // 사용자 성별에 맞게
+  const [profileImg, setProfileImg] = useState(''); // [0] : 남성, [1] : 여성, [2] : 기타
+  const [genderImg, setGenderImg] = useState(''); // [0] : 남성, [1] : 여성
+  const gender = useStore((state) => state.gender);
+  const setGender = useStore((state) => state.setGender);
   const [dateModalState, setDateModalState] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userAge, setUserAge] = useState(''); // 나이 계산 필요
   const [dateValue, setDateValue] = useState('');
   const [numValue, setNumValue] = useState('');
   const [displayNumValue, setDisplayNumValue] = useState(''); // 사용자에게 보여지는 값 (하이픈 포함)
@@ -207,28 +284,60 @@ const MyPage = () => {
   const [addressValue, setAddressValue] = useState('');
   const [editDetailAddress, setEditDetailAddress] = useState(false);
   const [detailAddress, setDetailAddress] = useState('');
+
   // 약 수정 관련
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [newValue, setNewValue] = useState([]);
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [userInfo, setUserInfo] = useState({});
+
+  // 약 추가
 
   const [medicineList, setMedicineList] = useState([]);
-  const dummyMedicineList = [
-    {
-      id: 1,
-      medicine: '타이레놀',
-      cycle: [true, true, true],
-    },
-    {
-      id: 2,
-      medicine: '아스피린',
-      cycle: [true, false, true],
-    },
-  ];
+
+  const accessToken = cookies.accessToken;
+
+  // 슬라이더
+  const sliderRef = useRef();
+  const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이더 페이지(인덱스) 상태
+  const [hideAll, setHideAll] = useState(false); // 그 뭐야 그 그 그거 약품 추가 탭 없애기
+
+  const navigate = useNavigate();
+
+  const handleSlide = () => {
+    if (currentSlide === 0) {
+      sliderRef.current.slickNext();
+      setHideAll(false);
+    } else if (currentSlide === 1) {
+      sliderRef.current.slickPrev();
+    }
+  };
+
+  const settings = {
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    beforeChange: (current, next) => setCurrentSlide(next), // 다음 슬라이드 인덱스 업데이트
+    draggable: false,
+    swipe: false,
+    arrows: false,
+    speed: 200, // 넘어가는 시간
+  };
+
+  useEffect(() => {
+    getUserInfo(accessToken, setUserInfo, setUserName, setGender);
+  }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      applyInfo(userInfo);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     if (editingIndex !== null) {
-      setEditingName(newValue[editingIndex].medicine);
+      setEditingName(newValue[editingIndex].medicineName);
     }
   }, [editingIndex, medicineList]);
 
@@ -239,13 +348,30 @@ const MyPage = () => {
   }, [medicineList]);
 
   useEffect(() => {
-    setDateValue('Sun Apr 21 2024 17:21:08 GMT+0900 (한국 표준시)');
-    setNumValue('01012345678');
-    setDisplayNumValue(phoneAutoHyphen('01012345678'));
-    setAddressValue('경기도 파주시 적성면 어삼로2');
-    setDetailAddress('402호');
-    setMedicineList(dummyMedicineList);
-  }, []);
+    if (gender === 'MALE') {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-male.jpg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-male.svg');
+    } else {
+      setProfileImg(
+        process.env.PUBLIC_URL + '/images/MyPage/profile-user-female.jpg',
+      );
+      setGenderImg(process.env.PUBLIC_URL + '/images/MyPage/gender-female.svg');
+    }
+  }, [gender]);
+
+  const applyInfo = (userInfo) => {
+    setUserName(userInfo.name);
+    setAddressValue(userInfo.address);
+    setDetailAddress(userInfo.detailAddress);
+    setNumValue(userInfo.phoneNumber);
+    setDisplayNumValue(phoneAutoHyphen(userInfo.phoneNumber));
+    setDateValue(userInfo.birthday);
+    setUserAge(calculateAge(userInfo.birthday));
+    setMedicineList(userInfo.medicineResponses);
+    setNewValue(userInfo.medicineResponses);
+  };
 
   const handleDateFocus = () => {
     setDateModalState(true);
@@ -254,20 +380,16 @@ const MyPage = () => {
     setDateModalState(false);
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    return `${year}년 ${month}월 ${day}일`;
+  const saveBirth = async (date) => {
+    await updateBirthday(
+      formatDate(date, 'update'),
+      accessToken,
+      setUserInfo,
+      setDateModalState,
+    );
   };
-  const saveBirth = () => {
-    // API 연결 후 "생년월일 수정 요청 버튼"
-    console.log('saveBirth 실행');
-  };
-  const saveEditNum = () => {
+
+  const saveEditNum = async () => {
     if (numValue.length > 11 || numValue.length < 9) {
       Swal.fire({
         title: '전화 번호',
@@ -281,14 +403,14 @@ const MyPage = () => {
       });
       return;
     } else {
-      setEditNum(false);
+      await updateNum(numValue, accessToken, setEditNum, numRef);
     }
   };
 
   const phoneAutoHyphen = (phone) => {
     return phone
-      .replace(/[^0-9]/g, '')
-      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+      ?.replace(/[^0-9]/g, '')
+      ?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
   };
   const handleNumChange = (e) => {
     const rawNumber = e.target.value.replace(/[^0-9]/g, '');
@@ -307,54 +429,91 @@ const MyPage = () => {
   const handleDetailAddressChange = (e) => {
     setDetailAddress(e.target.value);
   };
-  const saveDetailAddress = () => {
-    // API 연결 후 "생년월일 수정 요청 버튼"
-    setEditDetailAddress(false);
-    console.log('saveDetailAddress 실행');
+
+  const updateAddress = async (address, detailAddress) => {
+    await myPagaApis
+      .updateAddress(
+        { address: address, detailAddress: detailAddress },
+        accessToken,
+      )
+      .then(async (res) => {
+        if (res.status === 204) {
+          await getUserInfo(accessToken, setUserInfo);
+        } else {
+          Swal.fire({
+            title: '주소 수정',
+            text: '주소 수정에 실패했습니다. 잠시 후 다시 시도해주세요.',
+            type: 'warning',
+            confirmButtonText: '확인',
+          });
+        }
+      });
   };
 
-  const saveAddress = () => {
-    // API 연결 후 "주소 수정 요청 버튼"
-    console.log('saveAddress 실행');
+  const saveDetailAddress = async () => {
+    await updateAddress(addressValue, detailAddress);
+    setEditDetailAddress(false);
+  };
+
+  const saveAddress = async (address) => {
+    await updateAddress(address, detailAddress);
   };
 
   // 약 수정
-  const handleToggle = (index, cycleIndex) => {
-    const updatedValue = newValue.map((item, idx) => {
-      if (idx === index) {
-        const updatedCycle = [...item.cycle];
-        updatedCycle[cycleIndex] = !updatedCycle[cycleIndex];
-        return { ...item, cycle: updatedCycle };
-      }
-      return item;
-    });
-    setNewValue(updatedValue);
-  };
+
   const handleNameChange = (event) => {
     setEditingName(event.target.value);
   };
 
-  const deleteBtn = (index) => {
+  const deleteBtn = (index, itemId) => {
     Swal.fire({
       title: '약품 삭제',
-      text: `[${newValue[index].medicine}]를 삭제하시겠습니까 ?`,
+      text: `[${newValue[index].medicineName}] 을/를 삭제하시겠습니까 ?`,
       showCancelButton: true,
       confirmButtonText: '확인',
       cancelButtonText: '취소',
     }).then((res) => {
       if (res.isConfirmed) {
-        deleteItem(index);
+        deleteItem(itemId);
       } else {
         return;
       }
     });
   };
 
-  const deleteItem = (index) => {
-    const updateValue = [...newValue];
-    updateValue.splice(index, 1);
-    setNewValue(updateValue);
-    setMedicineList([...updateValue]);
+  const deleteItem = async (index) => {
+    await medicineApis
+      .delete(index, accessToken)
+      .then(async (res) => {
+        if (res.status === 204) {
+          Swal.fire({
+            title: '약품 삭제',
+            icon: 'success',
+            text: '약품이 삭제되었습니다.',
+            confirmButtonText: '확인',
+          });
+
+          const updateValue = [...newValue];
+          updateValue.splice(index, 1);
+          setNewValue(updateValue);
+          setEditingIndex(null);
+
+          await getUserInfo(accessToken, setUserInfo);
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.code === 400) {
+          Swal.fire({
+            title: '약품 삭제',
+            text: '약품 삭제에 실패했습니다.',
+            confirmButtonText: '확인',
+          }).then((res) => {
+            if (res.isConfirmed) {
+              return;
+            }
+          });
+        }
+      });
   };
 
   const saveBtn = () => {
@@ -373,66 +532,74 @@ const MyPage = () => {
     }
   };
 
-  const saveEdit = () => {
+  const saveEdit = async () => {
     // API 연결 시 -> 수정 사항 없는데 수정하려고 하면 400 에러 주의
     if (
-      newValue[editingIndex].medicine !== editingName ||
-      !Object.is(newValue[editingIndex].cycle, medicineList[editingIndex].cycle)
+      newValue[editingIndex].medicineName !== editingName ||
+      !Object.is(
+        newValue[editingIndex].medicineTime,
+        medicineList[editingIndex].medicineTime,
+      )
     ) {
       applyName();
-      setMedicineList([...newValue]);
+      const data = {
+        medicineName: editingName,
+        medicineTime: newValue[editingIndex].medicineTime,
+      };
+      await updateMedicine(newValue[editingIndex].id, data, accessToken);
       setEditingIndex(null);
     } else {
       // 수정사항 없음
       setEditingIndex(null);
     }
   };
+
+  useAdjustInputWidth(editingName, editingIndex); // 이름 수정 시 input 너비 조절
+
   const applyName = () => {
     if (editingName) {
       const updatedValue = [...newValue];
-      updatedValue[editingIndex].medicine = editingName;
+      updatedValue[editingIndex].medicineName = editingName;
       setNewValue(updatedValue);
     }
   };
 
-  useEffect(() => {
-    const inputWidth = editingName.trim().length * 20;
-    const medicineInfo = document.getElementById('medicine-info');
-    const modifyWrapper = document.getElementById('modify-wrapper');
-
-    if (document.getElementById('edit-name')) {
-      if (editingName && medicineInfo && modifyWrapper) {
-        if (
-          inputWidth <=
-          medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-        ) {
-          document.getElementById('edit-name').style.width = `${inputWidth}px`;
-        } else {
-          document.getElementById('edit-name').style.width = `${
-            medicineInfo.clientWidth - modifyWrapper.clientWidth - 12
-          }px`;
-        }
+  const logOut = () => {
+    Swal.fire({
+      title: '로그아웃',
+      text: '로그아웃 하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        removeCookie('accessToken');
+        Swal.fire({
+          title: '로그아웃',
+          icon: 'success',
+          text: '로그아웃 되었습니다.',
+          confirmButtonText: '확인',
+        }).then((res) => {
+          navigate('/');
+        });
+      } else {
+        return;
       }
-    }
-  }, [editingName, editingIndex]);
+    });
+  };
 
   return (
     <MyPageContainer>
       <TitleHeader title={'내 정보'} showBackButton={true} showDivider={true} />
       <MyPageContent>
         <ProfileWrapper>
-          <ProfileImg
-            imgSrc={
-              process.env.PUBLIC_URL + 'images/MyPage/profile-user-male.svg'
-            }
-          />
+          <ProfileImg imgSrc={profileImg} />
           <ProfileInfoWrapper>
-            <UserName>곽희건</UserName>
+            <UserName>{userName}</UserName>
             <AgeWrapper>
-              <AgeInfo>84세</AgeInfo>
-              <img
-                src={process.env.PUBLIC_URL + 'images/MyPage/gender-male.svg'}
-              />
+              <AgeInfo>{userAge}세</AgeInfo>
+              <img src={genderImg} />
             </AgeWrapper>
           </ProfileInfoWrapper>
         </ProfileWrapper>
@@ -440,7 +607,7 @@ const MyPage = () => {
         <EditItem>
           <EditTitle>생년월일</EditTitle>
           <DateWrapper onClick={handleDateFocus}>
-            {formatDate(dateValue)}
+            {formatDate(dateValue, 'format')}
             <img src={process.env.PUBLIC_URL + '/images/calendar.svg'} />
           </DateWrapper>
           <BirthModal
@@ -448,8 +615,8 @@ const MyPage = () => {
             closeModal={handleDateBlur}
             birth={dateValue ? dateValue : new Date()}
             setBirth={setDateValue}
-            formatDate={formatDate}
             saveBirth={saveBirth}
+            defaultDate={dateValue}
           />
         </EditItem>
         <EditItem>
@@ -517,79 +684,122 @@ const MyPage = () => {
               onChange={handleDetailAddressChange}
             />
           ) : (
-            <InputWrapper>{detailAddress}</InputWrapper>
+            <InputWrapper>
+              {detailAddress?.length === 0
+                ? '상세 주소를 입력해주세요.'
+                : detailAddress}
+            </InputWrapper>
           )}
         </EditItem>
-        <EditItem>
-          <EditTitle>복용중인 약</EditTitle>
-          <MedicineWrapper>
-            {newValue.map((item, index) => (
-              <MedicineItem
-                key={index}
-                isLastItem={index === newValue.length - 1}
-              >
-                <MedicineInfo id="medicine-info">
-                  <MedicineHeader>
-                    {editingIndex === index ? (
-                      <MedicineInputWrapper>
-                        <EditName
-                          id="edit-name"
-                          type="text"
-                          value={editingName}
-                          onChange={handleNameChange}
-                        />
-                      </MedicineInputWrapper>
-                    ) : (
-                      <MedicineName id="medicine-name">
-                        {item.medicine}
-                      </MedicineName>
-                    )}
-                    <ModifyWrapper id="modify-wrapper">
-                      {editingIndex === index ? (
-                        <CompleteBtn
-                          onClick={() => {
-                            saveBtn();
-                          }}
-                        >
-                          완료
-                        </CompleteBtn>
-                      ) : (
-                        <EditBtn
-                          onClick={() => {
-                            setEditingIndex(index);
-                          }}
-                        >
-                          수정
-                        </EditBtn>
-                      )}
-                      <DeleteBtn
-                        onClick={() => {
-                          deleteBtn(index);
-                        }}
-                      >
-                        삭제
-                      </DeleteBtn>
-                    </ModifyWrapper>
-                  </MedicineHeader>
-                  <CycleWrapper id="cycle-wrapper">
-                    {['아침', '점심', '저녁'].map((part, cycleIndex) => (
-                      <Toggle
-                        key={`${index}-${cycleIndex}`}
-                        text={part}
-                        size="RectSmall"
-                        selected={newValue[index].cycle[cycleIndex]}
-                        onClick={() => {
-                          setEditingIndex(index);
-                          handleToggle(index, cycleIndex);
-                        }}
-                      />
-                    ))}
-                  </CycleWrapper>
-                </MedicineInfo>
-              </MedicineItem>
-            ))}
-          </MedicineWrapper>
-        </EditItem>
+        <EditMedicine>
+          <MedicineTitle>
+            <EditTitle>복용중인 약</EditTitle>
+            <AddButton
+              src={process.env.PUBLIC_URL + 'images/MyPage/add-medicine.svg'}
+              onClick={() => handleSlide()}
+              currentSlide={currentSlide} // 현재 슬라이드 인덱스를 prop으로 전달
+            />
+          </MedicineTitle>
+          <Slider id="slider" ref={sliderRef} {...settings}>
+            <MedicineWrapper>
+              {medicineList?.length !== 0 ? (
+                <ItemWrapper>
+                  {newValue.map((item, index) => (
+                    <MedicineItem
+                      key={item.id}
+                      isLastItem={index === newValue.length - 1}
+                    >
+                      <MedicineInfo id="medicine-info">
+                        <MedicineHeader>
+                          {editingIndex === index ? (
+                            <MedicineInputWrapper>
+                              <EditName
+                                id="edit-name"
+                                type="text"
+                                value={editingName}
+                                onChange={handleNameChange}
+                              />
+                            </MedicineInputWrapper>
+                          ) : (
+                            <MedicineName id="medicine-name">
+                              {item.medicineName}
+                            </MedicineName>
+                          )}
+                          <ModifyWrapper id="modify-wrapper">
+                            {editingIndex === index ? (
+                              <CompleteBtn
+                                onClick={() => {
+                                  saveBtn();
+                                }}
+                              >
+                                완료
+                              </CompleteBtn>
+                            ) : (
+                              <EditBtn
+                                onClick={() => {
+                                  setEditingIndex(index);
+                                }}
+                              >
+                                수정
+                              </EditBtn>
+                            )}
+                            <DeleteBtn
+                              onClick={() => {
+                                deleteBtn(index, item.id);
+                              }}
+                            >
+                              삭제
+                            </DeleteBtn>
+                          </ModifyWrapper>
+                        </MedicineHeader>
+                        <CycleWrapper id="cycle-wrapper">
+                          {['아침', '점심', '저녁'].map((part, cycleIndex) => (
+                            <Toggle
+                              key={`${index}-${cycleIndex}`}
+                              text={part}
+                              size="RectSmall"
+                              selected={newValue[index].medicineTime.includes(
+                                part,
+                              )}
+                              onClick={() => {
+                                setEditingIndex(index);
+                                handleToggle(
+                                  index,
+                                  cycleIndex,
+                                  part,
+                                  newValue,
+                                  setNewValue,
+                                );
+                              }}
+                            />
+                          ))}
+                        </CycleWrapper>
+                      </MedicineInfo>
+                    </MedicineItem>
+                  ))}
+                </ItemWrapper>
+              ) : (
+                <NoMedicine>추가하신 약품이 없습니다.</NoMedicine>
+              )}
+            </MedicineWrapper>
+            <AddMedicine
+              getUserInfo={getUserInfo}
+              setUserInfo={setUserInfo}
+              handleSlide={handleSlide}
+              hideAll={hideAll}
+              setHideAll={setHideAll}
+            />
+          </Slider>
+        </EditMedicine>
+        <ButtonWrapper>
+          <Button
+            text="로그아웃"
+            size="Large"
+            height="Short"
+            type="Secondary"
+            onClick={logOut}
+          />
+        </ButtonWrapper>
       </MyPageContent>
     </MyPageContainer>
   );

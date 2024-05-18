@@ -1,11 +1,12 @@
 // Bubble.js
 
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const BubbleContainer = styled.div`
   display: flex;
   height: fit-content;
-  padding: 6px 8px;
+  padding: 8px 12px;
   background-color: ${(props) =>
     props.type === 'System' ? 'var(--primary-color)' : '#FFFFFF'};
   border: ${(props) =>
@@ -23,6 +24,10 @@ const BubbleValue = styled.span`
 `;
 
 const Bubble = ({ text, type }) => {
+  const [blogTitle, setBlogTitle] = useState('');
+  const [count, setCount] = useState(0);
+  const completionWord = text;
+
   return (
     <BubbleContainer type={type}>
       <BubbleValue type={type}>{text}</BubbleValue>

@@ -2,6 +2,7 @@ package capstone.allbom.member.domain;
 
 import capstone.allbom.auth.dto.request.GeneralSignUpRequest;
 import capstone.allbom.auth.dto.response.KakaoMemberResponse;
+import capstone.allbom.job.domain.Province;
 import capstone.allbom.medicine.domain.Medicine;
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,6 +52,10 @@ public class Member {
     private String guardianNumber;
 
     private String profileImageUrl;
+
+    private String chatProfileImageUrl;
+
+    private Province province;
 
     @Builder.Default
     @OneToMany (mappedBy = "member", cascade = CascadeType.ALL)

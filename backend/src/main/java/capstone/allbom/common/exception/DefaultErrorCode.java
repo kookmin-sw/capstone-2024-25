@@ -7,6 +7,7 @@ public enum DefaultErrorCode implements ErrorCode{
     NOT_FOUND_MEMBER_ID(400, "요청한 ID에 해당하는 멤버가 존재하지 않습니다."),
     NOT_FOUND_MEDICINE_ID(400, "요청한 ID에 해당하는 약이 존재하지 않습니다."),
     NOT_FOUND_MAP_ID(400, "요청한 ID에 해당하는 지도 데이터가 존재하지 않습니다."),
+    NOT_FOUND_JOB_ID(404, "요청한 ID에 해당하는 일자리 데이터가 존재하지 않습니다."),
     DUPLICATED_LOGIN_ID(400, "이미 존재하는 로그인 아이디입니다."),
     DUPLICATED_MEDICINE(400, "중복된 약입니다."),
     DUPLICATED_REGISTER(400, "이미 모든 회원가입을 완료했습니다."),
@@ -16,8 +17,14 @@ public enum DefaultErrorCode implements ErrorCode{
     INVALID_ROUTINE_TYPE(404, "요청한 투두 카테고리에 해당하는 내용이 존재하지 않습니다."),
     INVALID_ROUTINE_NUMBER(404, "요청한 투두 카테고리의 번호에 해당하는 내용이 존재하지 않습니다."),
     INVALID_FACILITY_TYPE_ID(400, "요청한 유형과 번호에 해당하는 시설이 존재하지 않습니다."),
+    INVALID_QUERY_PARAMETER_SORTED(400, "일자리 리스트 조회하기 위한 쿼리 파라미터 값으로 0과 1만 가능합니다."),
+    INVALID_TWENTY_QUESTIONS_REQUEST(400, "새로운 스무고개 게임을 진행하려면 질문이 비어있어야 합니다."),
+    NOT_FOUND_TWENTY_QUESTIONS(404, "스무고개 테이블이 존재하지 않습니다."),
+    NEED_CHATBOT_PROFILE_UPDATE(400, "챗봇 프로필 업데이트가 먼저 필요합니다."),
     INVALID_GAME_SUBJECT_TYPE(404, "요청한 과목명이나 번호에 해당하는 문장이 존재하지 않습니다."),
     INVALID_GAME_SENTENCE_NUMBER(404, "요청한 번호에 해당하는 문장이 존재하지 않습니다."),
+    INVALID_MEMBER_ADDRESS_PROVINCE(500, "요청한 주소를 시도로 변환하는 과정에서 문제가 발생했습니다."),
+    AI_SERVER_ERROR(500, "AI 서버로부터 답변을 받아오지 못했습니다."),
     COMPLETE_SUBJECT_ALL_PROBLEM(400, "해당 교과목의 모든 문제를 완료했습니다."),
     COMPLETE_ROUTINE_EXERCISE(400, "오늘의 운동을 완료했습니다."),
     COMPLETE_ROUTINE_GROWTH(400, "오늘의 성장을 완료했습니다."),
@@ -48,7 +55,8 @@ public enum DefaultErrorCode implements ErrorCode{
     OAUTH2_PROVIDER_NOT_RESPONSE(500, "OAuth2 제공자 서버에 문제가 발생했습니다."),
     FOR_TEST_ERROR(500, "테스트용 에러입니다."),
     INVALID_SOLVED_PROBLEMS_SIZE(500, "과목별 푼 문제를 계산하는 과정에서 서버에 문제가 발생했습니다."),
-    UNEXPECTED_PROCESS_EXIT(500, "외부 파일 실행 도중 비정상적인 종료가 발생했습니다.")
+    UNEXPECTED_PROCESS_EXIT(500, "외부 파일 실행 도중 비정상적인 종료가 발생했습니다."),
+    JOB_CRAWLING_EXECUTE_ERROR(500, "외부 일자리 크롤링 파일 실행 도중 비정상적인 종료가 발생했습니다.")
     ;
 
     private final int code;

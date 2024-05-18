@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Input from '../Input';
+import { useEffect } from 'react';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -14,12 +15,14 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
 const StepName = ({ value, setValue }) => {
   const handleInputChange = (e) => {
     setValue(e.target.value);
   };
+
   return (
     <StepWrapper>
       <StepTitle>이름 *</StepTitle>

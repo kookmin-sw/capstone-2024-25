@@ -17,6 +17,7 @@ const HeaderTitle = styled.div`
   padding: 24px 0;
   border-bottom: 1px solid var(--unselected-color);
   box-sizing: border-box;
+  font-weight: 700;
 `;
 
 const SearchWrapper = styled.div`
@@ -36,6 +37,7 @@ const SearchInput = styled.input`
   outline: none;
   border: none;
   font-size: 16px;
+  font-weight: 600;
 `;
 const JobPageContent = styled.div`
   display: flex;
@@ -48,16 +50,36 @@ const JobPageContent = styled.div`
   gap: 24px;
 `;
 
-const JobPageHeader = () => {
+const JobPageHeader = ({ jobName, setJobName, searchJob }) => {
+  const handleSearch = (e) => {
+    setJobName(e.target.value);
+  };
+
+  const clickSearch = async () => {
+    await searchJob();
+    setJobName('');
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  };
+
   return (
     <HeaderWrapper>
-      <HeaderTitle>어르신 일자리</HeaderTitle>
+      <HeaderTitle>장년 일자리</HeaderTitle>
       <SearchWrapper>
         <img
           src={process.env.PUBLIC_URL + '/images/JobPage/search.svg'}
           alt="search"
+          onClick={() => {
+            clickSearch();
+          }}
         />
-        <SearchInput placeholder="직종을 입력하세요" />
+        <SearchInput
+          id="search-input"
+          placeholder="직종을 입력하세요"
+          onChange={handleSearch}
+        />
       </SearchWrapper>
     </HeaderWrapper>
   );

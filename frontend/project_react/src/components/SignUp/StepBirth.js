@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../Input';
 import BirthModal from '../Modal/Birth2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const StepWrapper = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const StepTitle = styled.div`
   align-self: flex-start;
   font-size: 24px;
   margin-bottom: 32px;
+  font-weight: 600;
 `;
 
 const DateWrapper = styled.div`
@@ -26,12 +27,14 @@ const DateWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   font-size: 24px;
+  font-weight: 600;
 `;
 const DatePlaceholder = styled.span`
   color: var(--unselected-color);
+  font-weight: 600;
 `;
 
-const StepBirth = ({ value, setValue }) => {
+const StepBirth = ({ value, setValue, setBirthPossible }) => {
   const [modalState, setModalState] = useState(false);
   const handleFocus = () => {
     setModalState(true);
@@ -39,9 +42,13 @@ const StepBirth = ({ value, setValue }) => {
   const handleBlur = () => {
     setModalState(false);
   };
-  const handleInputChange = (e) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    if (value !== '') {
+      setBirthPossible(true);
+    } else {
+      setBirthPossible(false);
+    }
+  }, [value]);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 

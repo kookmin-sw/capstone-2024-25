@@ -11,12 +11,20 @@ class JobTest {
 
     @Test
     public void updateDeadline() {
-        Job job = new Job();
-//        job.setDeadline("채용시까지");
-        job.setDday("D-15");
-        Assertions.assertThat(job.getDday()).isEqualTo("D-15");
-        job.updateDeadline(job.getDday());
-        Assertions.assertThat(job.getDday()).isEqualTo("D-14");
+        // given
+        Job job1 = new Job();
+        job1.setDday("D-15");
+
+        Job job2 = new Job();
+        job2.setDday("D-1");
+
+        // when
+        job1.updateDeadline(job1.getDday());
+        job2.updateDeadline(job2.getDday());
+
+        // then
+        Assertions.assertThat(job1.getDday()).isEqualTo("D-14");
+        System.out.println("job2.getDday() = " + job2.getDday());
     }
 
 }

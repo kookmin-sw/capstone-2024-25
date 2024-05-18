@@ -13,7 +13,6 @@ const InputWrapper = styled.div`
   gap: 12px;
   box-sizing: border-box;
   position: relative;
-  border: 1px solid red;
 `;
 
 const InputStyled = styled.input`
@@ -27,6 +26,7 @@ const InputStyled = styled.input`
   ::placeholder {
     color: var(--unselected-color);
   }
+  font-weight: 600;
 `;
 const InputInfo = styled.div`
   font-size: 16px;
@@ -36,6 +36,7 @@ const InputInfo = styled.div`
       : infoState === 'success'
       ? 'black'
       : 'var(--unselected-color)'};
+  font-weight: 700;
 `;
 
 const Input = ({
@@ -60,10 +61,10 @@ const Input = ({
     }
   };
 
-  const displayValue =
-    type === 'password' && inputValue.length > 0
-      ? `${'*'.repeat(inputValue.length - 1)}${inputValue.slice(-1)}`
-      : text;
+  // const displayValue =
+  //   type === 'password' && inputValue.length > 0
+  //     ? `${'*'.repeat(inputValue.length - 1)}${inputValue.slice(-1)}`
+  //     : text;
 
   const handleFocus = () => {
     setShowCalendar(true);
@@ -75,9 +76,10 @@ const Input = ({
   return (
     <InputWrapper>
       <InputStyled
+        type={type}
         id="input-styled"
         placeholder={inputInfo}
-        value={displayValue}
+        value={text}
         onChange={handleChange}
         onClick={onClick}
         fontSize={fontSize}
