@@ -23,7 +23,7 @@ const RegionWrapper = styled.div`
   top: 0;
   //right: 124px;
   right: ${(props) => (props.sorted === 0 ? '114px' : '124px')};
-  //transition: right 0.3s ease-in-out;
+  transition: right 0.2s ease-in-out;
   background-color: #ffffff;
   font-weight: 500;
 `;
@@ -92,7 +92,7 @@ const JobDropdown = ({
       <RegionWrapper sorted={sorted}>서울</RegionWrapper>
       <FilterSelect onClick={() => toggleFilter()} openFilter={openFilter}>
         <FilterSelected>
-          <FilterText>{sorted === 0 ? '거리 순' : '마감일자 순'}</FilterText>
+          <FilterText>{sorted === 0 ? '거리순' : '마감일자순'}</FilterText>
           <ArrowImg
             src={process.env.PUBLIC_URL + '/images/JobPage/arrow-up.svg'}
             alt="search"
@@ -101,10 +101,10 @@ const JobDropdown = ({
         </FilterSelected>
         <FilterItemWrapper openFilter={openFilter}>
           <FilterSelected onClick={() => selectDistance()}>
-            <FilterText>거리 순</FilterText>
+            <FilterText>거리순</FilterText>
           </FilterSelected>
           <FilterSelected onClick={() => selectDeadline()}>
-            <FilterText>마감일자 순</FilterText>
+            <FilterText>마감일자순</FilterText>
           </FilterSelected>
         </FilterItemWrapper>
       </FilterSelect>

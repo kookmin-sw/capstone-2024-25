@@ -48,26 +48,19 @@ const PaginationBox = styled.div`
   align-items: center;
   max-width: 100%;
   box-sizing: border-box;
-  //border: 1px solid green;
   .pagination {
     display: flex;
     justify-content: center;
-    //align-self: center;
     max-width: 80%;
     box-sizing: border-box;
-    //margin-top: 15px;
-    //border: 1px solid red;
   }
   ul {
     list-style: none;
     padding: 0;
-    //border: 1px solid red;
   }
   ul.pagination li {
-    //width: 40px;
     max-width: 44px;
     height: 40px;
-    //border: 1px solid #e2e2e2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,8 +69,6 @@ const PaginationBox = styled.div`
     box-sizing: border-box;
     border-radius: 8px;
     &:first-child {
-      // 맨 앞 버튼
-      //background-color: red;
       border-top-left-radius: 12px;
       border-bottom-left-radius: 12px;
     }
@@ -100,11 +91,8 @@ const PaginationBox = styled.div`
   ul.pagination li.active {
     background-color: var(--primary-color);
   }
-  //ul.pagination li a:hover,
   ul.pagination li a.active {
     border: 1px solid #e2e2e2;
-
-    //color: var(--primary-color);
   }
 `;
 
@@ -148,23 +136,10 @@ const JobPage = () => {
   useEffect(() => {
     const pagination = document.querySelector('.pagination');
     if (pagination) {
-      // pagination.firstChild.innerHTML =
-      //   '<span style="max-width: 12px; color: var(--primary-color)">처음</span>';
       pagination.firstChild.firstChild.innerHTML = '처음';
       pagination.firstChild.nextElementSibling.firstChild.innerHTML = '이전';
       pagination.lastChild.firstChild.innerHTML = '마지막';
       pagination.lastChild.previousElementSibling.firstChild.innerHTML = '다음';
-
-      // pagination.firstChild.firstChild.clientWidth = '20px;';
-      // pagination.firstChild.style.width = '10px';
-      // pagination.firstChild.firstChild.style.boxSizing = 'border-box';
-      // pagination.firstChild.firstChild.innerHTML.style.padding = '0 !important';
-
-      // pagination.firstChild.firstChild.style.padding = '0 !important';
-      // pagination.firstChild.nextElementSibling.innerHTML =
-      //   '<span style="max-width: 20px; color: var(--primary-color)">이전</span>';
-      // pagination.firstChild.nextElementSibling.firstChild.style.padding =
-      //   '0 !important';
     }
   }, [page]);
 
