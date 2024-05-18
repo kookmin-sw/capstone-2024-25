@@ -66,7 +66,7 @@ const JobPageHeader = ({ jobName, setJobName, searchJob }) => {
 
   return (
     <HeaderWrapper>
-      <HeaderTitle>어르신 일자리</HeaderTitle>
+      <HeaderTitle>장년 일자리</HeaderTitle>
       <SearchWrapper>
         <img
           src={process.env.PUBLIC_URL + '/images/JobPage/search.svg'}
