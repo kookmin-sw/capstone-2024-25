@@ -57,8 +57,8 @@ class _LayoutNav5State extends State<LayoutNav5> {
         InAppWebView(
           key: webViewKey,
           initialUrlRequest: URLRequest(
-              // url: WebUri("https://allbome-for-vercel.vercel.app/map")),
-              url: WebUri("http://192.168.141.255:3000/map")),
+              url: WebUri("https://allbome-for-vercel.vercel.app/map")),
+              // url: WebUri("http://192.168.141.255:3000/map")),
           initialSettings: settings,
           pullToRefreshController: pullToRefreshController,
           onWebViewCreated: (controller) {
@@ -75,6 +75,7 @@ class _LayoutNav5State extends State<LayoutNav5> {
                 handlerName: 'test',
                 callback: (args) {
                   print(args);
+                  print('으갸갹 도착');
                   // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
                 });
           },
