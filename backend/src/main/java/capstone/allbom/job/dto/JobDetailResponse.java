@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
 
-@Schema(description = "일자리 리스트 응답")
+@Schema(description = "일자리 상세 응답")
 public record JobDetailResponse(
         @Schema(description = "일자리 ID", example = "1")
         Long id,

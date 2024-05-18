@@ -3,7 +3,7 @@ package capstone.allbom.job.dto;
 import capstone.allbom.job.domain.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "일자리 상세 응답")
+@Schema(description = "일자리 리스트 응답")
 public record JobListResponse(
         @Schema(description = "일자리 ID", example = "1")
         Long id,

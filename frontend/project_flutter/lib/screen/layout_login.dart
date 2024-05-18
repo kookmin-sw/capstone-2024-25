@@ -3,16 +3,16 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LayoutNav5 extends StatefulWidget {
-  const LayoutNav5({super.key});
+class LayoutHome extends StatefulWidget {
+  const LayoutHome({super.key});
 
   @override
-  State<LayoutNav5> createState() {
-    return _LayoutNav5State();
+  State<LayoutHome> createState() {
+    return _LayoutHomeState();
   }
 }
 
-class _LayoutNav5State extends State<LayoutNav5> {
+class _LayoutHomeState extends State<LayoutHome> {
   final GlobalKey webViewKey = GlobalKey();
 
   InAppWebViewController? webViewController;
@@ -56,27 +56,12 @@ class _LayoutNav5State extends State<LayoutNav5> {
       children: [
         InAppWebView(
           key: webViewKey,
-          initialUrlRequest: URLRequest(
-              // url: WebUri("https://allbome-for-vercel.vercel.app/map")),
-              url: WebUri("http://192.168.141.255:3000/map")),
+          initialUrlRequest:
+              URLRequest(url: WebUri("https://allbome-for-vercel.vercel.app")),
           initialSettings: settings,
           pullToRefreshController: pullToRefreshController,
           onWebViewCreated: (controller) {
             webViewController = controller;
-            
-            // controller.addJavaScriptHandler(
-            //     handlerName: 'handlerFoo',
-            //     callback: (args) {
-            //       // return data to the JavaScript side!
-            //       return {'bar': 'bar_value', 'baz': 'baz_value'};
-            //     });
-
-            controller.addJavaScriptHandler(
-                handlerName: 'test',
-                callback: (args) {
-                  print(args);
-                  // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
-                });
           },
           onLoadStart: (controller, url) {
             setState(() {
@@ -140,7 +125,7 @@ class _LayoutNav5State extends State<LayoutNav5> {
           },
           onConsoleMessage: (controller, consoleMessage) {
             if (kDebugMode) {
-              print('리액트로부터.. $consoleMessage');
+              print(consoleMessage);
             }
           },
         ),

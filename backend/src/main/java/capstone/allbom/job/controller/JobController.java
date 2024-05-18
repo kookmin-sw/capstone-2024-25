@@ -9,6 +9,7 @@ import capstone.allbom.job.domain.Job;
 import capstone.allbom.job.domain.Province;
 import capstone.allbom.job.dto.JobDetailResponse;
 import capstone.allbom.job.dto.JobListResponse;
+import capstone.allbom.job.dto.JobResponse;
 import capstone.allbom.job.service.JobService;
 import capstone.allbom.member.domain.Member;
 import com.amazonaws.Response;
@@ -19,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +34,13 @@ public class JobController implements JobControllerDocs{
     private final JobService jobService;
 
     @GetMapping
-    public ResponseEntity<List<JobListResponse>> getJobs(
+    public ResponseEntity<JobResponse> getJobs(
             @Auth Member member,
             @RequestParam final Integer sorted,
             Pageable pageable
     ) {
         List<JobListResponse> jobResponses = new ArrayList<>();
+        Long totalSize = jobService.getTotalSizeByProvince(member.getProvince());
 
         log.info("pageable={}", pageable);
 
@@ -50,7 +54,7 @@ public class JobController implements JobControllerDocs{
             throw new BadRequestException(DefaultErrorCode.INVALID_QUERY_PARAMETER_SORTED);
         }
 
-        return ResponseEntity.ok(jobResponses);
+        return ResponseEntity.ok(JobResponse.from(member, jobResponses, totalSize));
     }
 
     @GetMapping("/{jobId}")
@@ -64,13 +68,16 @@ public class JobController implements JobControllerDocs{
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<JobListResponse>> searchJobByOccupation(
+    public ResponseEntity<JobResponse> searchJobByOccupation(
             @Auth Member member,
             @RequestParam final String name,
             Pageable pageable
     ) {
+        String decodedName = URLDecoder.decode(name, StandardCharsets.UTF_8);
         List<JobListResponse> jobResponses = new ArrayList<>();
-        jobResponses = jobService.findJobsByOccupation(member.getProvince(), name, pageable);
-        return ResponseEntity.ok(jobResponses);
+        jobResponses = jobService.findJobsByOccupation(member.getProvince(), decodedName, pageable);
+        Long totalSize = jobService.getTotalSizeByOccupation(member.getProvince(), decodedName);
+
+        return ResponseEntity.ok(JobResponse.from(member,jobResponses, totalSize));
     }
 }
