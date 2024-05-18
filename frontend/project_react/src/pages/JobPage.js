@@ -120,19 +120,26 @@ const JobPage = () => {
   const searchJob = async () => {
     await jobApis.searchJob(jobName, page - 1, accessToken).then((res) => {
       setJobList(res.data);
-      console.log('searchJob res.data : ', res.data);
     });
   };
 
   const getJobList = async () => {
     await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
       setJobList(res.data); // id, companyName, title, occupation
+      console.log('searchJob res.data : ', res.data);
     });
+    // scroll to top
   };
 
   useEffect(() => {
     getJobList();
   }, []);
+  useEffect(() => {
+    const jobContent = document.getElementById('job-content');
+    if (jobContent) {
+      jobContent.scrollTo(0, 0);
+    }
+  }, [jobList]);
 
   useEffect(() => {
     getJobList();
@@ -174,7 +181,7 @@ const JobPage = () => {
         setJobName={setJobName}
         searchJob={searchJob}
       />
-      <JobPageContent>
+      <JobPageContent id="job-content">
         <JobDropdown
           toggleFilter={toggleFilter}
           openFilter={openFilter}
