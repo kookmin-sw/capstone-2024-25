@@ -19,7 +19,6 @@ const JobContainer = styled.div`
   overflow: hidden;
   padding: 20px;
   gap: 8px;
-  border: 1px solid red;
 `;
 
 const JobPageContent = styled.div`
