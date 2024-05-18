@@ -19,7 +19,9 @@ const SignInWrapper = styled.div`
   box-sizing: border-box;
 `;
 
-const LogoImage = styled.img``;
+const LogoImage = styled.img`
+  height: 20%;
+`;
 
 const SignInContent = styled.div`
   display: flex;
