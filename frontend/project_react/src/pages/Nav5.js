@@ -131,6 +131,14 @@ export default function Nav5() {
     }
   }
 
+  const handleCall = (phoneNumber) => {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview.callHandler('test', phoneNumber);
+    } else {
+      console.error('Flutter WebView is not initialized.');
+    }
+  };
+
   return (
     <Layout>
       <Frame>
@@ -262,7 +270,7 @@ export default function Nav5() {
                 {markerInfo.address}
               </div>
             </MarkerInfoLeft>
-            <MarkerInfoRight>
+            <MarkerInfoRight onClick={() => handleCall(markerInfo.phone)}>
               <img
                 src={
                   markerInfo.type === 'JOB'
