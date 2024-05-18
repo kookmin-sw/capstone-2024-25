@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { twentyHeadsApis } from '../../../api/apis/gameApis';
 import { useAccessToken } from '../../../components/cookies';
 import ChatPair from '../../../components/Chatbot/ChatPair';
-import Category from '../../../components/Toggle/Category';
+import Swal from 'sweetalert2';
 import SelectInputMode from '../../../components/Chatbot/SelectInputMode';
 
 import {
@@ -23,19 +23,19 @@ import {
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import { getUserInfo } from '../../../utils/handleUser';
 import Layout from '../../../layouts/Layout';
 
 export default function TwentyHeadsGame() {
   const navigate = useNavigate();
   const accessToken = useAccessToken();
-  const [gameAnswer, setGameAnswer] = useState('바나나'); // 바나나는 예시
-  const [remainingQuestions, setRemainingQuestions] = useState(20); // 20은 예시
+  const [gameAnswer, setGameAnswer] = useState('');
+  const [remainingQuestions, setRemainingQuestions] = useState(20);
   const [chattingList, setChattingList] = useState([]);
   const [avatarImg, setAvatarImg] = useState(''); // 아바타 이미지
 
   /*   ChatBot Start    */
   const inputRef = useRef();
+  const inputRef2 = useRef();
   const [selectMode, setSelectMode] = useState('select');
   const inputVoiceInfo =
     '질문을 말씀해주세요 ! \n5초 동안 말씀이 없으시면 종료됩니다.';
@@ -50,12 +50,36 @@ export default function TwentyHeadsGame() {
   const [timer, setTimer] = useState(null);
   const [initialTimer, setInitialTimer] = useState(null);
   const [isTimerFirst, setIsTimerFirst] = useState(true);
+
   useEffect(() => {
+    // 돔이 로드되면 getPassageData() 호출
+    // 게임 시작 시, 문제 데이터를 가져오기 위함
     if (!browserSupportsSpeechRecognition) {
       alert('Speech recognition not supported');
     }
     console.log('public.env.PUBLIC_URL', process.env.PUBLIC_URL);
+    getPassageData();
   }, []);
+
+  useEffect(() => {
+    // 음성 인식이 활성화되어 있고, transcript가 변화할 때마다 타이머를 리셋
+    if (listening) {
+      setIsTimerFirst(false);
+      resetTimer();
+    }
+
+    return () => {
+      clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+      clearTimeout(initialTimer);
+    };
+  }, [transcript, listening]);
+
+  useEffect(() => {
+    // 채팅창이 변화할 때마다 스크롤을 가장 아래로 내려줌
+    setTimeout(() => {
+      inputRef.current.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
+  }, [chattingList]);
 
   // 타이머를 리셋하고 새로 설정하는 함수
   const resetTimer = () => {
@@ -65,6 +89,7 @@ export default function TwentyHeadsGame() {
         if (!isTimerFirst) {
           console.log('입력이 3초 동안 없어 음성 인식 중지');
           SpeechRecognition.stopListening();
+          postUserAnswer(transcript);
           resetTranscript();
           setSelectMode('select');
         }
@@ -85,19 +110,6 @@ export default function TwentyHeadsGame() {
     setInitialTimer(newInitialTimer);
   };
 
-  useEffect(() => {
-    // 음성 인식이 활성화되어 있고, transcript가 변화할 때마다 타이머를 리셋
-    if (listening) {
-      setIsTimerFirst(false);
-      resetTimer();
-    }
-
-    return () => {
-      clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
-      clearTimeout(initialTimer);
-    };
-  }, [transcript, listening]);
-
   const clickVoice = () => {
     setIsTimerFirst(true);
     SpeechRecognition.startListening({ continuous: true });
@@ -112,24 +124,21 @@ export default function TwentyHeadsGame() {
     setSelectMode('select');
   };
 
-  useEffect(() => {
-    // 돔이 로드되면 getPassageData() 호출
-    // 게임 시작 시, 문제 데이터를 가져오기 위함
-    getPassageData();
-  }, []);
-
   async function getPassageData() {
     try {
       const response = await twentyHeadsApis.getTwentyHeadsData(accessToken);
       setAvatarImg(response.data.chatProfileImageUrl);
-      setChattingList(response.data.qnaPairs);
-      // 대화 내역
       console.log(response.data);
+      // 대화 내역
       // 만약 빈 배열이라면 게임을 다시 시작해야 하므로 postUserAnswer('') 호출
       if (response.data.qnaPairs.length === 0) {
-        postUserAnswer('');
+        const answer = await postUserAnswer('');
+        setGameAnswer(answer);
       } else {
         // 게임이 진행 내역이 존재하므로, 채팅창에 대화 내역을 출력
+        setChattingList(response.data.qnaPairs.reverse());
+        setGameAnswer(response.data.solution);
+        setRemainingQuestions(response.data.questionCount);
       }
     } catch (error) {
       console.log(error);
@@ -138,118 +147,162 @@ export default function TwentyHeadsGame() {
 
   async function postUserAnswer(userAnswer) {
     try {
+      setChattingList((prev) => [
+        ...prev,
+        { question: userAnswer, answer: '' },
+      ]);
       const response = await twentyHeadsApis.postUserAnswer(
         accessToken,
         userAnswer,
       );
-      console.log(response.data);
+      console.log('스무고개 물어봤더니 돌아온 답:', response.data);
+      if (response.data.isCorrect) {
+        Swal.fire({
+          icon: 'success',
+          title: '정답입니다!',
+          showDenyButton: true,
+          denyButtonText: '그만하기',
+          confirmButtonText: '다음 문제',
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // 페이지 전체 재렌더링
+            window.location.reload();
+            return;
+          } else if (result.isDenied) {
+            navigate(-1, { replace: true });
+          }
+        });
+      }
+      setRemainingQuestions(response.data.questionCount);
+      setChattingList((prev) => {
+        prev[prev.length - 1] = {
+          question: userAnswer,
+          answer: response.data.answer,
+        };
+        return [...prev];
+      });
+
+      return response.data.solution;
+      // setGameAnswer(response.data.solution);
     } catch (error) {
       console.log(error);
     }
   }
 
   return (
-    <Layout>
-      <Frame>
-        <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
-        <AnswerDiv>
-          <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
-            정답:
-          </h1>
-          {gameAnswer &&
-            Array.from({ length: gameAnswer.length }).map((_, index) => (
-              <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-                key={index}
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  backgroundColor: '#cccccc',
-                  borderRadius: '8px',
-                }}
-              ></motion.div>
-            ))}
-        </AnswerDiv>
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
-        >{`남은 질문 횟수: ${remainingQuestions}회`}</motion.p>
-        <ChatBotDiv>
-          <ChattingWrapper>
-            {chattingList.map((chat, index) => (
-              <ChatPair key={index} qnaPairs={chat} chatImg={avatarImg} />
-            ))}
+<Layout>
+    <Frame>
+      <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
+      <AnswerDiv>
+        <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
+          정답:
+        </h1>
+        {gameAnswer &&
+          Array.from({ length: gameAnswer.length }).map((_, index) => (
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
+              key={index}
+              style={{
+                width: '44px',
+                height: '44px',
+                backgroundColor: '#cccccc',
+                borderRadius: '8px',
+              }}
+            ></motion.div>
+          ))}
+      </AnswerDiv>
+      <motion.p
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        style={{ margin: '0', fontSize: '28px', fontWeight: '400' }}
+      >
+        남은 질문 횟수:
+        <motion.span
+          key={remainingQuestions}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          style={{ marginLeft: '8px' }}
+        >
+          {remainingQuestions}회
+        </motion.span>
+      </motion.p>
+      <ChatBotDiv>
+        <ChattingWrapper ref={inputRef2}>
+          {chattingList.map((chat, index) => (
+            <ChatPair key={index} qnaPairs={chat} chatImg={avatarImg} />
+          ))}
+          <div ref={inputRef}></div>
 
-            <BottomWrapper ref={inputRef}>
-              {selectMode === 'voice' && (
-                <InputVoiceWrapper>
-                  <MicImg
+          <BottomWrapper>
+            {selectMode === 'voice' && (
+              <InputVoiceWrapper>
+                <MicImg
+                  src={process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'}
+                />
+                <InputVoiceText>{transcript || inputVoiceInfo}</InputVoiceText>
+                <XImg
+                  src={process.env.PUBLIC_URL + '/images/x-img.svg'}
+                  onClick={() => voiceXClick()}
+                />
+              </InputVoiceWrapper>
+            )}
+            {selectMode === 'select' && (
+              <SelectInputMode
+                setSelectMode={setSelectMode}
+                clickVoice={clickVoice}
+              />
+            )}
+            {selectMode === 'keyboard' && (
+              <ChatInputWrapper>
+                <XImage
+                  src={process.env.PUBLIC_URL + '/images/x-img.svg'}
+                  onClick={() => setSelectMode('select')}
+                />
+                <InputText
+                  type="text"
+                  어
+                  id="input-text"
+                  // onClick={handleViewportResize}
+                  onChange={(e) => setUserText(e.target.value)}
+                  placeholder="대화를 입력하세요"
+                />
+                {userText === '' ? (
+                  <SendButton
                     src={
                       process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'
                     }
                   />
-                  <InputVoiceText>
-                    {transcript || inputVoiceInfo}
-                  </InputVoiceText>
-                  <XImg
-                    src={process.env.PUBLIC_URL + '/images/x-img.svg'}
-                    onClick={() => voiceXClick()}
+                ) : (
+                  <SendButton
+                    onClick={() => {
+                      postUserAnswer(userText);
+                    }}
+                    src={
+                      process.env.PUBLIC_URL +
+                      '/images/Chatbot/send-icon-on.svg'
+                    }
                   />
-                </InputVoiceWrapper>
-              )}
-              {selectMode === 'select' && (
-                <SelectInputMode
-                  setSelectMode={setSelectMode}
-                  clickVoice={clickVoice}
-                />
-              )}
-              {selectMode === 'keyboard' && (
-                <ChatInputWrapper>
-                  <XImage
-                    src={process.env.PUBLIC_URL + '/images/x-img.svg'}
-                    onClick={() => setSelectMode('select')}
-                  />
-                  <InputText
-                    type="text"
-                    어
-                    id="input-text"
-                    // onClick={handleViewportResize}
-                    onChange={(e) => setUserText(e.target.value)}
-                    placeholder="대화를 입력하세요"
-                  />
-                  {userText === '' ? (
-                    <SendButton
-                      src={
-                        process.env.PUBLIC_URL +
-                        '/images/Chatbot/send-icon-off.svg'
-                      }
-                    />
-                  ) : (
-                    <SendButton
-                      // onClick={() => addChat(userText)}
-                      src={
-                        process.env.PUBLIC_URL +
-                        '/images/Chatbot/send-icon-on.svg'
-                      }
-                    />
-                  )}
-                </ChatInputWrapper>
-              )}
-            </BottomWrapper>
-          </ChattingWrapper>
-        </ChatBotDiv>
-        <div style={{ width: '100%' }}>
-          <BottomButton
-            onClick={() => navigate(`/game/wordOrderGame/`, { replace: true })}
-          >
-            시작하기
-          </BottomButton>
-        </div>
-      </Frame>
+                )}
+              </ChatInputWrapper>
+            )}
+          </BottomWrapper>
+        </ChattingWrapper>
+      </ChatBotDiv>
+      <div style={{ width: '100%' }}>
+        <BottomButton
+          onClick={() =>
+            inputRef.current.scrollIntoView({ behavior: 'smooth' })
+          }
+        >
+          시작하기
+        </BottomButton>
+      </div>
+    </Frame>
     </Layout>
   );
 }
@@ -282,6 +335,9 @@ const ChatBotDiv = styled.div`
   --darkreader-inline-boxshadow: #33373a 0px 0px 5px;
   overflow-y: scroll;
   position: relative;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChattingWrapper = styled.div`
