@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import TitleHeader from '../components/Header/TitleHeader';
 import { Button } from 'react-day-picker';
+import Layout from '../layouts/Layout';
 
 export default function Nav1() {
   const navigate = useNavigate();
 
   return (
+  <Layout>
     <Frame>
       <TitleHeader title={'두뇌 향상 게임'} showDivider={true}></TitleHeader>
       <GameBox>
@@ -97,6 +99,7 @@ export default function Nav1() {
         </GameDiv>
       </GameBox>
     </Frame>
+  </Layout>
   );
 }
 
@@ -147,7 +150,7 @@ const GameButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   box-shadow: rgb(102, 102, 102) 0px 8px 20px -10px;
   --darkreader-inline-boxshadow: #4d5356 0px 8px 6px -6px;
   transition: transform 0.3s;

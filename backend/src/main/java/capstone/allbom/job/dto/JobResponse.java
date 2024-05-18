@@ -13,15 +13,15 @@ public record JobResponse(
         String province,
 
         @Schema(description = "일자리 총 갯수")
-        Integer totalJobSize,
+        Long totalJobSize,
 
         @Schema(description = "일자리 리스트")
         List<JobListResponse> jobListResponses
 ) {
-    public static JobResponse from(Member member, List<JobListResponse> jobListResponses) {
+    public static JobResponse from(Member member, List<JobListResponse> jobListResponses, Long totalJobSize) {
         return new JobResponse(
-                member.getProvince().toString(), jobListResponses.size(),
-                jobListResponses
+                member.getProvince().toString(),
+                totalJobSize, jobListResponses
         );
     }
 }

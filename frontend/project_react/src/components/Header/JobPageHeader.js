@@ -37,6 +37,7 @@ const SearchInput = styled.input`
   outline: none;
   border: none;
   font-size: 16px;
+  font-weight: 600;
 `;
 const JobPageContent = styled.div`
   display: flex;
@@ -74,7 +75,11 @@ const JobPageHeader = ({ jobName, setJobName, searchJob }) => {
             clickSearch();
           }}
         />
-        <SearchInput id="search-input" placeholder="직종을 입력하세요" />
+        <SearchInput
+          id="search-input"
+          placeholder="직종을 입력하세요"
+          onChange={handleSearch}
+        />
       </SearchWrapper>
     </HeaderWrapper>
   );

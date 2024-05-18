@@ -8,7 +8,7 @@ https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sha
 </br>
 </br>
 
-# 올봄: AI 기반 장년층 대상 라이프 케어 서비스
+# 올봄: AI 기반 장년층 라이프 케어 서비스
 
 <h2> 1. 프로젝트 소개 </h2>
 

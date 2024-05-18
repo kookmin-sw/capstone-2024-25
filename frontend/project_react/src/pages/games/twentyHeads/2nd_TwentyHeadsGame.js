@@ -23,7 +23,7 @@ import {
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-import { set } from 'date-fns';
+import Layout from '../../../layouts/Layout';
 
 export default function TwentyHeadsGame() {
   const navigate = useNavigate();
@@ -191,6 +191,7 @@ export default function TwentyHeadsGame() {
   }
 
   return (
+<Layout>
     <Frame>
       <TitleHeader showBackButton={true} title={'스무고개'}></TitleHeader>
       <AnswerDiv>
@@ -273,8 +274,7 @@ export default function TwentyHeadsGame() {
                 {userText === '' ? (
                   <SendButton
                     src={
-                      process.env.PUBLIC_URL +
-                      '/images/Chatbot/send-icon-off.svg'
+                      process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'
                     }
                   />
                 ) : (
@@ -303,6 +303,7 @@ export default function TwentyHeadsGame() {
         </BottomButton>
       </div>
     </Frame>
+    </Layout>
   );
 }
 

@@ -41,8 +41,6 @@ export const reverseQnaResponses = (data) => {
 };
 
 export const googleTTS = (text) => {
-  // console.log('googleTTS');
-  // console.log('text : ', text);
   const store = useStore.getState(); // Zustand 스토어에서 상태를 직접 가져오기
   const selectedAvatar = store.selectedAvatar; // 현재 선택된 아바타 타입 가져오기
 
@@ -93,8 +91,6 @@ export const googleTTS = (text) => {
 
 export const convertArrayToObjectList = (data) => {
   const keyList = { 시설명: 'location', 전화번호: 'phone', 주소: 'address' };
-
-  console.log('data : ', data);
   const result = [];
   let currentObject = {};
 

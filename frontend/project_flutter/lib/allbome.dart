@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:project_flutter/screen/layout_login.dart';
 import 'package:project_flutter/screen/layout_nav1.dart';
 import 'package:project_flutter/screen/layout_nav2.dart';
 import 'package:project_flutter/screen/layout_nav3.dart';
@@ -18,6 +20,10 @@ class _AllBomeState extends State<AllBome> {
   @override
   Widget build(BuildContext context) {
     // final ThemeData theme = Theme.of(context);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // 상태 표시줄을 투명하게 설정
+        statusBarIconBrightness: Brightness.dark));
+
     return MaterialApp(
       home: Scaffold(
           bottomNavigationBar: NavigationBar(
@@ -33,6 +39,10 @@ class _AllBomeState extends State<AllBome> {
             // indicatorColor: const Color(0xFF379237),
             selectedIndex: currentPageIndex,
             destinations: const <Widget>[
+              NavigationDestination(
+                icon: Icon(Icons.home),
+                label: '0',
+              ),
               NavigationDestination(
                 // selectedIcon: Icon(Icons.sports_esports_rounded),
                 icon: Icon(Icons.sports_esports_rounded),
@@ -61,11 +71,12 @@ class _AllBomeState extends State<AllBome> {
           ),
           body: SafeArea(
             child: <Widget>[
-              LayoutNav1(),
-              LayoutNav2(),
-              LayoutNav3(),
-              LayoutNav4(),
-              LayoutNav5(),
+              const LayoutHome(),
+              const LayoutNav1(),
+              const LayoutNav2(),
+              const LayoutNav3(),
+              const LayoutNav4(),
+              const LayoutNav5(),
             ][currentPageIndex],
           )),
     );
