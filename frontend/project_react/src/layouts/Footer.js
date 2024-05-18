@@ -57,12 +57,13 @@ const Footer = () => {
           process.env.PUBLIC_URL + '/images/Footer/footer-chatbot.svg',
         );
       } else {
-        if (res.data.profileImageUrl) {
-          setChatBotImg(res.data.profileImageUrl);
-        } else {
+        if (res.data.profileImageUrl === null) {
+          // 나중에 아바타 이미지로 변경
           setChatBotImg(
             process.env.PUBLIC_URL + '/images/Footer/footer-chatbot.svg',
           );
+        } else {
+          setChatBotImg(res.data.profileImageUrl);
         }
       }
     });
