@@ -174,7 +174,6 @@ const JobDetailPage = () => {
 
   const getJobDetail = async () => {
     await jobApis.getJobDetail(jobId, accessToken).then((res) => {
-      console.log('res.data : ', res.data);
       setJobInfo(res.data);
       if (res.data.dday.startsWith('D')) {
         classifyDate(extractDay(res.data.dday));

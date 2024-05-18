@@ -42,7 +42,6 @@ const ChatSystem = ({ content, type, chatImg }) => {
   const clickYes = () => {
     const answerToJson = parseNewsData(content);
     setTempList(answerToJson.articles);
-    console.log('clickYes : ', answerToJson.articles);
     let completeSentence = '';
 
     const voiceList = answerToJson.articles.slice(

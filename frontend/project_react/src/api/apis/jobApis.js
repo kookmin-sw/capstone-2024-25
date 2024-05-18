@@ -25,13 +25,6 @@ export const jobApis = {
         },
       })
       .then((res) => {
-        console.log('typeof name : ', typeof name);
-        console.log('jobName : ', name);
-        console.log('encodeURIComponent(name) : ', encodeURIComponent(name));
-        console.log(
-          'decodeURIComponent(encodeURIComponent(name)) : ',
-          decodeURIComponent(encodeURIComponent(name)),
-        );
         return res;
       }),
 };

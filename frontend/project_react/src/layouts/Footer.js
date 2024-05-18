@@ -54,9 +54,6 @@ const Footer = () => {
   const accessToken = cookies.accessToken;
 
   useEffect(() => {
-    console.log('accessToken : ', accessToken);
-  }, []);
-  useEffect(() => {
     getUserInfo(accessToken, setUserInfo);
 
     if (pathname.startsWith('/chatbot')) {

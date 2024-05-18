@@ -456,7 +456,6 @@ const MyPage = () => {
   };
 
   const saveAddress = async (address) => {
-    console.log('saveAddress address : ', address);
     await updateAddress(address, detailAddress);
   };
 

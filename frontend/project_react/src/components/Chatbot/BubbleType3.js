@@ -48,9 +48,6 @@ const BubbleType3 = ({ content, bubbleType }) => {
   const [showContents, setShowContents] = useState([]);
 
   useEffect(() => {
-    if (bubbleType === 'SHOPPING' || bubbleType === 'PARK') {
-      console.log('bubbleType : ', bubbleType);
-    }
     if (content && content.length !== 0) {
       setHeader(content.header);
       const newContents = content.split('\n');

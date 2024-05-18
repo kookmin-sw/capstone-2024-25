@@ -40,9 +40,7 @@ const BubbleType2 = ({ content, showList, clickYes, showNext, clickNo }) => {
   useEffect(() => {
     if (content && content.length !== 0) {
       const parsedData = parseNewsData(content);
-      // console.log('parseNewsData : ', parseNewsData(content));
       setHeader(parsedData.header);
-      // console.log('showList : ', showList);
       setContents(showList);
     }
   }, [content, showList]);

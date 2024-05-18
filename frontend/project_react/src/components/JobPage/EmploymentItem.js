@@ -54,7 +54,6 @@ const JobEmploymentItem = ({ jobList }) => {
     // jobList가 배열인지 확인 후 상태 업데이트
     if (Array.isArray(jobList)) {
       setNewList(jobList);
-      console.log('jobList.length', jobList.length);
     } else {
       console.error('jobList is not an array:', jobList);
       setNewList([]); // jobList가 배열이 아니면 빈 배열로 설정

@@ -123,7 +123,6 @@ const JobPage = () => {
 
   const getJobList = async () => {
     await jobApis.getJobList(sorted, page - 1, accessToken).then((res) => {
-      console.log('res.data : ', res.data);
       setJobList(res.data.jobListResponses); // id, companyName, title, occupation
       setMaxPage(res.data.totalJobSize / 10 + 1);
       setTotalCount(res.data.totalJobSize);

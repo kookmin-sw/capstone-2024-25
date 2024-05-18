@@ -252,7 +252,6 @@ const Chatbot = () => {
   });
 
   useEffect(() => {
-    // console.log('userName 변경 : ', userName);
     setFirstChat({
       answer: `안녕하세요. [${userName}]님! 올봄 챗봇입니다. 무엇을 도와드릴까요?`,
     });
