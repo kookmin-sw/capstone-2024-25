@@ -25,6 +25,33 @@ const mapCategoryList = [
 export default function Nav5() {
   useKakaoLoader();
 
+  // window.addEventListener('flutterInAppWebViewPlatformReady', function (event) {
+  //   window.flutter_inappwebview
+  //     .callHandler('test')
+  //     .then(function (result) {
+  //       // print to the console the data coming
+  //       // from the Flutter side.
+  //       console.log(JSON.stringify(result));
+
+  //       window.flutter_inappwebview.callHandler(
+  //         'handlerFooWithArgs',
+  //         1,
+  //         true,
+  //         ['bar', 5],
+  //         { foo: 'baz' },
+  //         result,
+  //       );
+  //     });
+  // });
+
+  function callFlutter() {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview.callHandler('test');
+    } else {
+      console.error("Flutter WebView is not initialized.");
+    }
+  };
+
   // 지도 관련 동작
   const [centerState, setCenterState] = useState({
     center: {
@@ -152,7 +179,7 @@ export default function Nav5() {
           }}
           onTileLoaded={(map) => {
             console.log('지도 타일이 로드됐어요', currentBounds);
-            if (mapSizeLevel < 4) {
+            if (mapSizeLevel < 6) {
               fetchMarkers();
             }
           }}
@@ -167,7 +194,7 @@ export default function Nav5() {
           <MapMarker position={position ?? centerState.center} />
           {/* <MapMarker position={centerState.center} /> */}
           {!centerState.isLoading &&
-            mapSizeLevel < 4 &&
+            mapSizeLevel < 6 &&
             mapTags.map(
               (tag, index) =>
                 (selectedCategory === 'ALL' ||
@@ -258,7 +285,9 @@ export default function Nav5() {
               {markerInfo.address}
             </div>
           </MarkerInfoLeft>
-          <MarkerInfoRight>
+          <MarkerInfoRight
+          onClick={() => callFlutter()}
+          >
             <img
               src={
                 markerInfo.type === 'JOB'
