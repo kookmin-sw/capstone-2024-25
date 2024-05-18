@@ -148,7 +148,7 @@ const JobPage = () => {
       pagination.lastChild.firstChild.innerHTML = '마지막';
       pagination.lastChild.previousElementSibling.firstChild.innerHTML = '다음';
     }
-  }, [page]);
+  }, [page, jobList]);
 
   const toggleFilter = () => {
     setOpenFilter(!openFilter);
