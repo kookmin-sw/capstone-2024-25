@@ -21,7 +21,7 @@ public class JobCrawlingProcessBuilder {
     @Async("threadPoolTaskExecutor")
 //    @Scheduled(cron = "0 0 0 * * MON") // 매주 월요일 00:00:00에 실행
 //    @Scheduled(fixedDelay = 2 * 7 * 24 * 60 * 60 * 1000)
-    @Scheduled(cron = "0 58 14 * * ?")
+    @Scheduled(cron = "0 40 2 * * ?")
     public void processPythonFile() throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder("python", PYTHON_FILE_URL);
