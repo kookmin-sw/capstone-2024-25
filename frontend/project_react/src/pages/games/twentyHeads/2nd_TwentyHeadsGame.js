@@ -9,6 +9,7 @@ import { useAccessToken } from '../../../components/cookies';
 import ChatPair from '../../../components/Chatbot/ChatPair';
 import Swal from 'sweetalert2';
 import SelectInputMode from '../../../components/Chatbot/SelectInputMode';
+import ChatSystem from '../../../components/Chatbot/ChatSystem';
 
 import {
   XImg,
@@ -24,6 +25,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import Layout from '../../../layouts/Layout';
+import { set } from 'date-fns';
 
 export default function TwentyHeadsGame() {
   const navigate = useNavigate();
@@ -32,6 +34,8 @@ export default function TwentyHeadsGame() {
   const [remainingQuestions, setRemainingQuestions] = useState(20);
   const [chattingList, setChattingList] = useState([]);
   const [avatarImg, setAvatarImg] = useState(''); // 아바타 이미지
+  const [answerArray, setAnswerArray] = useState([]);
+  const [bottomButtonClicked, setBottomButtonClicked] = useState(false);
 
   /*   ChatBot Start    */
   const inputRef = useRef();
@@ -40,6 +44,8 @@ export default function TwentyHeadsGame() {
   const inputVoiceInfo =
     '질문을 말씀해주세요 ! \n5초 동안 말씀이 없으시면 종료됩니다.';
   const [userText, setUserText] = useState('');
+  const [firstChat, setFirstChat] = useState();
+  const inputsRef = useRef([]);
 
   const {
     transcript,
@@ -79,7 +85,7 @@ export default function TwentyHeadsGame() {
     setTimeout(() => {
       inputRef.current.scrollIntoView({ behavior: 'smooth' });
     }, 0);
-  }, [chattingList]);
+  }, [chattingList, firstChat]);
 
   // 타이머를 리셋하고 새로 설정하는 함수
   const resetTimer = () => {
@@ -124,20 +130,49 @@ export default function TwentyHeadsGame() {
     setSelectMode('select');
   };
 
+  const handleChange = (index, event) => {
+    const newValues = [...answerArray];
+    newValues[index] = event.target.value;
+    setAnswerArray(newValues);
+  };
+
+  const handleKeyPress = (index, event) => {
+    if (event.key === 'Enter' && index < 2) {
+      inputsRef.current[index + 1].focus();
+    }
+  };
+
   async function getPassageData() {
     try {
       const response = await twentyHeadsApis.getTwentyHeadsData(accessToken);
       setAvatarImg(response.data.chatProfileImageUrl);
-      console.log(response.data);
+      console.log(
+        response.data,
+        'qnaPairs:',
+        response.data.qnaPairs,
+        'qnaPairs.length:',
+        response.data.qnaPairs.length,
+      );
       // 대화 내역
       // 만약 빈 배열이라면 게임을 다시 시작해야 하므로 postUserAnswer('') 호출
       if (response.data.qnaPairs.length === 0) {
-        const answer = await postUserAnswer('');
-        setGameAnswer(answer);
+        // const answer = await postUserAnswer('');
+        console.log('비어잇네');
+        const firstPost = await twentyHeadsApis.postUserAnswer(accessToken, '');
+        console.log('올봄이의 스무고개 첫 멘트:', firstPost.data);
+        setGameAnswer(firstPost.data.solution);
+        setAnswerArray(new Array(firstPost.data.solution.length).fill(''));
+        setRemainingQuestions(firstPost.data.questionCount);
+        setFirstChat(firstPost.data.answer);
       } else {
         // 게임이 진행 내역이 존재하므로, 채팅창에 대화 내역을 출력
-        setChattingList(response.data.qnaPairs.reverse());
+        let chatList = response.data.qnaPairs;
+        const firstChat = chatList.pop().answer;
+        setChattingList(chatList.reverse());
+        // console.log(response.data.qnaPairs)
+        setFirstChat(firstChat);
         setGameAnswer(response.data.solution);
+        setAnswerArray(new Array(response.data.solution.length).fill(''));
         setRemainingQuestions(response.data.questionCount);
       }
     } catch (error) {
@@ -198,21 +233,42 @@ export default function TwentyHeadsGame() {
           <h1 style={{ margin: '0', fontSize: '36px', fontWeight: '600' }}>
             정답:
           </h1>
-          {gameAnswer &&
-            Array.from({ length: gameAnswer.length }).map((_, index) => (
-              <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-                key={index}
+          {answerArray.map((answer, index) => (
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
+              key={index}
+              style={{
+                width: '44px',
+                height: '44px',
+                backgroundColor: '#cccccc',
+                borderRadius: '8px',
+              }}
+            >
+              <input
+                type="text"
+                maxLength={1}
+                value={answer}
                 style={{
-                  width: '44px',
-                  height: '44px',
-                  backgroundColor: '#cccccc',
-                  borderRadius: '8px',
+                  width: '100%',
+                  height: '100%',
+                  textAlign: 'center',
+                  fontSize: '24px',
+                  fontWeight: '600',
+                  backgroundColor: 'transparent',
+                  border: 'none',
                 }}
-              ></motion.div>
-            ))}
+                onChange={(e) => {
+                  handleChange(index, e);
+                }}
+                onKeyDown={(e) => {
+                  handleKeyPress(index, e);
+                }}
+                ref={(el) => (inputsRef.current[index] = el)}
+              />
+            </motion.div>
+          ))}
         </AnswerDiv>
         <motion.p
           initial={{ y: 20, opacity: 0 }}
@@ -233,6 +289,13 @@ export default function TwentyHeadsGame() {
         </motion.p>
         <ChatBotDiv>
           <ChattingWrapper ref={inputRef2}>
+            {firstChat && (
+              <ChatSystem
+                content={firstChat}
+                type={'qwer'}
+                chatImg={avatarImg}
+              />
+            )}
             {chattingList.map((chat, index) => (
               <ChatPair key={index} qnaPairs={chat} chatImg={avatarImg} />
             ))}
@@ -291,11 +354,26 @@ export default function TwentyHeadsGame() {
         </BottomWrapper>
         <div style={{ width: '100%' }}>
           <BottomButton
-            onClick={() =>
-              inputRef.current.scrollIntoView({ behavior: 'smooth' })
-            }
+            onClick={() => {
+              console.log(
+                'answerArray.join:',
+                answerArray.join(''),
+                'gameAnswer:',
+                gameAnswer.length,
+              );
+              if (
+                // bottomButtonClicked &&
+                answerArray.join('').length === gameAnswer.length
+              ) {
+                console.log('정답 제출', answerArray.join(''));
+                postUserAnswer(answerArray.join(''));
+              } else {
+                inputsRef.current[0].focus();
+              }
+            }}
+            postAnswer={answerArray.join('').length === gameAnswer.length}
           >
-            정답 입력하기
+            정답 제출하기
           </BottomButton>
         </div>
       </Frame>
@@ -341,7 +419,7 @@ const ChattingWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px; // 나중에 ChatPair 로 옮길 예정
-  padding: 12px 24px 100px 24px;
+  padding: 12px 24px 24px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
