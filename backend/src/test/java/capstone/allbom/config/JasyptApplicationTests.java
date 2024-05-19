@@ -17,14 +17,14 @@ class JasyptApplicationTests {
         pbeEnc.setAlgorithm("PBEWithMD5AndDES");
         pbeEnc.setPassword("toma");
 
-        String value = "http://43.200.183.169/chatbot_game/";
+        String value = "test";
 
         System.out.println("기존  value :: " + value + " | 변경 value :: " + pbeEnc.encrypt(value));
     }
 
     public String jasyptEncoding(String value) {
 
-        String key = "toma";
+        String key = "tomas";
         StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
         pbeEnc.setAlgorithm("PBEWithMD5AndDES");
         pbeEnc.setPassword(key);

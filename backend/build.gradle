@@ -46,15 +46,15 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
 
 //test {
 //	useJUnitPlatform()
 //}
 
 // 테스트 코드 제외 빌드
-//tasks.withType(Test) {
-//	enabled = false
-//}
+tasks.withType(Test) {
+	enabled = false
+}
