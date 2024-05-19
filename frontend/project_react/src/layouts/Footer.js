@@ -19,6 +19,7 @@ const FooterContainer = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
   z-index: 100;
+  background-color: white;
 `;
 
 const Divider = styled.div`
@@ -39,7 +40,7 @@ const FooterChatBot = styled.div`
 `;
 
 // 수정된 Footer 컴포넌트
-const Footer = () => {
+const Footer = ({ fromJob }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [isGameOn, setIsGameOn] = useState(false);
@@ -83,7 +84,7 @@ const Footer = () => {
     setIsMapOn(pathname.startsWith('/map'));
   }, [pathname]);
 
-  if (pathname === '/' || pathname === '/sign-up') {
+  if (pathname === '/' || pathname === '/sign-up' || fromJob) {
     return null;
   }
 
