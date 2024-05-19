@@ -84,7 +84,7 @@ const Footer = ({ fromJob }) => {
     setIsMapOn(pathname.startsWith('/map'));
   }, [pathname]);
 
-  if (pathname === '/' || pathname === '/sign-up' || fromJob) {
+  if (pathname === '/' || pathname === '/sign-up' || fromJob === true) {
     return null;
   }
 

@@ -11,40 +11,34 @@ const LayoutContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   position: relative;
-  main {
-    width: 100%;
-    //height: calc(100vh - 78px);
-    height: 100%;
-    // height: ${(props) => (!props.fromJob ? '100%' : 'calc(100vh - 78px)')};
-  }
 `;
 
-const MainFromJob = styled.main`
+const StyledMain = styled.main`
   width: 100%;
-  //height: 100%;
   height: calc(100vh - 78px);
 `;
+const MainFromJob = styled.main`
+  width: 100%;
+  height: 100%;
+`;
 const Layout = ({ children, fromJob }) => {
-  const [isFromJob, setIsFromJob] = useState(false);
+  // const [isFromJob, setIsFromJob] = useState(false);
+
   useEffect(() => {
-    if (fromJob) {
-      setIsFromJob(true);
-    }
     console.log('Layout fromJob : ', fromJob);
-  }, []);
+  }, [fromJob]);
+
+  if (fromJob) {
+    return (
+      <LayoutContainer>
+        <MainFromJob>{children}</MainFromJob>
+        <Footer fromJob={fromJob} />
+      </LayoutContainer>
+    );
+  }
   return (
     <LayoutContainer>
-      {/*{fromJob ? (*/}
-      {/*  <mainFromJob>{children}</mainFromJob>*/}
-      {/*) : (*/}
-      {/*  <main>{children}</main>*/}
-      {/*)}*/}
-      {isFromJob ? (
-        <MainFromJob>{children}</MainFromJob>
-      ) : (
-        <main>{children}</main>
-      )}
-      {/*// <main fromJob={fromJob}>{children}</main>*/}
+      <StyledMain fromJob={fromJob}>{children}</StyledMain>
       <Footer fromJob={fromJob} />
     </LayoutContainer>
   );

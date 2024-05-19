@@ -50,10 +50,18 @@ export default function Nav5() {
   useEffect(() => {
     if (location.state) {
       fetchMarkerInfo('job', location.state.jobId);
+      console.log('얘가 ');
+      setFromJob(true);
     } else {
       SetCurrentPosition();
+      console.log('얘보다 늦게 나와야해');
+      setFromJob(false);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('Map fromJob : ', fromJob);
+  }, [fromJob]);
 
   function SetCurrentPosition() {
     console.log('현재 위치로 이동');
@@ -143,7 +151,6 @@ export default function Nav5() {
           phone: response.data.phoneNumber,
         });
       }
-      setFromJob(true);
     } catch (error) {
       console.error('마커 세부 정보 에러', error.response.data.code);
     }
