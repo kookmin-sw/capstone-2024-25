@@ -7,6 +7,7 @@ import { useAccessToken } from '../components/cookies';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../layouts/Layout';
 import { set } from 'date-fns';
+import Footer from '../layouts/Footer';
 
 const mapCategoryList = [
   [
@@ -156,197 +157,194 @@ export default function Nav5() {
   };
 
   return (
-    <Layout>
-      <Frame>
-        <MapFrame>
-          <Map // 지도를 표시할 Container
-            id="map"
-            center={centerState.center} // 지도의 중심좌표
-            isPanto={true}
-            style={{
-              width: '100%',
-              height: '100%',
+    <Frame>
+      <MapFrame fromJob={location.state?.jobId}>
+        <Map // 지도를 표시할 Container
+          id="map"
+          center={centerState.center} // 지도의 중심좌표
+          isPanto={true}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+          level={mapSizeLevel} // 지도의 확대 레벨
+          onZoomChanged={(map) => {
+            const level = map.getLevel();
+            setMapSizeLevel(level);
+            console.log(`현재 지도 레벨은 ${level} 입니다`);
+          }}
+          onTileLoaded={(map) => {
+            console.log('지도 타일이 로드됐어요', currentBounds);
+            if (mapSizeLevel < 4) {
+              fetchMarkers();
+            }
+          }}
+          onBoundsChanged={(map) => {
+            const bounds = map.getBounds();
+            setCurrentBounds({
+              sw: bounds.getSouthWest().toString(),
+              ne: bounds.getNorthEast().toString(),
+            });
+          }}
+        >
+          <MapMarker
+            position={position ?? centerState.center}
+            image={{
+              src: '/images/map/marker_JOB.svg',
+              size: { width: 60, height: 60 },
             }}
-            level={mapSizeLevel} // 지도의 확대 레벨
-            onZoomChanged={(map) => {
-              const level = map.getLevel();
-              setMapSizeLevel(level);
-              console.log(`현재 지도 레벨은 ${level} 입니다`);
-            }}
-            onTileLoaded={(map) => {
-              console.log('지도 타일이 로드됐어요', currentBounds);
-              if (mapSizeLevel < 4) {
-                fetchMarkers();
-              }
-            }}
-            onBoundsChanged={(map) => {
-              const bounds = map.getBounds();
-              setCurrentBounds({
-                sw: bounds.getSouthWest().toString(),
-                ne: bounds.getNorthEast().toString(),
-              });
-            }}
-          >
-            <MapMarker
-              position={position ?? centerState.center}
-              image={{
-                src: '/images/map/marker_JOB.svg',
-                size: { width: 60, height: 60 },
+          />
+          {/* <MapMarker position={centerState.center} /> */}
+          {!centerState.isLoading &&
+            mapSizeLevel < 4 &&
+            !location.state &&
+            mapTags.map(
+              (tag, index) =>
+                (selectedCategory === 'ALL' ||
+                  ('PHARMACY' === tag['type'] &&
+                    selectedCategory === 'HOSPITAL') ||
+                  selectedCategory === tag['type']) && (
+                  <div key={index}>
+                    <MapMarker
+                      position={{
+                        lat: tag['latitude'],
+                        lng: tag['longitude'],
+                      }}
+                      image={{
+                        src: `/images/map/marker_${
+                          tag['type'] === 'PHARMACY' ? 'PHARMACY' : tag['type']
+                        }.svg`,
+                        size:
+                          markerInfo && tag['id'] === markerInfo.id
+                            ? { width: 60, height: 60 }
+                            : { width: 40, height: 40 },
+                      }}
+                      onClick={() => {
+                        console.log(tag);
+                        fetchMarkerInfo(tag['type'], tag['id']);
+                        setCenterState((prev) => ({
+                          ...prev,
+                          center: {
+                            lat: tag['latitude'],
+                            lng: tag['longitude'],
+                          },
+                        }));
+                      }}
+                    />
+                  </div>
+                ),
+            )}
+        </Map>
+      </MapFrame>
+      {location.state ? (
+        <div
+          style={{
+            position: 'absolute',
+            width: '60px',
+            height: '60px',
+            zIndex: '50',
+            top: '20px',
+            left: '20px',
+            backgroundColor: '#20B627',
+            borderRadius: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <img
+            style={{ width: '50px' }}
+            src="/images/JobPage/arrow-back-white.svg"
+            alt="뒤로가기"
+          />
+        </div>
+      ) : (
+        <CategoryFrame>
+          <CategoryButtonDiv>
+            {mapCategoryList[0].map((category, index) => (
+              <CategoryButton
+                key={index}
+                $color={category[2]}
+                $isSelected={selectedCategory === category[1]}
+                onClick={() => setSelectedCategory(category[1])}
+              >
+                {category[0]}
+              </CategoryButton>
+            ))}
+          </CategoryButtonDiv>
+          <Spacer direction="column" size="12px" />
+          <CategoryButtonDiv>
+            {mapCategoryList[1].map((category, index) => (
+              <CategoryButton
+                key={index}
+                $color={category[2]}
+                $isSelected={selectedCategory === category[1]}
+                onClick={() => setSelectedCategory(category[1])}
+              >
+                {category[0]}
+              </CategoryButton>
+            ))}
+          </CategoryButtonDiv>
+        </CategoryFrame>
+      )}
+      {markerInfo && (
+        <MarkerInfo>
+          <MarkerInfoLeft>
+            <div
+              style={{
+                width: '100%',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                fontSize: '24px',
+                fontWeight: 'bold',
               }}
-            />
-            {/* <MapMarker position={centerState.center} /> */}
-            {!centerState.isLoading &&
-              mapSizeLevel < 4 &&
-              !location.state &&
-              mapTags.map(
-                (tag, index) =>
-                  (selectedCategory === 'ALL' ||
-                    ('PHARMACY' === tag['type'] &&
-                      selectedCategory === 'HOSPITAL') ||
-                    selectedCategory === tag['type']) && (
-                    <div key={index}>
-                      <MapMarker
-                        position={{
-                          lat: tag['latitude'],
-                          lng: tag['longitude'],
-                        }}
-                        image={{
-                          src: `/images/map/marker_${
-                            tag['type'] === 'PHARMACY'
-                              ? 'PHARMACY'
-                              : tag['type']
-                          }.svg`,
-                          size:
-                            markerInfo && tag['id'] === markerInfo.id
-                              ? { width: 60, height: 60 }
-                              : { width: 40, height: 40 },
-                        }}
-                        onClick={() => {
-                          console.log(tag);
-                          fetchMarkerInfo(tag['type'], tag['id']);
-                          setCenterState((prev) => ({
-                            ...prev,
-                            center: {
-                              lat: tag['latitude'],
-                              lng: tag['longitude'],
-                            },
-                          }));
-                        }}
-                      />
-                    </div>
-                  ),
-              )}
-          </Map>
-        </MapFrame>
-        {location.state ? (
-          <div
-            style={{
-              position: 'absolute',
-              width: '60px',
-              height: '60px',
-              zIndex: '50',
-              top: '20px',
-              left: '20px',
-              backgroundColor: '#20B627',
-              borderRadius: '12px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            >
+              {markerInfo.type === 'JOB'
+                ? markerInfo.occupation
+                : markerInfo.name}
+            </div>
+            <div
+              style={{
+                width: '100%',
+                overflow: 'hidden',
+                wordBreak: 'break-all',
+                fontSize: '18px',
+              }}
+            >
+              {markerInfo.address}
+            </div>
+          </MarkerInfoLeft>
+          <MarkerInfoRight
             onClick={() => {
-              navigate(-1);
+              if (markerInfo.type === 'JOB') {
+                navigate(`/job-detail/${markerInfo.id}`);
+              } else {
+                handleCall(markerInfo.phone);
+              }
             }}
           >
             <img
-              style={{ width: '50px' }}
-              src="/images/JobPage/arrow-back-white.svg"
-              alt="뒤로가기"
+              src={
+                markerInfo.type === 'JOB'
+                  ? '/images/map/jobDetail.svg'
+                  : '/images/map/phone.svg'
+              }
+              style={
+                markerInfo.type === 'JOB'
+                  ? { width: '36px', height: '36px' }
+                  : { width: '44px', height: '44px' }
+              }
+              alt="상세정보 보기"
             />
-          </div>
-        ) : (
-          <CategoryFrame>
-            <CategoryButtonDiv>
-              {mapCategoryList[0].map((category, index) => (
-                <CategoryButton
-                  key={index}
-                  $color={category[2]}
-                  $isSelected={selectedCategory === category[1]}
-                  onClick={() => setSelectedCategory(category[1])}
-                >
-                  {category[0]}
-                </CategoryButton>
-              ))}
-            </CategoryButtonDiv>
-            <Spacer direction="column" size="12px" />
-            <CategoryButtonDiv>
-              {mapCategoryList[1].map((category, index) => (
-                <CategoryButton
-                  key={index}
-                  $color={category[2]}
-                  $isSelected={selectedCategory === category[1]}
-                  onClick={() => setSelectedCategory(category[1])}
-                >
-                  {category[0]}
-                </CategoryButton>
-              ))}
-            </CategoryButtonDiv>
-          </CategoryFrame>
-        )}
-        {markerInfo && (
-          <MarkerInfo>
-            <MarkerInfoLeft>
-              <div
-                style={{
-                  width: '100%',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  fontSize: '24px',
-                  fontWeight: 'bold',
-                }}
-              >
-                {markerInfo.type === 'JOB'
-                  ? markerInfo.occupation
-                  : markerInfo.name}
-              </div>
-              <div
-                style={{
-                  width: '100%',
-                  overflow: 'hidden',
-                  wordBreak: 'break-all',
-                  fontSize: '18px',
-                }}
-              >
-                {markerInfo.address}
-              </div>
-            </MarkerInfoLeft>
-            <MarkerInfoRight
-              onClick={() => {
-                if (markerInfo.type === 'JOB') {
-                  navigate(`/job-detail/${markerInfo.id}`);
-                } else {
-                  handleCall(markerInfo.phone);
-                }
-              }}
-            >
-              <img
-                src={
-                  markerInfo.type === 'JOB'
-                    ? '/images/map/jobDetail.svg'
-                    : '/images/map/phone.svg'
-                }
-                style={
-                  markerInfo.type === 'JOB'
-                    ? { width: '36px', height: '36px' }
-                    : { width: '44px', height: '44px' }
-                }
-                alt="상세정보 보기"
-              />
-            </MarkerInfoRight>
-          </MarkerInfo>
-        )}
-      </Frame>
-    </Layout>
+          </MarkerInfoRight>
+        </MarkerInfo>
+      )}
+      {!location.state?.jobId && <Footer />}
+    </Frame>
   );
 }
 
@@ -358,7 +356,8 @@ const Frame = styled.div`
 
 const MapFrame = styled.div`
   width: 100%;
-  height: 100%;
+  //height: 100%;
+  height: ${(props) => props.fromJob && 'calc(100% - 78px)'}
   position: absolute;
 `;
 
