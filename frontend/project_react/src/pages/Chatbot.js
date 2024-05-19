@@ -13,7 +13,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { getUserInfo } from '../utils/handleUser';
 
-import { googleTTS } from './ComponentTest';
+import { googleTTS } from '../utils/handleChat';
 import { convertArrayToObjectList } from '../utils/handleChat';
 
 import { useEffect, useRef, useState } from 'react';
