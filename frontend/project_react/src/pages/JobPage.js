@@ -116,8 +116,9 @@ const JobPage = () => {
 
   const searchJob = async () => {
     await jobApis.searchJob(jobName, page - 1, accessToken).then((res) => {
-      setJobList(res.data);
-      setRegion(convertRegionName(res.data.province));
+      setJobList(res.data.jobListResponses);
+      setMaxPage(res.data.totalJobSize / 10 + 1);
+      setTotalCount(res.data.totalJobSize);
     });
   };
 
@@ -126,6 +127,7 @@ const JobPage = () => {
       setJobList(res.data.jobListResponses); // id, companyName, title, occupation
       setMaxPage(res.data.totalJobSize / 10 + 1);
       setTotalCount(res.data.totalJobSize);
+      setRegion(convertRegionName(res.data.province));
     });
   };
 

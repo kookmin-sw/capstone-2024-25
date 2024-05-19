@@ -20,5 +20,5 @@ export const convertRegionName = (shortName) => {
   };
 
   // 입력된 짧은 이름을 기반으로 전체 이름을 반환
-  return regionMap[shortName] || '알 수 없는 지역';
+  return regionMap[shortName] || '미정';
 };
