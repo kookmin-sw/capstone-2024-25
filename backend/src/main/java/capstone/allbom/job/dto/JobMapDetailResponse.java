@@ -15,6 +15,8 @@ public class JobMapDetailResponse extends MapDetailResponse {
     private final String type; // 정적으로 선언
     private final String occupation;
     private final String address;
+    private final Double latitude;
+    private final Double longitude;
 
     public static JobMapDetailResponse from(Job job) {
         String type = "JOB";
@@ -22,7 +24,9 @@ public class JobMapDetailResponse extends MapDetailResponse {
                 job.getId(),
                 type, // 직접 정적 필드를 사용
                 job.getOccupation(),
-                job.getAddress()
+                job.getAddress(),
+                job.getLatitude(),
+                job.getLongitude()
         );
     }
 }
