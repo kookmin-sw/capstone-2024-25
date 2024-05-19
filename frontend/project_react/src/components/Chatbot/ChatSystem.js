@@ -5,7 +5,7 @@ import BubbleType3 from './BubbleType3';
 import Profile from './Profile';
 import { useEffect, useState } from 'react';
 import { parseNewsData } from '../../utils/handleChat';
-import { googleTTS } from '../../pages/ComponentTest';
+import { googleTTS } from '../../utils/handleChat';
 
 const ChatContainer = styled.div`
   display: flex;
