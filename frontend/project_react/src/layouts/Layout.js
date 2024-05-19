@@ -1,7 +1,7 @@
 // components/Layout/Layout.tsx
 import styled from 'styled-components';
 import Footer from './Footer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -11,28 +11,28 @@ const LayoutContainer = styled.div`
   height: 100vh;
   box-sizing: border-box;
   position: relative;
-  main {
-    width: 100%;
-    //height: calc(100vh - 78px);
-    //height: 100%;
-    height: ${(props) => (!props.fromJob ? '100%' : 'calc(100vh - 78px)')};
-    border: 1px solid red;
-  }
 `;
 
+const StyledMain = styled.main`
+  width: 100%;
+  height: calc(100vh - 78px);
+`;
+const MainFromJob = styled.main`
+  width: 100%;
+  height: 100%;
+`;
 const Layout = ({ children, fromJob }) => {
-  useEffect(() => {
-    console.log('Layout fromJob : ', fromJob);
-  }, []);
+  if (fromJob) {
+    return (
+      <LayoutContainer>
+        <MainFromJob>{children}</MainFromJob>
+        <Footer fromJob={fromJob} />
+      </LayoutContainer>
+    );
+  }
   return (
     <LayoutContainer>
-      {/*{fromJob ? (*/}
-      {/*  <mainFromJob>{children}</mainFromJob>*/}
-      {/*) : (*/}
-      {/*  <main>{children}</main>*/}
-      {/*)}*/}
-      <main fromJob={fromJob}>{children}</main>
-
+      <StyledMain fromJob={fromJob}>{children}</StyledMain>
       <Footer fromJob={fromJob} />
     </LayoutContainer>
   );
