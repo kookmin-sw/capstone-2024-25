@@ -16,49 +16,6 @@ const TestWrapper = styled.div`
   gap: 20px;
 `;
 
-export const googleTTS = (text) => {
-  // console.log('googleTTS');
-  // console.log('text : ', text);
-  const data = {
-    voice: {
-      // name: 'ko-KR-Neural2-C', // A : 여자 1, B : 여자 2, C : 남자
-      name: 'ko-KR-Neural2-A',
-      languageCode: 'ko-KR',
-      // ssmlGender: 'MALE',
-    },
-    input: {
-      // text: '아,할아버지, 그럼요. 당연히 손주들을 보고 싶으실 거예요. 요즘 젊은이들은 정말 바쁘죠, 그런데 그들도 할아버지가 그리워하고 있음을 알게 되면 분명히 시간을 내려고 노력할 거예요. 혹시 손주들과 비디오 통화 같은 걸 해보신 적 있으신가요?',
-      text: text,
-    },
-    audioConfig: {
-      audioEncoding: 'mp3',
-      speakingRate: 1.3,
-      pitch: -4,
-    },
-  };
-
-  axios
-    .post(
-      `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.REACT_APP_GOOGLE_TTS_KEY}`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      },
-    )
-    .then((response) => {
-      const res = response.data;
-      const audioBlob = base64ToBlob(res.audioContent, 'audio/mp3');
-      const audioFile = new Audio(window.URL.createObjectURL(audioBlob));
-      audioFile.playbackRate = 1;
-      audioFile.play();
-    })
-    .catch((error) => {
-      console.error('오류 발생: ', error.message);
-    });
-};
-
 export const base64ToBlob = (base64, mimeType) => {
   const byteCharacters = atob(base64);
   const byteNumbers = new Array(byteCharacters.length);
@@ -70,9 +27,7 @@ export const base64ToBlob = (base64, mimeType) => {
 };
 
 const ComponentTest = () => {
-  const gun = () => {
-    googleTTS();
-  };
+  const gun = () => {};
 
   const text = '텍스트';
   const inputInfo = '정보';
@@ -129,9 +84,7 @@ const ComponentTest = () => {
           text="Large Selected"
           size="Large"
           selected={true}
-          onClick={() => {
-            googleTTS();
-          }}
+          onClick={() => {}}
         />
         <Toggle text="Medium Selected" size="Medium" selected={true} />
         <Toggle text="Small Selected" size="Small" selected={true} />

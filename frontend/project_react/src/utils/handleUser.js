@@ -1,5 +1,6 @@
 import { myPagaApis } from '../api/apis/myPagaApis';
 import Swal from 'sweetalert2';
+import useStore from '../stores/store';
 
 export const getUserInfo = async (
   accessToken,
@@ -7,7 +8,11 @@ export const getUserInfo = async (
   setUserName,
   setGender,
 ) => {
+  const store = useStore.getState(); // Zustand 스토어에서 상태를 직접 가져오기
+  const selectedAvatar = store.selectedAvatar; // 현재 선택된 아바타 타입 가져오기
+  const setSelectedAvatar = store.setSelectedAvatar; // 선택된 아바타 타입 설정 함수 가져오기
   await myPagaApis.getInfo(accessToken).then((res) => {
+    console.log('getUserInfo', res.data);
     if (res.status === 200) {
       if (setUserInfo) {
         setUserInfo(res.data);
@@ -17,6 +22,16 @@ export const getUserInfo = async (
       }
       if (setGender) {
         setGender(res.data.gender);
+      }
+      if (res.data.chatProfileImageUrl) {
+        if (
+          res.data.chatProfileImageUrl ===
+          'https://allbom.s3.ap-northeast-2.amazonaws.com/chat_female.jpg'
+        ) {
+          setSelectedAvatar('GIRL');
+        } else {
+          setSelectedAvatar('BOY');
+        }
       }
     }
   });

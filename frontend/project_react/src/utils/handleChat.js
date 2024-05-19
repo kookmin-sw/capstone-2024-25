@@ -45,10 +45,10 @@ export const googleTTS = (text) => {
   const selectedAvatar = store.selectedAvatar; // 현재 선택된 아바타 타입 가져오기
 
   let voiceName = 'ko-KR-Neural2-A'; // 기본값 설정
-  if (selectedAvatar === 'BOY') {
-    voiceName = 'ko-KR-Neural2-C'; // 'BOY'일 경우 남성 음성으로 변경
+  if (selectedAvatar === 'GIRL') {
+    voiceName = 'ko-KR-Neural2-A'; // 'BOY'일 경우 남성 음성으로 변경
   } else {
-    voiceName = 'ko-KR-Neural2-A'; //
+    voiceName = 'ko-KR-Neural2-C'; //
   }
 
   const data = {
