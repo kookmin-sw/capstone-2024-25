@@ -44,6 +44,7 @@ export default function Nav5() {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const location = useLocation();
   const navigate = useNavigate();
+  const [fromJob, setFromJob] = useState(false);
 
   // 지도 초기화
   useEffect(() => {
@@ -142,6 +143,7 @@ export default function Nav5() {
           phone: response.data.phoneNumber,
         });
       }
+      setFromJob(true);
     } catch (error) {
       console.error('마커 세부 정보 에러', error.response.data.code);
     }
@@ -156,7 +158,7 @@ export default function Nav5() {
   };
 
   return (
-    <Layout>
+    <Layout fromJob={fromJob}>
       <Frame>
         <MapFrame>
           <Map // 지도를 표시할 Container
