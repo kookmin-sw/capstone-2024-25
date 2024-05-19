@@ -22,12 +22,6 @@ const MainFromJob = styled.main`
   height: 100%;
 `;
 const Layout = ({ children, fromJob }) => {
-  // const [isFromJob, setIsFromJob] = useState(false);
-
-  useEffect(() => {
-    console.log('Layout fromJob : ', fromJob);
-  }, [fromJob]);
-
   if (fromJob) {
     return (
       <LayoutContainer>
