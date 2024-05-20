@@ -2,27 +2,25 @@
 <h3> 🔗 프로젝트 페이지 주소 </h3>
 https://kookmin-sw.github.io/capstone-2024-25 
 
-<h3> 🔗 중간발표자료, 중간보고서 다운로드 주소 </h3>
-https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing 
+<h3> 🔗 최종발표자료, 최종보고서, 포스터 다운로드 주소 </h3>
+https://drive.google.com/drive/folders/1cwjLvT1xf6Uk6S9F-n2CaNSZvr5AfN9-?usp=drive_link
 
 </br>
 </br>
 
 # 올봄: AI 기반 장년층 라이프 케어 서비스
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/fed2d5f3-3a3e-4213-a0e8-8fe5c7477068" />
+
 
 <h2> 1. 프로젝트 소개 </h2>
 
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
-
-<br/>
-
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
 
 <h2> 2. 소개 영상 </h2>
 
