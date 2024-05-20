@@ -25,7 +25,7 @@ https://drive.google.com/drive/folders/1cwjLvT1xf6Uk6S9F-n2CaNSZvr5AfN9-?usp=dri
 <h2> 2. 소개 영상 </h2>
 
 아래 이미지 클릭 시 소개 영상 링크로 이동합니다.
-[![올봄 소개역](https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/2df19a94-7bdf-47e0-95a4-687508297656)](https://youtu.be/oeedMYw1dUg)
+[![올봄 소개역](https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/2df19a94-7bdf-47e0-95a4-687508297656)](https://www.youtube.com/watch?v=RSI6oyMCy5w)
 <h2> 3. 팀 소개 </h2>
 
 |이름|학번|포지션|프로필 사진|깃허브|
