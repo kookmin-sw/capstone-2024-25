@@ -1,26 +1,26 @@
 
 <h3> 🔗 프로젝트 페이지 주소 </h3>
-<a href="https://kookmin-sw.github.io/capstone-2024-25">https://kookmin-sw.github.io/capstone-2024-25</a> 
+https://kookmin-sw.github.io/capstone-2024-25 
 
-<h3> 🔗 중간발표자료, 중간보고서 다운로드 주소 </h3>
-<a href="https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing">https://drive.google.com/drive/folders/1n68fIr3CX4UqZTCc4CvZrfcuMwzdnme0?usp=sharing</a> 
+<h3> 🔗 최종발표자료, 최종보고서, 포스터 다운로드 주소 </h3>
+https://drive.google.com/drive/folders/1cwjLvT1xf6Uk6S9F-n2CaNSZvr5AfN9-?usp=drive_link
 
+</br>
+</br>
 
-# 올봄: AI 기반 노인 돌봄 통합형 서비스
+# 올봄: AI 기반 장년층 라이프 케어 서비스
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/fed2d5f3-3a3e-4213-a0e8-8fe5c7477068" />
+
 
 <h2> 1. 프로젝트 소개 </h2>
 
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/92b26920-36c9-48de-b694-a1e647eb53cd" />
-
-<br/>
-
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
 
 <h2> 2. 소개 영상 </h2>
 
@@ -57,7 +57,7 @@
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
 
 <h3> 서비스 아키텍처 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a0b6acba-a73b-4fdc-92be-622c6ef72d29" />
+<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/7907750d-5fa5-4c41-a794-40905e491978" />
 
 <h3> 서비스 흐름도 </h3>
 <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eaf699c2-5411-450b-828b-e5398ac15cfa">
