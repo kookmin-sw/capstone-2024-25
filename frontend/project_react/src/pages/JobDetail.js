@@ -4,6 +4,7 @@ import { jobApis } from '../api/apis/jobApis';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import useStore from '../stores/store';
 
 const JobDetailContainer = styled.div`
   display: flex;
@@ -145,7 +146,7 @@ const ContentTitle = styled.span`
   font-weight: 700;
 `;
 
-const FloatingButton = styled.a`
+const FloatingButton = styled.div`
   text-decoration-line: none;
 `;
 
@@ -218,6 +219,15 @@ const JobDetailPage = () => {
       },
     });
   };
+  const clickDetail = () => {
+    navigate('/job-detail2', {
+      state: {
+        companyName: jobInfo.companyName,
+        // password: password,
+        worknetUrl: jobInfo.worknetUrl,
+      },
+    });
+  };
 
   return (
     <JobDetailContainer>
@@ -230,7 +240,11 @@ const JobDetailPage = () => {
           <img src={process.env.PUBLIC_URL + '/images/JobPage/map.svg'} />
           지도 보기
         </MapButton>
-        <FloatingButton href={jobInfo.worknetUrl}>
+        <FloatingButton
+          onClick={() => {
+            clickDetail();
+          }}
+        >
           <ShowDetailButton>
             <img
               src={process.env.PUBLIC_URL + '/images/JobPage/show-detail.svg'}
