@@ -834,6 +834,11 @@ const Chatbot = () => {
                   onClick={handleViewportResize}
                   onChange={(e) => setUserText(e.target.value)}
                   placeholder="대화를 입력하세요"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      addChat(userText);
+                    }
+                  }}
                 />
                 {userText === '' || isWaiting ? (
                   <SendButton
