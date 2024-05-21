@@ -17,6 +17,7 @@ import WordOrderGame from './pages/games/wordOrder/3rd_WordOrderGame';
 import Chatbot from './pages/Chatbot';
 import JobPage from './pages/JobPage';
 import JobDetailPage from './pages/JobDetail';
+import JobDetailPage2 from './pages/JobDetail2';
 import MyPage from './pages/MyPage';
 import LoadingPage from './pages/LoadingPage';
 import './fonts/Font.css';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/job" element={<JobPage />} />
           <Route path="/job-detail/:jobId" element={<JobDetailPage />} />
+          <Route path="/job-detail2" element={<JobDetailPage2 />} />
           <Route path="/my-page" element={<MyPage />} />
           <Route path="/loading" element={<LoadingPage />} />
 
@@ -59,15 +61,9 @@ function App() {
             element={<WordOrderGame />}
           />
           <Route path="/game/crossWordIntro" element={<CrossWordIntro />} />
-          <Route
-            path="/game/crossWordGame"
-            element={<CrossWordGame />}
-          />
+          <Route path="/game/crossWordGame" element={<CrossWordGame />} />
           <Route path="/game/twentyHeadsIntro" element={<TwentyHeadsIntro />} />
-          <Route
-            path="/game/wordOrderGame"
-            element={<TwentyHeadsGame/>}
-          />
+          <Route path="/game/wordOrderGame" element={<TwentyHeadsGame />} />
 
           {/* To do */}
           <Route path="/toDo" element={<Nav4 />} />
