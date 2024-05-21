@@ -193,7 +193,7 @@ export default function Nav5() {
             <MapMarker
               position={position ?? centerState.center}
               image={{
-                src: '/images/map/marker_JOB.svg',
+                src: '/images/map/marker_job.svg',
                 size: { width: 60, height: 60 },
               }}
             />
