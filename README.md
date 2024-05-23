@@ -1,63 +1,90 @@
+<h1> 📌 올봄: AI 기반 장년층 라이프 케어 서비스</h1>
 
-<h3> 🔗 프로젝트 페이지 주소 </h3>
-https://kookmin-sw.github.io/capstone-2024-25 
+<div align="center">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/fed2d5f3-3a3e-4213-a0e8-8fe5c7477068" />
+  <div>
+    <a href="https://kookmin-sw.github.io/capstone-2024-25"> 🔗 프로젝트 소개 페이지</a>
+    <br />
+    <a href="https://drive.google.com/drive/folders/1cwjLvT1xf6Uk6S9F-n2CaNSZvr5AfN9-?usp=drive_link"> 🔗 최종발표자료, 최종보고서, 포스터 다운로드</a>
+  </div>
+</div>
 
-<h3> 🔗 최종발표자료, 최종보고서, 포스터 다운로드 주소 </h3>
-https://drive.google.com/drive/folders/1cwjLvT1xf6Uk6S9F-n2CaNSZvr5AfN9-?usp=drive_link
+<br />
+<br />
 
-</br>
-</br>
+<h2> ✏️ 프로젝트 소개 </h2>
 
-# 올봄: AI 기반 장년층 라이프 케어 서비스
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/fed2d5f3-3a3e-4213-a0e8-8fe5c7477068" />
+<div align="center">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/4fc1eebc-4618-4fa6-be9d-766875d93fb7">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/99217e62-7e1a-4343-a59c-a95740a4434e">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/fb021879-0bf8-4925-aef8-ff7efd311b7a">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/e7206a94-bb16-4ce5-920c-812fd58d3596">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/336b866d-a598-4cc8-99cb-a193a83c3300">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/c88471cc-84df-48cd-a13e-286f31e46de7">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/4d476b04-d11c-4945-bb5b-0f27cff24901">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/7c456c8b-30fa-42a1-82ed-143c6e8dc2fe">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/b4a4d87a-8d24-420b-b5de-79ce1736ee2c">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/035077d4-224b-4b05-8fb0-ef4215872c60">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/82efbb62-f65d-46e4-bf4f-608ef4eae683">
+</div>
 
+<br />
+<br />
 
-<h2> 1. 프로젝트 소개 </h2>
+<h2> 📹 소개 영상 </h2>
 
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a07e1b27-2c21-4a98-be9c-68457f16ea52" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/c30375c6-29f6-4f8c-a5f8-921dfd150da6" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/006a49c3-a245-46a0-8568-27e6c06c4c50" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/ead87076-7624-4fd2-b116-9ef256e26945" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/f6ed6bba-072e-4451-a293-f2345b373b07" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/5de82c9b-5661-4d05-a1bd-0b2ad7d7ec0c" />
-<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/aadd57c0-db57-4ce9-934a-22097e200ddf" />
+<div align="center">
+  <h4>아래 이미지 클릭 시 소개 영상 링크로 이동합니다.</h4>
+  <a href="https://www.youtube.com/watch?v=r0bPpBmPC7s">
+    <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/d8552616-fbd7-4506-a0aa-9a3f7e23383b" />
+  </a>
+</div>
 
-<h2> 2. 소개 영상 </h2>
+<br />
+<br />
 
-아래 이미지 클릭 시 소개 영상 링크로 이동합니다.
-[![올봄 소개역](https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/2df19a94-7bdf-47e0-95a4-687508297656)](https://www.youtube.com/watch?v=RSI6oyMCy5w)
-<h2> 3. 팀 소개 </h2>
+<h2> 🧑‍🧑‍🧒‍🧒 팀원 소개 </h2>
 
-|이름|학번|포지션|프로필 사진|깃허브|
-|-----------------------------------| - | - | - | - |
-| **이은선**                           | 20203118 | 백엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a47d70cf-02ad-409f-a320-057046f56578" width="100" height="100"/> | [https://github.com/Eun-sun-Lee](https://github.com/Eun-sun-Lee) | 
-| **곽희건**                           | 20181574 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/53166aa7-a504-4d5c-889f-545c99249710" width="100" height="100"/> | [https://github.com/VarGun](https://github.com/VarGun) |
-| **백현식**                           | 20191605 | 프론트엔드 | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/bb9a6d50-a53d-4456-ae55-7c577e697fb6" width="100" height="100"/> | [https://github.com/hammsik](https://github.com/hammsik) |
-| **김민선**                           | 20203035 | AI | <img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/a8daeed0-a399-4c60-adda-c17d97d3b4ac" width="100" height="100"/> | [https://github.com/CLM-BONNY](https://github.com/CLM-BONNY) |
+| ![이은선](https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eada2671-7eff-460e-85db-ebff652c9d76) | ![곽희건](https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/7d191600-3f11-4686-9254-c9f0761b89b8) | ![백현식](https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/408e4c24-813a-4c0c-ab6b-0ed3690baccc) | ![김민선](https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/8af40328-eb94-42cd-a083-43930f5015ef) |
+|:---:|:---:|:---:|:---:|
+| **이은선** | **곽희건** | **백현식** | **김민선** |
+| BackEnd | FrontEnd | FrontEnd | AI/Data |
+| 20203118 | 20181574 | 20191605 | 20203035 |
+| [Eun-sun-Lee](https://github.com/Eun-sun-Lee) | [VarGun](https://github.com/VarGun) | [hammsik](https://github.com/hammsik) | [CLM-BONNY](https://github.com/CLM-BONNY) |
 
-<h2> 4. 사용법 </h2>
+<br />
+<br />
 
-- 프로젝트 설치방법 및 데모, 사용 방법, 프리뷰 등은 추후 추가 예정입니다.
-- Api나 사용방법 등 내용이 많을 경우 wiki에 꾸미고 링크 추가할 예정입니다.
+<h2> 📱 사용법 </h2>
 
-<h2> 5. 기술 스택 </h2>
-<h3> 프론트엔드 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/d5550222-c615-441f-a81a-3a24881b55a9" />
+<h4>아래의 주소에서 apk 파일을 다운로드 받아 휴대폰에 설치하면 올봄 서비스를 이용하실 수 있습니다.</h4>
 
-<h3> 백엔드 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/018fa6be-f788-4a84-9a9c-ade8ee327721" />
+```bash
+🔗 앱 다운로드 링크
+https://drive.google.com/file/d/1hkx6u3X1QIshjXy04HpAK3yoCkCdYSfO/view?usp=drive_link
+```
 
-<h3> AI </h3>
-<img width="60%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/a966529e-66d4-4f88-8d25-bddedfcf7db0" />
+<br />
+<br />
 
-<h3> 데이터 전처리 </h3>
-<img width="80%" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/fb8c1b5c-90a5-40f4-b87e-32b5eea67077" />
+<h2> 🛠️ 기술 스택 </h2>
 
-<h3> 인프라 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
+<h3>➰ FrontEnd</h3>
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/d5550222-c615-441f-a81a-3a24881b55a9" />
+<h3>➰ BackEnd</h3>
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/018fa6be-f788-4a84-9a9c-ade8ee327721" />
+<h3>➰ AI</h3>
+<img width="360" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/a966529e-66d4-4f88-8d25-bddedfcf7db0" />
+<h3>➰ Data</h3>
+<img width="480" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/fb8c1b5c-90a5-40f4-b87e-32b5eea67077" />
+<h3>➰ Infra</h3>
+<img width="600" src="https://github.com/kookmin-sw/capstone-2024-25/assets/88530565/4a4fc35d-af89-4466-8ca4-a99650b89ac6" />
 
-<h3> 서비스 아키텍처 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/7907750d-5fa5-4c41-a794-40905e491978" />
+<br />
+<br />
 
-<h3> 서비스 흐름도 </h3>
-<img src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/eaf699c2-5411-450b-828b-e5398ac15cfa">
+<h2> 📍 서비스 아키텍처 </h2>
+
+<div align="center">
+  <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/84428520/7907750d-5fa5-4c41-a794-40905e491978" />
+</div>
