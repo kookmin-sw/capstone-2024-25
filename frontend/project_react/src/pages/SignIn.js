@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/apis/authApis';
 import { useCookies } from 'react-cookie';
 import Swal from 'sweetalert2';
+import { getUserInfo } from '../utils/handleUser';
 
 const SignInWrapper = styled.div`
   display: flex;
@@ -77,11 +78,25 @@ const SignIn = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [userInfo, setUserInfo] = useState({});
 
   // 환경 변수에서 카카오 API 키와 리다이렉트 URI를 가져옵니다.
   const Rest_api_key = process.env.REACT_APP_REST_API_KEY; // REST API KEY
   const redirect_uri =
     'https://allbome-for-vercel.vercel.app/auth/kakao/callback'; //Redirect URI
+
+  // 자동 로그인
+  useEffect(() => {
+    const accessToken = cookies.accessToken;
+    if (accessToken) {
+      getUserInfo(accessToken, setUserInfo);
+    }
+  }, []);
+  useEffect(() => {
+    if (userInfo.name) {
+      navigate('/chatbot');
+    }
+  }, [userInfo]);
 
   const signIn = async () => {
     await authApi
@@ -157,7 +172,6 @@ const SignIn = () => {
           type="Primary"
           text="로그인"
           onClick={signIn}
-          // onClick={/* 로그인 처리 함수를 여기에 추가합니다. */}
         />
         <FooterText>
           아직 회원이 아니신가요?{' '}

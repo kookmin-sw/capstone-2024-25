@@ -373,7 +373,7 @@ const Chatbot = () => {
         } else {
           // 날씨 선택 시 구현 추가
           setSelectedCategoryId(id);
-          console.log('선택된 카테고리 타이틀 : ', category.title);
+          // console.log('선택된 카테고리 타이틀 : ', category.title);
           if (category.title === '날씨') {
             const requestCategory = weatherRequest();
             if (!isWaiting) {
@@ -398,7 +398,7 @@ const Chatbot = () => {
     const newSubCategoryList = categoryList.map((category) => {
       category.values.map((subCategory) => {
         if (subCategory.id === id && category.id === selectedCategoryId) {
-          console.log('선택된 서브카테고리 타이틀 : ', subCategory.title);
+          // console.log('선택된 서브카테고리 타이틀 : ', subCategory.title);
           let requestCategory = '';
           if (category.title === '뉴스') {
             if (subCategory.title === '전체') {

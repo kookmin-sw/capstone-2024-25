@@ -2,10 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import useStore from '../stores/store';
 import { myPagaApis } from '../api/apis/myPagaApis';
 import { useCookies } from 'react-cookie';
-import { getUserInfo } from '../utils/handleUser';
 
 const FooterContainer = styled.div`
   display: flex;
