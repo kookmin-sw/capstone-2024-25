@@ -13,10 +13,9 @@ void main() async {
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     await InAppWebViewController.setWebContentsDebuggingEnabled(kDebugMode);
   }
-  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //   statusBarColor: Color.fromARGB(0, 255, 255, 255),
-  //   systemNavigationBarIconBrightness: Brightness.dark,
-  // ));
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(const MaterialApp(home: AllBome()));
 }

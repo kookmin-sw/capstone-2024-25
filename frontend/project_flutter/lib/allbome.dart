@@ -73,10 +73,6 @@ class _AllBomeState extends State<AllBome> {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //   statusBarColor: Color.fromARGB(0, 255, 255, 255),
-    //   systemNavigationBarIconBrightness: Brightness.dark,
-    // ));
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -91,19 +87,9 @@ class _AllBomeState extends State<AllBome> {
               pullToRefreshController: pullToRefreshController,
               onWebViewCreated: (controller) {
                 webViewController = controller;
-
-                // controller.addJavaScriptHandler(
-                //     handlerName: 'handlerFoo',
-                //     callback: (args) {
-                //       // return data to the JavaScript side!
-                //       return {'bar': 'bar_value', 'baz': 'baz_value'};
-                //     });
-
                 controller.addJavaScriptHandler(
                     handlerName: 'test',
                     callback: (args) {
-                      print(args[0]);
-                      print('으갸갹 도착');
                       if (_hasCallSupport) {
                         print('전화걸기를 지원합니다.');
                         setState(() {
@@ -112,7 +98,6 @@ class _AllBomeState extends State<AllBome> {
                       } else {
                         print('전화걸기를 지원하지 않습니다.');
                       }
-                      // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
                     });
               },
               onLoadStart: (controller, url) {
