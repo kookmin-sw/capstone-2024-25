@@ -10,6 +10,7 @@ import ChatPair from '../../../components/Chatbot/ChatPair';
 import Swal from 'sweetalert2';
 import SelectInputMode from '../../../components/Chatbot/SelectInputMode';
 import ChatSystem from '../../../components/Chatbot/ChatSystem';
+import { googleTTS } from '../../../utils/handleChat';
 
 import {
   XImg,
@@ -142,6 +143,12 @@ export default function TwentyHeadsGame() {
     }
   };
 
+  const resetInput = () => {
+    const inputText = document.getElementById('input-text');
+    if (inputText) inputText.value = '';
+    setUserText('');
+  };
+
   async function getPassageData() {
     try {
       const response = await twentyHeadsApis.getTwentyHeadsData(accessToken);
@@ -191,6 +198,8 @@ export default function TwentyHeadsGame() {
         userAnswer,
       );
       console.log('스무고개 물어봤더니 돌아온 답:', response.data);
+      await googleTTS(response.data.answer);
+
       if (response.data.isCorrect) {
         Swal.fire({
           icon: 'success',
@@ -217,10 +226,11 @@ export default function TwentyHeadsGame() {
         };
         return [...prev];
       });
-
+      await resetInput();
       return response.data.solution;
       // setGameAnswer(response.data.solution);
     } catch (error) {
+      await resetInput();
       console.log(error);
     }
   }
@@ -334,6 +344,11 @@ export default function TwentyHeadsGame() {
                 // onClick={handleViewportResize}
                 onChange={(e) => setUserText(e.target.value)}
                 placeholder="대화를 입력하세요"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    postUserAnswer(userText);
+                  }
+                }}
               />
               {userText === '' ? (
                 <SendButton
