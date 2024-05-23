@@ -57,6 +57,7 @@ export default function TwentyHeadsGame() {
   const [timer, setTimer] = useState(null);
   const [initialTimer, setInitialTimer] = useState(null);
   const [isTimerFirst, setIsTimerFirst] = useState(true);
+  const [isWaiting, setIsWaiting] = useState(false);
 
   useEffect(() => {
     // 돔이 로드되면 getPassageData() 호출
@@ -189,6 +190,7 @@ export default function TwentyHeadsGame() {
 
   async function postUserAnswer(userAnswer) {
     try {
+      setIsWaiting(true);
       setChattingList((prev) => [
         ...prev,
         { question: userAnswer, answer: '' },
@@ -227,10 +229,14 @@ export default function TwentyHeadsGame() {
         return [...prev];
       });
       await resetInput();
+      setIsWaiting(false);
+
       return response.data.solution;
       // setGameAnswer(response.data.solution);
     } catch (error) {
       await resetInput();
+      setIsWaiting(false);
+
       console.log(error);
     }
   }
@@ -350,9 +356,11 @@ export default function TwentyHeadsGame() {
                   }
                 }}
               />
-              {userText === '' ? (
+              {userText === '' || isWaiting ? (
                 <SendButton
-                  src={process.env.PUBLIC_URL + '/images/Chatbot/mic-icon.svg'}
+                  src={
+                    process.env.PUBLIC_URL + '/images/Chatbot/send-icon-off.svg'
+                  }
                 />
               ) : (
                 <SendButton
