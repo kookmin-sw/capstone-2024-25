@@ -12,7 +12,6 @@ export const getUserInfo = async (
   const selectedAvatar = store.selectedAvatar; // 현재 선택된 아바타 타입 가져오기
   const setSelectedAvatar = store.setSelectedAvatar; // 선택된 아바타 타입 설정 함수 가져오기
   await myPagaApis.getInfo(accessToken).then((res) => {
-    console.log('getUserInfo', res.data);
     if (res.status === 200) {
       if (setUserInfo) {
         setUserInfo(res.data);
