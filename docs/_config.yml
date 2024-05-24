@@ -1,5 +1,5 @@
 #page title
-page_title                                :                                           # Automatically populates with app name if not set and if iOS app ID is set. Otherwise enter manually.
+page_title                                : 올봄-캡스톤 2024 25조                        # Automatically populates with app name if not set and if iOS app ID is set. Otherwise enter manually.
 
 # App Info
 ios_app_id                                : 1234793120                                # Required. Enter iOS app ID to automatically populate name, price and icons (e.g. 718043190).
@@ -10,10 +10,10 @@ playstore_link                            :                                     
 presskit_download_link                    : https://emilbaehr.com                                          # Enter a link to downloadable file or (e.g. public Dropbox link to a .zip file). 
                                                                                       # Or upload your press kit file to assets and set path accordingly (e.g. "assets/your_press_kit.zip").
 
-app_icon                                  : # assets/appicon.png                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
-app_name                                  :                                           # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
-app_price                                 :                                           # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
-app_description                           : Write a short tagline for your app.
+app_icon                                  : assets/appicon.png                       # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
+app_name                                  : 올봄                                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
+app_price                                 : 장년층 라이프 케어 서비스                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
+app_description                           : 반복되고 무료한 일상 속의 즐거움을 찾을 수 있는 <br> 다양한 기능을 제공하는 올봄을 사용해보세요!
 
 enable_smart_app_banner                   : true                                      # Set to true to show a smart app banner at top of page on mobile devices.
 
@@ -36,58 +36,41 @@ mastodon_link                             : https://mastodon.social/@ebaehr
 # Feature List                            Edit, add or remove features to be presented.
 features                                  :
 
-  - title                                 : GitHub Pages Jekyll Theme
-    description                           : Designed for GitHub Pages. Fork. Edit _config.yml. Upload screenshot/video. Push to gh-pages branch. Voilá!
-    fontawesome_icon_name                 : magic
+  - title                                 : 두뇌 향상 게임
+    description                           : 두뇌 활동을 촉진하는 게임을 플레이함으로써, 장년 사용자의 기억력 및 사고 능력을 강화합니다.
+    fontawesome_icon_name                 : gamepad
     
-  - title                                 : iPhone Device Preview
-    description                           : Preview your app in the context of an iPhone device. Five different device colors included.
-    fontawesome_icon_name                 : mobile
+  - title                                 : ToDo 관리
+    description                           : 무료한 일상 속에서 부여된 작은 일들을 완수하며 소소한 행복 및 성취감을 느낄 수 있습니다.
+    fontawesome_icon_name                 : list
 
-  - title                                 : Video Support
-    description                           : Preview app video on the iPhone device simply by placing your video files in the videos folder.
-    fontawesome_icon_name                 : play-circle
+  - title                                 : 챗봇
+    description                           : 일상 생활에서의 다양한 도움을 제공하고, 사용자와 활발한 상호작용을 하는 챗봇을 통해 장년층이 기술적 장벽을 느끼지 않게 합니다.
+    fontawesome_icon_name                 : rocketchat
 
-  - title                                 : Automatic Icon and Metadata
-    description                           : Enter iOS app ID in the _config.yml file to automatically fetch app icon, price and App Store Link.
-    fontawesome_icon_name                 : sync
+  - title                                 : 지도
+    description                           : 장년층에게 유용한 건강, 생활 시설에 대한 정보를 제공합니다.
+    fontawesome_icon_name                 : map-location-dot
 
-  - title                                 : Easy to Tweak
-    description                           : Tweak accent color, images, icons and transparency via the _config.yml file. No HTML/CSS needed.
-    fontawesome_icon_name                 : adjust
+  - title                                 : 일자리
+    description                           : 가정이나 사회에서의 역할 상실로 무력감을 느끼는 장년층에게 적합한 일자리를 제공해 소속감을 회복시키고 경제적 자립을 지원합니다.
+    fontawesome_icon_name                 : briefcase
   
-  - title                                 : Feature List
-    description                           : Add features (like this one) to your site via the _config.yml file. No HTML/CSS needed.
-    fontawesome_icon_name                 : star
-
-  - title                                 : Smart App Banner
-    description                           : Display a smart app banner on iOS devices.
-    fontawesome_icon_name                 : arrow-alt-circle-down
-
-  - title                                 : Social Links
-    description                           : Easily add social media accounts and contact info in the footer via the _config.yml file. No HTML/CSS needed.
-    fontawesome_icon_name                 : link
-
-  - title                                 : FontAwesome Support
-    description                           : Pick custom Font Awesome icons for the feature list via the _config.yml file. No HTML/CSS needed.
-    fontawesome_icon_name                 : info-circle
-
-  - title                                 : # New Feature Title
-    description                           : # New Feature Description
-    fontawesome_icon_name                 : # Enter Font Awesome icon name (e.g. star). Find icons on fontawesome.com/icons.
-
+  - title                                 : 하이브리드 플랫폼
+    description                           : Android, IOS 양 측 플랫폼 모두를 지원하며 각 OS에서 설치가 가능합니다.
+    fontawesome_icon_name                 : arrow-left-right
 
 
 # Theme Settings
-topbar_color                              : "#000000"
+topbar_color                              : "#ffffff"
 topbar_transparency                       : 0.1
-topbar_title_color                        : "#ffffff"
+topbar_title_color                        : "#3b3b3b"
 
-cover_image                               : assets/headerimage.png                    # Replace with alternative image path or image URL.
+cover_image                               :                                          # Replace with alternative image path or image URL.
 cover_overlay_color                       : "#363b3d"
 cover_overlay_transparency                : 0.8
 
-device_color                              : black                                     # Set to: blue, black, yellow, coral or white.
+device_color                              : white                                     # Set to: blue, black, yellow, coral or white.
 
 body_background_color                     : "#ffffff"
 
