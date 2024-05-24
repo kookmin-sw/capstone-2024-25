@@ -35,7 +35,7 @@
 
 <div align="center">
   <h4>아래 이미지 클릭 시 소개 영상 링크로 이동합니다.</h4>
-  <a href="https://www.youtube.com/watch?v=r0bPpBmPC7s">
+  <a href="https://youtu.be/3ocOheOt5x8">
     <img width="700" src="https://github.com/kookmin-sw/capstone-2024-25/assets/66056874/d8552616-fbd7-4506-a0aa-9a3f7e23383b" />
   </a>
 </div>
