@@ -13,7 +13,7 @@ presskit_download_link                    : https://emilbaehr.com               
 app_icon                                  : assets/videos/appicon.png                       # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
 app_name                                  : 올봄                                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
 app_price                                 : 장년층 라이프 케어 서비스                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
-app_description                           : 반복되고 무료한 일상 속의 즐거움을 찾을 수 있는 <br> 다양한 기능을 제공하는 올봄을 사용해보세요!
+app_description                           : 반복되고 무료한 일상 속의 즐거움을 찾을 수 있는 <br> 챗봇, 두뇌 향상 게임, 일자리, 지도, ToDo관리 <br> 기능을 제공하는 올봄을 사용해보세요!
 
 enable_smart_app_banner                   : true                                      # Set to true to show a smart app banner at top of page on mobile devices.
 
