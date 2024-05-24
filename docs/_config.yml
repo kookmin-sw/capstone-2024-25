@@ -10,7 +10,7 @@ playstore_link                            :                                     
 presskit_download_link                    : https://emilbaehr.com                                          # Enter a link to downloadable file or (e.g. public Dropbox link to a .zip file). 
                                                                                       # Or upload your press kit file to assets and set path accordingly (e.g. "assets/your_press_kit.zip").
 
-app_icon                                  : assets/appicon.png                       # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
+app_icon                                  : assets/videos/appicon.png                       # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
 app_name                                  : 올봄                                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
 app_price                                 : 장년층 라이프 케어 서비스                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
 app_description                           : 반복되고 무료한 일상 속의 즐거움을 찾을 수 있는 <br> 다양한 기능을 제공하는 올봄을 사용해보세요!
@@ -20,16 +20,16 @@ enable_smart_app_banner                   : true                                
 
 
 # Information About Yourself
-your_name                                 : Emil Baehr                                
-your_link                                 : https://emilbaehr.com                     
-your_city                                 : Copenhagen                                
-email_address                             : emil.baehr@gmail.com
+your_name                                 : 캡스톤 2024 25조
+your_link                                 :
+your_city                                 : 국민대학교
+email_address                             :
 facebook_username                         :                                           
-instagram_username                        : ebaehr
-twitter_username                          : ebaehr
-github_username                           : emilbaehr
+instagram_username                        :
+twitter_username                          :
+github_username                           :
 youtube_username                          :
-mastodon_link                             : https://mastodon.social/@ebaehr
+mastodon_link                             :
 
 
 
@@ -46,11 +46,11 @@ features                                  :
 
   - title                                 : 챗봇
     description                           : 일상 생활에서의 다양한 도움을 제공하고, 사용자와 활발한 상호작용을 하는 챗봇을 통해 장년층이 기술적 장벽을 느끼지 않게 합니다.
-    fontawesome_icon_name                 : rocketchat
+    fontawesome_icon_name                 : comment
 
   - title                                 : 지도
     description                           : 장년층에게 유용한 건강, 생활 시설에 대한 정보를 제공합니다.
-    fontawesome_icon_name                 : map-location-dot
+    fontawesome_icon_name                 : map
 
   - title                                 : 일자리
     description                           : 가정이나 사회에서의 역할 상실로 무력감을 느끼는 장년층에게 적합한 일자리를 제공해 소속감을 회복시키고 경제적 자립을 지원합니다.
@@ -58,7 +58,7 @@ features                                  :
   
   - title                                 : 하이브리드 플랫폼
     description                           : Android, IOS 양 측 플랫폼 모두를 지원하며 각 OS에서 설치가 가능합니다.
-    fontawesome_icon_name                 : arrow-left-right
+    fontawesome_icon_name                 : arrow-left-right-to-line
 
 
 # Theme Settings
