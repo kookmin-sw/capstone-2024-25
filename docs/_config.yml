@@ -58,7 +58,7 @@ features                                  :
   
   - title                                 : 하이브리드 플랫폼
     description                           : Android, IOS 양 측 플랫폼 모두를 지원하며 각 OS에서 설치가 가능합니다.
-    fontawesome_icon_name                 : arrow
+    fontawesome_icon_name                 : arrows-left-right
 
 
 # Theme Settings
