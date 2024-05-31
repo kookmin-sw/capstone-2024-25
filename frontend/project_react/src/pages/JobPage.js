@@ -31,7 +31,7 @@ const JobPageContent = styled.div`
   overflow-y: auto;
   gap: 24px;
   box-sizing: border-box;
-  margin-bottom: 78px;
+  margin-bottom: 40px;
 `;
 
 const EmploymentWrapper = styled.div`
