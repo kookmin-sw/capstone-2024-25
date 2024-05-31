@@ -15,7 +15,7 @@ const LayoutContainer = styled.div`
 
 const StyledMain = styled.main`
   width: 100%;
-  height: calc(100vh - 78px);
+  height: calc(100vh - 60px);
 `;
 const MainFromJob = styled.main`
   width: 100%;
