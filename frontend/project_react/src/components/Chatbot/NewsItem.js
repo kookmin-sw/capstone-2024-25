@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NewsItemContainer = styled.span`
   font-size: 16px;
@@ -10,12 +11,24 @@ const NewsItemContainer = styled.span`
   //border: ;
 `;
 const NewsContents = styled.p``;
-const NewsLink = styled.a`
+const NewsLink = styled.span`
+  text-decoration: underline;
   color: #0066ff;
 `;
 
 const NewsItem = ({ news }) => {
   const [category, setCategory] = useState('');
+  const navigate = useNavigate();
+
+  const clickDetail = () => {
+    navigate('/job-detail2', {
+      state: {
+        companyName: '뉴스',
+        // password: password,
+        worknetUrl: news.link,
+      },
+    });
+  };
 
   useEffect(() => {
     switch (news.category) {
@@ -48,7 +61,13 @@ const NewsItem = ({ news }) => {
       <NewsContents>{news.description}</NewsContents>
       <NewsContents>
         자세히 보기 :<br />
-        <NewsLink href={news.link}>{news.link}</NewsLink>
+        <NewsLink
+          onClick={() => {
+            clickDetail();
+          }}
+        >
+          {news.link}
+        </NewsLink>
       </NewsContents>
     </NewsItemContainer>
   );
