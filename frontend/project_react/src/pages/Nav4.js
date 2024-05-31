@@ -175,6 +175,7 @@ const Frame = styled.div`
 
 const CardsFrame = styled.div`
   width: 100dvw;
+  max-width: 480px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
